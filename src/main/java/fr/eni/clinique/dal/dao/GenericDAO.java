@@ -1,8 +1,8 @@
-package main.java.fr.eni.clinique.dal.dao;
+package fr.eni.clinique.dal.dao;
 
 import java.util.List;
 
-import main.java.fr.eni.clinique.dal.exception.DaoException;
+import fr.eni.clinique.dal.exception.DaoException;
 
 /**
  * Generic DAO for the basic current usages of specific DAO.

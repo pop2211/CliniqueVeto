@@ -1,4 +1,4 @@
-package main.java.fr.eni.clinique.dal.exception;
+package fr.eni.clinique.dal.exception;
 
 /**
  * Exception class for DAO Methods.

@@ -1,11 +1,10 @@
-package main.java.fr.eni.clinique.dal.factory;
+package fr.eni.clinique.dal.factory;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
-import main.java.fr.eni.clinique.common.exception.TechnicalException;
-import main.java.fr.eni.clinique.config.AppConfig;
+import fr.eni.clinique.common.exception.TechnicalException;
+import fr.eni.clinique.config.AppConfig;
 
 public class MSSQLConnectionFactory {
     
