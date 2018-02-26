@@ -1,5 +1,8 @@
 package fr.eni.clinique.bo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Client {
 
 	private Integer codeClient;
@@ -13,6 +16,7 @@ public class Client {
 	private String assurance;
 	private String email;
 	private String remarque;
+	private List<Animal> animaux = new ArrayList<Animal>();
 	private Byte archive;
 	
 	
@@ -31,11 +35,10 @@ public class Client {
 		this.remarque = "";
 		this.archive = 0;
 	}
-	
-	
+
 	public Client(Integer codeClient, String nomClient, String prenomClient, String adresse1, String adresse2,
 			String codePostal, String ville, String numTel, String assurance, String email, String remarque,
-			Byte archive) {
+			List<Animal> animaux, Byte archive) {
 		super();
 		this.codeClient = codeClient;
 		this.nomClient = nomClient;
@@ -48,9 +51,9 @@ public class Client {
 		this.assurance = assurance;
 		this.email = email;
 		this.remarque = remarque;
+		this.animaux = animaux;
 		this.archive = archive;
 	}
-	
 
 	public Integer getCodeClient() {
 		return codeClient;
@@ -171,21 +174,37 @@ public class Client {
 		this.archive = archive;
 	}
 
-
-	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Client [codeClient=").append(codeClient).append(", nomClient=").append(nomClient)
-				.append(", prenomClient=").append(prenomClient).append(", adresse1=").append(adresse1)
-				.append(", adresse2=").append(adresse2).append(", codePostal=").append(codePostal).append(", ville=")
-				.append(ville).append(", numTel=").append(numTel).append(", assurance=").append(assurance)
-				.append(", email=").append(email).append(", remarque=").append(remarque).append(", archive=")
-				.append(archive).append("]");
+		builder.append("Client [codeClient=");
+		builder.append(codeClient);
+		builder.append(", nomClient=");
+		builder.append(nomClient);
+		builder.append(", prenomClient=");
+		builder.append(prenomClient);
+		builder.append(", adresse1=");
+		builder.append(adresse1);
+		builder.append(", adresse2=");
+		builder.append(adresse2);
+		builder.append(", codePostal=");
+		builder.append(codePostal);
+		builder.append(", ville=");
+		builder.append(ville);
+		builder.append(", numTel=");
+		builder.append(numTel);
+		builder.append(", assurance=");
+		builder.append(assurance);
+		builder.append(", email=");
+		builder.append(email);
+		builder.append(", remarque=");
+		builder.append(remarque);
+		builder.append(", animaux=");
+		builder.append(animaux);
+		builder.append(", archive=");
+		builder.append(archive);
+		builder.append("]");
 		return builder.toString();
 	}
-	
-	
-	
 	
 }
