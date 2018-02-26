@@ -1,0 +1,6 @@
+12:26:06 INFO  fr.eni.clinique.AppliTestBO - Animal [codeAnimal=1, nomAnimal=MamandeBambi, sexe=h, couleur=bleu, tatouage=symboledelinfini, antecedants=alcoolique, archive=0, race=Race [race=papsderace, espece=bambie], codeClient=5]
+12:27:56 INFO  fr.eni.clinique.AppliTestBO - Animal [codeAnimal=1, nomAnimal=MamandeBambi, sexe=h, couleur=bleu, tatouage=symboledelinfini, antecedants=alcoolique, archive=0, race=Race [race=papsderace, espece=bambie], codeClient=5]
+12:27:56 INFO  fr.eni.clinique.AppliTestBO - bleu
+12:28:45 INFO  fr.eni.clinique.AppliTestBO - Animal [codeAnimal=1, nomAnimal=MamandeBambi, sexe=h, couleur=bleu, tatouage=symboledelinfini, antecedants=alcoolique, archive=0, race=Race [race=papsderace, espece=bambie], codeClient=5]
+12:28:45 INFO  fr.eni.clinique.AppliTestBO - bleu
+12:28:45 INFO  fr.eni.clinique.AppliTestBO - rose
