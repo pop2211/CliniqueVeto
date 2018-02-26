@@ -1,19 +1,19 @@
 package fr.eni.clinique.bo;
 
-import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class Agenda {
 
 	
 	private Personel veto; 
-	private Date dateRdv; //Rendez-vous tous les quarts d’heures : 00 ; 15 ; 30 ; 45
+	private GregorianCalendar dateRdv; //Rendez-vous tous les quarts d’heures : 00 ; 15 ; 30 ; 45
 	private Animal animal;
 	
 	
 	public Agenda() {
 		super();
 	}
-	public Agenda(Personel veto, Date dateRdv, Animal animal) {
+	public Agenda(Personel veto, GregorianCalendar dateRdv, Animal animal) {
 		super();
 		this.veto = veto;
 		this.dateRdv = dateRdv;
@@ -35,10 +35,10 @@ public class Agenda {
 		this.animal = animal;
 	}
 
-	public Date getDateRdv() {
+	public GregorianCalendar getDateRdv() {
 		return dateRdv;
 	}
-	public void setDateRdv(Date dateRdv) {
+	public void setDateRdv(GregorianCalendar dateRdv) {
 		this.dateRdv = dateRdv;
 	}
 	
