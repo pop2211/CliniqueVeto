@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<!-- Setting the main console output -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<!-- This is the pattern of the message logged in the main console -->
+			<pattern>%d{HH:mm:ss} %-5level %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<!-- Setting the file output -->
+	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+		<file>application.log</file>
+		<encoder>
+			<!-- This is the pattern of the message logged in file-->
+			<pattern>%d{HH:mm:ss} %-5level %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<!-- Defines here the appenders you want to use -->
+	<root level="info">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</root>
+</configuration>
