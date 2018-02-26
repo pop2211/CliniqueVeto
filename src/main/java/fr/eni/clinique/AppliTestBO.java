@@ -46,7 +46,6 @@ public class AppliTestBO {
 		GregorianCalendar date = new GregorianCalendar(2018, 2, 25, 14, 15);
 		Rdv rdv = new Rdv(personel, date, animal);
 		LOGGER.info(rdv.toString());
-		
 
 	}
 	
