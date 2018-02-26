@@ -6,7 +6,7 @@ import fr.eni.clinique.dal.dao.impl.AnimalJDBCDAOImpl;
 
 public class DaoFactory {
     
-    public static AnimalDAO articleDAO() {
+    public static AnimalDAO animalDAO() {
         return AnimalJDBCDAOImpl.getInstance();
     }
 }
