@@ -5,18 +5,9 @@ public class Personnel {
 	private Integer codePers;
 	private String nom; 
 	private String mdp; 
-	private String role; 
+	private String role; //EnumRole
 	private Boolean archive;
 	
-	/* ROLES
-		administrateur
-		secrétaire
-		utilisateur
-		vétérinaire
-		développeur
-		support technique
-	 */
-
 	
     public Personnel() {
         
