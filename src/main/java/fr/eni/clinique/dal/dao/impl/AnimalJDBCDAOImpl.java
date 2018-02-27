@@ -19,8 +19,8 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
 	
 	private static final String SELECT_BY_ID_QUERY = "SELECT * FROM Animaux WHERE CodeAnimal = ?";
 	private static final String SELECT_ALL_QUERY = "SELECT * FROM Animaux";
-	private static final String UPDATE_QUERY = "UPDATE Animaux SET NomAnimal=?, Sexe=?, Couleur=?, Race=?, Espece=?, CodeClient=?, Tatouage=?, Antecedents=?, Archives=? WHERE CodeAnimal=?";
-    private static final String INSERT_QUERY = "INSERT INTO Animaux(NomAnimal, Sexe, Couleur, Race, Espece, CodeClient, Tatouage, Antecedents, Archives) VALUES (?,?,?,?,?,?,?,?,?)";
+	private static final String UPDATE_QUERY = "UPDATE Animaux SET NomAnimal=?, Sexe=?, Couleur=?, Race=?, Espece=?, CodeClient=?, Tatouage=?, Antecedents=?, Archive=? WHERE CodeAnimal=?";
+    private static final String INSERT_QUERY = "INSERT INTO Animaux(NomAnimal, Sexe, Couleur, Race, Espece, CodeClient, Tatouage, Antecedents, Archive) VALUES (?,?,?,?,?,?,?,?,?)";
     private static final String DELETE_QUERY = "DELETE FROM Animaux WHERE CodeAnimal=?";
     
     private static AnimalJDBCDAOImpl instance;
@@ -60,6 +60,7 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
 	private Animal resultSetEntryToAnimal(ResultSet resultSet) throws SQLException{
 		Animal animal = new Animal();
 
+		animal.setCodeAnimal(resultSet.getInt("CodeAnimal"));
 		animal.setNomAnimal(resultSet.getString("Designation"));
 		animal.setSexe(resultSet.getString("Sexe"));
 		animal.setCouleur(resultSet.getString("Couleur"));
