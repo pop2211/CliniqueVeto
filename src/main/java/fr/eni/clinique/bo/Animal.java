@@ -71,6 +71,10 @@ public class Animal {
 	public void setArchive(byte archive) {
 		this.archive = archive;
 	}
+	
+	public byte getArchive() {
+		return archive;
+	}
 	public Integer getCodeClient() {
 		return codeClient;
 	}
