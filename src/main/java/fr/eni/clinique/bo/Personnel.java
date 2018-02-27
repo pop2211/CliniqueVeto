@@ -1,12 +1,23 @@
 package fr.eni.clinique.bo;
 
 public class Personnel {
+	
 	private Integer codePers;
 	private String nom; 
 	private String mdp; 
 	private String role; 
 	private Boolean archive;
+	
+	/* ROLES
+		administrateur
+		secrétaire
+		utilisateur
+		vétérinaire
+		développeur
+		support technique
+	 */
 
+	
     public Personnel() {
         
     }
