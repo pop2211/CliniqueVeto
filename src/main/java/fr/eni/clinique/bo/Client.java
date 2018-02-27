@@ -17,28 +17,15 @@ public class Client {
 	private String email;
 	private String remarque;
 	private List<Animal> animaux = new ArrayList<Animal>();
-	private Byte archive;
-	
-	
-	public Client(Integer CodeClient) {
+	private Boolean archive;
+
+	public Client() {
 		super();
-		this.codeClient = CodeClient;
-		this.nomClient = "";
-		this.prenomClient = "";
-		this.adresse1 = "";
-		this.adresse2 = "";
-		this.codePostal = "";
-		this.ville = "";
-		this.numTel = "";
-		this.assurance = "";
-		this.email = "";
-		this.remarque = "";
-		this.archive = 0;
 	}
 
 	public Client(Integer codeClient, String nomClient, String prenomClient, String adresse1, String adresse2,
 			String codePostal, String ville, String numTel, String assurance, String email, String remarque,
-			List<Animal> animaux, Byte archive) {
+			List<Animal> animaux, Boolean archive) {
 		super();
 		this.codeClient = codeClient;
 		this.nomClient = nomClient;
@@ -163,16 +150,23 @@ public class Client {
 	public void setRemarque(String remarque) {
 		this.remarque = remarque;
 	}
+	
+	public List<Animal> getAnimaux() {
+		return animaux;
+	}
 
+	public void setAnimaux(List<Animal> animaux) {
+		this.animaux = animaux;
+	}
 
-	public Byte isArchive() {
+	public Boolean getArchive() {
 		return archive;
 	}
 
-
-	public void setArchive(Byte archive) {
+	public void setArchive(Boolean archive) {
 		this.archive = archive;
 	}
+	
 
 	@Override
 	public String toString() {

@@ -8,7 +8,7 @@ public class Animal {
 	private String couleur;
 	private String tatouage;
 	private String antecedants;
-	private byte archive;
+	private Boolean archive;
 	private Race race;
 	private Integer codeClient;
 	
@@ -16,7 +16,7 @@ public class Animal {
 		super();
 	}
 	public Animal(Integer codeAnimal, String nomAnimal, String sexe, String couleur, String tatouage,
-			String antecedants, byte archive, Race race, Integer codeClient) {
+			String antecedants, Boolean archive, Race race, Integer codeClient) {
 		super();
 		this.codeAnimal = codeAnimal;
 		this.nomAnimal = nomAnimal;
@@ -32,52 +32,63 @@ public class Animal {
 	public Integer getCodeAnimal() {
 		return codeAnimal;
 	}
+	
 	public void setCodeAnimal(Integer codeAnimal) {
 		this.codeAnimal = codeAnimal;
 	}
+	
 	public String getNomAnimal() {
 		return nomAnimal;
 	}
+	
 	public void setNomAnimal(String nomAnimal) {
 		this.nomAnimal = nomAnimal;
 	}
+	
 	public String getSexe() {
 		return sexe;
 	}
+	
 	public void setSexe(String sexe) {
 		this.sexe = sexe;
 	}
+	
 	public String getCouleur() {
 		return couleur;
 	}
+	
 	public void setCouleur(String couleur) {
 		this.couleur = couleur;
 	}
+	
 	public String getTatouage() {
 		return tatouage;
 	}
+	
 	public void setTatouage(String tatouage) {
 		this.tatouage = tatouage;
 	}
+	
 	public String getAntecedants() {
 		return antecedants;
 	}
+	
 	public void setAntecedants(String antecedants) {
 		this.antecedants = antecedants;
 	}
-	public byte isArchive() {
+	
+	public boolean isArchive() {
 		return archive;
 	}
-	public void setArchive(byte archive) {
+	
+	public void setArchive(Boolean archive) {
 		this.archive = archive;
 	}
 	
-	public byte getArchive() {
-		return archive;
-	}
 	public Integer getCodeClient() {
 		return codeClient;
 	}
+	
 	public void setCodeClient(Integer codeClient) {
 		this.codeClient = codeClient;
 	}
@@ -85,17 +96,34 @@ public class Animal {
 	public Race getRace() {
 		return race;
 	}
+	
 	public void setRace(Race race) {
 		this.race = race;
 	}
+	
 	@Override
 	public String toString() {
-		return "Animal [codeAnimal=" + codeAnimal + ", nomAnimal=" + nomAnimal + ", sexe=" + sexe + ", couleur="
-				+ couleur + ", tatouage=" + tatouage + ", antecedants=" + antecedants + ", archive=" + archive
-				+ ", race=" + race.toString() + ", codeClient=" + codeClient + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("Animal [codeAnimal=");
+		builder.append(codeAnimal);
+		builder.append(", nomAnimal=");
+		builder.append(nomAnimal);
+		builder.append(", sexe=");
+		builder.append(sexe);
+		builder.append(", couleur=");
+		builder.append(couleur);
+		builder.append(", tatouage=");
+		builder.append(tatouage);
+		builder.append(", antecedants=");
+		builder.append(antecedants);
+		builder.append(", archive=");
+		builder.append(archive);
+		builder.append(", race=");
+		builder.append(race);
+		builder.append(", codeClient=");
+		builder.append(codeClient);
+		builder.append("]");
+		return builder.toString();
 	}
-
-	
-	
 	
 }

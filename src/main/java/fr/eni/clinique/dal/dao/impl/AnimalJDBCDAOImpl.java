@@ -20,7 +20,7 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
 	private static final String SELECT_BY_ID_QUERY = "SELECT * FROM Animaux WHERE codeAnimal = ?";
 	private static final String SELECT_ALL_QUERY = "SELECT * FROM Animaux";
 	private static final String UPDATE_QUERY = "UPDATE Animaux SET NomAnimal=?, Sexe=?, Couleur=?, Race=?, Espece=?, CodeClient=?, Tatouage=?, Antecedents=?, Archives=? WHERE codeAnimal=?";
-    private static final String INSERT_QUERY = "INSERT INTo Animaux(NomAnimal=?, Sexe=?, Couleur=?, Race=?, Espece=?, CodeClient=?, Tatouage=?, Antecedents=?, Archives=?) VALUES (?,?,?,?,?,?,?,?,?)";
+    private static final String INSERT_QUERY = "INSERT INTO Animaux(NomAnimal, Sexe, Couleur, Race, Espece, CodeClient, Tatouage, Antecedents, Archives) VALUES (?,?,?,?,?,?,?,?,?)";
     private static final String DELETE_QUERY = "DELETE FROM Animaux WHERE codeAnimal=?";
 	public static AnimalDAO getInstance() {
 		// TODO Auto-generated method stub
@@ -40,12 +40,8 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
 
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
-            	try {
-					animal = resultSetEntryToAnimal(resultSet);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				animal = resultSetEntryToAnimal(resultSet);
+				// TODO Auto-generated catch block
             }
 
         } catch(SQLException e) {
@@ -56,7 +52,7 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
         return animal;
 	}
 
-	private Animal resultSetEntryToAnimal(ResultSet resultSet) throws Exception {
+	private Animal resultSetEntryToAnimal(ResultSet resultSet) throws SQLException{
 		Animal animal = new Animal();
 
 		animal.setNomAnimal(resultSet.getString("Designation"));
@@ -66,7 +62,7 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
 		animal.setCodeClient(resultSet.getInt("CodeClient"));
 		animal.setTatouage(resultSet.getString("Tatouage"));
 		animal.setAntecedants(resultSet.getString("Antecedants"));
-		animal.setArchive(resultSet.getByte("Archive"));
+		animal.setArchive(resultSet.getBoolean("Archive"));
         
         
         return animal;
@@ -90,7 +86,7 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
             statement.setInt(6, animal.getCodeClient());
             statement.setString(7, animal.getTatouage());
             statement.setString(8, animal.getAntecedants());
-            statement.setByte(9, animal.getArchive());
+            statement.setBoolean(9, animal.isArchive());
             
             if (statement.executeUpdate() == 1) {
                 resultSet = statement.getGeneratedKeys();
@@ -123,7 +119,7 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
             statement.setInt(6, animal.getCodeClient());
             statement.setString(7, animal.getTatouage());
             statement.setString(8, animal.getAntecedants());
-            statement.setByte(9, animal.getArchive());
+            statement.setBoolean(9, animal.isArchive());
             
             
         } catch(SQLException e) {
@@ -172,7 +168,7 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
             while (resultSet.next()) { 
 				liste.add(resultSetEntryToAnimal(resultSet));	
             }
-        } catch(Exception e) {
+        } catch(SQLException e) {
             throw new DaoException(e.getMessage(), e);
         } finally {
             ResourceUtil.safeClose(connection, statement, resultSet);

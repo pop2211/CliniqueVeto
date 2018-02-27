@@ -20,7 +20,6 @@ public class Rdv {
 		this.animal = animal;
 	}
 
-
 	public Personel getVeto() {
 		return veto;
 	}
@@ -41,16 +40,17 @@ public class Rdv {
 	public void setDateRdv(GregorianCalendar dateRdv) {
 		this.dateRdv = dateRdv;
 	}
-	
-	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Agenda [veto=").append(veto).append(", dateRdv=").append(dateRdv).append(", animal=")
-				.append(animal).append("]");
+		builder.append("Rdv [veto=");
+		builder.append(veto);
+		builder.append(", dateRdv=");
+		builder.append(dateRdv);
+		builder.append(", animal=");
+		builder.append(animal);
+		builder.append("]");
 		return builder.toString();
 	}
-	
-	
 	
 }

@@ -5,13 +5,13 @@ public class Personel {
 	private String nom; 
 	private String mdp; 
 	private String role; 
-	private byte archive;
+	private Boolean archive;
 
     public Personel() {
         
     }
 
-    public Personel(Integer id, String nom, String mdp, String role, Byte archive) {
+    public Personel(Integer id, String nom, String mdp, String role, Boolean archive) {
 		this.id = id;
     	this.nom = nom;
 		this.mdp = mdp;
@@ -51,11 +51,11 @@ public class Personel {
 		this.role = role;
 	}
 
-	public Byte isArchive() {
+	public Boolean isArchive() {
 		return archive;
 	}
 
-	public void setArchive(Byte archive) {
+	public void setArchive(Boolean archive) {
 		this.archive = archive;
 	}
 
