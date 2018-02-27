@@ -33,83 +33,34 @@ public class AppliTestDal {
             Race race = new Race("pasderace", "bambie");
             Race race2 = new Race("lapin", "civet");
             
-            Animal animal = new Animal("MamandeBambi", "h", "bleu", "symbole", "alcoolique", false , race , 5);
-            Animal animal2 = new Animal(2, "Mamandepanpan", "h", "vert", "flingue", "suicidaire", false, race2 , 5);
+            Animal animal = new Animal("MamandeBambi", "h", "bleu", "symbole", "alcoolique", false , race , 1);
 
-    		List<Animal> animaux = new ArrayList<Animal>();
-    		animaux.add(animal);
-    		animaux.add(animal2);
-    		
-    		Client client = new Client(5, "lagaffe", "vincent", "8 rue de lala", "bis", "49000", "Angers", "0606060606", "maf", "aze@rty.fr", "ne paye pas", animaux, false);
+            Client client = new Client("lagaffe", "vincent", "8 rue de lala", "bis", "49000", "Angers", "0606060606", "maf", "aze@rty.fr", "ne paye pas", false);
             
-    		LOGGER.info("Check inserting Race : {}", raceDAO.insert(race));
+            /*
+            LOGGER.info("Check inserting Race : {}", raceDAO.insert(race));
+    		LOGGER.info("Check inserting Race : {}", raceDAO.insert(race2));
             LOGGER.info("Check reading Race : {}", raceDAO.selectAll());
+            */
+            
             
             LOGGER.info("Check inserting Client : {}", clientDAO.insert(client));
-            LOGGER.info("Check reading Eleve Client: {}", clientDAO.selectById(client.getCodeClient()));
+            LOGGER.info("Check reading Client: {}", clientDAO.selectById(client.getCodeClient()));
             LOGGER.info("Check reading all Client : {}", clientDAO.selectAll());
             
+            
+            /*
             LOGGER.info("Check inserting Eleve : {}", animalDAO.insert(animal));
             LOGGER.info("Check reading Eleve 001: {}", animalDAO.selectById(animal.getCodeAnimal()));
             LOGGER.info("Check reading all Eleve : {}", animalDAO.selectAll());
+            */
           
-            // Test SELECT ALL
-            //List<Eleve> eleves = eleveDAO.selectAll();
+            /*
+            animalDAO.delete(1);
+            clientDAO.delete(1);
+            raceDAO.deleteRace(race.getRace(),race.getEspece());
+            */
             
-            //LOGGER.info("Eleves before Inserting: {}", eleves);
-            
-            // Test insert Eleve
-            //Eleve newEleve = eleveDAO.insert(new Eleve("Montiel", "Bernard", "Rue de l'ENI", "10/10/1990"));
-            
-            //LOGGER.info("New Eleve: {}", newEleve);
-            
-            // Test update
-            /*Eleve eleve = eleves.get(0);
-            eleve.setPrenom("Jacques");
-            
-            eleveDAO.update(eleve);*/
-            
-            // Test Delete
-            /*Eleve eleve = eleves.get(0);
-            eleveDAO.delete(eleve.getId());*/
-            
-            // Test Select by Id.
-            //LOGGER.info("Eleve with id 2: {}", eleveDAO.selectById(2));
-            
-            // Test Search by name and firstname.
-            //LOGGER.info("Sarch Eleves : {}", eleveDAO.search("Montiel", "Bernard"));
-          
-            
-            
-            
-            //ArticleDAO articleDAO = new ArticleDAOJDPCImpl();
-            
-            // Test SELECT ALL
-            /*List<Article> articles = articleDAO.selectAll();
-            
-            LOGGER.info("articles before Inserting: {}", articles);*/
-            
-            // Test insert Eleve
-           /* Article newArticle = articleDAO.insert(new Stylo("REF", "MARQUE", "DESIGNATION", 4, 5, "BLEU"));
-            Article newArticle2 = articleDAO.insert(new Ramette("REF2", "MARQUE3", "DESIGNATION2", 5, 6, 12));
-            LOGGER.info("New Stylo: {}", newArticle);
-            LOGGER.info("New Ramette: {}", newArticle2);*/
-            
-            //Test update
-            /*Article article = articles.get(0);
-            article.setMarque("marqueUpdate");
-            
-            articleDAO.update(article);*/
-            
-            // Test Delete
-            /*Article article = articles.get(0);
-            articleDAO.delete(article.getIdArticle());*/
-            
-            // Test Select by Id.
-            //LOGGER.info("Article with id 5: {}", articleDAO.selectById(20));
-            
-            // Test Search by name and firstname.
-            //LOGGER.info("Sarch Eleves : {}", eleveDAO.search("Montiel", "Bernard"));
         } catch (DaoException e) {
             LOGGER.error("ERROR", e);
             e.printStackTrace();

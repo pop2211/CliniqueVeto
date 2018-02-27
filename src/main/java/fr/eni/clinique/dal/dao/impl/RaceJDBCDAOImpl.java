@@ -45,11 +45,11 @@ public class RaceJDBCDAOImpl implements RaceDAO{
             
             if (statement.executeUpdate() == 1) {
                 resultSet = statement.getGeneratedKeys();
-                if (resultSet.next()) {
+                /*if (resultSet.next()) {
                 	race.setRace(resultSet.getString(1));
                 	race.setEspece(resultSet.getString(2));
                 	
-                }
+                }*/
             }
         } catch(SQLException e) {
             throw new DaoException(e.getMessage(), e);
@@ -90,7 +90,7 @@ public class RaceJDBCDAOImpl implements RaceDAO{
             // si l'article est référencé dans une ligne de commande
             statement = connection.prepareStatement(DELETE_QUERY);
             statement.setString(1, race);
-            statement.setString(1, espece);
+            statement.setString(2, espece);
             statement.executeUpdate();
             
         } catch(SQLException e) {
