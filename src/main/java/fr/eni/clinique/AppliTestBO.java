@@ -21,7 +21,7 @@ public class AppliTestBO {
 
 		Race race = new Race("pasderace", "bambie");
 		Race race2 = new Race("lapin", "civet");
-		Animal animal = new Animal(1, "MamandeBambi", "h", "bleu", "symboledelinfini", "alcoolique", false , race , 5);
+		Animal animal = new Animal(1, "MamandeBambi", "h", "bleu", "symbole", "alcoolique", false , race , 5);
 		Animal animal2 = new Animal(2, "Mamandepanpan", "h", "vert", "flingue", "suicidaire", false, race2 , 5);
 
 		List<Animal> animaux = new ArrayList<Animal>();
