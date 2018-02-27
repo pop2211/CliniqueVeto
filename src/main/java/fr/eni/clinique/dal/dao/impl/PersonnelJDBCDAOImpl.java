@@ -12,7 +12,7 @@ import fr.eni.clinique.bo.Personnel;
 import fr.eni.clinique.common.util.ResourceUtil;
 import fr.eni.clinique.dal.dao.PersonnelDAO;
 import fr.eni.clinique.dal.exception.DaoException;
-import fr.eni.clinique.dal.factory.MSSQLConnectionFactory;
+import fr.eni.clinique.dal.factory.JdbcTools;
 
 public class PersonnelJDBCDAOImpl implements PersonnelDAO{
 
@@ -38,7 +38,7 @@ public class PersonnelJDBCDAOImpl implements PersonnelDAO{
         ResultSet resultSet = null;
         Personnel personnel = null;
         try {
-            connection = MSSQLConnectionFactory.get();
+            connection = JdbcTools.get();
             statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
             statement.setInt(1, id);
 
@@ -64,7 +64,6 @@ public class PersonnelJDBCDAOImpl implements PersonnelDAO{
 		personnel.setRole(resultSet.getString("Role"));
 		personnel.setArchive(resultSet.getBoolean("Archive"));
         
-        
         return personnel;
 	}
 
@@ -74,7 +73,7 @@ public class PersonnelJDBCDAOImpl implements PersonnelDAO{
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
-            connection = MSSQLConnectionFactory.get();
+            connection = JdbcTools.get();
             
             statement = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS);
             
@@ -102,7 +101,7 @@ public class PersonnelJDBCDAOImpl implements PersonnelDAO{
 		Connection connection = null;
         PreparedStatement statement = null;
         try {
-	    	connection = MSSQLConnectionFactory.get();
+	    	connection = JdbcTools.get();
 	         
 	        statement = connection.prepareStatement(UPDATE_QUERY);
 	        
@@ -125,7 +124,7 @@ public class PersonnelJDBCDAOImpl implements PersonnelDAO{
         PreparedStatement statement = null;
         
         try {
-            connection = MSSQLConnectionFactory.get();
+            connection = JdbcTools.get();
             
             // l'intégrité référentielle s'occupe d'invalider la suppression
             // si l'article est référencé dans une ligne de commande
@@ -148,7 +147,7 @@ public class PersonnelJDBCDAOImpl implements PersonnelDAO{
         List<Personnel> liste = new ArrayList<Personnel>();
         
         try {
-            connection = MSSQLConnectionFactory.get();
+            connection = JdbcTools.get();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(SELECT_ALL_QUERY);
 
