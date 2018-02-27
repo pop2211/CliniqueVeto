@@ -35,7 +35,7 @@ public class PersonnelManagerImpl implements PersonnelManager{
 		
 	}
 	
-	private void Connexion(Personnel Personnel) throws ManagerException {
+	public void Connexion(Personnel Personnel) throws ManagerException {
 
         try {
         	

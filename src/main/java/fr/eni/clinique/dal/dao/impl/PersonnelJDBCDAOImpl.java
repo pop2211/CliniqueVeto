@@ -18,6 +18,8 @@ public class PersonnelJDBCDAOImpl implements PersonnelDAO{
 
 	private static final String SELECT_BY_ID_QUERY = "SELECT * FROM Personnels WHERE CodePers = ?";
 	private static final String SELECT_ALL_QUERY = "SELECT * FROM Personnels";
+	private static final String SELECT_BY_NAME_QUERY = "SELECT * FROM Personnels WHERE Nom = ?";
+	private static final String SELECT_BY_NAME_PSW_QUERY = "SELECT * FROM Personnels WHERE Nom = ? AND MotPasse = ?";
 	private static final String UPDATE_QUERY = "UPDATE Personnels SET Nom=?, MotPasse=?, Role=?, Archive=? WHERE CodePers=?";
     private static final String INSERT_QUERY = "INSERT INTO Personnels(Nom, MotPasse, Role, Archive) VALUES (?,?,?,?)";
     private static final String DELETE_QUERY = "DELETE FROM Personnels WHERE CodePers=?";
@@ -180,5 +182,59 @@ public class PersonnelJDBCDAOImpl implements PersonnelDAO{
             ResourceUtil.safeClose(connection, statement, resultSet);
         }
 	}
+
+	@Override
+	public List<Personnel> selectByNom(String nom) throws DaoException {
+		
+		Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        List<Personnel> liste = new ArrayList<Personnel>();
+        try {
+            connection = JdbcTools.get();
+            statement = connection.prepareStatement(SELECT_BY_NAME_QUERY);
+            statement.setString(1, nom);
+            resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                liste.add(resultSetEntryToPersonnel(resultSet));
+            }
+            
+        } catch(SQLException e) {
+            throw new DaoException(e.getMessage(), e);
+        } finally {
+            ResourceUtil.safeClose(connection, statement);
+        }
+        
+        return liste;
+	}
+
+	@Override
+	public List<Personnel> selectByNomMdp(String nom, String mdp) throws DaoException {
+		Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        List<Personnel> liste = new ArrayList<Personnel>();
+        try {
+            connection = JdbcTools.get();
+            statement = connection.prepareStatement(SELECT_BY_NAME_PSW_QUERY);
+            statement.setString(1, nom);
+            statement.setString(2, mdp);
+            resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                liste.add(resultSetEntryToPersonnel(resultSet));
+            }
+            
+        } catch(SQLException e) {
+            throw new DaoException(e.getMessage(), e);
+        } finally {
+            ResourceUtil.safeClose(connection, statement);
+        }
+        
+        return liste;
+	}
+
+
 
 }
