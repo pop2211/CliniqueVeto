@@ -74,14 +74,15 @@ public class AppliTestDAL {
             LOGGER.info("Check reading all Rdv : {}", rdvDAO.selectAll());
             
             
-            LOGGER.info("Check delete end : {}");
-            rdvDAO.delete(rdv);
-            personnelDAO.delete(veto.getCodePers());
-            animalDAO.delete(animal.getCodeAnimal());
-            clientDAO.delete(client.getCodeClient());
-            clientDAO.delete(client.getCodeClient());
-            raceDAO.deleteRace(race.getRace(),race.getEspece());
-            raceDAO.deleteRace(race2.getRace(),race2.getEspece());
+//            LOGGER.info("Check delete end : {}");
+//            rdvDAO.delete(rdv);
+//            personnelDAO.delete(veto.getCodePers());
+//            animalDAO.delete(animal.getCodeAnimal());
+//            clientDAO.delete(client.getCodeClient());
+//            clientDAO.delete(client.getCodeClient());
+//            raceDAO.deleteRace(race.getRace(),race.getEspece());
+//            raceDAO.deleteRace(race2.getRace(),race2.getEspece());
+            
             
             
         } catch (DaoException e) {

@@ -22,7 +22,8 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
 	private static final String UPDATE_QUERY = "UPDATE Animaux SET NomAnimal=?, Sexe=?, Couleur=?, Race=?, Espece=?, CodeClient=?, Tatouage=?, Antecedents=?, Archive=? WHERE CodeAnimal=?";
     private static final String INSERT_QUERY = "INSERT INTO Animaux(NomAnimal, Sexe, Couleur, Race, Espece, CodeClient, Tatouage, Antecedents, Archive) VALUES (?,?,?,?,?,?,?,?,?)";
     private static final String DELETE_QUERY = "DELETE FROM Animaux WHERE CodeAnimal=?";
-    private static final String TRUNCATE_QUERY = "TRUNCATE TABLE Animaux";
+    //private static final String TRUNCATE_QUERY = "TRUNCATE TABLE Animaux";
+    private static final String TRUNCATE_QUERY = "DELETE FROM Animaux";
     
     private static AnimalJDBCDAOImpl instance;
     
@@ -186,15 +187,14 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
 	public void deleteAll() throws DaoException {
 		Connection connection = null;
         Statement statement = null;
-        ResultSet resultSet = null;
         try {
             connection = JdbcTools.get();
             statement = connection.createStatement();
-            resultSet = statement.executeQuery(TRUNCATE_QUERY);
+            statement.executeUpdate(TRUNCATE_QUERY);
         } catch(SQLException e) {
             throw new DaoException(e.getMessage(), e);
         } finally {
-            ResourceUtil.safeClose(connection, statement, resultSet);
+            ResourceUtil.safeClose(connection, statement);
         }
 	}
 	

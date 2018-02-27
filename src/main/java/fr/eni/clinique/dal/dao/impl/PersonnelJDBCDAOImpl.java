@@ -23,7 +23,8 @@ public class PersonnelJDBCDAOImpl implements PersonnelDAO{
 	private static final String UPDATE_QUERY = "UPDATE Personnels SET Nom=?, MotPasse=?, Role=?, Archive=? WHERE CodePers=?";
     private static final String INSERT_QUERY = "INSERT INTO Personnels(Nom, MotPasse, Role, Archive) VALUES (?,?,?,?)";
     private static final String DELETE_QUERY = "DELETE FROM Personnels WHERE CodePers=?";
-    private static final String TRUNCATE_QUERY = "TRUNCATE TABLE Personnels";
+    //private static final String TRUNCATE_QUERY = "TRUNCATE TABLE Personnels";
+    private static final String TRUNCATE_QUERY = "DELETE FROM Personnels";
     
     private static PersonnelJDBCDAOImpl instance;
     
@@ -166,22 +167,6 @@ public class PersonnelJDBCDAOImpl implements PersonnelDAO{
         return liste;
 	}
 	
-	
-	@Override
-	public void deleteAll() throws DaoException {
-		Connection connection = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
-        try {
-            connection = JdbcTools.get();
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(TRUNCATE_QUERY);
-        } catch(SQLException e) {
-            throw new DaoException(e.getMessage(), e);
-        } finally {
-            ResourceUtil.safeClose(connection, statement, resultSet);
-        }
-	}
 
 	@Override
 	public List<Personnel> selectByNom(String nom) throws DaoException {
@@ -207,6 +192,21 @@ public class PersonnelJDBCDAOImpl implements PersonnelDAO{
         }
         
         return liste;
+	}
+	
+	@Override
+	public void deleteAll() throws DaoException {
+		Connection connection = null;
+        Statement statement = null;
+        try {
+            connection = JdbcTools.get();
+            statement = connection.createStatement();
+            statement.executeUpdate(TRUNCATE_QUERY);
+        } catch(SQLException e) {
+            throw new DaoException(e.getMessage(), e);
+        } finally {
+            ResourceUtil.safeClose(connection, statement);
+        }
 	}
 
 	@Override
@@ -234,7 +234,6 @@ public class PersonnelJDBCDAOImpl implements PersonnelDAO{
         
         return liste;
 	}
-
 
 
 }

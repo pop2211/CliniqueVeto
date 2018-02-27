@@ -31,7 +31,8 @@ public class RdvJDBCDAOImpl implements RdvDAO{
 	private static final String UPDATE_QUERY = "UPDATE Agendas SET CodeVeto=?, DateRdv=?, CodeAnimal=? WHERE CodeVeto=? AND DateRdv=? AND CodeAnimal=?";
     private static final String INSERT_QUERY = "INSERT INTO Agendas(CodeVeto, DateRdv, CodeAnimal) VALUES (?,?,?)";
     private static final String DELETE_QUERY = "DELETE FROM Agendas WHERE CodeVeto=? AND DateRdv=? AND CodeAnimal=?";
-    private static final String TRUNCATE_QUERY = "TRUNCATE TABLE Agendas";
+    //private static final String TRUNCATE_QUERY = "TRUNCATE TABLE Agendas";
+    private static final String TRUNCATE_QUERY = "DELETE FROM Agendas";
     
     private static RdvJDBCDAOImpl instance;
     
@@ -203,15 +204,14 @@ public class RdvJDBCDAOImpl implements RdvDAO{
 	public void deleteAll() throws DaoException {
 		Connection connection = null;
         Statement statement = null;
-        ResultSet resultSet = null;
         try {
             connection = JdbcTools.get();
             statement = connection.createStatement();
-            resultSet = statement.executeQuery(TRUNCATE_QUERY);
+            statement.executeUpdate(TRUNCATE_QUERY);
         } catch(SQLException e) {
             throw new DaoException(e.getMessage(), e);
         } finally {
-            ResourceUtil.safeClose(connection, statement, resultSet);
+            ResourceUtil.safeClose(connection, statement);
         }
 	}
 
