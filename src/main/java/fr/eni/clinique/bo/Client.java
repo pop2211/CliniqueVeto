@@ -58,7 +58,7 @@ public class Client {
 		this.remarque = remarque;
 		this.archive = archive;
 	}
-
+		
 	public Integer getCodeClient() {
 		return codeClient;
 	}

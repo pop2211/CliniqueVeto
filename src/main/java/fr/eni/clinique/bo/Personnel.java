@@ -24,7 +24,12 @@ public class Personnel {
     	this(nom, mdp, role, archive);
     	this.codePers = codePers;
 	}
-    
+
+	public Personnel(String nom, String mdp) {
+		super();
+		this.nom = nom;
+		this.mdp = mdp;
+	}
 
 	public Integer getCodePers() {
 		return codePers;
