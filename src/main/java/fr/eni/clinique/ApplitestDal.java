@@ -4,9 +4,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import fr.eni.clinique.bo.Animal;
+import fr.eni.clinique.bo.Client;
 import fr.eni.clinique.bo.Race;
 import fr.eni.clinique.dal.dao.AnimalDAO;
+import fr.eni.clinique.dal.dao.ClientDAO;
+import fr.eni.clinique.dal.dao.RaceDAO;
 import fr.eni.clinique.dal.dao.impl.AnimalJDBCDAOImpl;
+import fr.eni.clinique.dal.dao.impl.ClientJDBCDAOImpl;
+import fr.eni.clinique.dal.dao.impl.RaceJDBCDAOImpl;
 import fr.eni.clinique.dal.exception.DaoException;
 
 public class ApplitestDal {
@@ -18,9 +23,25 @@ public class ApplitestDal {
 
 		try {
             //TEST serialisation
+            RaceDAO raceDAO = new RaceJDBCDAOImpl();
+            ClientDAO clientDAO = new ClientJDBCDAOImpl();
             AnimalDAO animalDAO = new AnimalJDBCDAOImpl();
             
             Race race = new Race("pasderace", "bambie");
+            Race race2 = new Race("lapin", "civet");
+            
+            LOGGER.info("Check inserting Race : {}", raceDAO.insert(race));
+            
+            LOGGER.info("Check reading Race : {}", raceDAO.selectAll());
+            
+            Client client = new Client(5, "lagaffe", "vincent", "8 rue de lala", "bis", "49000", "Angers", "0606060606", "maf", "aze@rty.fr", "ne paye pas", animaux, false);
+            
+            LOGGER.info("Check inserting Client : {}", ClientDAO.insert(client));
+            
+            LOGGER.info("Check reading Eleve Client: {}", ClientDAO.selectById(client.getCodePers()));
+            
+            LOGGER.info("Check reading all Client : {}", client.selectAll());
+            
             Animal animal = new Animal("MamandeBambi", "h", "bleu", "symbole", "alcoolique", false , race , 5);
             
             LOGGER.info("Check inserting Eleve : {}", animalDAO.insert(animal));
@@ -28,8 +49,6 @@ public class ApplitestDal {
             LOGGER.info("Check reading Eleve 001: {}", animalDAO.selectById(animal.getCodeAnimal()));
             
             LOGGER.info("Check reading all Eleve : {}", animalDAO.selectAll());
-            
-          
           
             // Test SELECT ALL
             //List<Eleve> eleves = eleveDAO.selectAll();
@@ -88,11 +107,6 @@ public class ApplitestDal {
             
             // Test Search by name and firstname.
             //LOGGER.info("Sarch Eleves : {}", eleveDAO.search("Montiel", "Bernard"));
-            
-          
-            //test rollback
-             // articleDAO.insertBis();
-            
         } catch (DaoException e) {
             LOGGER.error("ERROR", e);
             e.printStackTrace();

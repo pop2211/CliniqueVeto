@@ -64,7 +64,6 @@ public class PersonnelJDBCDAOImpl implements PersonnelDAO{
 		personnel.setRole(resultSet.getString("Role"));
 		personnel.setArchive(resultSet.getBoolean("Archive"));
         
-        
         return personnel;
 	}
 
@@ -86,7 +85,7 @@ public class PersonnelJDBCDAOImpl implements PersonnelDAO{
             if (statement.executeUpdate() == 1) {
                 resultSet = statement.getGeneratedKeys();
                 if (resultSet.next()) {
-                	personnel.setId(resultSet.getInt(1));
+                	personnel.setCodePers(resultSet.getInt(1));
                 }
             }
         } catch(SQLException e) {

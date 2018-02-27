@@ -11,7 +11,7 @@ public class AppConstants {
     public static final String EMPTY = "";
     public static final String SPACE = " ";
     public static final String COLON = ":";
-    public static final String APP_NAME = "Gestion de la clinique vétérinaire";
-    public static final String APP_PROPERTIES_NAME = "application.properties";
+    public static final String APP_NAME = "Gestion de la clinique vï¿½tï¿½rinaire";
+    public static final String APP_PROPERTIES_NAME = "settings.properties";
     
 }
