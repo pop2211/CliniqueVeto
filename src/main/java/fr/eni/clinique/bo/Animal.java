@@ -29,6 +29,18 @@ public class Animal {
 		this.codeClient = codeClient;
 	}
 	
+	public Animal(String nomAnimal, String sexe, String couleur, String tatouage, String antecedants, Boolean archive,
+			Race race, Integer codeClient) {
+		super();
+		this.nomAnimal = nomAnimal;
+		this.sexe = sexe;
+		this.couleur = couleur;
+		this.tatouage = tatouage;
+		this.antecedants = antecedants;
+		this.archive = archive;
+		this.race = race;
+		this.codeClient = codeClient;
+	}
 	public Integer getCodeAnimal() {
 		return codeAnimal;
 	}
