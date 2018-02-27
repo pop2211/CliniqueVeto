@@ -1,5 +1,8 @@
 package fr.eni.clinique;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,24 +33,24 @@ public class ApplitestDal {
             Race race = new Race("pasderace", "bambie");
             Race race2 = new Race("lapin", "civet");
             
-            LOGGER.info("Check inserting Race : {}", raceDAO.insert(race));
+            Animal animal = new Animal("MamandeBambi", "h", "bleu", "symbole", "alcoolique", false , race , 5);
+            Animal animal2 = new Animal(2, "Mamandepanpan", "h", "vert", "flingue", "suicidaire", false, race2 , 5);
+
+    		List<Animal> animaux = new ArrayList<Animal>();
+    		animaux.add(animal);
+    		animaux.add(animal2);
+    		
+    		Client client = new Client(5, "lagaffe", "vincent", "8 rue de lala", "bis", "49000", "Angers", "0606060606", "maf", "aze@rty.fr", "ne paye pas", animaux, false);
             
+    		LOGGER.info("Check inserting Race : {}", raceDAO.insert(race));
             LOGGER.info("Check reading Race : {}", raceDAO.selectAll());
             
-            Client client = new Client(5, "lagaffe", "vincent", "8 rue de lala", "bis", "49000", "Angers", "0606060606", "maf", "aze@rty.fr", "ne paye pas", animaux, false);
-            
-            LOGGER.info("Check inserting Client : {}", ClientDAO.insert(client));
-            
-            LOGGER.info("Check reading Eleve Client: {}", ClientDAO.selectById(client.getCodePers()));
-            
-            LOGGER.info("Check reading all Client : {}", client.selectAll());
-            
-            Animal animal = new Animal("MamandeBambi", "h", "bleu", "symbole", "alcoolique", false , race , 5);
+            LOGGER.info("Check inserting Client : {}", clientDAO.insert(client));
+            LOGGER.info("Check reading Eleve Client: {}", clientDAO.selectById(client.getCodeClient()));
+            LOGGER.info("Check reading all Client : {}", clientDAO.selectAll());
             
             LOGGER.info("Check inserting Eleve : {}", animalDAO.insert(animal));
-            
             LOGGER.info("Check reading Eleve 001: {}", animalDAO.selectById(animal.getCodeAnimal()));
-            
             LOGGER.info("Check reading all Eleve : {}", animalDAO.selectAll());
           
             // Test SELECT ALL
