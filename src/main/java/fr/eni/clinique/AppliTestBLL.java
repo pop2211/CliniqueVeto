@@ -7,7 +7,7 @@ import fr.eni.clinique.bll.exception.ManagerException;
 
 public class AppliTestBLL {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(AppliTestDal.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(AppliTestBLL.class);
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
