@@ -1,7 +1,7 @@
 package fr.eni.clinique.bo;
 
 public class Personnel {
-	private Integer id;
+	private Integer codePers;
 	private String nom; 
 	private String mdp; 
 	private String role; 
@@ -11,20 +11,20 @@ public class Personnel {
         
     }
 
-    public Personnel(Integer id, String nom, String mdp, String role, Boolean archive) {
-		this.id = id;
+    public Personnel(Integer codePers, String nom, String mdp, String role, Boolean archive) {
+		this.codePers = codePers;
     	this.nom = nom;
 		this.mdp = mdp;
 		this.role = role;
 		this.archive = archive;
 	}
 
-	public Integer getId() {
-		return id;
+	public Integer getCodePers() {
+		return codePers;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setCodePers(Integer codePers) {
+		this.codePers = codePers;
 	}
 
 	public String getNom() {
@@ -62,8 +62,8 @@ public class Personnel {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Personel [id=");
-		builder.append(id);
+		builder.append("Personel [codePers=");
+		builder.append(codePers);
 		builder.append(", nom=");
 		builder.append(nom);
 		builder.append(", mdp=");
