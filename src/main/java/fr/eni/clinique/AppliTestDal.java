@@ -48,9 +48,11 @@ public class AppliTestDal {
             Client client = new Client("lagaffe", "vincent", "8 rue de lala", "bis", "49000", "Angers", "0606060606", "maf", "aze@rty.fr", "ne paye pas", false);
             
             Personnel veto = new Personnel("leveterinaire", "123456", EnumRole.VETERINAIRE.getCode(), false);
+            LOGGER.info("Check inserting Veto : {}");
+            Personnel vetoAvecCode = personnelDAO.insert(veto);
             
             GregorianCalendar dateRdv = new GregorianCalendar();
-            Rdv rdv = new Rdv(veto, dateRdv, animal);
+            Rdv rdv = new Rdv(vetoAvecCode, dateRdv, animal);
             
             /*
             LOGGER.info("Check inserting Race : {}", raceDAO.insert(race));
@@ -64,10 +66,13 @@ public class AppliTestDal {
             LOGGER.info("Check reading all Client : {}", clientDAO.selectAll());
             */
             
+            LOGGER.info("Check rdv.getVeto().getCodePers() : {}", rdv.getVeto().getCodePers() );
             
             LOGGER.info("Check inserting Rdv : {}", rdvDAO.insert(rdv));
-            //LOGGER.info("Check reading Rdv: {}", rdvDAO.selectById(rendezVous));
+            LOGGER.info("Check reading Rdv: {}", rdvDAO.selectById(rdv));
             LOGGER.info("Check reading all Rdv : {}", rdvDAO.selectAll());
+            rdvDAO.delete(rdv);
+            personnelDAO.delete(vetoAvecCode.getCodePers());
             
           
             /*
