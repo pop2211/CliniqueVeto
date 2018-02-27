@@ -61,13 +61,13 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
 		Animal animal = new Animal();
 
 		animal.setCodeAnimal(resultSet.getInt("CodeAnimal"));
-		animal.setNomAnimal(resultSet.getString("Designation"));
+		animal.setNomAnimal(resultSet.getString("NomAnimal"));
 		animal.setSexe(resultSet.getString("Sexe"));
 		animal.setCouleur(resultSet.getString("Couleur"));
 		animal.setRace(new Race(resultSet.getString("Race"),resultSet.getString("Espece")));
 		animal.setCodeClient(resultSet.getInt("CodeClient"));
 		animal.setTatouage(resultSet.getString("Tatouage"));
-		animal.setAntecedants(resultSet.getString("Antecedants"));
+		animal.setAntecedants(resultSet.getString("Antecedents"));
 		animal.setArchive(resultSet.getBoolean("Archive"));
         
         
