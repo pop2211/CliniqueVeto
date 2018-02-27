@@ -2,11 +2,17 @@ package fr.eni.clinique.dal.factory;
 
 
 import fr.eni.clinique.dal.dao.AnimalDAO;
+import fr.eni.clinique.dal.dao.ClientDAO;
 import fr.eni.clinique.dal.dao.impl.AnimalJDBCDAOImpl;
+import fr.eni.clinique.dal.dao.impl.ClientJDBCDAOImpl;
 
 public class DaoFactory {
     
     public static AnimalDAO animalDAO() {
         return AnimalJDBCDAOImpl.getInstance();
+    }
+    
+    public static ClientDAO clientDAO() {
+        return ClientJDBCDAOImpl.getInstance();
     }
 }
