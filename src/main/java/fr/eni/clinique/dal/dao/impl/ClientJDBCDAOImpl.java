@@ -22,7 +22,9 @@ public class ClientJDBCDAOImpl implements ClientDAO{
 	private static final String UPDATE_QUERY = "UPDATE Clients SET NomClient=?, PrenomClient=?, Adresse1=?, Adresse2=?, CodePostal=?, Ville=?, NumTel=?, Assurance=?, Email=?, Remarque=?, Archive=? WHERE codeClient=?";
     private static final String INSERT_QUERY = "INSERT INTO Clients(NomClient, PrenomClient, Adresse1, Adresse2, CodePostal, Ville, NumTel, Assurance, Email, Remarque, Archive) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
     private static final String DELETE_QUERY = "DELETE FROM Clients WHERE codeClient=?";
-
+    //private static final String TRUNCATE_QUERY = "TRUNCATE TABLE Clients";
+    private static final String TRUNCATE_QUERY = "DELETE FROM Clients";
+    
     private static ClientJDBCDAOImpl instance;
     
 	public static ClientDAO getInstance() {
@@ -191,6 +193,22 @@ public class ClientJDBCDAOImpl implements ClientDAO{
         }
         
         return liste;
+	}
+	
+	
+	@Override
+	public void deleteAll() throws DaoException {
+		Connection connection = null;
+        Statement statement = null;
+        try {
+            connection = JdbcTools.get();
+            statement = connection.createStatement();
+            statement.executeUpdate(TRUNCATE_QUERY);
+        } catch(SQLException e) {
+            throw new DaoException(e.getMessage(), e);
+        } finally {
+            ResourceUtil.safeClose(connection, statement);
+        }
 	}
 
 

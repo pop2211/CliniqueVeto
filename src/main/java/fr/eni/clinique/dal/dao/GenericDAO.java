@@ -61,4 +61,14 @@ public interface GenericDAO<T, ID> {
 	 */
 	List<T> selectAll() throws DaoException;
 	
+	
+	/**
+	 * Remove all elements.
+	 * 
+	 * @return void.
+	 * 
+	 * @throws DaoException
+	 */
+	void deleteAll() throws DaoException;
+	
 }
