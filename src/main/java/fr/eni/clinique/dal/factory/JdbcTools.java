@@ -6,12 +6,12 @@ import java.sql.SQLException;
 import fr.eni.clinique.common.exception.TechnicalException;
 import fr.eni.clinique.config.AppConfig;
 
-public class MSSQLConnectionFactory {
+public class JdbcTools {
     
     /**
      * Ths constructor is private because we dont want to instante it from outside.
      */
-    private MSSQLConnectionFactory() {
+    private JdbcTools() {
         
     }
     
