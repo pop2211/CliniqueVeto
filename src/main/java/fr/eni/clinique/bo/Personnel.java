@@ -12,14 +12,19 @@ public class Personnel {
     public Personnel() {
         
     }
-
-    public Personnel(Integer codePers, String nom, String mdp, String role, Boolean archive) {
-		this.codePers = codePers;
+    
+    public Personnel(String nom, String mdp, String role, Boolean archive) {
     	this.nom = nom;
 		this.mdp = mdp;
 		this.role = role;
 		this.archive = archive;
 	}
+    
+    public Personnel(Integer codePers, String nom, String mdp, String role, Boolean archive) {
+    	this(nom, mdp, role, archive);
+    	this.codePers = codePers;
+	}
+    
 
 	public Integer getCodePers() {
 		return codePers;
