@@ -36,11 +36,11 @@ public class ApplitestDal {
             
             Client client = new Client(5, "lagaffe", "vincent", "8 rue de lala", "bis", "49000", "Angers", "0606060606", "maf", "aze@rty.fr", "ne paye pas", animaux, false);
             
-            LOGGER.info("Check inserting Client : {}", clientDAO.insert(client));
+            LOGGER.info("Check inserting Client : {}", ClientDAO.insert(client));
             
-            LOGGER.info("Check reading Eleve Client: {}", clientDAO.selectById(client.getCodePers()));
+            LOGGER.info("Check reading Eleve Client: {}", ClientDAO.selectById(client.getCodePers()));
             
-            LOGGER.info("Check reading all Client : {}", clientDAO.selectAll());
+            LOGGER.info("Check reading all Client : {}", client.selectAll());
             
             Animal animal = new Animal("MamandeBambi", "h", "bleu", "symbole", "alcoolique", false , race , 5);
             
