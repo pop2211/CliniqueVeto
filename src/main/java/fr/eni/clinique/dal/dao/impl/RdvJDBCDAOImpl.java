@@ -16,13 +16,13 @@ import fr.eni.clinique.bo.Rdv;
 import fr.eni.clinique.common.util.ResourceUtil;
 import fr.eni.clinique.dal.dao.RdvDAO;
 import fr.eni.clinique.dal.exception.DaoException;
-import fr.eni.clinique.dal.factory.MSSQLConnectionFactory;
+import fr.eni.clinique.dal.factory.JdbcTools;
 
 
 
 public class RdvJDBCDAOImpl implements RdvDAO{
 	
-	//Il est impératif de respecter la structure des tables et le schéma de la base fournis en annexe.
+	//Il est impï¿½ratif de respecter la structure des tables et le schï¿½ma de la base fournis en annexe.
 	//=> pas d'id rendez vous
 	
 	//private static final String SELECT_BY_ID_QUERY = "SELECT * FROM Agendas WHERE CodeRdv = ?";
@@ -49,7 +49,7 @@ public class RdvJDBCDAOImpl implements RdvDAO{
         ResultSet resultSet = null;
         Rdv rendezVous = null;
         try {
-            connection = MSSQLConnectionFactory.get();
+            connection = JdbcTools.get();
             statement = connection.prepareStatement(SELECT_BY_CODEVETO_DATERDV_CODEANIMAL_QUERY);
             
             statement.setInt(1, rdv.getVeto().getCodePers());
@@ -106,7 +106,7 @@ public class RdvJDBCDAOImpl implements RdvDAO{
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
-            connection = MSSQLConnectionFactory.get();
+            connection = JdbcTools.get();
             
             statement = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS);
             
@@ -130,7 +130,7 @@ public class RdvJDBCDAOImpl implements RdvDAO{
 		Connection connection = null;
         PreparedStatement statement = null;
         try {
-	    	connection = MSSQLConnectionFactory.get();
+	    	connection = JdbcTools.get();
 	        
 	        statement = connection.prepareStatement(UPDATE_QUERY);
 	        
@@ -151,7 +151,7 @@ public class RdvJDBCDAOImpl implements RdvDAO{
         PreparedStatement statement = null;
         
         try {
-            connection = MSSQLConnectionFactory.get();
+            connection = JdbcTools.get();
             
             // l'integrite referentielle s'occupe d'invalider la suppression
             // si l'element est reference dans une ligne de commande
@@ -181,7 +181,7 @@ public class RdvJDBCDAOImpl implements RdvDAO{
         List<Rdv> liste = new ArrayList<Rdv>();
         
         try {
-            connection = MSSQLConnectionFactory.get();
+            connection = JdbcTools.get();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(SELECT_ALL_QUERY);
 

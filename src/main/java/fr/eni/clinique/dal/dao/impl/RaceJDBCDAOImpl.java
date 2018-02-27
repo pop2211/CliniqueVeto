@@ -8,12 +8,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.clinique.bo.Personnel;
 import fr.eni.clinique.bo.Race;
 import fr.eni.clinique.common.util.ResourceUtil;
 import fr.eni.clinique.dal.dao.RaceDAO;
 import fr.eni.clinique.dal.exception.DaoException;
-import fr.eni.clinique.dal.factory.MSSQLConnectionFactory;
+import fr.eni.clinique.dal.factory.JdbcTools;
 
 public class RaceJDBCDAOImpl implements RaceDAO{
 	
@@ -37,7 +36,7 @@ public class RaceJDBCDAOImpl implements RaceDAO{
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
-            connection = MSSQLConnectionFactory.get();
+            connection = JdbcTools.get();
             
             statement = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS);
             
@@ -65,7 +64,7 @@ public class RaceJDBCDAOImpl implements RaceDAO{
 		Connection connection = null;
         PreparedStatement statement = null;
         try {
-	    	connection = MSSQLConnectionFactory.get();
+	    	connection = JdbcTools.get();
 	         
 	        statement = connection.prepareStatement(UPDATE_QUERY);
 	        
@@ -85,7 +84,7 @@ public class RaceJDBCDAOImpl implements RaceDAO{
         PreparedStatement statement = null;
         
         try {
-            connection = MSSQLConnectionFactory.get();
+            connection = JdbcTools.get();
             
             // l'intégrité référentielle s'occupe d'invalider la suppression
             // si l'article est référencé dans une ligne de commande
@@ -109,7 +108,7 @@ public class RaceJDBCDAOImpl implements RaceDAO{
         List<Race> liste = new ArrayList<Race>();
         
         try {
-            connection = MSSQLConnectionFactory.get();
+            connection = JdbcTools.get();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(SELECT_ALL_QUERY);
 
