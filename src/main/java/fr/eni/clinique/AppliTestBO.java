@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import fr.eni.clinique.bo.Animal;
 import fr.eni.clinique.bo.Client;
-import fr.eni.clinique.bo.Personel;
+import fr.eni.clinique.bo.Personnel;
 import fr.eni.clinique.bo.Race;
 import fr.eni.clinique.bo.Rdv;
 
@@ -39,7 +39,7 @@ public class AppliTestBO {
 		LOGGER.info(client.toString());
 		
 		LOGGER.info("Test class Personel");
-		Personel personel = new Personel(1, "soignetoutou", "bambie", "veto", false );
+		Personnel personel = new Personnel(1, "soignetoutou", "bambie", "veto", false );
 		LOGGER.info(personel.toString());
 		
 		LOGGER.info("Test class Rdv");

@@ -1,17 +1,17 @@
 package fr.eni.clinique.bo;
 
-public class Personel {
+public class Personnel {
 	private Integer id;
 	private String nom; 
 	private String mdp; 
 	private String role; 
 	private Boolean archive;
 
-    public Personel() {
+    public Personnel() {
         
     }
 
-    public Personel(Integer id, String nom, String mdp, String role, Boolean archive) {
+    public Personnel(Integer id, String nom, String mdp, String role, Boolean archive) {
 		this.id = id;
     	this.nom = nom;
 		this.mdp = mdp;

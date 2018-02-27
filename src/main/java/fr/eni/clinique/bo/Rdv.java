@@ -5,7 +5,7 @@ import java.util.GregorianCalendar;
 public class Rdv {
 
 	
-	private Personel veto; 
+	private Personnel veto; 
 	private GregorianCalendar dateRdv; //Rendez-vous tous les quarts d�heures : 00 ; 15 ; 30 ; 45
 	private Animal animal;
 	
@@ -13,17 +13,17 @@ public class Rdv {
 	public Rdv() {
 		super();
 	}
-	public Rdv(Personel veto, GregorianCalendar dateRdv, Animal animal) {
+	public Rdv(Personnel veto, GregorianCalendar dateRdv, Animal animal) {
 		super();
 		this.veto = veto;
 		this.dateRdv = dateRdv;
 		this.animal = animal;
 	}
 
-	public Personel getVeto() {
+	public Personnel getVeto() {
 		return veto;
 	}
-	public void setVeto(Personel veto) {
+	public void setVeto(Personnel veto) {
 		this.veto = veto;
 	}
 

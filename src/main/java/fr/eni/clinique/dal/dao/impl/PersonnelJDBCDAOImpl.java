@@ -8,36 +8,35 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.clinique.bo.Animal;
-import fr.eni.clinique.bo.Race;
+import fr.eni.clinique.bo.Personnel;
 import fr.eni.clinique.common.util.ResourceUtil;
-import fr.eni.clinique.dal.dao.AnimalDAO;
+import fr.eni.clinique.dal.dao.PersonnelDAO;
 import fr.eni.clinique.dal.exception.DaoException;
 import fr.eni.clinique.dal.factory.MSSQLConnectionFactory;
 
-public class AnimalJDBCDAOImpl implements AnimalDAO{
-	
-	private static final String SELECT_BY_ID_QUERY = "SELECT * FROM Animaux WHERE CodeAnimal = ?";
-	private static final String SELECT_ALL_QUERY = "SELECT * FROM Animaux";
-	private static final String UPDATE_QUERY = "UPDATE Animaux SET NomAnimal=?, Sexe=?, Couleur=?, Race=?, Espece=?, CodeClient=?, Tatouage=?, Antecedents=?, Archives=? WHERE CodeAnimal=?";
-    private static final String INSERT_QUERY = "INSERT INTO Animaux(NomAnimal, Sexe, Couleur, Race, Espece, CodeClient, Tatouage, Antecedents, Archives) VALUES (?,?,?,?,?,?,?,?,?)";
-    private static final String DELETE_QUERY = "DELETE FROM Animaux WHERE CodeAnimal=?";
+public class PersonnelJDBCDAOImpl implements PersonnelDAO{
+
+	private static final String SELECT_BY_ID_QUERY = "SELECT * FROM Personnels WHERE CodePers = ?";
+	private static final String SELECT_ALL_QUERY = "SELECT * FROM Personnels";
+	private static final String UPDATE_QUERY = "UPDATE Personnels SET Nom=?, MotPasse=?, Role=?, Archives=? WHERE CodePers=?";
+    private static final String INSERT_QUERY = "INSERT INTO Personnels(Nom, MotPasse, Role, Archives) VALUES (?,?,?,?)";
+    private static final String DELETE_QUERY = "DELETE FROM Personnels WHERE CodePers=?";
     
-    private static AnimalJDBCDAOImpl instance;
+    private static PersonnelJDBCDAOImpl instance;
     
-	public static AnimalDAO getInstance() {
+	public static PersonnelDAO getInstance() {
 		if(instance == null) {
-            instance = new AnimalJDBCDAOImpl();
+            instance = new PersonnelJDBCDAOImpl();
         }
         return instance;
 	}
 	
 	@Override
-	public Animal selectById(Integer id) throws DaoException {
+	public Personnel selectById(Integer id) throws DaoException {
 		Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-        Animal animal = null;
+        Personnel personnel = null;
         try {
             connection = MSSQLConnectionFactory.get();
             statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
@@ -45,7 +44,7 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
 
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
-				animal = resultSetEntryToAnimal(resultSet);
+            	personnel = resultSetEntryToPersonnel(resultSet);
 				// TODO Auto-generated catch block
             }
 
@@ -54,27 +53,23 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
         } finally {
             ResourceUtil.safeClose(connection, statement, resultSet);
         }
-        return animal;
+        return personnel;
 	}
 
-	private Animal resultSetEntryToAnimal(ResultSet resultSet) throws SQLException{
-		Animal animal = new Animal();
+	private Personnel resultSetEntryToPersonnel(ResultSet resultSet) throws SQLException{
+		Personnel personnel = new Personnel();
 
-		animal.setNomAnimal(resultSet.getString("Designation"));
-		animal.setSexe(resultSet.getString("Sexe"));
-		animal.setCouleur(resultSet.getString("Couleur"));
-		animal.setRace(new Race(resultSet.getString("Race"),resultSet.getString("Espece")));
-		animal.setCodeClient(resultSet.getInt("CodeClient"));
-		animal.setTatouage(resultSet.getString("Tatouage"));
-		animal.setAntecedants(resultSet.getString("Antecedants"));
-		animal.setArchive(resultSet.getBoolean("Archive"));
+		personnel.setNom(resultSet.getString("Nom"));
+		personnel.setMdp(resultSet.getString("MotPasse"));
+		personnel.setRole(resultSet.getString("Role"));
+		personnel.setArchive(resultSet.getBoolean("Archive"));
         
         
-        return animal;
+        return personnel;
 	}
 
 	@Override
-	public Animal insert(Animal animal) throws DaoException {
+	public Personnel insert(Personnel personnel) throws DaoException {
 		Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -83,20 +78,15 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
             
             statement = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS);
             
-            statement.setString(1, animal.getNomAnimal());
-            statement.setString(2, animal.getSexe());
-            statement.setString(3, animal.getCouleur());
-            statement.setString(4, animal.getRace().getRace());
-            statement.setString(5, animal.getRace().getEspece());
-            statement.setInt(6, animal.getCodeClient());
-            statement.setString(7, animal.getTatouage());
-            statement.setString(8, animal.getAntecedants());
-            statement.setBoolean(9, animal.isArchive());
+            statement.setString(1, personnel.getNom());
+            statement.setString(2, personnel.getMdp());
+            statement.setString(3, personnel.getRole());
+            statement.setBoolean(4, personnel.isArchive());
             
             if (statement.executeUpdate() == 1) {
                 resultSet = statement.getGeneratedKeys();
                 if (resultSet.next()) {
-                    animal.setCodeAnimal(resultSet.getInt(1));
+                	personnel.setId(resultSet.getInt(1));
                 }
             }
         } catch(SQLException e) {
@@ -104,11 +94,11 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
         } finally {
             ResourceUtil.safeClose(connection, statement, resultSet);
         }
-		return animal;
+		return personnel;
 	}
 
 	@Override
-	public void update(Animal animal) throws DaoException {
+	public void update(Personnel personnel) throws DaoException {
 		Connection connection = null;
         PreparedStatement statement = null;
         try {
@@ -116,15 +106,10 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
 	         
 	        statement = connection.prepareStatement(UPDATE_QUERY);
 	        
-            statement.setString(1, animal.getNomAnimal());
-            statement.setString(2, animal.getSexe());
-            statement.setString(3, animal.getCouleur());
-            statement.setString(4, animal.getRace().getRace());
-            statement.setString(5, animal.getRace().getEspece());
-            statement.setInt(6, animal.getCodeClient());
-            statement.setString(7, animal.getTatouage());
-            statement.setString(8, animal.getAntecedants());
-            statement.setBoolean(9, animal.isArchive());
+            statement.setString(1, personnel.getNom());
+            statement.setString(2, personnel.getMdp());
+            statement.setString(3, personnel.getRole());
+            statement.setBoolean(4, personnel.isArchive());
             
             
         } catch(SQLException e) {
@@ -153,15 +138,14 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
         } finally {
             ResourceUtil.safeClose(connection, statement);
         }
-		
 	}
 
 	@Override
-	public List<Animal> selectAll() throws DaoException {
+	public List<Personnel> selectAll() throws DaoException {
 		Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
-        List<Animal> liste = new ArrayList<Animal>();
+        List<Personnel> liste = new ArrayList<Personnel>();
         
         try {
             connection = MSSQLConnectionFactory.get();
@@ -169,7 +153,7 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
             resultSet = statement.executeQuery(SELECT_ALL_QUERY);
 
             while (resultSet.next()) { 
-				liste.add(resultSetEntryToAnimal(resultSet));	
+				liste.add(resultSetEntryToPersonnel(resultSet));	
             }
         } catch(SQLException e) {
             throw new DaoException(e.getMessage(), e);
@@ -179,5 +163,5 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
         
         return liste;
 	}
-	
+
 }
