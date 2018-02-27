@@ -16,10 +16,10 @@ import fr.eni.clinique.dal.factory.JdbcTools;
 
 public class RaceJDBCDAOImpl implements RaceDAO{
 	
-	private static final String SELECT_ALL_QUERY = "SELECT * FROM Race";
-	private static final String UPDATE_QUERY = "UPDATE Race SET Race=?, Espece=? WHERE Race = ? AND Espece = ?";
-    private static final String INSERT_QUERY = "INSERT INTO Race(Race, Espece) VALUES (?,?)";
-    private static final String DELETE_QUERY = "DELETE FROM Race WHERE Race = ? AND Espece = ?";
+	private static final String SELECT_ALL_QUERY = "SELECT * FROM Races";
+	private static final String UPDATE_QUERY = "UPDATE Races SET Race=?, Espece=? WHERE Race = ? AND Espece = ?";
+    private static final String INSERT_QUERY = "INSERT INTO Races(Race, Espece) VALUES (?,?)";
+    private static final String DELETE_QUERY = "DELETE FROM Races WHERE Race = ? AND Espece = ?";
     
     private static RaceJDBCDAOImpl instance;
     

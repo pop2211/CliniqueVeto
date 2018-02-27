@@ -17,9 +17,9 @@ import fr.eni.clinique.dal.dao.impl.ClientJDBCDAOImpl;
 import fr.eni.clinique.dal.dao.impl.RaceJDBCDAOImpl;
 import fr.eni.clinique.dal.exception.DaoException;
 
-public class ApplitestDal {
+public class AppliTestDal {
 	
-	 private static final Logger LOGGER = LoggerFactory.getLogger(AppliTestBO.class);
+	 private static final Logger LOGGER = LoggerFactory.getLogger(AppliTestDal.class);
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
