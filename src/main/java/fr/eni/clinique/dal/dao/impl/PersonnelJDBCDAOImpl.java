@@ -18,8 +18,8 @@ public class PersonnelJDBCDAOImpl implements PersonnelDAO{
 
 	private static final String SELECT_BY_ID_QUERY = "SELECT * FROM Personnels WHERE CodePers = ?";
 	private static final String SELECT_ALL_QUERY = "SELECT * FROM Personnels";
-	private static final String UPDATE_QUERY = "UPDATE Personnels SET Nom=?, MotPasse=?, Role=?, Archives=? WHERE CodePers=?";
-    private static final String INSERT_QUERY = "INSERT INTO Personnels(Nom, MotPasse, Role, Archives) VALUES (?,?,?,?)";
+	private static final String UPDATE_QUERY = "UPDATE Personnels SET Nom=?, MotPasse=?, Role=?, Archive=? WHERE CodePers=?";
+    private static final String INSERT_QUERY = "INSERT INTO Personnels(Nom, MotPasse, Role, Archive) VALUES (?,?,?,?)";
     private static final String DELETE_QUERY = "DELETE FROM Personnels WHERE CodePers=?";
     
     private static PersonnelJDBCDAOImpl instance;

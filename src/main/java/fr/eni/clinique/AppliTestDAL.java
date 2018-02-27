@@ -1,8 +1,6 @@
 package fr.eni.clinique;
 
-import java.util.ArrayList;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,9 +23,9 @@ import fr.eni.clinique.dal.dao.impl.RaceJDBCDAOImpl;
 import fr.eni.clinique.dal.dao.impl.RdvJDBCDAOImpl;
 import fr.eni.clinique.dal.exception.DaoException;
 
-public class AppliTestDal {
+public class AppliTestDAL {
 	
-	 private static final Logger LOGGER = LoggerFactory.getLogger(AppliTestDal.class);
+	 private static final Logger LOGGER = LoggerFactory.getLogger(AppliTestDAL.class);
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -43,22 +41,30 @@ public class AppliTestDal {
             Race race = new Race("pasderace", "bambie");
             Race race2 = new Race("lapin", "civet");
             
-            Animal animal = new Animal("MamandeBambi", "h", "bleu", "symbole", "alcoolique", false , race , 1);
+            
+            Client client = new Client("lagaffe", "vincent", "8 rue de lala", "bis", "49000", "Angers", "0606060606", "maf", "aze@rty.fr", "ne pas", false);
+            
+            Animal animal = new Animal("MamandeBambi", "h", "bleu", "symbole", "alcoolique", false , race , 3);
 
-            Client client = new Client("lagaffe", "vincent", "8 rue de lala", "bis", "49000", "Angers", "0606060606", "maf", "aze@rty.fr", "ne paye pas", false);
             
             Personnel veto = new Personnel("leveterinaire", "123456", EnumRole.VETERINAIRE.getCode(), false);
             LOGGER.info("Check inserting Veto : {}");
             Personnel vetoAvecCode = personnelDAO.insert(veto);
             
-            GregorianCalendar dateRdv = new GregorianCalendar();
-            Rdv rdv = new Rdv(vetoAvecCode, dateRdv, animal);
-            
-            /*
             LOGGER.info("Check inserting Race : {}", raceDAO.insert(race));
     		LOGGER.info("Check inserting Race : {}", raceDAO.insert(race2));
             LOGGER.info("Check reading Race : {}", raceDAO.selectAll());
-            */
+            
+            LOGGER.info("Check inserting Race : {}", animalDAO.insert(animal));
+            
+            GregorianCalendar dateRdv = new GregorianCalendar();
+            Rdv rdv = new Rdv(vetoAvecCode, dateRdv, animal);
+            
+            
+
+            
+            
+           
             
             /*
             LOGGER.info("Check inserting Client : {}", clientDAO.insert(client));
@@ -66,7 +72,6 @@ public class AppliTestDal {
             LOGGER.info("Check reading all Client : {}", clientDAO.selectAll());
             */
             
-            LOGGER.info("Check rdv.getVeto().getCodePers() : {}", rdv.getVeto().getCodePers() );
             
             LOGGER.info("Check inserting Rdv : {}", rdvDAO.insert(rdv));
             LOGGER.info("Check reading Rdv: {}", rdvDAO.selectById(rdv));
