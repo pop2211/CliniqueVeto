@@ -12,7 +12,7 @@ import fr.eni.clinique.bo.Client;
 import fr.eni.clinique.common.util.ResourceUtil;
 import fr.eni.clinique.dal.dao.ClientDAO;
 import fr.eni.clinique.dal.exception.DaoException;
-import fr.eni.clinique.dal.factory.MSSQLConnectionFactory;
+import fr.eni.clinique.dal.factory.JdbcTools;
 
 public class ClientJDBCDAOImpl implements ClientDAO{
 	
@@ -40,7 +40,7 @@ public class ClientJDBCDAOImpl implements ClientDAO{
         ResultSet resultSet = null;
         Client client = null;
         try {
-            connection = MSSQLConnectionFactory.get();
+            connection = JdbcTools.get();
             statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
             statement.setInt(1, id);
 
@@ -86,7 +86,7 @@ public class ClientJDBCDAOImpl implements ClientDAO{
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
-            connection = MSSQLConnectionFactory.get();
+            connection = JdbcTools.get();
             
             statement = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS);
             
@@ -122,7 +122,7 @@ public class ClientJDBCDAOImpl implements ClientDAO{
 		Connection connection = null;
         PreparedStatement statement = null;
         try {
-	    	connection = MSSQLConnectionFactory.get();
+	    	connection = JdbcTools.get();
 	        
 	        statement = connection.prepareStatement(UPDATE_QUERY);
 	        
@@ -151,7 +151,7 @@ public class ClientJDBCDAOImpl implements ClientDAO{
         PreparedStatement statement = null;
         
         try {
-            connection = MSSQLConnectionFactory.get();
+            connection = JdbcTools.get();
             
             // l'integrite referentielle s'occupe d'invalider la suppression
             // si l'element est reference dans une ligne de commande
@@ -177,7 +177,7 @@ public class ClientJDBCDAOImpl implements ClientDAO{
         List<Client> liste = new ArrayList<Client>();
         
         try {
-            connection = MSSQLConnectionFactory.get();
+            connection = JdbcTools.get();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(SELECT_ALL_QUERY);
 
