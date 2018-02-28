@@ -1,4 +1,4 @@
-package fr.eni.clinique.ihm.model;
+package fr.eni.clinique.ihm.screen;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -10,12 +10,13 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.SwingUtilities;
 
-import fr.eni.clinique.ihm.screen.InternalFrameLogin;
+import fr.eni.clinique.ihm.listener.PersonnelActionListener;
+import fr.eni.clinique.ihm.model.PersonnelModel;
+import fr.eni.clinique.ihm.screen.login.InternalFrameLogin;
 
 
-public class CliniqueModel extends JFrame implements ActionListener {
+public class ConnexionScreen extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -23,9 +24,11 @@ public class CliniqueModel extends JFrame implements ActionListener {
 	private JMenuBar menuBarre;
 	private JMenu menuAgenda;
 	private InternalFrameLogin frameLogin;
+	
+	private PersonnelActionListener actionListener;
 
 
-	public CliniqueModel() {
+	public ConnexionScreen(String title, PersonnelModel mode) {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -44,19 +47,6 @@ public class CliniqueModel extends JFrame implements ActionListener {
 		//Frame interne login
 		desktopPane.add(getFrameLogin());
 		getFrameLogin().setVisible(true);
-
-	}
-
-	// Lancement de l'application
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-
-			@Override
-			public void run() {
-				CliniqueModel ecran = new CliniqueModel();
-				ecran.setVisible(true);
-			}
-		});
 
 	}
 
@@ -127,5 +117,19 @@ public class CliniqueModel extends JFrame implements ActionListener {
 		}
 		return frameLogin;
 	}
+	
+	 public void setActionListener(PersonnelActionListener actionListener) {
+	        
+	        if(actionListener != null) {
+	            
+	            this.actionListener = actionListener;
+	            
+	            /*try {
+
+	            } catch (Exception e) {
+	                showFailureMessage(e.getMessage());
+	            }*/
+	        }
+	    }
 
 }

@@ -1,4 +1,4 @@
-package fr.eni.clinique.ihm.screen;
+package fr.eni.clinique.ihm.screen.login;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -18,7 +18,7 @@ import fr.eni.clinique.bo.Personnel;
 import fr.eni.clinique.common.AppConstants;
 import fr.eni.clinique.ihm.event.PersonnelActionEvent;
 import fr.eni.clinique.ihm.listener.PersonnelActionListener;
-import fr.eni.clinique.ihm.model.CliniqueModel;
+import fr.eni.clinique.ihm.screen.ConnexionScreen;
 
 public class InternalFrameLogin extends JInternalFrame {
 	
@@ -31,7 +31,7 @@ public class InternalFrameLogin extends JInternalFrame {
     private JPanel buttonBar;
     
     private PersonnelActionListener actionListener;
-    private CliniqueModel model;
+    private ConnexionScreen model;
 	
 	public InternalFrameLogin() {
 		//Ecran avec un titre, redimensionable, fermable, agrandissable, iconifiable
@@ -169,7 +169,7 @@ public class InternalFrameLogin extends JInternalFrame {
     
     private JPanel createButtonBar() {
 
-        validateButton = new JButton();
+        validateButton = new JButton("Valider");
         validateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

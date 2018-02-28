@@ -1,23 +1,20 @@
 package fr.eni.clinique.ihm.controller;
 
-import java.util.List;
-
 import fr.eni.clinique.bll.factory.ManagerFactory;
 import fr.eni.clinique.bll.manager.PersonnelManager;
-import fr.eni.clinique.bo.Personnel;
 import fr.eni.clinique.ihm.event.PersonnelActionEvent;
 import fr.eni.clinique.ihm.listener.PersonnelActionListener;
-import fr.eni.clinique.ihm.model.CliniqueModel;
+import fr.eni.clinique.ihm.model.PersonnelModel;
 
 public class PersonnelController implements PersonnelActionListener {
 
-    private CliniqueModel model;
+    private PersonnelModel model;
     private PersonnelManager personnelManager = ManagerFactory.PersonnelManager();
 
     /**
      * @param model
      */
-    public PersonnelController(CliniqueModel model) {
+    public PersonnelController(PersonnelModel model) {
         super();
         this.model = model;
     }
