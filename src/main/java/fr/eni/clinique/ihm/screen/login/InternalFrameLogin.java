@@ -49,25 +49,12 @@ public class InternalFrameLogin extends JInternalFrame {
         addFormRow("Mot de passe", passwordInput, 2);
         
         
-        mainPanel.add(createButton(), createGridBagConstraints(1,1,10));
+        //mainPanel.add(validateButton, createGridBagConstraints(0.7, 1, 3));
         
-		//buttonBar = createButtonBar();
-        //mainPanel.add(buttonBar, createGridBagConstraints(1, 1, 10));
+		buttonBar = createButtonBar();
+        mainPanel.add(buttonBar, createGridBagConstraints(1, 1, 10));
         
-	}
-	
-	private JButton createButton() {
-		validateButton = new JButton("Valider");
-	    validateButton.addActionListener(new ActionListener() {
-	        @Override
-	        public void actionPerformed(ActionEvent e) {
-	            if(actionListener != null) {
-	            	connectPersonnel();
-	            }
-	        }
-	    });
-	    
-	    return validateButton;
+        
 	}
 	
     /**
