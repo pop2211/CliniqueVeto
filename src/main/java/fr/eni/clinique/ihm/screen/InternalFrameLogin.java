@@ -28,6 +28,7 @@ public class InternalFrameLogin extends JInternalFrame {
     private JTextField loginInput;
     private JTextField passwordInput;
     private JButton validateButton;
+    private JPanel buttonBar;
     
     private PersonnelActionListener actionListener;
     private CliniqueModel model;
@@ -48,15 +49,10 @@ public class InternalFrameLogin extends JInternalFrame {
         addFormRow("Mot de passe", passwordInput, 2);
         
         
-        validateButton = new JButton();
-        validateButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(actionListener != null) {
-                    connectPersonnel();
-                }
-            }
-        });
+        //mainPanel.add(validateButton, createGridBagConstraints(0.7, 1, 3));
+        
+		buttonBar = createButtonBar();
+        mainPanel.add(buttonBar, createGridBagConstraints(1, 1, 10));
         
         
 	}
@@ -169,6 +165,27 @@ public class InternalFrameLogin extends JInternalFrame {
      */
     private void showSuccessMessage(String message) {
         JOptionPane.showMessageDialog(InternalFrameLogin.this, message);
+    }
+    
+    private JPanel createButtonBar() {
+
+        validateButton = new JButton();
+        validateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(actionListener != null) {
+                    connectPersonnel();
+                }
+            }
+        });
+        
+        JPanel panelButtons = new JPanel();
+        panelButtons.setOpaque(true);
+        panelButtons.setLayout(new GridBagLayout());
+        
+        panelButtons.add(validateButton, createGridBagConstraints(0.2, 3, 1));
+        
+        return panelButtons;
     }
 
 }
