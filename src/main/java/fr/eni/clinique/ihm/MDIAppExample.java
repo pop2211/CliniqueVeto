@@ -20,7 +20,7 @@ public class MDIAppExample extends JFrame implements ActionListener {
 	private JDesktopPane desktopPane;
 	private JMenuBar menuBarre;
 	private JMenu menuAgenda;
-	private InternalFrame1 frm1;
+	private InternalFrameLogin frm1;
 
 
 	public MDIAppExample() {
@@ -40,7 +40,7 @@ public class MDIAppExample extends JFrame implements ActionListener {
 		setJMenuBar(getMenuBarre());
 		
 		//Frame interne exemple		
-		desktopPane.add(getFrm1());
+		desktopPane.add(getFrmLogin());
 
 	}
 
@@ -64,7 +64,7 @@ public class MDIAppExample extends JFrame implements ActionListener {
 		menuBarre.add(menu);
 
 		// Sous menu DÃ©connexion
-		JMenuItem menuItem = new JMenuItem("Déconnexion");
+		JMenuItem menuItem = new JMenuItem("Dï¿½connexion");
 		menuItem.setActionCommand("deconnexion");
 		menuItem.addActionListener(this);
 		menu.add(menuItem);
@@ -96,7 +96,7 @@ public class MDIAppExample extends JFrame implements ActionListener {
 
 		case "ecran":
 			System.out.println("coucou");
-			getFrm1().setVisible(true);
+			getFrmLogin().setVisible(true);
 			break;
 
 		default:
@@ -118,9 +118,9 @@ public class MDIAppExample extends JFrame implements ActionListener {
 		return menuBarre;
 	}
 
-	public InternalFrame1 getFrm1() {
+	public InternalFrameLogin getFrmLogin() {
 		if(frm1== null){
-			frm1 = new InternalFrame1();
+			frm1 = new InternalFrameLogin();
 		}
 		return frm1;
 	}
