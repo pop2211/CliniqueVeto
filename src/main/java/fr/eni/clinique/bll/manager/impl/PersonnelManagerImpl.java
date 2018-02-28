@@ -8,7 +8,9 @@ import fr.eni.clinique.bo.Personnel;
 import fr.eni.clinique.common.exception.TechnicalException;
 import fr.eni.clinique.common.util.ObjectUtil;
 import fr.eni.clinique.dal.dao.PersonnelDAO;
+import fr.eni.clinique.dal.exception.DaoException;
 import fr.eni.clinique.dal.factory.DaoFactory;
+
 
 public class PersonnelManagerImpl implements PersonnelManager{
 	
@@ -25,26 +27,58 @@ public class PersonnelManagerImpl implements PersonnelManager{
 
 	@Override
 	public List<Personnel> getList() throws ManagerException {
-		// TODO Auto-generated method stub
-		return null;
+		List<Personnel> personnels = null;
+        
+        try {
+        	personnels = personnelDAO.selectAll();
+            
+        } catch (DaoException e) {
+            throw new ManagerException("Erreur récupération Liste du personnel", e);
+        }
+        
+        return personnels;
 	}
 
 	@Override
-	public Personnel addPersonnel(Personnel newPersonnel)
-			throws ManagerException {
-		// TODO Auto-generated method stub
-		return null;
+	public Personnel addPersonnel(Personnel newPersonnel) throws ManagerException {
+		if(newPersonnel.getCodePers() != null) {
+            throw new ManagerException("La personne est deja existante.");
+        }
+        
+        try {
+        	validerPersonnel(newPersonnel);
+            
+        	newPersonnel = personnelDAO.insert(newPersonnel);
+            
+        } catch (DaoException e) {
+            throw new ManagerException("Echec addPersonnel", e);
+        }
+        return newPersonnel;
 	}
+	
+	 @Override
+	    public void updatePersonnel(Personnel personnel) throws ManagerException {
+	        
+	        try {
+	        	validerPersonnel(personnel);
+	            
+	        	personnelDAO.update(personnel);
+	            
+	        } catch (DaoException e) {
+	            throw new ManagerException(String.format("Echec updatePersonnel-personnel: %s", personnel), e);
+	        }
+	    }
 
-	@Override
-	public void Personnel(Personnel personnel) throws ManagerException {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 	@Override
 	public void removePersonnel(Personnel personnel) throws ManagerException {
-		// TODO Auto-generated method stub
+		 try {
+	            personnelDAO.delete(personnel.getCodePers());
+	            
+	        } catch (DaoException e) {
+	            throw new ManagerException("Echec de suppression de la personne - ", e);
+	        }
 		
 	}
 	
@@ -72,5 +106,21 @@ public class PersonnelManagerImpl implements PersonnelManager{
             throw new TechnicalException(e.getMessage(), e);
         }
      }
+	
+	private void validerPersonnel(Personnel personnel) throws ManagerException {
+
+        try {
+            ObjectUtil.checkNotNullWithMessage(personnel, "Une erreur technique st survenue");
+            ObjectUtil.checkNotNullWithMessage(personnel.getNom(), "Le Nom est obligatoire");
+            ObjectUtil.checkNotNullWithMessage(personnel.getMdp(), "Le MDP est obligatoire");
+            ObjectUtil.checkNotBlankWithMessage(personnel.getRole(), "Le Rôle est obligatoire");
+            ObjectUtil.checkNotNullWithMessage(personnel.isArchive(), "L'Archive est obligatoire");
+
+        } catch (IllegalArgumentException e) {
+            throw new ManagerException(String.format("Erreur de validation : %s", e.getMessage()), e);
+        } catch (Exception e) {
+            throw new TechnicalException(e.getMessage(), e);
+        }
+    }
 
 }

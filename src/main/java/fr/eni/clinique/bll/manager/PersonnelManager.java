@@ -11,9 +11,9 @@ public interface PersonnelManager {
     
 	Personnel addPersonnel(Personnel newPersonnel) throws ManagerException;
     
-    void Personnel(Personnel personnel) throws ManagerException;
-    
     void removePersonnel(Personnel personnel) throws ManagerException;
 
 	void connexion(Personnel personnel) throws ManagerException;
+
+	void updatePersonnel(Personnel personnel) throws ManagerException;
 }
