@@ -100,7 +100,6 @@ public class CliniqueModel extends JFrame implements ActionListener {
 			break;
 
 		case "ecran":
-			System.out.println("coucou");
 			getFrameLogin().setVisible(true);
 			break;
 
