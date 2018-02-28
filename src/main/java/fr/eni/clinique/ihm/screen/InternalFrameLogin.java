@@ -3,15 +3,22 @@ package fr.eni.clinique.ihm.screen;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import fr.eni.clinique.bo.Personnel;
 import fr.eni.clinique.common.AppConstants;
+import fr.eni.clinique.ihm.event.PersonnelActionEvent;
+import fr.eni.clinique.ihm.listener.PersonnelActionListener;
+import fr.eni.clinique.ihm.model.CliniqueModel;
 
 public class InternalFrameLogin extends JInternalFrame {
 	
@@ -21,6 +28,9 @@ public class InternalFrameLogin extends JInternalFrame {
     private JTextField loginInput;
     private JTextField passwordInput;
     private JButton validateButton;
+    
+    private PersonnelActionListener actionListener;
+    private CliniqueModel model;
 	
 	public InternalFrameLogin() {
 		//Ecran avec un titre, redimensionable, fermable, agrandissable, iconifiable
@@ -38,21 +48,48 @@ public class InternalFrameLogin extends JInternalFrame {
         addFormRow("Mot de passe", passwordInput, 2);
         
         
-        //validateButton = new JButton();
-        //validateButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("images/Save24.gif")));
-        /*
+        validateButton = new JButton();
         validateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(actionListener != null) {
-                    saveArticle();
+                    connectPersonnel();
                 }
             }
         });
-        */
         
         
 	}
+	
+    /**
+     * Connect Personnel.
+     */
+    private void connectPersonnel() {
+
+        try {
+            actionListener.connectPersonnel(new PersonnelActionEvent(readPersonnelLoginPassword()));
+
+            showSuccessMessage("Connexion réussie !");
+
+        } catch (Exception e) {
+            showFailureMessage(e.getMessage());
+        }
+    }
+    
+    
+    /**
+     * Read Personnel login and password from the UI.
+     * 
+     * @return
+     */
+    private Personnel readPersonnelLoginPassword() {
+        Personnel personnel = new Personnel();
+        personnel.setNom(loginInput.getText().trim());
+        personnel.setMdp(passwordInput.getText().trim());
+        
+        return personnel;
+    }
+	
 	
     private JTextField createTextField(String defaultValue, String tooltip) {
         
@@ -93,8 +130,7 @@ public class InternalFrameLogin extends JInternalFrame {
     /**
      * @param actionListener the actionListener to set
      */
-    /*
-    public void setActionListener(CatalogActionListener actionListener) {
+    public void setActionListener(PersonnelActionListener actionListener) {
         
         if(actionListener != null) {
             
@@ -104,16 +140,6 @@ public class InternalFrameLogin extends JInternalFrame {
 
                 // Fire Initialisation Event.
                 this.actionListener.init();
-                
-                // Get First Article
-                Article article = model.firstArticle();
-
-                if (article == null) {
-                    actionListener.newArticle(); // Not Article to show => show a new Article.
-
-                    article = model.currentArticle();
-                }
-                showArticle(article); // First Article
 
             } catch (Exception e) {
                 showFailureMessage(e.getMessage());
@@ -124,6 +150,25 @@ public class InternalFrameLogin extends JInternalFrame {
     public void removeActionListener() {
         this.actionListener = null;
     }
-    */
+    
+    
+    /**
+     * Show TechnicalError.
+     * 
+     * @param message
+     */
+    private void showFailureMessage(String message) {
+        JOptionPane.showMessageDialog(InternalFrameLogin.this, message, "Erreur", JOptionPane.ERROR_MESSAGE);
+    }
+    
+    
+    /**
+     * Show Success Message.
+     * 
+     * @param message
+     */
+    private void showSuccessMessage(String message) {
+        JOptionPane.showMessageDialog(InternalFrameLogin.this, message);
+    }
 
 }
