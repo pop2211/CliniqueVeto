@@ -30,7 +30,9 @@ public class CliniqueModel extends JFrame implements ActionListener {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		setBounds(0, 0, screenSize.width, screenSize.height);
+		int largeurFen = (int) Math.round(screenSize.width*0.8);
+		int hauteurFen = (int) Math.round(screenSize.height*0.8);
+		setBounds(0, 0, largeurFen, hauteurFen);
 
 		// initialiser l'ecran MDI
 		desktopPane = new JDesktopPane();
