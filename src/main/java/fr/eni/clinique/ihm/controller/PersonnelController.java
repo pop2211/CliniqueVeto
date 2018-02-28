@@ -60,7 +60,7 @@ public class PersonnelController implements PersonnelActionListener {
 
 	@Override
 	public void init() throws Exception {
-		// TODO Auto-generated method stub
+		System.out.println("Personnel Controler: init()");
 		
 	}
 
