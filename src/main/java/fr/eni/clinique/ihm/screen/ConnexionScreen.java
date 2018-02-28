@@ -28,7 +28,7 @@ public class ConnexionScreen extends JFrame implements ActionListener {
 	private PersonnelActionListener actionListener;
 
 
-	public ConnexionScreen(String title, PersonnelModel mode) {
+	public ConnexionScreen(String title, PersonnelModel model) {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -36,6 +36,7 @@ public class ConnexionScreen extends JFrame implements ActionListener {
 		int largeurFen = (int) Math.round(screenSize.width*0.8);
 		int hauteurFen = (int) Math.round(screenSize.height*0.8);
 		setBounds(0, 0, largeurFen, hauteurFen);
+		setTitle(title);
 
 		// initialiser l'ecran MDI
 		desktopPane = new JDesktopPane();
