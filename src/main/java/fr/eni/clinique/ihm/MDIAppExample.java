@@ -64,7 +64,7 @@ public class MDIAppExample extends JFrame implements ActionListener {
 		menuBarre.add(menu);
 
 		// Sous menu Déconnexion
-		JMenuItem menuItem = new JMenuItem("D�connexion");
+		JMenuItem menuItem = new JMenuItem("Déconnexion");
 		menuItem.setActionCommand("deconnexion");
 		menuItem.addActionListener(this);
 		menu.add(menuItem);
