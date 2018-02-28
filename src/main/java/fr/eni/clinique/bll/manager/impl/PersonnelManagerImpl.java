@@ -12,7 +12,7 @@ import fr.eni.clinique.dal.exception.DaoException;
 import fr.eni.clinique.dal.factory.DaoFactory;
 
 
-public class PersonnelManagerImpl implements PersonnelManager{
+public class PersonnelManagerImpl implements PersonnelManager {
 	
 	private PersonnelDAO personnelDAO = DaoFactory.personelDAO();
 	    
@@ -26,7 +26,7 @@ public class PersonnelManagerImpl implements PersonnelManager{
 	}
 
 	@Override
-	public List<Personnel> getList() throws ManagerException {
+	public List<Personnel> selectAll() throws ManagerException {
 		List<Personnel> personnels = null;
         
         try {
@@ -40,7 +40,7 @@ public class PersonnelManagerImpl implements PersonnelManager{
 	}
 
 	@Override
-	public Personnel addPersonnel(Personnel newPersonnel) throws ManagerException {
+	public Personnel insert(Personnel newPersonnel) throws ManagerException {
 		if(newPersonnel.getCodePers() != null) {
             throw new ManagerException("La personne est deja existante.");
         }
@@ -57,7 +57,7 @@ public class PersonnelManagerImpl implements PersonnelManager{
 	}
 	
 	 @Override
-	    public void updatePersonnel(Personnel personnel) throws ManagerException {
+	    public void update(Personnel personnel) throws ManagerException {
 	        
 	        try {
 	        	validerPersonnel(personnel);
@@ -72,9 +72,9 @@ public class PersonnelManagerImpl implements PersonnelManager{
 	
 
 	@Override
-	public void removePersonnel(Personnel personnel) throws ManagerException {
+	public void delete(Integer codePers) throws ManagerException {
 		 try {
-	            personnelDAO.delete(personnel.getCodePers());
+	            personnelDAO.delete(codePers);
 	            
 	        } catch (DaoException e) {
 	            throw new ManagerException("Echec de suppression de la personne - ", e);
@@ -122,5 +122,22 @@ public class PersonnelManagerImpl implements PersonnelManager{
             throw new TechnicalException(e.getMessage(), e);
         }
     }
+
+	@Override
+	public Personnel selectById(Integer id) throws ManagerException {
+		
+		Personnel personne = new Personnel();
+		
+		try {
+			personne = personnelDAO.selectById(id);
+            
+        } catch (DaoException e) {
+            throw new ManagerException("Erreur récupération Liste du personnel", e);
+        }
+		return personne;
+        
+	}
+
+
 
 }
