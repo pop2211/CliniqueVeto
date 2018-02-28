@@ -21,13 +21,18 @@ import fr.eni.clinique.ihm.screen.login.InternalFrameLogin;
 public class MainScreen extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
+	
+	private PersonnelModel model;
+	private PersonnelController controller;
 
 	private JDesktopPane desktopPane;
 	private JMenuBar menuBarre;
 	private InternalFrameLogin frameLogin;
 
 	public MainScreen(String title, PersonnelModel model, PersonnelController controller) {
-
+		this.controller = controller;
+		this.model = model;
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -126,7 +131,6 @@ public class MainScreen extends JFrame implements ActionListener {
         JOptionPane.showMessageDialog(MainScreen.this, message, "Erreur", JOptionPane.ERROR_MESSAGE);
     }
     
-    
     /**
      * Show Success Message.
      * 
@@ -135,7 +139,5 @@ public class MainScreen extends JFrame implements ActionListener {
     private void showSuccessMessage(String message) {
         JOptionPane.showMessageDialog(MainScreen.this, message);
     }
-
     
-
 }

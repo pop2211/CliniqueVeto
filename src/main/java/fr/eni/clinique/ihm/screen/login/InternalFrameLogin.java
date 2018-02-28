@@ -12,6 +12,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import fr.eni.clinique.bo.Personnel;
@@ -23,48 +24,58 @@ public class InternalFrameLogin extends JInternalFrame{
 	
 	private static final long serialVersionUID = -4557163862895833172L;
 	
+	private PersonnelModel model;
+	private PersonnelController controller;
+	
 	private JPanel mainPanel;
     private JTextField loginInput;
     private JTextField passwordInput;
     private JButton validateButton;
-    
-    public JButton getValidateButton(){
-    	return validateButton;
-    }
 	
 	public InternalFrameLogin(PersonnelModel model, PersonnelController controller) {
 		//Ecran avec un titre, redimensionable, fermable, agrandissable, iconifiable
 		super("Connexion", true, true, true,true);
+		this.controller = controller;
+		this.model = model;
 		
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		setBounds(100, 100,400, 200);
 		
-		loginInput = createTextField(AppConstants.EMPTY, "");
-		passwordInput = createTextField(AppConstants.EMPTY, "");
+		loginInput = createTextField(AppConstants.EMPTY, "Votre Nom");
+		passwordInput = createPasswordField(AppConstants.EMPTY, "Votre MDP");
 		
 		setContentPane(createMainPanel());
 		
         addFormRow("Nom", loginInput, 1);
-        addFormRow("Mot de passe", passwordInput, 2);     
+        addFormRow("Mot de passe", passwordInput, 2);    
         
-        validateButton = new JButton("Valider");
-        validateButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	connectPersonnel(controller);
-            }
-        });
-        
-        mainPanel.add(validateButton, createGridBagConstraints(0.7, 1, 3));
+        mainPanel.add(ButtonValdier(), createGridBagConstraints(0.7, 1, 3));
      
 	}
 
-	
+	private JButton ButtonValdier()	{
+		validateButton = new JButton("Valider");
+	    validateButton.addActionListener(new ActionListener() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	        	connectPersonnel();
+	        }
+	    });
+	    return validateButton;
+	} 
+	   
     private JTextField createTextField(String defaultValue, String tooltip) {
         
         JTextField textField = new JTextField(defaultValue);
         textField.setToolTipText(tooltip);
         return textField;
+    }
+    
+    private JPasswordField createPasswordField(String defaultValue, String tooltip) {
+        
+    	JPasswordField password = new JPasswordField(defaultValue);
+    	password.setToolTipText(tooltip);
+        return password;
     }
     
     private void addFormRow(String label, JComponent component, int lineNumber) {
@@ -98,7 +109,7 @@ public class InternalFrameLogin extends JInternalFrame{
     /**
      * Connect Personnel.
      */
-    private Boolean connectPersonnel(PersonnelController controller) {
+    private Boolean connectPersonnel() {
     	Boolean testLoginPass = false;
     	try {
         	Personnel identifiants = readPersonnelLoginPassword();
