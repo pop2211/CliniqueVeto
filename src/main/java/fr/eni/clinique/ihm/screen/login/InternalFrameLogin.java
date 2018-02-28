@@ -48,33 +48,16 @@ public class InternalFrameLogin extends JInternalFrame implements ActionListener
 		setContentPane(createMainPanel());
 		
         addFormRow("Nom", loginInput, 1);
-        addFormRow("Mot de passe", passwordInput, 2);
-        
-       
-		//buttonBar = createButtonBar();
-        //mainPanel.add(buttonBar, createGridBagConstraints(1, 1, 10));
-        
+        addFormRow("Mot de passe", passwordInput, 2);     
         
         validateButton = new JButton("Valider");
         validateButton.setActionCommand("connexion");
         validateButton.addActionListener(this);
-//        validateButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                if(actionListener != null) {
-//                    connectPersonnel();
-//                }
-//            }
-//        });
-        
-        
+   
         mainPanel.add(validateButton, createGridBagConstraints(0.7, 1, 3));
-        
-        
+     
 	}
-	
 
-	
 	
     private JTextField createTextField(String defaultValue, String tooltip) {
         
@@ -110,10 +93,7 @@ public class InternalFrameLogin extends JInternalFrame implements ActionListener
         
         return gridBagConstraints;
     }
-
-
-    
-    
+  
     /**
      * Show TechnicalError.
      * 
@@ -121,8 +101,7 @@ public class InternalFrameLogin extends JInternalFrame implements ActionListener
      */
     private void showFailureMessage(String message) {
         JOptionPane.showMessageDialog(InternalFrameLogin.this, message, "Erreur", JOptionPane.ERROR_MESSAGE);
-    }
-    
+    }   
     
     /**
      * Show Success Message.
@@ -138,31 +117,6 @@ public class InternalFrameLogin extends JInternalFrame implements ActionListener
 		// TODO Auto-generated method stub
 		
 	}
-    
-    
-    /*
-    private JPanel createButtonBar() {
-
-        validateButton = new JButton("Valider");
-        validateButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(actionListener != null) {
-                    connectPersonnel();
-                }
-            }
-        });
-        
-        JPanel panelButtons = new JPanel();
-        panelButtons.setOpaque(true);
-        panelButtons.setLayout(new GridBagLayout());
-        
-        panelButtons.add(validateButton, createGridBagConstraints(0.2, 3, 1));
-        
-        return panelButtons;
-    }
-    */
-
 
     /**
      * Read Personnel login and password from the UI.
