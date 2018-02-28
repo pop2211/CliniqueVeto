@@ -13,24 +13,20 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
-import fr.eni.clinique.bo.Personnel;
-import fr.eni.clinique.common.AppConstants;
+import fr.eni.clinique.ihm.controller.PersonnelController;
 import fr.eni.clinique.ihm.listener.PersonnelActionListener;
 import fr.eni.clinique.ihm.model.PersonnelModel;
 import fr.eni.clinique.ihm.screen.login.InternalFrameLogin;
 
-public class ConnexionScreen extends JFrame implements ActionListener {
+public class MainScreen extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 
 	private JDesktopPane desktopPane;
 	private JMenuBar menuBarre;
 	private InternalFrameLogin frameLogin;
-	private JButton frameLoginBtn;
 
-	private PersonnelActionListener actionListener;
-
-	public ConnexionScreen(String title, PersonnelModel model) {
+	public MainScreen(String title, PersonnelModel model, PersonnelController controller) {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -50,13 +46,10 @@ public class ConnexionScreen extends JFrame implements ActionListener {
 		setJMenuBar(getMenuBarre());
 
 		// Frame interne login
-		desktopPane.add(getFrameLogin());
-		getFrameLogin().setVisible(true);
+		frameLogin = getFrameLogin(model, controller);
+		desktopPane.add(frameLogin);
+		frameLogin.setVisible(true);
 
-		frameLoginBtn = getFrameLogin().getValidateButton();
-		System.out.println("FAIL COMMING");
-		frameLoginBtn.addActionListener(this);
-		System.out.println("AFTER FAIL ?");
 	}
 
 	public void createMenuBar() {
@@ -96,13 +89,7 @@ public class ConnexionScreen extends JFrame implements ActionListener {
 			System.exit(0);
 			break;
 		case "ecran":
-			getFrameLogin().setVisible(true);
-			break;
-		case "connexion":
-			System.out.println("CLIC CONNEXION");
-			connectPersonnel();
-			//si connexion OK:
-			getFrameLogin().setVisible(false);
+			frameLogin.setVisible(true);
 			break;
 		default:
 			System.out.println("Probleme e=" + e);
@@ -123,56 +110,12 @@ public class ConnexionScreen extends JFrame implements ActionListener {
 		return menuBarre;
 	}
 
-	public InternalFrameLogin getFrameLogin() {
+	public InternalFrameLogin getFrameLogin(PersonnelModel model, PersonnelController controller) {
 		if (frameLogin == null) {
-			frameLogin = new InternalFrameLogin();
+			frameLogin = new InternalFrameLogin(model, controller);
 		}
 		return frameLogin;
 	}
-
-	public void setActionListener(PersonnelActionListener aL) {
-
-		System.out.println("MAINSCREEN EXEC setActionListener (1)");
-
-		if (aL != null) {
-
-			System.out.println("MAINSCREEN EXEC setActionListener (2)");
-
-			this.actionListener = aL;
-
-			/*
-			 * try {
-			 * 
-			 * } catch (Exception e) { showFailureMessage(e.getMessage()); }
-			 */
-		}
-	}
-	
-	
-    /**
-     * Connect Personnel.
-     */
-    private boolean connectPersonnel() {
-
-        try {
-        	System.out.println("TRY");
-        	Personnel identifiants = getFrameLogin().readPersonnelLoginPassword();
-            //actionListener.connectPersonnel(new PersonnelActionEvent(identifiants));
-        	
-            Boolean testLoginPass = false;
-            if(testLoginPass){
-            	showSuccessMessage("Connexion réussie !");
-            	return true;
-            }
-            
-            
-        } catch (Exception e) {
-            showFailureMessage(e.getMessage());
-        }
-        return false;
-    }
-    
-    
     
     /**
      * Show TechnicalError.
@@ -180,7 +123,7 @@ public class ConnexionScreen extends JFrame implements ActionListener {
      * @param message
      */
     private void showFailureMessage(String message) {
-        JOptionPane.showMessageDialog(ConnexionScreen.this, message, "Erreur", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(MainScreen.this, message, "Erreur", JOptionPane.ERROR_MESSAGE);
     }
     
     
@@ -190,7 +133,7 @@ public class ConnexionScreen extends JFrame implements ActionListener {
      * @param message
      */
     private void showSuccessMessage(String message) {
-        JOptionPane.showMessageDialog(ConnexionScreen.this, message);
+        JOptionPane.showMessageDialog(MainScreen.this, message);
     }
 
     

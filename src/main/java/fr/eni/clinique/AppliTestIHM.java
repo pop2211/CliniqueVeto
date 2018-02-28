@@ -6,7 +6,7 @@ import fr.eni.clinique.common.AppConstants;
 import fr.eni.clinique.common.exception.TechnicalException;
 import fr.eni.clinique.ihm.controller.PersonnelController;
 import fr.eni.clinique.ihm.model.PersonnelModel;
-import fr.eni.clinique.ihm.screen.ConnexionScreen;
+import fr.eni.clinique.ihm.screen.MainScreen;
 
 public class AppliTestIHM {
 
@@ -24,10 +24,10 @@ public class AppliTestIHM {
                     PersonnelController personnelController = new PersonnelController(personnelModel);
                     
                     // Create A Clinique View
-                    ConnexionScreen screen = new ConnexionScreen(AppConstants.APP_NAME, personnelModel);
+                    MainScreen screen = new MainScreen(AppConstants.APP_NAME, personnelModel, personnelController);
                     
                     // The Controller listen to the View
-                    screen.setActionListener(personnelController);
+                    //screen.setActionListener(personnelController);
                     
                     screen.setVisible(true); // Fenetre visible
                     screen.setLocationRelativeTo(null); // Centré sur l'ecran

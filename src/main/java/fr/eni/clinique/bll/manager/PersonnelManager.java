@@ -6,6 +6,6 @@ import fr.eni.clinique.bo.Personnel;
 
 public interface PersonnelManager extends GenericManager<Personnel, Integer>{
 	
-	void connexion(Personnel personnel) throws ManagerException;
+	Boolean connexion(Personnel personnel) throws ManagerException;
 
 }

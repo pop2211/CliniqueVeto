@@ -82,8 +82,8 @@ public class PersonnelManagerImpl implements PersonnelManager {
 		
 	}
 	
-	public void connexion(Personnel personnel) throws ManagerException {
-		
+	public Boolean connexion(Personnel personnel) throws ManagerException {
+		Boolean testCo = false;
         try {
         	
         	ObjectUtil.checkNotBlankWithMessage(personnel.getNom(), "Le login est obligatoire");
@@ -95,6 +95,9 @@ public class PersonnelManagerImpl implements PersonnelManager {
             	if(personnel_nom_mdp.isEmpty() || personnel_nom_mdp.size() != 1) {
             		throw new IllegalArgumentException("Le mot de passe est incorrecte");
             	}
+            	else {
+            		testCo = true;
+            	}
             }
             else{
             	throw new IllegalArgumentException("Le nom d'utilisateur n'existe pas");
@@ -105,6 +108,7 @@ public class PersonnelManagerImpl implements PersonnelManager {
         } catch (Exception e) {
             throw new TechnicalException(e.getMessage(), e);
         }
+        return testCo;
      }
 	
 	private void validerPersonnel(Personnel personnel) throws ManagerException {
