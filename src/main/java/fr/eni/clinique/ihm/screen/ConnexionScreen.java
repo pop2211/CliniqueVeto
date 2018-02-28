@@ -5,36 +5,36 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import fr.eni.clinique.common.AppConstants;
 import fr.eni.clinique.ihm.listener.PersonnelActionListener;
 import fr.eni.clinique.ihm.model.PersonnelModel;
 import fr.eni.clinique.ihm.screen.login.InternalFrameLogin;
 
-
 public class ConnexionScreen extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private JDesktopPane desktopPane;
 	private JMenuBar menuBarre;
-	private JMenu menuAgenda;
 	private InternalFrameLogin frameLogin;
-	
-	private PersonnelActionListener actionListener;
+	private JButton frameLoginBtn;
 
+	private PersonnelActionListener actionListener;
 
 	public ConnexionScreen(String title, PersonnelModel model) {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		int largeurFen = (int) Math.round(screenSize.width*0.8);
-		int hauteurFen = (int) Math.round(screenSize.height*0.8);
+		int largeurFen = (int) Math.round(screenSize.width * 0.8);
+		int hauteurFen = (int) Math.round(screenSize.height * 0.8);
 		setBounds(0, 0, largeurFen, hauteurFen);
 		setTitle(title);
 
@@ -46,11 +46,15 @@ public class ConnexionScreen extends JFrame implements ActionListener {
 
 		// Barre de menus
 		setJMenuBar(getMenuBarre());
-		
-		//Frame interne login
+
+		// Frame interne login
 		desktopPane.add(getFrameLogin());
 		getFrameLogin().setVisible(true);
 
+		frameLoginBtn = getFrameLogin().getValidateButton();
+		System.out.println("FAIL COMMING");
+		frameLoginBtn.addActionListener(this);
+		System.out.println("AFTER FAIL ?");
 	}
 
 	public void createMenuBar() {
@@ -73,7 +77,7 @@ public class ConnexionScreen extends JFrame implements ActionListener {
 
 		// Menu Agenda
 		menuItem = new JMenuItem("Ecran");
-		menuBarre.add(menuItem);		
+		menuBarre.add(menuItem);
 		menuItem.setActionCommand("ecran");
 		menuItem.addActionListener(this);
 
@@ -89,11 +93,14 @@ public class ConnexionScreen extends JFrame implements ActionListener {
 		case "fermer":
 			System.exit(0);
 			break;
-
 		case "ecran":
 			getFrameLogin().setVisible(true);
 			break;
-
+		case "connexion":
+			System.out.println("CLIC CONNEXION");
+			//si connexion OK:
+			getFrameLogin().setVisible(false);
+			break;
 		default:
 			System.out.println("Probleme e=" + e);
 		}
@@ -114,24 +121,28 @@ public class ConnexionScreen extends JFrame implements ActionListener {
 	}
 
 	public InternalFrameLogin getFrameLogin() {
-		if(frameLogin== null){
+		if (frameLogin == null) {
 			frameLogin = new InternalFrameLogin();
 		}
 		return frameLogin;
 	}
-	
-	 public void setActionListener(PersonnelActionListener actionListener) {
-	        
-	        if(actionListener != null) {
-	            
-	            this.actionListener = actionListener;
-	            
-	            /*try {
 
-	            } catch (Exception e) {
-	                showFailureMessage(e.getMessage());
-	            }*/
-	        }
-	    }
+	public void setActionListener(PersonnelActionListener aL) {
+
+		System.out.println("MAINSCREEN EXEC setActionListener (1)");
+
+		if (aL != null) {
+
+			System.out.println("MAINSCREEN EXEC setActionListener (2)");
+
+			this.actionListener = aL;
+
+			/*
+			 * try {
+			 * 
+			 * } catch (Exception e) { showFailureMessage(e.getMessage()); }
+			 */
+		}
+	}
 
 }
