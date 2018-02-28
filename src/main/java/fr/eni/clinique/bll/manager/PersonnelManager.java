@@ -14,4 +14,6 @@ public interface PersonnelManager {
     void Personnel(Personnel personnel) throws ManagerException;
     
     void removePersonnel(Personnel personnel) throws ManagerException;
+
+	void connexion(Personnel personnel) throws ManagerException;
 }
