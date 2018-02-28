@@ -1,4 +1,4 @@
-package fr.eni.clinique.ihm;
+package fr.eni.clinique.ihm.model;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -12,18 +12,20 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.SwingUtilities;
 
+import fr.eni.clinique.ihm.screen.InternalFrameLogin;
 
-public class MDIAppExample extends JFrame implements ActionListener {
+
+public class CliniqueModel extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	
 	private JDesktopPane desktopPane;
 	private JMenuBar menuBarre;
 	private JMenu menuAgenda;
-	private InternalFrameLogin frm1;
+	private InternalFrameLogin frameLogin;
 
 
-	public MDIAppExample() {
+	public CliniqueModel() {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -39,8 +41,9 @@ public class MDIAppExample extends JFrame implements ActionListener {
 		// Barre de menus
 		setJMenuBar(getMenuBarre());
 		
-		//Frame interne exemple		
-		desktopPane.add(getFrmLogin());
+		//Frame interne login
+		desktopPane.add(getFrameLogin());
+		getFrameLogin().setVisible(true);
 
 	}
 
@@ -50,7 +53,7 @@ public class MDIAppExample extends JFrame implements ActionListener {
 
 			@Override
 			public void run() {
-				MDIAppExample ecran = new MDIAppExample();
+				CliniqueModel ecran = new CliniqueModel();
 				ecran.setVisible(true);
 			}
 		});
@@ -96,7 +99,7 @@ public class MDIAppExample extends JFrame implements ActionListener {
 
 		case "ecran":
 			System.out.println("coucou");
-			getFrmLogin().setVisible(true);
+			getFrameLogin().setVisible(true);
 			break;
 
 		default:
@@ -118,11 +121,11 @@ public class MDIAppExample extends JFrame implements ActionListener {
 		return menuBarre;
 	}
 
-	public InternalFrameLogin getFrmLogin() {
-		if(frm1== null){
-			frm1 = new InternalFrameLogin();
+	public InternalFrameLogin getFrameLogin() {
+		if(frameLogin== null){
+			frameLogin = new InternalFrameLogin();
 		}
-		return frm1;
+		return frameLogin;
 	}
 
 }
