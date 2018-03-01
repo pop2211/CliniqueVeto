@@ -5,7 +5,6 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -14,7 +13,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import fr.eni.clinique.ihm.controller.PersonnelController;
-import fr.eni.clinique.ihm.listener.PersonnelActionListener;
 import fr.eni.clinique.ihm.model.PersonnelModel;
 import fr.eni.clinique.ihm.screen.login.InternalFrameLogin;
 
@@ -36,8 +34,8 @@ public class MainScreen extends JFrame implements ActionListener {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		int largeurFen = (int) Math.round(screenSize.width * 0.8);
-		int hauteurFen = (int) Math.round(screenSize.height * 0.8);
+		int largeurFen = (int) Math.round(screenSize.width * 0.6);
+		int hauteurFen = (int) Math.round(screenSize.height * 0.6);
 		setBounds(0, 0, largeurFen, hauteurFen);
 		setTitle(title);
 
@@ -58,28 +56,40 @@ public class MainScreen extends JFrame implements ActionListener {
 	}
 
 	public void createMenuBar() {
-
+								
 		// Menu Fichier
 		JMenu menu = new JMenu("Fichier");
 		menuBarre.add(menu);
-
-		// Sous menu Déconnexion
-		JMenuItem menuItem = new JMenuItem("Déconnexion");
-		menuItem.setActionCommand("deconnexion");
-		menuItem.addActionListener(this);
-		menu.add(menuItem);
-
-		// Sous menu fermer
-		menuItem = new JMenuItem("Fermer");
-		menuItem.setActionCommand("fermer");
-		menuItem.addActionListener(this);
-		menu.add(menuItem);
-
-		// Menu Agenda
-		menuItem = new JMenuItem("Ecran");
-		menuBarre.add(menuItem);
-		menuItem.setActionCommand("ecran");
-		menuItem.addActionListener(this);
+			
+			// Sous menu Déconnexion
+			JMenuItem menuItem = new JMenuItem("Déconnexion");
+			menuItem.setActionCommand("deconnexion");
+			menuItem.addActionListener(this);
+			menu.add(menuItem);
+			
+			// Sous menu fermer
+			menuItem = new JMenuItem("Fermer");
+			menuItem.setActionCommand("fermer");
+			menuItem.addActionListener(this);
+			menu.add(menuItem);
+		
+		//Menu Gestion Des Rendez-vous
+		JMenu menuGestionDesRendezvous = new JMenu("Gestion des rendez-vous");
+		menuGestionDesRendezvous.setActionCommand("gestionRDV");
+		menuGestionDesRendezvous.addActionListener(this);
+		menuBarre.add(menuGestionDesRendezvous);
+		
+		//Menu Agenda
+		JMenu menuAgenda = new JMenu("Agenda");
+		menuAgenda.setActionCommand("gestionAgenda");
+		menuAgenda.addActionListener(this);
+		menuBarre.add(menuAgenda);
+		
+		//Menu GestionDuPersonnel
+		JMenu menuGestionDuPersonnel = new JMenu("Gestion du Personnel");
+		menuGestionDuPersonnel.setActionCommand("gestionPersonnel");
+		menuGestionDuPersonnel.addActionListener(this);
+		menuBarre.add(menuGestionDuPersonnel);
 
 	}
 
@@ -139,5 +149,4 @@ public class MainScreen extends JFrame implements ActionListener {
     private void showSuccessMessage(String message) {
         JOptionPane.showMessageDialog(MainScreen.this, message);
     }
-    
 }
