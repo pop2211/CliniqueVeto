@@ -39,7 +39,7 @@ public class MainScreen extends JFrame implements ActionListener {
 	private JMenu menuGestionDesRendezvous;
 	private JMenu menuAgenda;
 	private JMenu menuGestionDuPersonnel;
-	private JMenu menuGestionDesAnimaux;
+	private JMenuItem menuGestionDesAnimaux;
 	private InternalFrameLogin frameLogin;
 	private ClientScreen clientScreen;
 	private AnimalScreen animalScreen;
@@ -116,16 +116,10 @@ public class MainScreen extends JFrame implements ActionListener {
 		menuBarre.add(menuGestionDuPersonnel);
 		
 		//Menu Gestion des animaux
-		menuGestionDesAnimaux = new JMenu("Gestion des Animaux");
+		menuGestionDesAnimaux = new JMenuItem("Gestion des Animaux");
 		menuGestionDesAnimaux.setActionCommand("gestionAnimaux");
 		menuGestionDesAnimaux.addActionListener(this);
 		menuBarre.add(menuGestionDesAnimaux);
-		
-			// Sous menu fermer
-			menuItem = new JMenuItem("Gestion des Animaux");
-			menuItem.setActionCommand("gestionAnimaux");
-			menuItem.addActionListener(this);
-			menuGestionDesAnimaux.add(menuItem);
 
 		MenuProfil(getProfil());
 	}
