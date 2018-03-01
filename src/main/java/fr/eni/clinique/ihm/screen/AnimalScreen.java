@@ -12,8 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import fr.eni.clinique.dal.dao.AnimalDAO;
-import fr.eni.clinique.dal.dao.impl.AnimalJDBCDAOImpl;
+import fr.eni.clinique.dal.dao.RaceDAO;
+import fr.eni.clinique.dal.dao.impl.RaceJDBCDAOImpl;
 import fr.eni.clinique.dal.exception.DaoException;
 import fr.eni.clinique.ihm.controller.PersonnelController;
 import fr.eni.clinique.ihm.model.PersonnelModel;
@@ -29,7 +29,7 @@ public class AnimalScreen extends JInternalFrame {
 	private JTextField codeTbx;
 	private JTextField nomTbx;
 	private JTextField couleurTbx;
-	AnimalDAO animalDAO = new AnimalJDBCDAOImpl();
+	RaceDAO raceDAO = new RaceJDBCDAOImpl();
 	
 	public AnimalScreen(PersonnelModel model, PersonnelController controller) {
 		super("Gestion des Animaux", true, true, true,true);
@@ -143,7 +143,7 @@ public class AnimalScreen extends JInternalFrame {
 		gbc_raceCbx.gridx = 4;
 		gbc_raceCbx.gridy = 7;
 		try {
-			raceCbx.addItem(animalDAO.selectByEspece(especeCbx.getSelectedItem().toString()));
+			raceCbx.addItem(raceDAO.selectByEspece(especeCbx.getSelectedItem().toString()));
 		} catch (DaoException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

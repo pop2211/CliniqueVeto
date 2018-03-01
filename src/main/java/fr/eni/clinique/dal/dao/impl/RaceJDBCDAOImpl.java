@@ -22,6 +22,7 @@ public class RaceJDBCDAOImpl implements RaceDAO{
     private static final String DELETE_QUERY = "DELETE FROM Races WHERE Race = ? AND Espece = ?";
     //private static final String TRUNCATE_QUERY = "TRUNCATE TABLE Races";
     private static final String TRUNCATE_QUERY = "DELETE FROM Races";
+	private static final String SELECT_BY_ESPECE_QUERY = "SELECT Race FROM Races WHERE Espece = ?";
     
     private static RaceJDBCDAOImpl instance;
     
@@ -164,6 +165,30 @@ public class RaceJDBCDAOImpl implements RaceDAO{
         } finally {
             ResourceUtil.safeClose(connection, statement);
         }
+	}
+
+	@Override
+	public List<Race> selectByEspece(String espece) throws DaoException {
+		Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        List<Race> liste = new ArrayList<Race>();
+        
+        try {
+            connection = JdbcTools.get();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(SELECT_BY_ESPECE_QUERY);
+
+            while (resultSet.next()) { 
+				liste.add(resultSetEntryToRace(resultSet));	
+            }
+        } catch(SQLException e) {
+            throw new DaoException(e.getMessage(), e);
+        } finally {
+            ResourceUtil.safeClose(connection, statement, resultSet);
+        }
+        
+        return liste;
 	}
 
 }

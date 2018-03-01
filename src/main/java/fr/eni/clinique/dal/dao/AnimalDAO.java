@@ -7,6 +7,6 @@ import fr.eni.clinique.dal.exception.DaoException;
 
 public interface AnimalDAO extends GenericDAO<Animal, Integer> {	
 
-	List<Animal> selectByEspece(String espece) throws DaoException;
+	
 	
 }

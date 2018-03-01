@@ -199,24 +199,6 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
         }
 	}
 
-	@Override
-	public List<Animal> selectByEspece(String espece) throws DaoException {
-		Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        List<Animal> liste = new ArrayList<Animal>();
-        try {
-            connection = JdbcTools.get();
-            statement = connection.prepareStatement(SELECT_BY_ESPECE_QUERY);
-            statement.setString(1, espece);
-
-
-        } catch(SQLException e) {
-            throw new DaoException(e.getMessage(), e);
-        } finally {
-            ResourceUtil.safeClose(connection, statement, resultSet);
-        }
-        return liste;
-	}
+	
 	
 }
