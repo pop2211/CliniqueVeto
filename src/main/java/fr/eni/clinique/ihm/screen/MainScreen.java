@@ -38,6 +38,7 @@ public class MainScreen extends JFrame implements ActionListener {
 	private JMenu menuGestionDesRendezvous;
 	private JMenu menuAgenda;
 	private JMenu menuGestionDuPersonnel;
+	private JMenu menuGestionDesAnimaux;
 	private InternalFrameLogin frameLogin;
 	private ClientScreen clientScreen;
 	private AnimalScreen animalScreen;
@@ -63,25 +64,12 @@ public class MainScreen extends JFrame implements ActionListener {
 
 		// Barre de menus
 		setJMenuBar(getMenuBarre());
-
-		/*
-		clientScreen = getClientScreen(model, controller);
-		desktopPane.add(clientScreen);
-		clientScreen.setVisible(true);
 		
-		animalScreen = getAnimalScreen(model, controller);
-		desktopPane.add(animalScreen);
-		animalScreen.setVisible(true);
-		*/
-
 		// Frame interne login
 		frameLogin = getFrameLogin(model, controller);
 		desktopPane.add(frameLogin);
 		frameLogin.setVisible(true);
 		
-		//frame Client Screen
-		/*clientScreen = getClientScreen(model, controller);
-		desktopPane.add(clientScreen);*/
 	}
 
 	public void createMenuBar() {
@@ -125,6 +113,18 @@ public class MainScreen extends JFrame implements ActionListener {
 		menuGestionDuPersonnel.setActionCommand("gestionPersonnel");
 		menuGestionDuPersonnel.addActionListener(this);
 		menuBarre.add(menuGestionDuPersonnel);
+		
+		//Menu Gestion des animaux
+		menuGestionDesAnimaux = new JMenu("Gestion des Animaux");
+		menuGestionDesAnimaux.setActionCommand("gestionAnimaux");
+		menuGestionDesAnimaux.addActionListener(this);
+		menuBarre.add(menuGestionDesAnimaux);
+		
+			// Sous menu fermer
+			menuItem = new JMenuItem("Gestion des Animaux");
+			menuItem.setActionCommand("gestionAnimaux");
+			menuItem.addActionListener(this);
+			menuGestionDesAnimaux.add(menuItem);
 
 		MenuProfil(getProfil());
 	}
@@ -159,16 +159,19 @@ public class MainScreen extends JFrame implements ActionListener {
 			System.exit(0);
 			break;
 		case "gestionClients":
-			//frame Client Screen
+			//frame GestionCllient
 			clientScreen = getClientScreen(model, controller);
 			desktopPane.add(clientScreen);
 			clientScreen.setVisible(true);
-			
-			
-			
+			break;
+		case "gestionAnimaux":
+			//frame GestionAnimaux
+			animalScreen = getAnimalScreen(model, controller);
+			desktopPane.add(animalScreen);
+			animalScreen.setVisible(true);
 			break;
 		default:
-			System.out.println("Probleme e=" + e);
+			System.out.println("Probleme Event = " + e);
 		}
 
 	}
@@ -195,15 +198,14 @@ public class MainScreen extends JFrame implements ActionListener {
 	
 	public ClientScreen getClientScreen(PersonnelModel model, PersonnelController controller) {
 		if(clientScreen == null) {
-			System.out.println("new ClientScreen");
 			clientScreen = new ClientScreen(model, controller);
 		}
 		return clientScreen;
 	}
 	
 	public AnimalScreen getAnimalScreen(PersonnelModel model, PersonnelController controller) {
+		System.out.println("Animal");
 		if(animalScreen == null) {
-			System.out.println("new AnimalScreen");
 			animalScreen = new AnimalScreen(model, controller);
 		}
 		return animalScreen;

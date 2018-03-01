@@ -1,66 +1,42 @@
 package fr.eni.clinique.ihm.screen;
 
-import java.awt.EventQueue;
-
-import javax.swing.JInternalFrame;
-import javax.swing.JButton;
-import java.awt.BorderLayout;
-import javax.swing.JSplitPane;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.SystemColor;
+
+import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import fr.eni.clinique.bo.Animal;
 import fr.eni.clinique.dal.dao.AnimalDAO;
 import fr.eni.clinique.dal.dao.impl.AnimalJDBCDAOImpl;
 import fr.eni.clinique.dal.exception.DaoException;
 import fr.eni.clinique.ihm.controller.PersonnelController;
 import fr.eni.clinique.ihm.model.PersonnelModel;
 
-import javax.swing.JTextField;
-import java.awt.Color;
-import java.awt.SystemColor;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class AnimalScreen extends JInternalFrame {
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = -1179642960437851179L;
+	
+	private PersonnelModel model;
+	private PersonnelController controller;
 	
 	private JTextField tatouageTbx;
 	private JTextField codeTbx;
 	private JTextField nomTbx;
 	private JTextField couleurTbx;
 	AnimalDAO animalDAO = new AnimalJDBCDAOImpl();
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AnimalScreen frame = new AnimalScreen();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
+	
 	public AnimalScreen(PersonnelModel model, PersonnelController controller) {
-		setBounds(100, 100, 450, 300);
+		super("Gestion des Animaux", true, true, true,true);
+		this.controller = controller;
+		this.model = model;
+		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
+		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -205,6 +181,7 @@ public class AnimalScreen extends JInternalFrame {
 		gbc_annulerBtn.gridy = 9;
 		getContentPane().add(annulerBtn, gbc_annulerBtn);
 
+		this.pack();
 	}
 
 }

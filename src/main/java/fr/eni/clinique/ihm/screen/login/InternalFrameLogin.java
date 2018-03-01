@@ -42,15 +42,16 @@ public class InternalFrameLogin extends JInternalFrame{
 	
 	public InternalFrameLogin(PersonnelModel model, PersonnelController controller) {
 		//Ecran avec un titre, redimensionable, fermable, agrandissable, iconifiable
-		super("Connexion", true, true, true,true);
+		super("Connexion", true, false, true, false);
 		this.controller = controller;
 		this.model = model;
 		
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		setBounds(100, 100,400, 200);
 		
-		loginInput = createTextField(AppConstants.EMPTY, "Votre Nom");
-		passwordInput = createPasswordField(AppConstants.EMPTY, "Votre MDP");
+		//AppConstants.EMPTY
+		loginInput = createTextField("u", "Votre Nom");
+		passwordInput = createPasswordField("u", "Votre MDP");
 		
 		setContentPane(createMainPanel());
 		

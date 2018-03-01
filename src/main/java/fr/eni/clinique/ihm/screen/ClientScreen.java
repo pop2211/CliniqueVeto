@@ -19,7 +19,12 @@ import fr.eni.clinique.ihm.controller.PersonnelController;
 import fr.eni.clinique.ihm.model.PersonnelModel;
 
 public class ClientScreen extends JInternalFrame {
+	
 	private static final long serialVersionUID = -9075041539974261255L;
+	
+	private PersonnelModel model;
+	private PersonnelController controller;
+	
 	private JTextField codeTbx;
 	private JTextField textField_1;
 	private JTextField textField_2;
@@ -30,27 +35,13 @@ public class ClientScreen extends JInternalFrame {
 	private JTextField codePostalTbx;
 	private JTextField villeTbx;
 	private JTable animauxTable;
-
-	/**
-	 * Launch the application.
-	 */
-	/*public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ClientScreen frame = new ClientScreen();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
-
-	/**
-	 * Create the frame.
-	 */
+	
 	public ClientScreen(PersonnelModel model, PersonnelController controller) {
+		super("Gestion des Clients", true, true, true,true);
+		this.controller = controller;
+		this.model = model;
+		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
+		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -286,5 +277,6 @@ public class ClientScreen extends JInternalFrame {
 		gbc_editerAnimalBtn.gridy = 9;
 		getContentPane().add(editerAnimalBtn, gbc_editerAnimalBtn);
 
+		this.pack();
 	}
 }
