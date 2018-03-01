@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.clinique.bo.Animal;
+import fr.eni.clinique.bo.Personnel;
 import fr.eni.clinique.bo.Race;
 import fr.eni.clinique.common.util.ResourceUtil;
 import fr.eni.clinique.dal.dao.AnimalDAO;
@@ -22,8 +23,8 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
 	private static final String UPDATE_QUERY = "UPDATE Animaux SET NomAnimal=?, Sexe=?, Couleur=?, Race=?, Espece=?, CodeClient=?, Tatouage=?, Antecedents=?, Archive=? WHERE CodeAnimal=?";
     private static final String INSERT_QUERY = "INSERT INTO Animaux(NomAnimal, Sexe, Couleur, Race, Espece, CodeClient, Tatouage, Antecedents, Archive) VALUES (?,?,?,?,?,?,?,?,?)";
     private static final String DELETE_QUERY = "DELETE FROM Animaux WHERE CodeAnimal=?";
-    //private static final String TRUNCATE_QUERY = "TRUNCATE TABLE Animaux";
     private static final String TRUNCATE_QUERY = "DELETE FROM Animaux";
+	private static final String SELECT_BY_ESPECE_QUERY = "SELECT Race From Races WHERE Espece = ?";
     
     private static AnimalJDBCDAOImpl instance;
     
@@ -196,6 +197,26 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
         } finally {
             ResourceUtil.safeClose(connection, statement);
         }
+	}
+
+	@Override
+	public List<Animal> selectByEspece(String espece) throws DaoException {
+		Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        List<Animal> liste = new ArrayList<Animal>();
+        try {
+            connection = JdbcTools.get();
+            statement = connection.prepareStatement(SELECT_BY_ESPECE_QUERY);
+            statement.setString(1, espece);
+
+
+        } catch(SQLException e) {
+            throw new DaoException(e.getMessage(), e);
+        } finally {
+            ResourceUtil.safeClose(connection, statement, resultSet);
+        }
+        return liste;
 	}
 	
 }

@@ -1,7 +1,12 @@
 package fr.eni.clinique.dal.dao;
 
-import fr.eni.clinique.bo.Animal;
+import java.util.List;
 
-public interface AnimalDAO extends GenericDAO<Animal, Integer> {
+import fr.eni.clinique.bo.Animal;
+import fr.eni.clinique.dal.exception.DaoException;
+
+public interface AnimalDAO extends GenericDAO<Animal, Integer> {	
+
+	List<Animal> selectByEspece(String espece) throws DaoException;
 	
 }
