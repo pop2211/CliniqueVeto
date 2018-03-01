@@ -35,10 +35,11 @@ public class MainScreen extends JFrame implements ActionListener {
 
 	private JDesktopPane desktopPane;
 	private JMenuBar menuBarre;
-	private InternalFrameLogin frameLogin;
 	private JMenu menuGestionDesRendezvous;
 	private JMenu menuAgenda;
 	private JMenu menuGestionDuPersonnel;
+	private InternalFrameLogin frameLogin;
+	private ClientScreen clientScreen;
 	
 
 	public MainScreen(String title, PersonnelModel model, PersonnelController controller) {
@@ -66,7 +67,10 @@ public class MainScreen extends JFrame implements ActionListener {
 		frameLogin = getFrameLogin(model, controller);
 		desktopPane.add(frameLogin);
 		frameLogin.setVisible(true);
-
+		
+		//frame Client Screen
+		/*clientScreen = getClientScreen(model, controller);
+		desktopPane.add(clientScreen);*/
 	}
 
 	public void createMenuBar() {
@@ -92,6 +96,12 @@ public class MainScreen extends JFrame implements ActionListener {
 		menuGestionDesRendezvous.setActionCommand("gestionRDV");
 		menuGestionDesRendezvous.addActionListener(this);
 		menuBarre.add(menuGestionDesRendezvous);
+		
+			// Sous menu fermer
+			menuItem = new JMenuItem("Gestion des clients");
+			menuItem.setActionCommand("gestionClients");
+			menuItem.addActionListener(this);
+			menuGestionDesRendezvous.add(menuItem);
 		
 		//Menu Agenda
 		menuAgenda = new JMenu("Agenda");
@@ -137,8 +147,11 @@ public class MainScreen extends JFrame implements ActionListener {
 		case "fermer":
 			System.exit(0);
 			break;
-		case "ecran":
-			frameLogin.setVisible(true);
+		case "gestionClients":
+			//frame Client Screen
+			clientScreen = getClientScreen(model, controller);
+			desktopPane.add(clientScreen);
+			clientScreen.setVisible(true);
 			break;
 		default:
 			System.out.println("Probleme e=" + e);
@@ -164,6 +177,13 @@ public class MainScreen extends JFrame implements ActionListener {
 			frameLogin = new InternalFrameLogin(model, controller);
 		}
 		return frameLogin;
+	}
+	
+	public ClientScreen getClientScreen(PersonnelModel model, PersonnelController controller) {
+		if(clientScreen == null) {
+			clientScreen = new ClientScreen(model, controller);
+		}
+		return clientScreen;
 	}
     
     /**

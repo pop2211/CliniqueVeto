@@ -1,23 +1,25 @@
 package fr.eni.clinique.ihm.screen;
 
-import java.awt.EventQueue;
-
-import javax.swing.JInternalFrame;
-import javax.swing.SwingConstants;
-import javax.swing.JButton;
-import java.awt.BorderLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.ImageIcon;
-import java.awt.Insets;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JTable;
 import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
+import fr.eni.clinique.ihm.controller.PersonnelController;
+import fr.eni.clinique.ihm.model.PersonnelModel;
 
 public class ClientScreen extends JInternalFrame {
+	private static final long serialVersionUID = -9075041539974261255L;
 	private JTextField codeTbx;
 	private JTextField textField_1;
 	private JTextField textField_2;
@@ -32,7 +34,7 @@ public class ClientScreen extends JInternalFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -43,13 +45,12 @@ public class ClientScreen extends JInternalFrame {
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the frame.
 	 */
-	public ClientScreen() {
-		setBounds(100, 100, 598, 440);
+	public ClientScreen(PersonnelModel model, PersonnelController controller) {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
