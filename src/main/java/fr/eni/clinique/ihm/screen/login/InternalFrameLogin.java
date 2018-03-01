@@ -2,10 +2,15 @@ package fr.eni.clinique.ihm.screen.login;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JInternalFrame;
@@ -58,6 +63,15 @@ public class InternalFrameLogin extends JInternalFrame{
 
 	private JButton ButtonValider()	{
 		validateButton = new JButton("Valider");
+		
+		Image img = null;
+		try {
+			img = ImageIO.read(new File("src//main//resources//images//ico//done_16p.png"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		validateButton.setIcon(new ImageIcon(img));
+		
 	    validateButton.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
