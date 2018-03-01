@@ -197,17 +197,18 @@ public class MainScreen extends JFrame implements ActionListener {
 	}
 	
 	public ClientScreen getClientScreen(PersonnelModel model, PersonnelController controller) {
-		if(clientScreen == null) {
+		/*if(clientScreen == null) {
 			clientScreen = new ClientScreen(model, controller);
-		}
+		}*/
+		clientScreen = new ClientScreen(model, controller);
 		return clientScreen;
 	}
 	
 	public AnimalScreen getAnimalScreen(PersonnelModel model, PersonnelController controller) {
-		System.out.println("Animal");
-		if(animalScreen == null) {
+		/*if(animalScreen == null) {
 			animalScreen = new AnimalScreen(model, controller);
-		}
+		}*/
+		animalScreen = new AnimalScreen(model, controller);
 		return animalScreen;
 	}
     

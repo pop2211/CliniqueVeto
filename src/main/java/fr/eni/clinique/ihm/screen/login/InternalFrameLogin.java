@@ -22,7 +22,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import fr.eni.clinique.bo.Personnel;
-import fr.eni.clinique.common.AppConstants;
 import fr.eni.clinique.ihm.controller.PersonnelController;
 import fr.eni.clinique.ihm.model.PersonnelModel;
 import fr.eni.clinique.ihm.screen.MainScreen;
