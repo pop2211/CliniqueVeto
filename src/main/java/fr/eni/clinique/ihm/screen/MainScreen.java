@@ -22,10 +22,24 @@ public class MainScreen extends JFrame implements ActionListener {
 	
 	private PersonnelModel model;
 	private PersonnelController controller;
+	private String profil = "";
+
+	public String getProfil() {
+		return profil;
+	}
+
+	public void setProfil(String profil) {
+		this.profil = profil;
+		MenuProfil(profil);
+	}
 
 	private JDesktopPane desktopPane;
 	private JMenuBar menuBarre;
 	private InternalFrameLogin frameLogin;
+	private JMenu menuGestionDesRendezvous;
+	private JMenu menuAgenda;
+	private JMenu menuGestionDuPersonnel;
+	
 
 	public MainScreen(String title, PersonnelModel model, PersonnelController controller) {
 		this.controller = controller;
@@ -62,8 +76,8 @@ public class MainScreen extends JFrame implements ActionListener {
 		menuBarre.add(menu);
 			
 			// Sous menu Déconnexion
-			JMenuItem menuItem = new JMenuItem("Déconnexion");
-			menuItem.setActionCommand("deconnexion");
+			JMenuItem menuItem = new JMenuItem("Connexion / Déconnexion");
+			menuItem.setActionCommand("deco/reco");
 			menuItem.addActionListener(this);
 			menu.add(menuItem);
 			
@@ -74,31 +88,51 @@ public class MainScreen extends JFrame implements ActionListener {
 			menu.add(menuItem);
 		
 		//Menu Gestion Des Rendez-vous
-		JMenu menuGestionDesRendezvous = new JMenu("Gestion des rendez-vous");
+		menuGestionDesRendezvous = new JMenu("Gestion des rendez-vous");
 		menuGestionDesRendezvous.setActionCommand("gestionRDV");
 		menuGestionDesRendezvous.addActionListener(this);
 		menuBarre.add(menuGestionDesRendezvous);
 		
 		//Menu Agenda
-		JMenu menuAgenda = new JMenu("Agenda");
+		menuAgenda = new JMenu("Agenda");
 		menuAgenda.setActionCommand("gestionAgenda");
 		menuAgenda.addActionListener(this);
 		menuBarre.add(menuAgenda);
 		
 		//Menu GestionDuPersonnel
-		JMenu menuGestionDuPersonnel = new JMenu("Gestion du Personnel");
+		menuGestionDuPersonnel = new JMenu("Gestion du Personnel");
 		menuGestionDuPersonnel.setActionCommand("gestionPersonnel");
 		menuGestionDuPersonnel.addActionListener(this);
 		menuBarre.add(menuGestionDuPersonnel);
 
+		MenuProfil(getProfil());
+	}
+	
+	public void MenuProfil(String profil) {
+		if(profil != "") {
+			menuGestionDesRendezvous.setVisible(true);
+			menuAgenda.setVisible(true);
+			menuGestionDuPersonnel.setVisible(true);
+		}
+		else {
+			menuGestionDesRendezvous.setVisible(false);
+			menuAgenda.setVisible(false);
+			menuGestionDuPersonnel.setVisible(false);
+		}
 	}
 
 	// Réagir aux clicks sur les menus
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
-		case "deconnexion":
-			System.out.println("Deconnexion");
+		case "deco/reco":
+			if(profil == "")
+			{
+				frameLogin.setVisible(true);
+			}
+			else {
+				setProfil("");
+			}
 			break;
 		case "fermer":
 			System.exit(0);
