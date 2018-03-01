@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 
 import fr.eni.clinique.ihm.controller.PersonnelController;
 import fr.eni.clinique.ihm.model.PersonnelModel;
+import fr.eni.clinique.ihm.screen.client.ClientScreen;
 import fr.eni.clinique.ihm.screen.login.InternalFrameLogin;
 
 public class MainScreen extends JFrame implements ActionListener {
