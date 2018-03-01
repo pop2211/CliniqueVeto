@@ -26,8 +26,6 @@ public class ClientScreen extends JInternalFrame {
 	private PersonnelController controller;
 	
 	private JTextField codeTbx;
-	private JTextField textField_1;
-	private JTextField textField_2;
 	private JTextField nomTbx;
 	private JTextField prenomTbx;
 	private JTextField adresse1Tbx;
