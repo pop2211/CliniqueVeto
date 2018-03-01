@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -19,6 +20,7 @@ import fr.eni.clinique.bo.Personnel;
 import fr.eni.clinique.common.AppConstants;
 import fr.eni.clinique.ihm.controller.PersonnelController;
 import fr.eni.clinique.ihm.model.PersonnelModel;
+import fr.eni.clinique.ihm.screen.MainScreen;
 
 public class InternalFrameLogin extends JInternalFrame{
 	
@@ -31,6 +33,7 @@ public class InternalFrameLogin extends JInternalFrame{
     private JTextField loginInput;
     private JTextField passwordInput;
     private JButton validateButton;
+    private JMenu menu;
 	
 	public InternalFrameLogin(PersonnelModel model, PersonnelController controller) {
 		//Ecran avec un titre, redimensionable, fermable, agrandissable, iconifiable
@@ -49,11 +52,11 @@ public class InternalFrameLogin extends JInternalFrame{
         addFormRow("Nom", loginInput, 1);
         addFormRow("Mot de passe", passwordInput, 2);    
         
-        mainPanel.add(ButtonValdier(), createGridBagConstraints(0.7, 1, 3));
+        mainPanel.add(ButtonValider(), createGridBagConstraints(0.7, 1, 3));
      
 	}
 
-	private JButton ButtonValdier()	{
+	private JButton ButtonValider()	{
 		validateButton = new JButton("Valider");
 	    validateButton.addActionListener(new ActionListener() {
 	        @Override
@@ -117,7 +120,11 @@ public class InternalFrameLogin extends JInternalFrame{
         	testLoginPass = controller.connectPersonnel(identifiants);
         	
             if(testLoginPass){
-            	showSuccessMessage("Connexion réussie !");
+            	
+            	this.setVisible(false);
+            	//acces au MainScreen
+            	MainScreen parent = (MainScreen) this.getTopLevelAncestor();
+            	parent.setProfil("test");
             }
             
         } catch (Exception e) {
@@ -125,8 +132,8 @@ public class InternalFrameLogin extends JInternalFrame{
         }
         return testLoginPass;
     }
-    
-    /**
+
+	/**
      * Read Personnel login and password from the UI.
      * 
      * @return
@@ -138,6 +145,10 @@ public class InternalFrameLogin extends JInternalFrame{
         
         return personnel;
     }
+    
+    public void MenuVisible() {
+		this.menu.setVisible(true);
+	}
     
     /**
      * Show TechnicalError.
