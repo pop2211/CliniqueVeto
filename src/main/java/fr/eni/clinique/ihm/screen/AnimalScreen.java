@@ -18,6 +18,8 @@ import fr.eni.clinique.bo.Animal;
 import fr.eni.clinique.dal.dao.AnimalDAO;
 import fr.eni.clinique.dal.dao.impl.AnimalJDBCDAOImpl;
 import fr.eni.clinique.dal.exception.DaoException;
+import fr.eni.clinique.ihm.controller.PersonnelController;
+import fr.eni.clinique.ihm.model.PersonnelModel;
 
 import javax.swing.JTextField;
 import java.awt.Color;
@@ -57,7 +59,7 @@ public class AnimalScreen extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AnimalScreen() {
+	public AnimalScreen(PersonnelModel model, PersonnelController controller) {
 		setBounds(100, 100, 450, 300);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0};

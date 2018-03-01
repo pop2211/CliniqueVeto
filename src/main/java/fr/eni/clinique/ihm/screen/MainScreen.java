@@ -40,6 +40,7 @@ public class MainScreen extends JFrame implements ActionListener {
 	private JMenu menuGestionDuPersonnel;
 	private InternalFrameLogin frameLogin;
 	private ClientScreen clientScreen;
+	private AnimalScreen animalScreen;
 	
 
 	public MainScreen(String title, PersonnelModel model, PersonnelController controller) {
@@ -62,6 +63,16 @@ public class MainScreen extends JFrame implements ActionListener {
 
 		// Barre de menus
 		setJMenuBar(getMenuBarre());
+
+		/*
+		clientScreen = getClientScreen(model, controller);
+		desktopPane.add(clientScreen);
+		clientScreen.setVisible(true);
+		
+		animalScreen = getAnimalScreen(model, controller);
+		desktopPane.add(animalScreen);
+		animalScreen.setVisible(true);
+		*/
 
 		// Frame interne login
 		frameLogin = getFrameLogin(model, controller);
@@ -152,6 +163,9 @@ public class MainScreen extends JFrame implements ActionListener {
 			clientScreen = getClientScreen(model, controller);
 			desktopPane.add(clientScreen);
 			clientScreen.setVisible(true);
+			
+			
+			
 			break;
 		default:
 			System.out.println("Probleme e=" + e);
@@ -181,9 +195,18 @@ public class MainScreen extends JFrame implements ActionListener {
 	
 	public ClientScreen getClientScreen(PersonnelModel model, PersonnelController controller) {
 		if(clientScreen == null) {
+			System.out.println("new ClientScreen");
 			clientScreen = new ClientScreen(model, controller);
 		}
 		return clientScreen;
+	}
+	
+	public AnimalScreen getAnimalScreen(PersonnelModel model, PersonnelController controller) {
+		if(animalScreen == null) {
+			System.out.println("new AnimalScreen");
+			animalScreen = new AnimalScreen(model, controller);
+		}
+		return animalScreen;
 	}
     
     /**
