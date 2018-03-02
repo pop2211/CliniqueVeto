@@ -7,6 +7,7 @@ import java.awt.SystemColor;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
@@ -14,24 +15,32 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import fr.eni.clinique.bo.Client;
+import fr.eni.clinique.dal.dao.ClientDAO;
 import fr.eni.clinique.dal.dao.RaceDAO;
+import fr.eni.clinique.dal.dao.impl.ClientJDBCDAOImpl;
 import fr.eni.clinique.dal.dao.impl.RaceJDBCDAOImpl;
 import fr.eni.clinique.dal.exception.DaoException;
+import fr.eni.clinique.ihm.controller.AnimalController;
 import fr.eni.clinique.ihm.controller.PersonnelController;
+import fr.eni.clinique.ihm.model.AnimalModel;
 import fr.eni.clinique.ihm.model.PersonnelModel;
+import fr.eni.clinique.ihm.screen.client.ClientScreen;
+
 import java.awt.Color;
 import java.awt.event.ItemListener;
 import java.io.Console;
 import java.awt.event.ItemEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Font;
 
 public class AnimalScreen extends JInternalFrame {
 	
 	private static final long serialVersionUID = -1179642960437851179L;
 	
-	private PersonnelModel model;
-	private PersonnelController controller;
+	private AnimalModel model;
+	private AnimalController controller;
 	
 	private JTextField tatouageTbx;
 	private JTextField codeTbx;
@@ -39,9 +48,12 @@ public class AnimalScreen extends JInternalFrame {
 	private JTextField couleurTbx;
 	private JComboBox<String> especeCbx;
 	private JComboBox<String> raceCbx;
+	private JLabel recupLblCli;
+	private Integer codeClient = null;
 	RaceDAO raceDAO = new RaceJDBCDAOImpl();
+	ClientDAO clientDAO = new ClientJDBCDAOImpl();
 	
-	public AnimalScreen(PersonnelModel model, PersonnelController controller) {
+	public AnimalScreen(AnimalModel model, AnimalController controller) {
 		super("Gestion des Animaux", true, true, true,true);
 		setBackground(Color.WHITE);
 		this.controller = controller;
@@ -49,26 +61,31 @@ public class AnimalScreen extends JInternalFrame {
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gridBagLayout.columnWidths = new int[]{20, 0, 0, 0, 0, 0, 20, 0};
+		gridBagLayout.rowHeights = new int[]{0, 20, 0, 20, 0, 0, 0, 0, 0, 10, 0, 20, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		getContentPane().setLayout(gridBagLayout);
 		
-		JLabel labelCli = new JLabel("Client");
+		JLabel labelCli = new JLabel("Client :");
+		labelCli.setHorizontalAlignment(SwingConstants.TRAILING);
+		labelCli.setFont(new Font("Tahoma", Font.BOLD, 12));
 		GridBagConstraints gbc_labelCli = new GridBagConstraints();
+		gbc_labelCli.anchor = GridBagConstraints.EAST;
 		gbc_labelCli.insets = new Insets(0, 0, 5, 5);
 		gbc_labelCli.gridx = 2;
-		gbc_labelCli.gridy = 1;
+		gbc_labelCli.gridy = 2;
 		getContentPane().add(labelCli, gbc_labelCli);
 		
-		JLabel recupLabelClient = new JLabel("");
-		recupLabelClient.setForeground(SystemColor.activeCaption);
+		recupLblCli = new JLabel(recupLabelClient(3));
+		recupLblCli.setHorizontalAlignment(SwingConstants.LEFT);
+		recupLblCli.setFont(new Font("Tahoma", Font.BOLD, 12));
+		recupLblCli.setForeground(new Color(255, 0, 0));
 		GridBagConstraints gbc_recupLabelClient = new GridBagConstraints();
 		gbc_recupLabelClient.insets = new Insets(0, 0, 5, 5);
-		gbc_recupLabelClient.gridx = 2;
+		gbc_recupLabelClient.gridx = 3;
 		gbc_recupLabelClient.gridy = 2;
-		getContentPane().add(recupLabelClient, gbc_recupLabelClient);
+		getContentPane().add(recupLblCli, gbc_recupLabelClient);
 		
 		JLabel lblNewLabel = new JLabel("Code");
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
@@ -182,17 +199,19 @@ public class AnimalScreen extends JInternalFrame {
 		tatouageTbx.setColumns(10);
 		
 		JButton validerBtn = new JButton("Valider");
+		validerBtn.setIcon(new ImageIcon(ClientScreen.class.getResource("/images/ico/done_32p.png")));
 		GridBagConstraints gbc_validerBtn = new GridBagConstraints();
 		gbc_validerBtn.insets = new Insets(0, 0, 5, 5);
 		gbc_validerBtn.gridx = 2;
-		gbc_validerBtn.gridy = 9;
+		gbc_validerBtn.gridy = 10;
 		getContentPane().add(validerBtn, gbc_validerBtn);
 		
 		JButton annulerBtn = new JButton("Annuler");
+		annulerBtn.setIcon(new ImageIcon(ClientScreen.class.getResource("/images/ico/undo_27p.png")));
 		GridBagConstraints gbc_annulerBtn = new GridBagConstraints();
 		gbc_annulerBtn.insets = new Insets(0, 0, 5, 5);
 		gbc_annulerBtn.gridx = 4;
-		gbc_annulerBtn.gridy = 9;
+		gbc_annulerBtn.gridy = 10;
 		getContentPane().add(annulerBtn, gbc_annulerBtn);
 
 	    
@@ -226,6 +245,20 @@ public class AnimalScreen extends JInternalFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+    }
+	
+	public String recupLabelClient(Integer id){
+		String result = null;
+		try {
+			Client clients = clientDAO.selectById(id);
+			result = clients.getNomClient();
+		} catch (DaoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return result;
+		
     }
 
 }

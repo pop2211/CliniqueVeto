@@ -12,8 +12,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
+import fr.eni.clinique.ihm.controller.AnimalController;
 import fr.eni.clinique.ihm.controller.ClientController;
 import fr.eni.clinique.ihm.controller.PersonnelController;
+import fr.eni.clinique.ihm.model.AnimalModel;
 import fr.eni.clinique.ihm.model.ClientModel;
 import fr.eni.clinique.ihm.model.PersonnelModel;
 import fr.eni.clinique.ihm.screen.client.ClientScreen;
@@ -166,7 +168,10 @@ public class MainScreen extends JFrame implements ActionListener {
 			break;
 		case "gestionAnimaux":
 			//frame GestionAnimaux
-			animalScreen = getAnimalScreen(model, controller);
+
+            AnimalModel animalModel = new AnimalModel();
+            AnimalController animalController = new AnimalController(animalModel);
+			animalScreen = getAnimalScreen(animalModel, animalController);
 			desktopPane.add(animalScreen);
 			animalScreen.setVisible(true);
 			break;
@@ -204,7 +209,7 @@ public class MainScreen extends JFrame implements ActionListener {
 		return clientScreen;
 	}
 	
-	public AnimalScreen getAnimalScreen(PersonnelModel model, PersonnelController controller) {
+	public AnimalScreen getAnimalScreen(AnimalModel model, AnimalController controller) {
 		/*if(animalScreen == null) {
 			animalScreen = new AnimalScreen(model, controller);
 		}*/
