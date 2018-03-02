@@ -287,7 +287,7 @@ public class ClientScreen extends JInternalFrame {
 		//test chargement premier client a l'ouverture fenetre
         Client firstClient;
 		try {
-			firstClient = controller.chargerClient(2);
+			firstClient = controller.loadClient(2);
 			showClient(firstClient);
 		} catch (ManagerException e2) {
 			// TODO Auto-generated catch block
@@ -317,13 +317,9 @@ public class ClientScreen extends JInternalFrame {
         if(client == null) {
         	client = new Client();
         }
-
-        String codeClient = String.valueOf(client.getCodeClient());
-        System.out.println( codeClient );
-        System.out.println( client.getCodeClient() );
         
         //Rempli les champs de l'ihm :
-        codeTbx.setText(codeClient);
+        codeTbx.setText(String.valueOf(client.getCodeClient()));
         nomTbx.setText(ObjectUtil.nullToBlank(client.getNomClient()).trim());
         prenomTbx.setText(ObjectUtil.nullToBlank(client.getPrenomClient()).trim());
         adresse1Tbx.setText(ObjectUtil.nullToBlank(client.getAdresse1()).trim());

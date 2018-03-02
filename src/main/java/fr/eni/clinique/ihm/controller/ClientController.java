@@ -21,7 +21,7 @@ public class ClientController{
 
 	
 	public void init() throws Exception {
-		System.out.println("Client Controler: init(), load first client");
+		System.out.println("Client Controler: init()");
 		
 	}
 
@@ -36,7 +36,7 @@ public class ClientController{
 	}
 	
 	
-	public Client chargerClient(Integer codeCli) throws ManagerException {
+	public Client loadClient(Integer codeCli) throws ManagerException {
 		return clientManager.selectById(codeCli);
 	}
 	
