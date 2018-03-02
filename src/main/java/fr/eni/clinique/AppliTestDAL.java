@@ -52,6 +52,10 @@ public class AppliTestDAL {
             Race race2 = new Race("lapin", "civet");
             LOGGER.info("Check inserting Race : {}", raceDAO.insert(race));
     		LOGGER.info("Check inserting Race : {}", raceDAO.insert(race2));
+    		Race race3 = new Race("Worchair", "Chat");
+            LOGGER.info("Check inserting Race : {}", raceDAO.insert(race3));
+            Race race4 = new Race("Chinoix", "Chat");
+            LOGGER.info("Check inserting Race : {}", raceDAO.insert(race4));
             LOGGER.info("Check reading Race : {}", raceDAO.selectAll());
             
             Client client = new Client("lagaffe", "vincent", "8 rue de lala", "bis", "49000", "Angers", "0606060606", "maf", "aze@rty.fr", "ne pas", false);
