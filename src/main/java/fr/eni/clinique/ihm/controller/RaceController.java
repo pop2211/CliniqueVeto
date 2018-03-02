@@ -1,5 +1,7 @@
 package fr.eni.clinique.ihm.controller;
 
+import java.util.List;
+
 import fr.eni.clinique.bll.exception.ManagerException;
 import fr.eni.clinique.bll.factory.ManagerFactory;
 import fr.eni.clinique.bll.manager.RaceManager;
@@ -36,7 +38,7 @@ public class RaceController {
 		}
 		
 		
-		public Race loadRace(String espece) throws ManagerException {
+		public List<String> loadRace(String espece) throws ManagerException {
 			return raceManager.selectByEspece(espece);
 		}
 	

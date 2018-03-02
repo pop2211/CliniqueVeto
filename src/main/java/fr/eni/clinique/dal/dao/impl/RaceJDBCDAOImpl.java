@@ -140,7 +140,6 @@ public class RaceJDBCDAOImpl implements RaceDAO{
 	
 	//useless
 	@Override
-	//select race by espece
 	public Race selectById(String id) throws DaoException {
 		// TODO Auto-generated method stub
 		return null;
