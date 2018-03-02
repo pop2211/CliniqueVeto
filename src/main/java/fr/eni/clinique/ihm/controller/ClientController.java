@@ -35,7 +35,6 @@ public class ClientController{
 		clientManager.update(client);
 	}
 	
-	
 	public Client loadClient(Integer codeCli) throws ManagerException {
 		return clientManager.selectById(codeCli);
 	}

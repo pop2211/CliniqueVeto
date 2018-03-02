@@ -126,6 +126,14 @@ public class ClientScreen extends JInternalFrame {
 		JButton annulerBtn = new JButton("Annuler");
 		annulerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+					Client currentCli = readClient();
+					Client reloadedCli = controller.loadClient(currentCli.getCodeClient());
+					showClient(reloadedCli);
+					showSuccessMessage("Client rechargé !");
+				} catch (Exception e1) {
+					showFailureMessage(e1.getMessage());
+				}
 			}
 		});
 		annulerBtn.setIcon(new ImageIcon(ClientScreen.class.getResource("/images/ico/undo_27p.png")));
