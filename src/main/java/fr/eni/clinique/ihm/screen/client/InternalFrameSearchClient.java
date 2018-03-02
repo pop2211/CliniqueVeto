@@ -22,6 +22,9 @@ import javax.swing.JTable;
 import java.awt.Color;
 
 public class InternalFrameSearchClient extends JInternalFrame {
+
+	
+	private static final long serialVersionUID = -7503557272432439802L;
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTable rechercherTable;
@@ -31,7 +34,7 @@ public class InternalFrameSearchClient extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public InternalFrameSearchClient(ClientModel model, ClientController controller) {
-		setBounds(100, 100, 598, 440);
+		//setBounds(100, 100, 598, 440);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -74,6 +77,8 @@ public class InternalFrameSearchClient extends JInternalFrame {
 		gbc_rechercherTable.gridx = 1;
 		gbc_rechercherTable.gridy = 3;
 		getContentPane().add(rechercherTable, gbc_rechercherTable);
+		
+		this.pack();
 
 	}
 }

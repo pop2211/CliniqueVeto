@@ -7,7 +7,6 @@ import fr.eni.clinique.common.exception.TechnicalException;
 import fr.eni.clinique.ihm.controller.PersonnelController;
 import fr.eni.clinique.ihm.model.PersonnelModel;
 import fr.eni.clinique.ihm.screen.MainScreen;
-import javax.swing.JButton;
 
 public class AppliTestIHM {
 
