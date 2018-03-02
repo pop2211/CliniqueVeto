@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 
 import fr.eni.clinique.ihm.controller.PersonnelController;
 import fr.eni.clinique.ihm.model.PersonnelModel;
+import fr.eni.clinique.ihm.screen.Rdv.RdvScreen;
 import fr.eni.clinique.ihm.screen.client.ClientScreen;
 import fr.eni.clinique.ihm.screen.login.InternalFrameLogin;
 
@@ -40,9 +41,11 @@ public class MainScreen extends JFrame implements ActionListener {
 	private JMenu menuAgenda;
 	private JMenu menuGestionDuPersonnel;
 	private JMenuItem menuGestionDesAnimaux;
+	
 	private InternalFrameLogin frameLogin;
 	private ClientScreen clientScreen;
 	private AnimalScreen animalScreen;
+	private RdvScreen rdvScreen;
 	
 
 	public MainScreen(String title, PersonnelModel model, PersonnelController controller) {
@@ -93,11 +96,15 @@ public class MainScreen extends JFrame implements ActionListener {
 		
 		//Menu Gestion Des Rendez-vous
 		menuGestionDesRendezvous = new JMenu("Gestion des rendez-vous");
-		menuGestionDesRendezvous.setActionCommand("gestionRDV");
-		menuGestionDesRendezvous.addActionListener(this);
 		menuBarre.add(menuGestionDesRendezvous);
 		
-			// Sous menu fermer
+			// Sous menu Gestion Rdv
+			menuItem = new JMenuItem("Prise de rendez-vous");
+			menuItem.setActionCommand("gestionRDV");
+			menuItem.addActionListener(this);
+			menuGestionDesRendezvous.add(menuItem);
+		
+			// Sous menu Gestion clients
 			menuItem = new JMenuItem("Gestion des clients");
 			menuItem.setActionCommand("gestionClients");
 			menuItem.addActionListener(this);
@@ -129,11 +136,13 @@ public class MainScreen extends JFrame implements ActionListener {
 			menuGestionDesRendezvous.setVisible(true);
 			menuAgenda.setVisible(true);
 			menuGestionDuPersonnel.setVisible(true);
+			menuGestionDesAnimaux.setVisible(true);
 		}
 		else {
 			menuGestionDesRendezvous.setVisible(false);
 			menuAgenda.setVisible(false);
 			menuGestionDuPersonnel.setVisible(false);
+			menuGestionDesAnimaux.setVisible(false);
 		}
 	}
 
@@ -152,6 +161,12 @@ public class MainScreen extends JFrame implements ActionListener {
 			break;
 		case "fermer":
 			System.exit(0);
+			break;
+		case "gestionRDV": 
+			//frame GestionRdv
+			rdvScreen = getRdvScreen(model, controller);
+			desktopPane.add(rdvScreen);
+			rdvScreen.setVisible(true);
 			break;
 		case "gestionClients":
 			//frame GestionCllient
@@ -189,6 +204,14 @@ public class MainScreen extends JFrame implements ActionListener {
 			frameLogin = new InternalFrameLogin(model, controller);
 		}
 		return frameLogin;
+	}
+	
+	public RdvScreen getRdvScreen(PersonnelModel model, PersonnelController controller) {
+		/*if (frameLogin == null) {
+			frameLogin = new InternalFrameLogin(model, controller);
+		}*/
+		RdvScreen rdvScreen = new RdvScreen(model, controller);
+		return rdvScreen;
 	}
 	
 	public ClientScreen getClientScreen(PersonnelModel model, PersonnelController controller) {
