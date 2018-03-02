@@ -217,7 +217,7 @@ public class MainScreen extends JFrame implements ActionListener {
      * 
      * @param message
      */
-    private void showFailureMessage(String message) {
+    public void showFailureMessage(String message) {
         JOptionPane.showMessageDialog(MainScreen.this, message, "Erreur", JOptionPane.ERROR_MESSAGE);
     }
     
@@ -226,7 +226,7 @@ public class MainScreen extends JFrame implements ActionListener {
      * 
      * @param message
      */
-    private void showSuccessMessage(String message) {
+    public void showSuccessMessage(String message) {
         JOptionPane.showMessageDialog(MainScreen.this, message);
     }
 }

@@ -22,10 +22,13 @@ import fr.eni.clinique.ihm.controller.ClientController;
 import fr.eni.clinique.ihm.controller.PersonnelController;
 import fr.eni.clinique.ihm.model.ClientModel;
 import fr.eni.clinique.ihm.model.PersonnelModel;
+import fr.eni.clinique.ihm.screen.MainScreen;
 
 public class ClientScreen extends JInternalFrame {
 	
 	private static final long serialVersionUID = -9075041539974261255L;
+	
+	private MainScreen parent;
 	
 	private ClientModel model;
 	private ClientController controller;
@@ -38,18 +41,24 @@ public class ClientScreen extends JInternalFrame {
 	private JTextField codePostalTbx;
 	private JTextField villeTbx;
 	private JTable animauxTable;
+	private JTextField numTelTbx;
+	private JTextField assuranceTbx;
+	private JTextField emailTbx;
+	private JTextField remarqueTbx;
 	
 	public ClientScreen(ClientModel model, ClientController controller) {
 		super("Gestion des Clients", true, true, true,true);
+		
+		this.parent = (MainScreen) this.getTopLevelAncestor();
 		this.controller = controller;
 		this.model = model;
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 147, 0, 0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gridBagLayout.columnWidths = new int[]{20, 0, 0, 0, 0, 0, 147, 0, 0, 0, 0, 0, 0, 20, 0};
+		gridBagLayout.rowHeights = new int[]{20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		getContentPane().setLayout(gridBagLayout);
 		
 		JButton rechercherBtn = new JButton("Rechercher");
@@ -71,6 +80,18 @@ public class ClientScreen extends JInternalFrame {
 		validerBtn.setIcon(new ImageIcon(ClientScreen.class.getResource("/images/ico/done_32p.png")));
 		validerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				System.out.println("TOTO1");
+				try {
+					System.out.println("TOTO2");
+					Client cli = readClient();
+					System.out.println("TOTO3");
+					controller.saveClient(cli);
+					//parent.showSuccessMessage("Client enregistré !");
+					System.out.println("TOTO4");
+				} catch (Exception e1) {
+					System.out.println(e1.getMessage());
+					//parent.showFailureMessage(e1.getMessage());
+				}
 			}
 		});
 		
@@ -141,7 +162,7 @@ public class ClientScreen extends JInternalFrame {
 		animauxTable = new JTable();
 		animauxTable.setBackground(Color.LIGHT_GRAY);
 		GridBagConstraints gbc_animauxTable = new GridBagConstraints();
-		gbc_animauxTable.gridheight = 6;
+		gbc_animauxTable.gridheight = 9;
 		gbc_animauxTable.gridwidth = 6;
 		gbc_animauxTable.insets = new Insets(0, 0, 5, 5);
 		gbc_animauxTable.fill = GridBagConstraints.BOTH;
@@ -251,6 +272,63 @@ public class ClientScreen extends JInternalFrame {
 		gbc_villeTbx.gridy = 9;
 		getContentPane().add(villeTbx, gbc_villeTbx);
 		
+		JLabel lblNumTel = new JLabel("Téléphone");
+		GridBagConstraints gbc_lblNumTel = new GridBagConstraints();
+		gbc_lblNumTel.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNumTel.anchor = GridBagConstraints.WEST;
+		gbc_lblNumTel.gridx = 1;
+		gbc_lblNumTel.gridy = 10;
+		getContentPane().add(lblNumTel, gbc_lblNumTel);
+		
+		numTelTbx = new JTextField();
+		numTelTbx.setText("<dynamic>");
+		numTelTbx.setColumns(10);
+		GridBagConstraints gbc_numTelTbx = new GridBagConstraints();
+		gbc_numTelTbx.gridwidth = 5;
+		gbc_numTelTbx.insets = new Insets(0, 0, 5, 5);
+		gbc_numTelTbx.fill = GridBagConstraints.HORIZONTAL;
+		gbc_numTelTbx.gridx = 2;
+		gbc_numTelTbx.gridy = 10;
+		getContentPane().add(numTelTbx, gbc_numTelTbx);
+		
+		JLabel lblAssurance = new JLabel("Assurance");
+		GridBagConstraints gbc_lblAssurance = new GridBagConstraints();
+		gbc_lblAssurance.insets = new Insets(0, 0, 5, 5);
+		gbc_lblAssurance.anchor = GridBagConstraints.WEST;
+		gbc_lblAssurance.gridx = 1;
+		gbc_lblAssurance.gridy = 11;
+		getContentPane().add(lblAssurance, gbc_lblAssurance);
+		
+		assuranceTbx = new JTextField();
+		assuranceTbx.setText("<dynamic>");
+		assuranceTbx.setColumns(10);
+		GridBagConstraints gbc_assuranceTbx = new GridBagConstraints();
+		gbc_assuranceTbx.gridwidth = 5;
+		gbc_assuranceTbx.insets = new Insets(0, 0, 5, 5);
+		gbc_assuranceTbx.fill = GridBagConstraints.HORIZONTAL;
+		gbc_assuranceTbx.gridx = 2;
+		gbc_assuranceTbx.gridy = 11;
+		getContentPane().add(assuranceTbx, gbc_assuranceTbx);
+		
+		JLabel lblEmail = new JLabel("Email");
+		GridBagConstraints gbc_lblEmail = new GridBagConstraints();
+		gbc_lblEmail.insets = new Insets(0, 0, 5, 5);
+		gbc_lblEmail.anchor = GridBagConstraints.WEST;
+		gbc_lblEmail.gridx = 1;
+		gbc_lblEmail.gridy = 12;
+		getContentPane().add(lblEmail, gbc_lblEmail);
+		
+		emailTbx = new JTextField();
+		emailTbx.setText("<dynamic>");
+		emailTbx.setColumns(10);
+		GridBagConstraints gbc_emailTbx = new GridBagConstraints();
+		gbc_emailTbx.gridwidth = 5;
+		gbc_emailTbx.insets = new Insets(0, 0, 5, 5);
+		gbc_emailTbx.fill = GridBagConstraints.HORIZONTAL;
+		gbc_emailTbx.gridx = 2;
+		gbc_emailTbx.gridy = 12;
+		getContentPane().add(emailTbx, gbc_emailTbx);
+		
 		JButton ajouterAnimalBtn = new JButton("Ajouter");
 		ajouterAnimalBtn.setIcon(new ImageIcon(ClientScreen.class.getResource("/images/ico/add_18p.png")));
 		ajouterAnimalBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -258,7 +336,7 @@ public class ClientScreen extends JInternalFrame {
 		GridBagConstraints gbc_ajouterAnimalBtn = new GridBagConstraints();
 		gbc_ajouterAnimalBtn.insets = new Insets(0, 0, 5, 5);
 		gbc_ajouterAnimalBtn.gridx = 10;
-		gbc_ajouterAnimalBtn.gridy = 9;
+		gbc_ajouterAnimalBtn.gridy = 12;
 		getContentPane().add(ajouterAnimalBtn, gbc_ajouterAnimalBtn);
 		
 		JButton supprimerAnimalBtn = new JButton("Supprimer");
@@ -268,7 +346,7 @@ public class ClientScreen extends JInternalFrame {
 		GridBagConstraints gbc_supprimerAnimalBtn = new GridBagConstraints();
 		gbc_supprimerAnimalBtn.insets = new Insets(0, 0, 5, 5);
 		gbc_supprimerAnimalBtn.gridx = 11;
-		gbc_supprimerAnimalBtn.gridy = 9;
+		gbc_supprimerAnimalBtn.gridy = 12;
 		getContentPane().add(supprimerAnimalBtn, gbc_supprimerAnimalBtn);
 		
 		JButton editerAnimalBtn = new JButton("Editer");
@@ -278,8 +356,27 @@ public class ClientScreen extends JInternalFrame {
 		GridBagConstraints gbc_editerAnimalBtn = new GridBagConstraints();
 		gbc_editerAnimalBtn.insets = new Insets(0, 0, 5, 5);
 		gbc_editerAnimalBtn.gridx = 12;
-		gbc_editerAnimalBtn.gridy = 9;
+		gbc_editerAnimalBtn.gridy = 12;
 		getContentPane().add(editerAnimalBtn, gbc_editerAnimalBtn);
+		
+		JLabel lblRemarque = new JLabel("Remarque");
+		GridBagConstraints gbc_lblRemarque = new GridBagConstraints();
+		gbc_lblRemarque.anchor = GridBagConstraints.WEST;
+		gbc_lblRemarque.insets = new Insets(0, 0, 5, 5);
+		gbc_lblRemarque.gridx = 1;
+		gbc_lblRemarque.gridy = 13;
+		getContentPane().add(lblRemarque, gbc_lblRemarque);
+		
+		remarqueTbx = new JTextField();
+		remarqueTbx.setText("<dynamic>");
+		remarqueTbx.setColumns(10);
+		GridBagConstraints gbc_remarqueTbx = new GridBagConstraints();
+		gbc_remarqueTbx.gridwidth = 4;
+		gbc_remarqueTbx.insets = new Insets(0, 0, 5, 5);
+		gbc_remarqueTbx.fill = GridBagConstraints.HORIZONTAL;
+		gbc_remarqueTbx.gridx = 3;
+		gbc_remarqueTbx.gridy = 13;
+		getContentPane().add(remarqueTbx, gbc_remarqueTbx);
 
 		this.pack();
 		
@@ -326,6 +423,11 @@ public class ClientScreen extends JInternalFrame {
         adresse2Tbx.setText(ObjectUtil.nullToBlank(client.getAdresse2()).trim());
         codePostalTbx.setText(ObjectUtil.nullToBlank(client.getCodePostal()).trim());
         villeTbx.setText(ObjectUtil.nullToBlank(client.getVille()).trim());
+        numTelTbx.setText(ObjectUtil.nullToBlank(client.getNumTel()).trim());
+        assuranceTbx.setText(ObjectUtil.nullToBlank(client.getAssurance()).trim());
+        emailTbx.setText(ObjectUtil.nullToBlank(client.getEmail()).trim());
+        remarqueTbx.setText(ObjectUtil.nullToBlank(client.getRemarque()).trim());
+        
         
     }
 
@@ -347,6 +449,10 @@ public class ClientScreen extends JInternalFrame {
         client.setAdresse2( adresse2Tbx.getText().trim() ); 
         client.setCodePostal( codePostalTbx.getText().trim() );
         client.setVille( villeTbx.getText().trim() );
+        client.setNumTel( numTelTbx.getText().trim() );
+        client.setAssurance( assuranceTbx.getText().trim() );
+        client.setEmail( emailTbx.getText().trim() );
+        client.setRemarque( remarqueTbx.getText().trim() );
         
         return client;
     }
