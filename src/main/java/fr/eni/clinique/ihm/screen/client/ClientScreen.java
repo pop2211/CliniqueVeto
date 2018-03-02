@@ -15,15 +15,17 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import fr.eni.clinique.ihm.controller.ClientController;
 import fr.eni.clinique.ihm.controller.PersonnelController;
+import fr.eni.clinique.ihm.model.ClientModel;
 import fr.eni.clinique.ihm.model.PersonnelModel;
 
 public class ClientScreen extends JInternalFrame {
 	
 	private static final long serialVersionUID = -9075041539974261255L;
 	
-	private PersonnelModel model;
-	private PersonnelController controller;
+	private ClientModel model;
+	private ClientController controller;
 	
 	private JTextField codeTbx;
 	private JTextField nomTbx;
@@ -34,7 +36,7 @@ public class ClientScreen extends JInternalFrame {
 	private JTextField villeTbx;
 	private JTable animauxTable;
 	
-	public ClientScreen(PersonnelModel model, PersonnelController controller) {
+	public ClientScreen(ClientModel model, ClientController controller) {
 		super("Gestion des Clients", true, true, true,true);
 		this.controller = controller;
 		this.model = model;
@@ -276,5 +278,12 @@ public class ClientScreen extends JInternalFrame {
 		getContentPane().add(editerAnimalBtn, gbc_editerAnimalBtn);
 
 		this.pack();
+		
+		try {
+			controller.init();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 }

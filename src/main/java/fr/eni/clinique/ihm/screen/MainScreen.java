@@ -12,7 +12,9 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
+import fr.eni.clinique.ihm.controller.ClientController;
 import fr.eni.clinique.ihm.controller.PersonnelController;
+import fr.eni.clinique.ihm.model.ClientModel;
 import fr.eni.clinique.ihm.model.PersonnelModel;
 import fr.eni.clinique.ihm.screen.client.ClientScreen;
 import fr.eni.clinique.ihm.screen.login.InternalFrameLogin;
@@ -155,7 +157,10 @@ public class MainScreen extends JFrame implements ActionListener {
 			break;
 		case "gestionClients":
 			//frame GestionCllient
-			clientScreen = getClientScreen(model, controller);
+            // Create client Model & Controller
+            ClientModel clientModel = new ClientModel();
+            ClientController clientController = new ClientController(clientModel);
+			clientScreen = getClientScreen(clientModel, clientController);
 			desktopPane.add(clientScreen);
 			clientScreen.setVisible(true);
 			break;
@@ -191,7 +196,7 @@ public class MainScreen extends JFrame implements ActionListener {
 		return frameLogin;
 	}
 	
-	public ClientScreen getClientScreen(PersonnelModel model, PersonnelController controller) {
+	public ClientScreen getClientScreen(ClientModel model, ClientController controller) {
 		/*if(clientScreen == null) {
 			clientScreen = new ClientScreen(model, controller);
 		}*/
