@@ -1,5 +1,6 @@
 package fr.eni.clinique.dal.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.clinique.bo.Animal;
@@ -10,6 +11,8 @@ public interface RaceDAO extends GenericDAO<Race, String> {
 	
 	void deleteRace(String race, String espece) throws DaoException;
 	
-	List<Race> selectByEspece(String espece) throws DaoException;
+	List<String> selectByEspece(String espece) throws DaoException;
+	
+	List<String> selectEspeceDistinct() throws DaoException;
 
 }
