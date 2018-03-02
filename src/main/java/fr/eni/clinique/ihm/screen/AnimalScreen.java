@@ -4,6 +4,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.SystemColor;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -17,6 +19,12 @@ import fr.eni.clinique.dal.dao.impl.RaceJDBCDAOImpl;
 import fr.eni.clinique.dal.exception.DaoException;
 import fr.eni.clinique.ihm.controller.PersonnelController;
 import fr.eni.clinique.ihm.model.PersonnelModel;
+import java.awt.Color;
+import java.awt.event.ItemListener;
+import java.io.Console;
+import java.awt.event.ItemEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class AnimalScreen extends JInternalFrame {
 	
@@ -29,10 +37,13 @@ public class AnimalScreen extends JInternalFrame {
 	private JTextField codeTbx;
 	private JTextField nomTbx;
 	private JTextField couleurTbx;
+	private JComboBox<String> especeCbx;
+	private JComboBox<String> raceCbx;
 	RaceDAO raceDAO = new RaceJDBCDAOImpl();
 	
 	public AnimalScreen(PersonnelModel model, PersonnelController controller) {
 		super("Gestion des Animaux", true, true, true,true);
+		setBackground(Color.WHITE);
 		this.controller = controller;
 		this.model = model;
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
@@ -119,13 +130,15 @@ public class AnimalScreen extends JInternalFrame {
 		gbc_lblNewLabel_3.gridy = 7;
 		getContentPane().add(lblNewLabel_3, gbc_lblNewLabel_3);
 		
-		JComboBox especeCbx = new JComboBox();
+		especeCbx = new JComboBox();
+		
+				
 		GridBagConstraints gbc_especeCbx = new GridBagConstraints();
 		gbc_especeCbx.insets = new Insets(0, 0, 5, 5);
 		gbc_especeCbx.fill = GridBagConstraints.HORIZONTAL;
 		gbc_especeCbx.gridx = 2;
 		gbc_especeCbx.gridy = 7;
-		especeCbx.addItem("Chat");
+		fillEspece();
 		getContentPane().add(especeCbx, gbc_especeCbx);
 		
 		JLabel lblNewLabel_4 = new JLabel("Race");
@@ -136,18 +149,19 @@ public class AnimalScreen extends JInternalFrame {
 		gbc_lblNewLabel_4.gridy = 7;
 		getContentPane().add(lblNewLabel_4, gbc_lblNewLabel_4);
 		
-		JComboBox raceCbx = new JComboBox();
+		raceCbx = new JComboBox();
 		GridBagConstraints gbc_raceCbx = new GridBagConstraints();
 		gbc_raceCbx.insets = new Insets(0, 0, 5, 5);
 		gbc_raceCbx.fill = GridBagConstraints.HORIZONTAL;
 		gbc_raceCbx.gridx = 4;
 		gbc_raceCbx.gridy = 7;
-		try {
-			raceCbx.addItem(raceDAO.selectByEspece(especeCbx.getSelectedItem().toString()));
-		} catch (DaoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		fillRace(especeCbx.getItemAt(0));
+		especeCbx.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				fillRace(especeCbx.getSelectedItem().toString());
+
+			}
+		});
 		getContentPane().add(raceCbx, gbc_raceCbx);
 		
 		JLabel lblNewLabel_5 = new JLabel("Tatouage");
@@ -181,7 +195,37 @@ public class AnimalScreen extends JInternalFrame {
 		gbc_annulerBtn.gridy = 9;
 		getContentPane().add(annulerBtn, gbc_annulerBtn);
 
+	    
+		
+		
+		
 		this.pack();
 	}
+	
+	public void fillEspece(){
+		try {
+			List<String> especes = raceDAO.selectEspeceDistinct();
+			for(String espece : especes){
+				especeCbx.addItem(espece);
+			}
+		} catch (DaoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void fillRace(String espece){
+		try {
+			raceCbx.removeAllItems();
+			List<String> races = raceDAO.selectByEspece(espece);
+			for(String race : races){
+				
+				raceCbx.addItem(race);
+			}
+		} catch (DaoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 
 }

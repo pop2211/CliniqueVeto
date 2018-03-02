@@ -23,6 +23,7 @@ public class RaceJDBCDAOImpl implements RaceDAO{
     //private static final String TRUNCATE_QUERY = "TRUNCATE TABLE Races";
     private static final String TRUNCATE_QUERY = "DELETE FROM Races";
 	private static final String SELECT_BY_ESPECE_QUERY = "SELECT Race FROM Races WHERE Espece = ?";
+	private static final String SELECT_ESPECE_DISTINCT = "SELECT DISTINCT Espece FROM Races";
     
     private static RaceJDBCDAOImpl instance;
     
@@ -168,19 +169,45 @@ public class RaceJDBCDAOImpl implements RaceDAO{
 	}
 
 	@Override
-	public List<Race> selectByEspece(String espece) throws DaoException {
+	public List<String> selectByEspece(String espece) throws DaoException {
+		Connection connection = null;
+		PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        List<String> liste = new ArrayList<String>();
+        
+        try {
+            connection = JdbcTools.get();
+            statement = connection.prepareStatement(SELECT_BY_ESPECE_QUERY);
+            statement.setString(1, espece);
+            resultSet = statement.executeQuery();
+      
+            
+            while (resultSet.next()) {
+				liste.add(resultSet.getString(1));	
+            }
+        } catch(SQLException e) {
+            throw new DaoException(e.getMessage(), e);
+        } finally {
+            ResourceUtil.safeClose(connection, statement, resultSet);
+        }
+        
+        return liste;
+	}
+
+	@Override
+	public List<String> selectEspeceDistinct() throws DaoException {
 		Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
-        List<Race> liste = new ArrayList<Race>();
+        List<String> liste = new ArrayList<String>();
         
         try {
             connection = JdbcTools.get();
             statement = connection.createStatement();
-            resultSet = statement.executeQuery(SELECT_BY_ESPECE_QUERY);
+            resultSet = statement.executeQuery(SELECT_ESPECE_DISTINCT);
 
             while (resultSet.next()) { 
-				liste.add(resultSetEntryToRace(resultSet));	
+				liste.add(resultSet.getString(1));	
             }
         } catch(SQLException e) {
             throw new DaoException(e.getMessage(), e);
