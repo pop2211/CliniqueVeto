@@ -15,7 +15,10 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import fr.eni.clinique.bo.Animal;
 import fr.eni.clinique.bo.Client;
+import fr.eni.clinique.bo.Race;
+import fr.eni.clinique.common.util.ObjectUtil;
 import fr.eni.clinique.dal.dao.ClientDAO;
 import fr.eni.clinique.dal.dao.RaceDAO;
 import fr.eni.clinique.dal.dao.impl.ClientJDBCDAOImpl;
@@ -43,12 +46,12 @@ public class AnimalScreen extends JInternalFrame {
 	private AnimalController controller;
 	
 	private JTextField tatouageTbx;
-	private JTextField codeTbx;
 	private JTextField nomTbx;
 	private JTextField couleurTbx;
 	private JComboBox<String> especeCbx;
 	private JComboBox<String> raceCbx;
 	private JLabel recupLblCli;
+	private JLabel recupLblAnimal;
 	private Integer codeClient = null;
 	RaceDAO raceDAO = new RaceJDBCDAOImpl();
 	ClientDAO clientDAO = new ClientJDBCDAOImpl();
@@ -59,6 +62,9 @@ public class AnimalScreen extends JInternalFrame {
 		this.controller = controller;
 		this.model = model;
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
+		
+		//Animal animal = new Animal("MamandeBambi", "h", "bleu", "symbole", "alcoolique", false , new Race("Worchair", "Chat") , 2);
+		
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{20, 0, 0, 0, 0, 0, 20, 0};
@@ -95,14 +101,13 @@ public class AnimalScreen extends JInternalFrame {
 		gbc_lblNewLabel.gridy = 4;
 		getContentPane().add(lblNewLabel, gbc_lblNewLabel);
 		
-		codeTbx = new JTextField();
-		GridBagConstraints gbc_codeTbx = new GridBagConstraints();
-		gbc_codeTbx.insets = new Insets(0, 0, 5, 5);
-		gbc_codeTbx.fill = GridBagConstraints.HORIZONTAL;
-		gbc_codeTbx.gridx = 2;
-		gbc_codeTbx.gridy = 4;
-		getContentPane().add(codeTbx, gbc_codeTbx);
-		codeTbx.setColumns(10);
+		recupLblAnimal = new JLabel("");
+		recupLblAnimal.setForeground(new Color(124, 252, 0));
+		GridBagConstraints gbc_recupLblAnimal = new GridBagConstraints();
+		gbc_recupLblAnimal.insets = new Insets(0, 0, 5, 5);
+		gbc_recupLblAnimal.gridx = 2;
+		gbc_recupLblAnimal.gridy = 4;
+		getContentPane().add(recupLblAnimal, gbc_recupLblAnimal);
 		
 		JLabel lblNewLabel_1 = new JLabel("Nom");
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
@@ -155,7 +160,7 @@ public class AnimalScreen extends JInternalFrame {
 		gbc_especeCbx.fill = GridBagConstraints.HORIZONTAL;
 		gbc_especeCbx.gridx = 2;
 		gbc_especeCbx.gridy = 7;
-		fillEspece();
+		fillEspece(null);
 		getContentPane().add(especeCbx, gbc_especeCbx);
 		
 		JLabel lblNewLabel_4 = new JLabel("Race");
@@ -172,10 +177,10 @@ public class AnimalScreen extends JInternalFrame {
 		gbc_raceCbx.fill = GridBagConstraints.HORIZONTAL;
 		gbc_raceCbx.gridx = 4;
 		gbc_raceCbx.gridy = 7;
-		fillRace(especeCbx.getItemAt(0));
+		fillRace(especeCbx.getItemAt(0),null);
 		especeCbx.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				fillRace(especeCbx.getSelectedItem().toString());
+				fillRace(especeCbx.getSelectedItem().toString(), null);
 
 			}
 		});
@@ -215,17 +220,22 @@ public class AnimalScreen extends JInternalFrame {
 		getContentPane().add(annulerBtn, gbc_annulerBtn);
 
 	    
-		
+		//showAnimal(null);
 		
 		
 		this.pack();
 	}
 	
-	public void fillEspece(){
+	public void fillEspece(String currentEspece){
 		try {
 			List<String> especes = raceDAO.selectEspeceDistinct();
 			for(String espece : especes){
 				especeCbx.addItem(espece);
+			}
+			//modif
+			if(currentEspece != null){
+				System.out.println(currentEspece);
+				especeCbx.setSelectedItem(currentEspece);
 			}
 		} catch (DaoException e) {
 			// TODO Auto-generated catch block
@@ -233,13 +243,16 @@ public class AnimalScreen extends JInternalFrame {
 		}
 	}
 	
-	public void fillRace(String espece){
+	public void fillRace(String espece, String currentRace){
 		try {
 			raceCbx.removeAllItems();
 			List<String> races = raceDAO.selectByEspece(espece);
 			for(String race : races){
 				
 				raceCbx.addItem(race);
+			}
+			if(currentRace != null){
+				raceCbx.setSelectedItem(currentRace);
 			}
 		} catch (DaoException e) {
 			// TODO Auto-generated catch block
@@ -260,5 +273,43 @@ public class AnimalScreen extends JInternalFrame {
 		return result;
 		
     }
+	
+	public void showAnimal(Animal animal) {
+
+		if(animal == null){
+			animal = new Animal();
+		}
+		// Rempli les champs de l'ihm :
+
+			recupLblAnimal.setText(String.valueOf(animal.getCodeAnimal()));
+			nomTbx.setText(ObjectUtil.nullToBlank(animal.getNomAnimal()).trim());
+			couleurTbx.setText(ObjectUtil.nullToBlank(animal.getCouleur()).trim());
+			tatouageTbx.setText(ObjectUtil.nullToBlank(animal.getTatouage()).trim());
+			fillEspece(animal.getRace().getEspece());
+			fillRace(animal.getRace().getEspece(),animal.getRace().getRace());
+		
+	}
+
+	/**
+	 * Read Client From the UI.
+	 * 
+	 * @return
+	 */
+	private Animal readClient() {
+
+		Animal animal = new Animal();
+
+		//Recupère les champs de l'ihm :
+		animal.setCodeAnimal((Integer.parseInt(recupLblAnimal.getText())));
+		animal.setNomAnimal(nomTbx.getText().trim());
+		animal.setCouleur(couleurTbx.getText().trim());
+		Race race = new Race();
+		race.setRace(raceCbx.getSelectedItem().toString());
+		race.setEspece(especeCbx.getSelectedItem().toString());
+		animal.setRace(race);
+		animal.setTatouage(tatouageTbx.getText().trim());
+
+		return animal;
+	}
 
 }
