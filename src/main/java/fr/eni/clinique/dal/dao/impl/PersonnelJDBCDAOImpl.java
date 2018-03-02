@@ -23,8 +23,7 @@ public class PersonnelJDBCDAOImpl implements PersonnelDAO{
 	private static final String UPDATE_QUERY = "UPDATE Personnels SET Nom=?, MotPasse=?, Role=?, Archive=? WHERE CodePers=?";
     private static final String INSERT_QUERY = "INSERT INTO Personnels(Nom, MotPasse, Role, Archive) VALUES (?,?,?,?)";
     private static final String DELETE_QUERY = "DELETE FROM Personnels WHERE CodePers=?";
-    //private static final String TRUNCATE_QUERY = "TRUNCATE TABLE Personnels";
-    private static final String TRUNCATE_QUERY = "DELETE FROM Personnels";
+    private static final String TRUNCATE_QUERY = "DELETE FROM Personnels; DBCC CHECKIDENT(Personnels, RESEED, 0);";
     
     private static PersonnelJDBCDAOImpl instance;
     

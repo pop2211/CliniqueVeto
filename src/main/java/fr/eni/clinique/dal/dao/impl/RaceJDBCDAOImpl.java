@@ -20,7 +20,6 @@ public class RaceJDBCDAOImpl implements RaceDAO{
 	private static final String UPDATE_QUERY = "UPDATE Races SET Race=?, Espece=? WHERE Race = ? AND Espece = ?";
     private static final String INSERT_QUERY = "INSERT INTO Races(Race, Espece) VALUES (?,?)";
     private static final String DELETE_QUERY = "DELETE FROM Races WHERE Race = ? AND Espece = ?";
-    //private static final String TRUNCATE_QUERY = "TRUNCATE TABLE Races";
     private static final String TRUNCATE_QUERY = "DELETE FROM Races";
 	private static final String SELECT_BY_ESPECE_QUERY = "SELECT Race FROM Races WHERE Espece = ?";
 	private static final String SELECT_ESPECE_DISTINCT = "SELECT DISTINCT Espece FROM Races";
