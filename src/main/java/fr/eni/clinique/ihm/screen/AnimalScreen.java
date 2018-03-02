@@ -77,7 +77,7 @@ public class AnimalScreen extends JInternalFrame {
 		gbc_labelCli.gridy = 2;
 		getContentPane().add(labelCli, gbc_labelCli);
 		
-		recupLblCli = new JLabel(recupLabelClient(3));
+		recupLblCli = new JLabel(recupLabelClient(2));
 		recupLblCli.setHorizontalAlignment(SwingConstants.LEFT);
 		recupLblCli.setFont(new Font("Tahoma", Font.BOLD, 12));
 		recupLblCli.setForeground(new Color(255, 0, 0));
