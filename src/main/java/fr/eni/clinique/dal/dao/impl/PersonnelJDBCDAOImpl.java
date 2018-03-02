@@ -115,6 +115,11 @@ public class PersonnelJDBCDAOImpl implements PersonnelDAO{
             statement.setString(3, personnel.getRole());
             statement.setBoolean(4, personnel.isArchive());
             
+            statement.setInt(12, personnel.getCodePers());
+			if (statement.executeUpdate() == 0) {
+				throw new DaoException("Erreur update personnel");
+			}
+            
             
         } catch(SQLException e) {
             throw new DaoException(e.getMessage(), e);
