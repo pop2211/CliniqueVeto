@@ -23,8 +23,6 @@ public class ClientController{
 	public void init() throws Exception {
 		System.out.println("Client Controler: init(), load first client");
 		
-        Client firstClient = clientManager.selectById(1);
-        model.loadClient(firstClient);
 	}
 
 	
@@ -35,6 +33,11 @@ public class ClientController{
 	
 	public void saveClient(Client client) throws Exception {
 		clientManager.update(client);
+	}
+	
+	
+	public Client chargerClient(Integer codeCli) throws ManagerException {
+		return clientManager.selectById(codeCli);
 	}
 	
 }

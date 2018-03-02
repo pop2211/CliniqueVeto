@@ -9,7 +9,6 @@ public class ClientModel {
 	 
 	 public void loadClient(Client client) {
 		 this.client = client;
-		 //showClient
 	 }
 
 	

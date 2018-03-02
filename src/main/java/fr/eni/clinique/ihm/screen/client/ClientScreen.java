@@ -15,6 +15,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import fr.eni.clinique.bll.exception.ManagerException;
 import fr.eni.clinique.bo.Client;
 import fr.eni.clinique.common.util.ObjectUtil;
 import fr.eni.clinique.ihm.controller.ClientController;
@@ -282,6 +283,20 @@ public class ClientScreen extends JInternalFrame {
 
 		this.pack();
 		
+		
+		//test chargement premier client a l'ouverture fenetre
+        Client firstClient;
+		try {
+			firstClient = controller.chargerClient(2);
+			showClient(firstClient);
+		} catch (ManagerException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+        
+		
+        
+		//INIT CONTROLLER
 		try {
 			controller.init();
 		} catch (Exception e1) {
@@ -303,13 +318,18 @@ public class ClientScreen extends JInternalFrame {
         	client = new Client();
         }
 
+        String codeClient = String.valueOf(client.getCodeClient());
+        System.out.println( codeClient );
+        System.out.println( client.getCodeClient() );
+        
         //Rempli les champs de l'ihm :
-        codeTbx.setText(String.valueOf(client.getCodeClient()));
+        codeTbx.setText(codeClient);
         nomTbx.setText(ObjectUtil.nullToBlank(client.getNomClient()).trim());
         prenomTbx.setText(ObjectUtil.nullToBlank(client.getPrenomClient()).trim());
         adresse1Tbx.setText(ObjectUtil.nullToBlank(client.getAdresse1()).trim());
         adresse2Tbx.setText(ObjectUtil.nullToBlank(client.getAdresse2()).trim());
         codePostalTbx.setText(ObjectUtil.nullToBlank(client.getCodePostal()).trim());
+        villeTbx.setText(ObjectUtil.nullToBlank(client.getVille()).trim());
         
     }
 
@@ -330,6 +350,7 @@ public class ClientScreen extends JInternalFrame {
         client.setAdresse1( adresse1Tbx.getText().trim() ); 
         client.setAdresse2( adresse2Tbx.getText().trim() ); 
         client.setCodePostal( codePostalTbx.getText().trim() );
+        client.setVille( villeTbx.getText().trim() );
         
         return client;
     }
