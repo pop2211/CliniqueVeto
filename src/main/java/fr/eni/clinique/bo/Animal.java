@@ -14,6 +14,7 @@ public class Animal {
 	
 	public Animal() {
 		super();
+		this.setArchive(false);
 	}
 	public Animal(Integer codeAnimal, String nomAnimal, String sexe, String couleur, String tatouage,
 			String antecedants, Boolean archive, Race race, Integer codeClient) {

@@ -10,7 +10,8 @@ public class Personnel {
 	
 	
     public Personnel() {
-        
+		super();
+		this.setArchive(false);
     }
     
     public Personnel(String nom, String mdp, String role, Boolean archive) {
