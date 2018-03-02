@@ -31,12 +31,11 @@ public class ClientScreen extends JInternalFrame {
 
 	private static final long serialVersionUID = -9075041539974261255L;
 
-	private MainScreen parent;
+	private MainScreen mainScreen;
 
 	private ClientModel model;
 	private ClientController controller;
 	
-	private JDesktopPane desktopPane;
 	private InternalFrameAddClient frameAdd;
 	private InternalFrameSearchClient frameSearch;
 
@@ -55,8 +54,7 @@ public class ClientScreen extends JInternalFrame {
 
 	public ClientScreen(ClientModel model, ClientController controller) {
 		super("Gestion des Clients", true, true, true, true);
-
-		this.parent = (MainScreen) this.getTopLevelAncestor();
+		
 		this.controller = controller;
 		this.model = model;
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
@@ -74,6 +72,10 @@ public class ClientScreen extends JInternalFrame {
 		rechercherBtn.setIcon(new ImageIcon(ClientScreen.class.getResource("/images/ico/search_27p.png")));
 		rechercherBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				System.out.println("getFrameSearch");
+				frameSearch = getFrameSearch(model, controller);
+				getMainScreen().getDesktopPane().add(frameSearch);
+				frameSearch.setVisible(true);
 			}
 		});
 		rechercherBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -99,6 +101,13 @@ public class ClientScreen extends JInternalFrame {
 		});
 
 		JButton ajouterBtn = new JButton("Ajouter");
+		ajouterBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frameAdd = getFrameAdd(model, controller);
+				getMainScreen().getDesktopPane().add(frameAdd);
+				frameAdd.setVisible(true);
+			}
+		});
 		ajouterBtn.setIcon(new ImageIcon(ClientScreen.class.getResource("/images/ico/add_27p.png")));
 		ajouterBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
 		ajouterBtn.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -387,7 +396,7 @@ public class ClientScreen extends JInternalFrame {
 		gbc_remarqueTbx.gridy = 13;
 		getContentPane().add(remarqueTbx, gbc_remarqueTbx);
 
-		this.pack();
+		
 
 		// test chargement premier client a l'ouverture fenetre
 		Client firstClient;
@@ -407,27 +416,17 @@ public class ClientScreen extends JInternalFrame {
 			e1.printStackTrace();
 		}
 		
-		
-		// INIT INTERNALS FRAMES
-		/*
-		desktopPane = new JDesktopPane();
-		setContentPane(desktopPane);
-		desktopPane.add(this);
-		*/
-		
-		frameSearch = getFrameSearch(model, controller);
-		frameSearch.setVisible(false);
-		//desktopPane.add(frameSearch);
-		//this.parent.getDesktopPane().add(frameSearch);
-		//=>Exception in thread "AWT-EventQueue-0"
-		
-		
-		frameAdd = getFrameAdd(model, controller);
-		frameAdd.setVisible(false);
-		//desktopPane.add(frameAdd);
-		//this.parent.getDesktopPane().add(frameAdd);
-		
+		this.pack();
+		System.out.println("getMainScreen() null at end constructor: "+ getMainScreen());
 
+	}
+	
+	
+	public MainScreen getMainScreen(){
+		if(this.mainScreen == null){
+			this.mainScreen = (MainScreen) this.getTopLevelAncestor();
+		}
+		return this.mainScreen;
 	}
 	
 	

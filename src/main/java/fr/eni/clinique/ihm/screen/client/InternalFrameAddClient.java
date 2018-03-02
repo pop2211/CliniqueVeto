@@ -22,6 +22,9 @@ import javax.swing.JTable;
 import java.awt.Color;
 
 public class InternalFrameAddClient extends JInternalFrame {
+
+	
+	private static final long serialVersionUID = -6767304758301746824L;
 	private JTextField codeTbx;
 	private JTextField textField_1;
 	private JTextField textField_2;
