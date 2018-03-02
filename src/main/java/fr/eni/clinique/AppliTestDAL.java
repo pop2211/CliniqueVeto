@@ -47,6 +47,7 @@ public class AppliTestDAL {
             raceDAO.deleteAll();
             
             
+            
             Race race = new Race("pasderace", "bambie");
             Race race2 = new Race("lapin", "civet");
             LOGGER.info("Check inserting Race : {}", raceDAO.insert(race));
@@ -58,6 +59,9 @@ public class AppliTestDAL {
             LOGGER.info("Check reading Client: {}", clientDAO.selectById(client.getCodeClient()));
             LOGGER.info("Check reading all Client : {}", clientDAO.selectAll());
             
+            Client client2 = new Client("cli2", "nomcli2", "9 rue de lala", "bis", "75000", "Paris", "0707070707", "maf", "aze@rty.com", "remarque", false);
+            LOGGER.info("Check inserting Client2 : {}", clientDAO.insert(client2));
+            
             Animal animal = new Animal("MamandeBambi", "h", "bleu", "symbole", "alcoolique", false , race , client.getCodeClient());
     		LOGGER.info("Check inserting Animal : {}", animalDAO.insert(animal));
             LOGGER.info("Check reading Animal : {}", animalDAO.selectAll());
@@ -66,12 +70,18 @@ public class AppliTestDAL {
             LOGGER.info("Check inserting Veto : {}");
             personnelDAO.insert(veto);	//veto has now code
             
+            Personnel u = new Personnel("u", "u", EnumRole.VETERINAIRE.getCode(), false);
+            LOGGER.info("Check inserting u : {}");
+            personnelDAO.insert(u);
+            
             
             GregorianCalendar dateRdv = new GregorianCalendar();
             Rdv rdv = new Rdv(veto, dateRdv, animal);
             LOGGER.info("Check inserting Rdv : {}", rdvDAO.insert(rdv));
             LOGGER.info("Check reading Rdv: {}", rdvDAO.selectById(rdv));
             LOGGER.info("Check reading all Rdv : {}", rdvDAO.selectAll());
+            
+            
             
             
 //            LOGGER.info("Check delete end : {}");
