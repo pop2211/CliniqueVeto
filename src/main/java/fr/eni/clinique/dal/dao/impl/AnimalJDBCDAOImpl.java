@@ -130,7 +130,12 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
             statement.setString(8, animal.getAntecedants());
             statement.setBoolean(9, animal.isArchive());
             
-            statement.executeQuery();
+
+            statement.setInt(10, animal.getCodeAnimal());
+			if (statement.executeUpdate() == 0) {
+				throw new DaoException("Erreur update animal");
+			}
+            
         } catch(SQLException e) {
             throw new DaoException(e.getMessage(), e);
         } finally {
