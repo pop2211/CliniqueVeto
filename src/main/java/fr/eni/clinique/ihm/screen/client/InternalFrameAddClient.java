@@ -25,7 +25,6 @@ public class InternalFrameAddClient extends JInternalFrame {
 
 	
 	private static final long serialVersionUID = -6767304758301746824L;
-	private JTextField codeTbx;
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField nomTbx;
@@ -34,18 +33,26 @@ public class InternalFrameAddClient extends JInternalFrame {
 	private JTextField adresse2Tbx;
 	private JTextField codePostalTbx;
 	private JTextField villeTbx;
+	private JTextField numTelTbx;
+	private JTextField assuranceTbx;
+	private JTextField emailTbx;
+	private JTextField remarqueTbx;
+	private JLabel lblTlphone;
+	private JLabel lblAssurance;
+	private JLabel lblEmail;
+	private JLabel lblRemarque;
 
 
 	/**
 	 * Create the frame.
 	 */
 	public InternalFrameAddClient(ClientModel model, ClientController controller) {
-		setBounds(100, 100, 350, 400);
+		setBounds(100, 100, 350, 416);
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gridBagLayout.columnWidths = new int[]{20, 0, 0, 0, 0, 0, 0, 20, 0};
+		gridBagLayout.rowHeights = new int[]{20, 0, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		getContentPane().setLayout(gridBagLayout);
 		
 		JButton validerBtn = new JButton("Valider");
@@ -76,24 +83,6 @@ public class InternalFrameAddClient extends JInternalFrame {
 		gbc_annulerBtn.gridy = 1;
 		getContentPane().add(annulerBtn, gbc_annulerBtn);
 		
-		JLabel lblNewLabel = new JLabel("Code");
-		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-		gbc_lblNewLabel.anchor = GridBagConstraints.WEST;
-		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel.gridx = 1;
-		gbc_lblNewLabel.gridy = 3;
-		getContentPane().add(lblNewLabel, gbc_lblNewLabel);
-		
-		codeTbx = new JTextField();
-		GridBagConstraints gbc_codeTbx = new GridBagConstraints();
-		gbc_codeTbx.gridwidth = 5;
-		gbc_codeTbx.insets = new Insets(0, 0, 5, 5);
-		gbc_codeTbx.fill = GridBagConstraints.HORIZONTAL;
-		gbc_codeTbx.gridx = 2;
-		gbc_codeTbx.gridy = 3;
-		getContentPane().add(codeTbx, gbc_codeTbx);
-		codeTbx.setColumns(10);
-		
 		
 		
 		JLabel lblNom = new JLabel("Nom");
@@ -101,7 +90,7 @@ public class InternalFrameAddClient extends JInternalFrame {
 		gbc_lblNom.anchor = GridBagConstraints.WEST;
 		gbc_lblNom.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNom.gridx = 1;
-		gbc_lblNom.gridy = 4;
+		gbc_lblNom.gridy = 3;
 		getContentPane().add(lblNom, gbc_lblNom);
 		
 		nomTbx = new JTextField();
@@ -111,7 +100,7 @@ public class InternalFrameAddClient extends JInternalFrame {
 		gbc_nomTbx.insets = new Insets(0, 0, 5, 5);
 		gbc_nomTbx.fill = GridBagConstraints.HORIZONTAL;
 		gbc_nomTbx.gridx = 2;
-		gbc_nomTbx.gridy = 4;
+		gbc_nomTbx.gridy = 3;
 		getContentPane().add(nomTbx, gbc_nomTbx);
 		
 		JLabel lblPrnom = new JLabel("Prénom");
@@ -119,7 +108,7 @@ public class InternalFrameAddClient extends JInternalFrame {
 		gbc_lblPrnom.anchor = GridBagConstraints.WEST;
 		gbc_lblPrnom.insets = new Insets(0, 0, 5, 5);
 		gbc_lblPrnom.gridx = 1;
-		gbc_lblPrnom.gridy = 5;
+		gbc_lblPrnom.gridy = 4;
 		getContentPane().add(lblPrnom, gbc_lblPrnom);
 		
 		prenomTbx = new JTextField();
@@ -129,7 +118,7 @@ public class InternalFrameAddClient extends JInternalFrame {
 		gbc_prenomTbx.insets = new Insets(0, 0, 5, 5);
 		gbc_prenomTbx.fill = GridBagConstraints.HORIZONTAL;
 		gbc_prenomTbx.gridx = 2;
-		gbc_prenomTbx.gridy = 5;
+		gbc_prenomTbx.gridy = 4;
 		getContentPane().add(prenomTbx, gbc_prenomTbx);
 		
 		JLabel lblAdresse = new JLabel("Adresse");
@@ -137,7 +126,7 @@ public class InternalFrameAddClient extends JInternalFrame {
 		gbc_lblAdresse.anchor = GridBagConstraints.WEST;
 		gbc_lblAdresse.insets = new Insets(0, 0, 5, 5);
 		gbc_lblAdresse.gridx = 1;
-		gbc_lblAdresse.gridy = 6;
+		gbc_lblAdresse.gridy = 5;
 		getContentPane().add(lblAdresse, gbc_lblAdresse);
 		
 		adresse1Tbx = new JTextField();
@@ -147,7 +136,7 @@ public class InternalFrameAddClient extends JInternalFrame {
 		gbc_adresse1Tbx.insets = new Insets(0, 0, 5, 5);
 		gbc_adresse1Tbx.fill = GridBagConstraints.HORIZONTAL;
 		gbc_adresse1Tbx.gridx = 2;
-		gbc_adresse1Tbx.gridy = 6;
+		gbc_adresse1Tbx.gridy = 5;
 		getContentPane().add(adresse1Tbx, gbc_adresse1Tbx);
 		
 		adresse2Tbx = new JTextField();
@@ -157,7 +146,7 @@ public class InternalFrameAddClient extends JInternalFrame {
 		gbc_adresse2Tbx.insets = new Insets(0, 0, 5, 5);
 		gbc_adresse2Tbx.fill = GridBagConstraints.HORIZONTAL;
 		gbc_adresse2Tbx.gridx = 2;
-		gbc_adresse2Tbx.gridy = 7;
+		gbc_adresse2Tbx.gridy = 6;
 		getContentPane().add(adresse2Tbx, gbc_adresse2Tbx);
 		
 		JLabel lblCodePostal = new JLabel("Code postal");
@@ -165,7 +154,7 @@ public class InternalFrameAddClient extends JInternalFrame {
 		gbc_lblCodePostal.anchor = GridBagConstraints.WEST;
 		gbc_lblCodePostal.insets = new Insets(0, 0, 5, 5);
 		gbc_lblCodePostal.gridx = 1;
-		gbc_lblCodePostal.gridy = 8;
+		gbc_lblCodePostal.gridy = 7;
 		getContentPane().add(lblCodePostal, gbc_lblCodePostal);
 		
 		codePostalTbx = new JTextField();
@@ -175,7 +164,7 @@ public class InternalFrameAddClient extends JInternalFrame {
 		gbc_codePostalTbx.insets = new Insets(0, 0, 5, 5);
 		gbc_codePostalTbx.fill = GridBagConstraints.HORIZONTAL;
 		gbc_codePostalTbx.gridx = 2;
-		gbc_codePostalTbx.gridy = 8;
+		gbc_codePostalTbx.gridy = 7;
 		getContentPane().add(codePostalTbx, gbc_codePostalTbx);
 		
 		JLabel lblVille = new JLabel("Ville");
@@ -183,7 +172,7 @@ public class InternalFrameAddClient extends JInternalFrame {
 		gbc_lblVille.anchor = GridBagConstraints.WEST;
 		gbc_lblVille.insets = new Insets(0, 0, 5, 5);
 		gbc_lblVille.gridx = 1;
-		gbc_lblVille.gridy = 9;
+		gbc_lblVille.gridy = 8;
 		getContentPane().add(lblVille, gbc_lblVille);
 		
 		villeTbx = new JTextField();
@@ -193,8 +182,80 @@ public class InternalFrameAddClient extends JInternalFrame {
 		gbc_villeTbx.insets = new Insets(0, 0, 5, 5);
 		gbc_villeTbx.fill = GridBagConstraints.HORIZONTAL;
 		gbc_villeTbx.gridx = 2;
-		gbc_villeTbx.gridy = 9;
+		gbc_villeTbx.gridy = 8;
 		getContentPane().add(villeTbx, gbc_villeTbx);
+		
+		lblTlphone = new JLabel("Téléphone");
+		GridBagConstraints gbc_lblTlphone = new GridBagConstraints();
+		gbc_lblTlphone.insets = new Insets(0, 0, 5, 5);
+		gbc_lblTlphone.anchor = GridBagConstraints.WEST;
+		gbc_lblTlphone.gridx = 1;
+		gbc_lblTlphone.gridy = 9;
+		getContentPane().add(lblTlphone, gbc_lblTlphone);
+		
+		numTelTbx = new JTextField();
+		numTelTbx.setColumns(10);
+		GridBagConstraints gbc_numTelTbx = new GridBagConstraints();
+		gbc_numTelTbx.gridwidth = 5;
+		gbc_numTelTbx.insets = new Insets(0, 0, 5, 5);
+		gbc_numTelTbx.fill = GridBagConstraints.HORIZONTAL;
+		gbc_numTelTbx.gridx = 2;
+		gbc_numTelTbx.gridy = 9;
+		getContentPane().add(numTelTbx, gbc_numTelTbx);
+		
+		lblAssurance = new JLabel("Assurance");
+		GridBagConstraints gbc_lblAssurance = new GridBagConstraints();
+		gbc_lblAssurance.insets = new Insets(0, 0, 5, 5);
+		gbc_lblAssurance.anchor = GridBagConstraints.WEST;
+		gbc_lblAssurance.gridx = 1;
+		gbc_lblAssurance.gridy = 10;
+		getContentPane().add(lblAssurance, gbc_lblAssurance);
+		
+		assuranceTbx = new JTextField();
+		assuranceTbx.setColumns(10);
+		GridBagConstraints gbc_assuranceTbx = new GridBagConstraints();
+		gbc_assuranceTbx.gridwidth = 5;
+		gbc_assuranceTbx.insets = new Insets(0, 0, 5, 5);
+		gbc_assuranceTbx.fill = GridBagConstraints.HORIZONTAL;
+		gbc_assuranceTbx.gridx = 2;
+		gbc_assuranceTbx.gridy = 10;
+		getContentPane().add(assuranceTbx, gbc_assuranceTbx);
+		
+		lblEmail = new JLabel("Email");
+		GridBagConstraints gbc_lblEmail = new GridBagConstraints();
+		gbc_lblEmail.insets = new Insets(0, 0, 5, 5);
+		gbc_lblEmail.anchor = GridBagConstraints.WEST;
+		gbc_lblEmail.gridx = 1;
+		gbc_lblEmail.gridy = 11;
+		getContentPane().add(lblEmail, gbc_lblEmail);
+		
+		emailTbx = new JTextField();
+		emailTbx.setColumns(10);
+		GridBagConstraints gbc_emailTbx = new GridBagConstraints();
+		gbc_emailTbx.gridwidth = 5;
+		gbc_emailTbx.insets = new Insets(0, 0, 5, 5);
+		gbc_emailTbx.fill = GridBagConstraints.HORIZONTAL;
+		gbc_emailTbx.gridx = 2;
+		gbc_emailTbx.gridy = 11;
+		getContentPane().add(emailTbx, gbc_emailTbx);
+		
+		lblRemarque = new JLabel("Remarque");
+		GridBagConstraints gbc_lblRemarque = new GridBagConstraints();
+		gbc_lblRemarque.insets = new Insets(0, 0, 5, 5);
+		gbc_lblRemarque.anchor = GridBagConstraints.WEST;
+		gbc_lblRemarque.gridx = 1;
+		gbc_lblRemarque.gridy = 12;
+		getContentPane().add(lblRemarque, gbc_lblRemarque);
+		
+		remarqueTbx = new JTextField();
+		remarqueTbx.setColumns(10);
+		GridBagConstraints gbc_remarqueTbx = new GridBagConstraints();
+		gbc_remarqueTbx.gridwidth = 5;
+		gbc_remarqueTbx.insets = new Insets(0, 0, 5, 5);
+		gbc_remarqueTbx.fill = GridBagConstraints.HORIZONTAL;
+		gbc_remarqueTbx.gridx = 2;
+		gbc_remarqueTbx.gridy = 12;
+		getContentPane().add(remarqueTbx, gbc_remarqueTbx);
 
 	}
 }
