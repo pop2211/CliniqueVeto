@@ -67,6 +67,7 @@ public class ClientJDBCDAOImpl implements ClientDAO{
 	private Client resultSetEntryToClient(ResultSet resultSet) throws Exception {
 		Client client = new Client();
 
+		client.setCodeClient(resultSet.getInt("CodeClient"));
 		client.setNomClient(resultSet.getString("NomClient"));
 		client.setPrenomClient(resultSet.getString("PrenomClient"));
 		client.setAdresse1(resultSet.getString("Adresse1"));

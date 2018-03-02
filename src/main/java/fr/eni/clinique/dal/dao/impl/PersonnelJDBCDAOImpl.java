@@ -63,6 +63,7 @@ public class PersonnelJDBCDAOImpl implements PersonnelDAO{
 	private Personnel resultSetEntryToPersonnel(ResultSet resultSet) throws SQLException{
 		Personnel personnel = new Personnel();
 
+		personnel.setCodePers(resultSet.getInt("CodePers"));
 		personnel.setNom(resultSet.getString("Nom"));
 		personnel.setMdp(resultSet.getString("MotPasse"));
 		personnel.setRole(resultSet.getString("Role"));
