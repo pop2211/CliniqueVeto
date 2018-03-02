@@ -23,6 +23,7 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
     private static final String INSERT_QUERY = "INSERT INTO Animaux(NomAnimal, Sexe, Couleur, Race, Espece, CodeClient, Tatouage, Antecedents, Archive) VALUES (?,?,?,?,?,?,?,?,?)";
     private static final String DELETE_QUERY = "DELETE FROM Animaux WHERE CodeAnimal=?";
     private static final String TRUNCATE_QUERY = "DELETE FROM Animaux; DBCC CHECKIDENT(Animaux, RESEED,0);";
+
     
     private static AnimalJDBCDAOImpl instance;
     

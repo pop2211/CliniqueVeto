@@ -392,7 +392,7 @@ public class ClientScreen extends JInternalFrame {
 		// test chargement premier client a l'ouverture fenetre
 		Client firstClient;
 		try {
-			firstClient = controller.loadClient(2);
+			firstClient = controller.loadClient(1);
 			showClient(firstClient);
 		} catch (ManagerException e2) {
 			// TODO Auto-generated catch block
