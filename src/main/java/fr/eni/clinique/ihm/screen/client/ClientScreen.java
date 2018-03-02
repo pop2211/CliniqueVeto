@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -24,6 +25,7 @@ import fr.eni.clinique.ihm.controller.PersonnelController;
 import fr.eni.clinique.ihm.model.ClientModel;
 import fr.eni.clinique.ihm.model.PersonnelModel;
 import fr.eni.clinique.ihm.screen.MainScreen;
+import fr.eni.clinique.ihm.screen.login.InternalFrameLogin;
 
 public class ClientScreen extends JInternalFrame {
 
@@ -33,6 +35,10 @@ public class ClientScreen extends JInternalFrame {
 
 	private ClientModel model;
 	private ClientController controller;
+	
+	private JDesktopPane desktopPane;
+	private InternalFrameAddClient frameAdd;
+	private InternalFrameSearchClient frameSearch;
 
 	private JTextField codeTbx;
 	private JTextField nomTbx;
@@ -400,8 +406,48 @@ public class ClientScreen extends JInternalFrame {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		
+		
+		// INIT INTERNALS FRAMES
+		/*
+		desktopPane = new JDesktopPane();
+		setContentPane(desktopPane);
+		desktopPane.add(this);
+		*/
+		
+		frameSearch = getFrameSearch(model, controller);
+		frameSearch.setVisible(false);
+		//desktopPane.add(frameSearch);
+		//this.parent.getDesktopPane().add(frameSearch);
+		//=>Exception in thread "AWT-EventQueue-0"
+		
+		
+		frameAdd = getFrameAdd(model, controller);
+		frameAdd.setVisible(false);
+		//desktopPane.add(frameAdd);
+		//this.parent.getDesktopPane().add(frameAdd);
+		
 
 	}
+	
+	
+	public InternalFrameSearchClient getFrameSearch(ClientModel model, ClientController controller) {
+		if (frameSearch == null) {
+			frameSearch = new InternalFrameSearchClient(model, controller);
+		}
+		return frameSearch;
+	}
+	
+	
+	public InternalFrameAddClient getFrameAdd(ClientModel model, ClientController controller) {
+		if (frameAdd == null) {
+			frameAdd = new InternalFrameAddClient(model, controller);
+		}
+		return frameAdd;
+	}
+	
+	
+	
 
 	/**
 	 * Show Client on the UI.

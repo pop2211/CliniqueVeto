@@ -4,6 +4,10 @@ import java.awt.EventQueue;
 
 import javax.swing.JInternalFrame;
 import javax.swing.SwingConstants;
+
+import fr.eni.clinique.ihm.controller.ClientController;
+import fr.eni.clinique.ihm.model.ClientModel;
+
 import javax.swing.JButton;
 import java.awt.BorderLayout;
 import java.awt.GridBagLayout;
@@ -24,25 +28,9 @@ public class InternalFrameSearchClient extends JInternalFrame {
 	private JTextField rechercherTbx;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					InternalFrameSearchClient frame = new InternalFrameSearchClient();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
-	public InternalFrameSearchClient() {
+	public InternalFrameSearchClient(ClientModel model, ClientController controller) {
 		setBounds(100, 100, 598, 440);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
