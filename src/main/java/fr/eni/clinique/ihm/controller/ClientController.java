@@ -21,8 +21,10 @@ public class ClientController{
 
 	
 	public void init() throws Exception {
-		System.out.println("Client Controler: init()");
+		System.out.println("Client Controler: init(), load first client");
 		
+        Client firstClient = clientManager.selectById(1);
+        model.loadClient(firstClient);
 	}
 
 	

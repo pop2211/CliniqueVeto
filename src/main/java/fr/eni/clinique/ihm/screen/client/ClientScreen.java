@@ -15,6 +15,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import fr.eni.clinique.bo.Client;
+import fr.eni.clinique.common.util.ObjectUtil;
 import fr.eni.clinique.ihm.controller.ClientController;
 import fr.eni.clinique.ihm.controller.PersonnelController;
 import fr.eni.clinique.ihm.model.ClientModel;
@@ -125,6 +127,7 @@ public class ClientScreen extends JInternalFrame {
 		getContentPane().add(lblNewLabel, gbc_lblNewLabel);
 		
 		codeTbx = new JTextField();
+		codeTbx.setEnabled(false);
 		GridBagConstraints gbc_codeTbx = new GridBagConstraints();
 		gbc_codeTbx.gridwidth = 5;
 		gbc_codeTbx.insets = new Insets(0, 0, 5, 5);
@@ -285,5 +288,51 @@ public class ClientScreen extends JInternalFrame {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		
 	}
+	
+	
+    /**
+     * Show Client on the UI.
+     * 
+     * @param article
+     */
+    public void showClient(Client client) {
+        
+        if(client == null) {
+        	client = new Client();
+        }
+
+        //Rempli les champs de l'ihm :
+        codeTbx.setText(String.valueOf(client.getCodeClient()));
+        nomTbx.setText(ObjectUtil.nullToBlank(client.getNomClient()).trim());
+        prenomTbx.setText(ObjectUtil.nullToBlank(client.getPrenomClient()).trim());
+        adresse1Tbx.setText(ObjectUtil.nullToBlank(client.getAdresse1()).trim());
+        adresse2Tbx.setText(ObjectUtil.nullToBlank(client.getAdresse2()).trim());
+        codePostalTbx.setText(ObjectUtil.nullToBlank(client.getCodePostal()).trim());
+        
+    }
+
+    
+    /**
+     * Read Client From the UI.
+     * 
+     * @return
+     */
+    private Client readClient() {
+        
+        Client client = new Client();
+        
+        //Recupère les champs de l'ihm :
+        client.setCodeClient( Integer.parseInt(codeTbx.getText().trim()) ); 
+        client.setNomClient( nomTbx.getText().trim() ); 
+        client.setPrenomClient( prenomTbx.getText().trim() ); 
+        client.setAdresse1( adresse1Tbx.getText().trim() ); 
+        client.setAdresse2( adresse2Tbx.getText().trim() ); 
+        client.setCodePostal( codePostalTbx.getText().trim() );
+        
+        return client;
+    }
+    
+    
 }
