@@ -4,6 +4,10 @@ import java.awt.EventQueue;
 
 import javax.swing.JInternalFrame;
 import javax.swing.SwingConstants;
+
+import fr.eni.clinique.ihm.controller.ClientController;
+import fr.eni.clinique.ihm.model.ClientModel;
+
 import javax.swing.JButton;
 import java.awt.BorderLayout;
 import java.awt.GridBagLayout;
@@ -32,7 +36,7 @@ public class InternalFrameAddClient extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public InternalFrameAddClient() {
+	public InternalFrameAddClient(ClientModel model, ClientController controller) {
 		setBounds(100, 100, 350, 400);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};

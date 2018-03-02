@@ -29,7 +29,13 @@ public class JdbcTools {
             String username = AppConfig.get("database.mssql.username");
             String password = AppConfig.get("database.mssql.password");
             
+            // get connection from datasource Connection 
             connection =  DriverManager.getConnection(url, username, password);
+            
+            // wrap the connection with log4jdbc 
+            // connection = new net.sf.log4jdbc.ConnectionSpy(connection);
+            // now use Connection as normal (but it will be audited by log4jdbc)
+            
             
         } catch (SQLException e) {
             throw new TechnicalException("Could not load MSSQL Connection", e);

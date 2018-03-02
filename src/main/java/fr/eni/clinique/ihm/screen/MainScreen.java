@@ -12,7 +12,11 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
+import fr.eni.clinique.ihm.controller.AnimalController;
+import fr.eni.clinique.ihm.controller.ClientController;
 import fr.eni.clinique.ihm.controller.PersonnelController;
+import fr.eni.clinique.ihm.model.AnimalModel;
+import fr.eni.clinique.ihm.model.ClientModel;
 import fr.eni.clinique.ihm.model.PersonnelModel;
 import fr.eni.clinique.ihm.screen.Rdv.RdvScreen;
 import fr.eni.clinique.ihm.screen.client.ClientScreen;
@@ -170,13 +174,19 @@ public class MainScreen extends JFrame implements ActionListener {
 			break;
 		case "gestionClients":
 			//frame GestionCllient
-			clientScreen = getClientScreen(model, controller);
+            // Create client Model & Controller
+            ClientModel clientModel = new ClientModel();
+            ClientController clientController = new ClientController(clientModel);
+			clientScreen = getClientScreen(clientModel, clientController);
 			desktopPane.add(clientScreen);
 			clientScreen.setVisible(true);
 			break;
 		case "gestionAnimaux":
 			//frame GestionAnimaux
-			animalScreen = getAnimalScreen(model, controller);
+
+            AnimalModel animalModel = new AnimalModel();
+            AnimalController animalController = new AnimalController(animalModel);
+			animalScreen = getAnimalScreen(animalModel, animalController);
 			desktopPane.add(animalScreen);
 			animalScreen.setVisible(true);
 			break;
@@ -213,8 +223,8 @@ public class MainScreen extends JFrame implements ActionListener {
 		RdvScreen rdvScreen = new RdvScreen(model, controller);
 		return rdvScreen;
 	}
-	
-	public ClientScreen getClientScreen(PersonnelModel model, PersonnelController controller) {
+
+	public ClientScreen getClientScreen(ClientModel model, ClientController controller) {
 		/*if(clientScreen == null) {
 			clientScreen = new ClientScreen(model, controller);
 		}*/
@@ -222,7 +232,7 @@ public class MainScreen extends JFrame implements ActionListener {
 		return clientScreen;
 	}
 	
-	public AnimalScreen getAnimalScreen(PersonnelModel model, PersonnelController controller) {
+	public AnimalScreen getAnimalScreen(AnimalModel model, AnimalController controller) {
 		/*if(animalScreen == null) {
 			animalScreen = new AnimalScreen(model, controller);
 		}*/
@@ -235,7 +245,7 @@ public class MainScreen extends JFrame implements ActionListener {
      * 
      * @param message
      */
-    private void showFailureMessage(String message) {
+    public void showFailureMessage(String message) {
         JOptionPane.showMessageDialog(MainScreen.this, message, "Erreur", JOptionPane.ERROR_MESSAGE);
     }
     
@@ -244,7 +254,7 @@ public class MainScreen extends JFrame implements ActionListener {
      * 
      * @param message
      */
-    private void showSuccessMessage(String message) {
+    public void showSuccessMessage(String message) {
         JOptionPane.showMessageDialog(MainScreen.this, message);
     }
 }

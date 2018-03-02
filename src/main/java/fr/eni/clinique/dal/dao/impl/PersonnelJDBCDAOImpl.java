@@ -23,8 +23,7 @@ public class PersonnelJDBCDAOImpl implements PersonnelDAO{
 	private static final String UPDATE_QUERY = "UPDATE Personnels SET Nom=?, MotPasse=?, Role=?, Archive=? WHERE CodePers=?";
     private static final String INSERT_QUERY = "INSERT INTO Personnels(Nom, MotPasse, Role, Archive) VALUES (?,?,?,?)";
     private static final String DELETE_QUERY = "DELETE FROM Personnels WHERE CodePers=?";
-    //private static final String TRUNCATE_QUERY = "TRUNCATE TABLE Personnels";
-    private static final String TRUNCATE_QUERY = "DELETE FROM Personnels";
+    private static final String TRUNCATE_QUERY = "DELETE FROM Personnels; DBCC CHECKIDENT(Personnels, RESEED, 0);";
     
     private static PersonnelJDBCDAOImpl instance;
     
@@ -63,6 +62,7 @@ public class PersonnelJDBCDAOImpl implements PersonnelDAO{
 	private Personnel resultSetEntryToPersonnel(ResultSet resultSet) throws SQLException{
 		Personnel personnel = new Personnel();
 
+		personnel.setCodePers(resultSet.getInt("CodePers"));
 		personnel.setNom(resultSet.getString("Nom"));
 		personnel.setMdp(resultSet.getString("MotPasse"));
 		personnel.setRole(resultSet.getString("Role"));
@@ -113,6 +113,11 @@ public class PersonnelJDBCDAOImpl implements PersonnelDAO{
             statement.setString(2, personnel.getMdp());
             statement.setString(3, personnel.getRole());
             statement.setBoolean(4, personnel.isArchive());
+            
+            statement.setInt(12, personnel.getCodePers());
+			if (statement.executeUpdate() == 0) {
+				throw new DaoException("Erreur update personnel");
+			}
             
             
         } catch(SQLException e) {

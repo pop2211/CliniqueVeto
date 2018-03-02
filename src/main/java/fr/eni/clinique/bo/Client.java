@@ -21,6 +21,7 @@ public class Client {
 
 	public Client() {
 		super();
+		this.setArchive(false);
 	}
 
 	public Client(Integer codeClient, String nomClient, String prenomClient, String adresse1, String adresse2,

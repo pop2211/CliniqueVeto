@@ -30,7 +30,9 @@ public class DaoFactory {
         return RdvJDBCDAOImpl.getInstance();
     }
     
-    public static RaceDAO RaceDAO() {
+    public static RaceDAO raceDAO() {
         return RaceJDBCDAOImpl.getInstance();
     }
+
+
 }
