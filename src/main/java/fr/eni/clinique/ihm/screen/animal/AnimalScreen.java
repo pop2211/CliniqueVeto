@@ -1,4 +1,4 @@
-package fr.eni.clinique.ihm.screen;
+package fr.eni.clinique.ihm.screen.animal;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -283,13 +283,17 @@ public class AnimalScreen extends JInternalFrame {
 
 		annulerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					Animal currentAnimal = readAnimal();
-					Animal reloadedAnimal = controller.loadAnimal(currentAnimal.getCodeAnimal());
-					showAnimal(reloadedAnimal);
-					showSuccessMessage("Client rechargé !");
-				} catch (Exception e1) {
-					showFailureMessage(e1.getMessage());
+				if("".equals(recupLblCli.getText()) || recupLblCli.getText() == null){
+					setVisible(false);
+				}else{
+					try {
+						Animal currentAnimal = readAnimal();
+						Animal reloadedAnimal = controller.loadAnimal(currentAnimal.getCodeAnimal());
+						showAnimal(reloadedAnimal);
+						showSuccessMessage("Client rechargé !");
+					} catch (Exception e1) {
+						showFailureMessage(e1.getMessage());
+					}
 				}
 			}
 		});
