@@ -59,7 +59,6 @@ public class MainClientScreen extends GenericClientScreen {
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("getFrameSearch");
 				frameSearch = getFrameSearch(model, controller);
-				getMainScreen().getDesktopPane().add(frameSearch);
 				frameSearch.setVisible(true);
 			}
 		});
@@ -92,7 +91,6 @@ public class MainClientScreen extends GenericClientScreen {
 		ajouterBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frameAdd = getFrameAdd(model, controller);
-				getMainScreen().getDesktopPane().add(frameAdd);
 				frameAdd.setVisible(true);
 			}
 		});
@@ -421,6 +419,7 @@ public class MainClientScreen extends GenericClientScreen {
 	public SearchClientScreen getFrameSearch(ClientModel model, ClientController controller) {
 		if (frameSearch == null) {
 			frameSearch = new SearchClientScreen(model, controller);
+			getMainScreen().getDesktopPane().add(frameSearch);
 		}
 		return frameSearch;
 	}
@@ -429,6 +428,7 @@ public class MainClientScreen extends GenericClientScreen {
 	public AddClientScreen getFrameAdd(ClientModel model, ClientController controller) {
 		if (frameAdd == null) {
 			frameAdd = new AddClientScreen(model, controller);
+			getMainScreen().getDesktopPane().add(frameAdd);
 		}
 		return frameAdd;
 	}

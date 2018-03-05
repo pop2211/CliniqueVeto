@@ -78,7 +78,7 @@ public class AddClientScreen extends GenericClientScreen {
 		JButton annulerBtn = new JButton("Annuler");
 		annulerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//resetClient();
+				showClient(new Client());	//reset fields
 				setVisible(false);
 			}
 		});

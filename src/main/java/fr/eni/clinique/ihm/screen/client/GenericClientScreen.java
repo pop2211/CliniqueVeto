@@ -74,7 +74,9 @@ public class GenericClientScreen extends JInternalFrame {
 		}
 
 		// Rempli les champs de l'ihm :
-		codeTbx.setText(String.valueOf(client.getCodeClient()));
+		if(codeTbx != null){
+			codeTbx.setText(String.valueOf(client.getCodeClient()));
+		}
 		nomTbx.setText(ObjectUtil.nullToBlank(client.getNomClient()).trim());
 		prenomTbx.setText(ObjectUtil.nullToBlank(client.getPrenomClient()).trim());
 		adresse1Tbx.setText(ObjectUtil.nullToBlank(client.getAdresse1()).trim());
