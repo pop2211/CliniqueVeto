@@ -89,7 +89,7 @@ public class RdvScreen extends JInternalFrame {
 		panel_Pour.add(lblClient, gbc_lblClient);
 		
 		Vector<Item> modelCbxClient = new Vector<Item>();
-		JComboBox<Item> CbxClient = new JComboBox<Item>();
+		//JComboBox<Item> CbxClient = new JComboBox<Item>();
 		try {
 			List<Client> clients = controllerClient.loadAllClient();
 			
