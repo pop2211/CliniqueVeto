@@ -58,10 +58,10 @@ public class SearchClientScreen extends GenericScreen {
 		this.controllerClient = new ClientController(Modelclient);
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 200, 0, 20, 0};
-		gridBagLayout.rowHeights = new int[]{0, 20, 0, 20, 0, 0, 0, 0, 0, 0, 0, 0};
+		gridBagLayout.columnWidths = new int[]{20, 200, 0, 20, 0};
+		gridBagLayout.rowHeights = new int[]{20, 20, 10, 198, 20, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		getContentPane().setLayout(gridBagLayout);
 		
 		searchTbx = new JTextField();
@@ -69,9 +69,12 @@ public class SearchClientScreen extends GenericScreen {
 		gbc_searchTbx.insets = new Insets(0, 0, 5, 5);
 		gbc_searchTbx.fill = GridBagConstraints.HORIZONTAL;
 		gbc_searchTbx.gridx = 1;
-		gbc_searchTbx.gridy = 2;
+		gbc_searchTbx.gridy = 1;
 		getContentPane().add(searchTbx, gbc_searchTbx);
 		searchTbx.setColumns(10);
+		
+
+		resultsLstModel = new Vector<Item>();
 		
 		JButton searchBtn = new JButton("Rechercher");
 		searchBtn.setIcon(new ImageIcon(SearchClientScreen.class.getResource("/images/ico/search_27p.png")));
@@ -99,11 +102,8 @@ public class SearchClientScreen extends GenericScreen {
 		GridBagConstraints gbc_searchBtn = new GridBagConstraints();
 		gbc_searchBtn.insets = new Insets(0, 0, 5, 5);
 		gbc_searchBtn.gridx = 2;
-		gbc_searchBtn.gridy = 2;
+		gbc_searchBtn.gridy = 1;
 		getContentPane().add(searchBtn, gbc_searchBtn);
-		
-
-		resultsLstModel = new Vector<Item>();
 		resultsLst = new JList<Item>();
 		resultsLst.setListData(resultsLstModel);
 		
@@ -123,7 +123,6 @@ public class SearchClientScreen extends GenericScreen {
 		
 		gbc_resultsLst = new GridBagConstraints();
 		gbc_resultsLst.gridwidth = 2;
-		gbc_resultsLst.gridheight = 6;
 		gbc_resultsLst.insets = new Insets(0, 0, 5, 5);
 		gbc_resultsLst.fill = GridBagConstraints.BOTH;
 		gbc_resultsLst.gridx = 1;
