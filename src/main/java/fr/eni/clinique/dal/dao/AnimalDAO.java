@@ -3,10 +3,11 @@ package fr.eni.clinique.dal.dao;
 import java.util.List;
 
 import fr.eni.clinique.bo.Animal;
+import fr.eni.clinique.bo.Personnel;
 import fr.eni.clinique.dal.exception.DaoException;
 
 public interface AnimalDAO extends GenericDAO<Animal, Integer> {	
 
-	
+	List<Animal> selectByMaitre(Integer codeClient) throws DaoException;
 	
 }

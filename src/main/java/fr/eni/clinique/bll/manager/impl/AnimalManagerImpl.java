@@ -111,6 +111,20 @@ public class AnimalManagerImpl implements AnimalManager{
         }
     }
 
+	@Override
+	public List<Animal> selectByMaitre(Integer codeClient) throws ManagerException {
+		List<Animal> animal = null;
+        
+        try {
+        	animal = animalDAO.selectByMaitre(codeClient);
+            
+        } catch (DaoException e) {
+            throw new ManagerException("Erreur récupération Liste animaux par maitre", e);
+        }
+        
+        return animal;
+	}
+
 	
 
 }

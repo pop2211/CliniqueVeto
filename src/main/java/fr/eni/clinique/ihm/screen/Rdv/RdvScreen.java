@@ -26,9 +26,12 @@ import org.jdatepicker.ComponentFormatDefaults;
 import org.jdatepicker.JDatePicker;
 
 import fr.eni.clinique.bll.exception.ManagerException;
+import fr.eni.clinique.bo.Animal;
 import fr.eni.clinique.bo.Client;
 import fr.eni.clinique.common.util.Item;
+import fr.eni.clinique.ihm.controller.AnimalController;
 import fr.eni.clinique.ihm.controller.ClientController;
+import fr.eni.clinique.ihm.model.AnimalModel;
 import fr.eni.clinique.ihm.model.ClientModel;
 
 public class RdvScreen extends JInternalFrame {
@@ -37,12 +40,17 @@ public class RdvScreen extends JInternalFrame {
 	
 	private ClientController controllerClient;
 	private ClientModel Modelclient;
+	private AnimalController controllerAnimal;
+	private AnimalModel ModelAnimal;
+	
 	
 	JComboBox<Item> CbxClient;
+	JComboBox<Item> CbxAnimal;
 	
 	public RdvScreen() {
 		super("Prise de rendez-vous", true, true, true, true);
 		controllerClient = new ClientController(Modelclient);
+		controllerAnimal = new AnimalController(ModelAnimal);
 		constructionFenetre();
 	}
 	
@@ -80,9 +88,11 @@ public class RdvScreen extends JInternalFrame {
 		gbc_lblClient.gridy = 0;
 		panel_Pour.add(lblClient, gbc_lblClient);
 		
+		Vector<Item> modelCbxClient = new Vector<Item>();
+		JComboBox<Item> CbxClient = new JComboBox<Item>();
 		try {
 			List<Client> clients = controllerClient.loadAllClient();
-			Vector<Item> modelCbxClient = new Vector<Item>();
+			
 			if(!clients.isEmpty()) {
 				for (Client client : clients) {
 					modelCbxClient.addElement( new Item(client.getCodeClient(), client.getFullname()));
@@ -101,7 +111,7 @@ public class RdvScreen extends JInternalFrame {
 		CbxClient.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Item item = (Item)CbxClient.getSelectedItem();
-				System.out.println(item.getId() + " : " + item.getDescription());
+				chargeAnimaux(item.getId());
 			}
 		});
 		
@@ -131,15 +141,33 @@ public class RdvScreen extends JInternalFrame {
 		gbc_labelAnimal.gridy = 2;
 		panel_Pour.add(labelAnimal, gbc_labelAnimal);
 		
-		JComboBox<?> CbXAnimal = new JComboBox<Object>();
-		CbXAnimal.setMaximumSize(new Dimension(125, 20));
-		CbXAnimal.setMinimumSize(new Dimension(125, 20));
+		try {
+			Vector<Item> modelCbxAnimal = new Vector<Item>();
+			if(CbxClient.getItemCount() > 0 ){
+				List<Animal> animaux = controllerAnimal.loadAnimalByMaitre(CbxClient.getItemAt(0).getId());
+				
+				if(!animaux.isEmpty()) {
+					for (Animal animal : animaux) {
+						modelCbxAnimal.addElement( new Item(animal.getCodeAnimal(), animal.getNomAnimal()));
+					}
+				}
+				else {
+					modelCbxAnimal = null;
+				}
+			}
+			CbxAnimal = new JComboBox<Item>(modelCbxAnimal);
+			
+		} catch (ManagerException e) {
+			e.printStackTrace();
+		}
+		CbxAnimal.setMaximumSize(new Dimension(125, 20));
+		CbxAnimal.setMinimumSize(new Dimension(125, 20));
 		GridBagConstraints gbc_CbXAnimal = new GridBagConstraints();
 		gbc_CbXAnimal.insets = new Insets(0, 10, 5, 5);
 		gbc_CbXAnimal.fill = GridBagConstraints.HORIZONTAL;
 		gbc_CbXAnimal.gridx = 0;
 		gbc_CbXAnimal.gridy = 3;
-		panel_Pour.add(CbXAnimal, gbc_CbXAnimal);
+		panel_Pour.add(CbxAnimal, gbc_CbXAnimal);
 		
 		JButton BtnAddAnimal = new JButton("");
 		BtnAddAnimal.setBorderPainted(false);
@@ -240,7 +268,7 @@ public class RdvScreen extends JInternalFrame {
 		panelQuand.add(lblHeure, gbc_lblHeure);
 		
 		JComboBox<String> cbxHeure = new JComboBox<String>();
-		cbxHeure.setModel(new DefaultComboBoxModel<String>(new String[] {"0","1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"}));
+		cbxHeure.setModel(new DefaultComboBoxModel<String>(new String[] {"8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"}));
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.insets = new Insets(0, 10, 0, 5);
 		gbc_comboBox.gridx = 0;
@@ -297,6 +325,21 @@ public class RdvScreen extends JInternalFrame {
 		
 		this.pack();
 		
+	}
+
+	private void chargeAnimaux(int CodeClient) {
+		List<Animal> animaux;
+		try {
+			CbxAnimal.removeAllItems();
+			animaux = controllerAnimal.loadAnimalByMaitre(CodeClient);
+			if(!animaux.isEmpty()) {
+				for (Animal animal : animaux) {
+					CbxAnimal.addItem(new Item(animal.getCodeAnimal(), animal.getNomAnimal()));
+				}
+			}
+		} catch (ManagerException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/*

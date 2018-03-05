@@ -1,5 +1,7 @@
 package fr.eni.clinique.ihm.controller;
 
+import java.util.List;
+
 import fr.eni.clinique.bll.exception.ManagerException;
 import fr.eni.clinique.bll.factory.ManagerFactory;
 import fr.eni.clinique.bll.manager.AnimalManager;
@@ -41,6 +43,8 @@ public class AnimalController {
 		return animalManager.selectById(codeAnimal);
 	}
 	
-
+	public List<Animal> loadAnimalByMaitre(Integer codeClient) throws ManagerException {
+		return animalManager.selectByMaitre(codeClient);
+	}
 
 }

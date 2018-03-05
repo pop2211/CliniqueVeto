@@ -23,7 +23,7 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
     private static final String INSERT_QUERY = "INSERT INTO Animaux(NomAnimal, Sexe, Couleur, Race, Espece, CodeClient, Tatouage, Antecedents, Archive) VALUES (?,?,?,?,?,?,?,?,?)";
     private static final String DELETE_QUERY = "DELETE FROM Animaux WHERE CodeAnimal=?";
     private static final String TRUNCATE_QUERY = "DELETE FROM Animaux; DBCC CHECKIDENT(Animaux, RESEED,0);";
-
+    private static final String SELECT_BY_MAITRE = "SELECT * FROM Animaux WHERE CodeClient = ?";
     
     private static AnimalJDBCDAOImpl instance;
     
@@ -201,6 +201,30 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
         } finally {
             ResourceUtil.safeClose(connection, statement);
         }
+	}
+
+	@Override
+	public List<Animal> selectByMaitre(Integer codeClient) throws DaoException {
+		Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        List<Animal> liste = new ArrayList<Animal>();
+        
+        try {
+            connection = JdbcTools.get();
+            statement = connection.prepareStatement(SELECT_BY_MAITRE);
+            statement.setInt(1, codeClient);
+            
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) { 
+				liste.add(resultSetEntryToAnimal(resultSet));	
+            }
+        } catch(SQLException e) {
+            throw new DaoException(e.getMessage(), e);
+        } finally {
+            ResourceUtil.safeClose(connection, statement, resultSet);
+        }
+        return liste;
 	}
 
 	
