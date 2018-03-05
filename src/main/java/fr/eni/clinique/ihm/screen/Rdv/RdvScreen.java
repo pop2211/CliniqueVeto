@@ -8,6 +8,8 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Vector;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -23,24 +25,28 @@ import javax.swing.border.TitledBorder;
 import org.jdatepicker.ComponentFormatDefaults;
 import org.jdatepicker.JDatePicker;
 
-import fr.eni.clinique.ihm.controller.PersonnelController;
-import fr.eni.clinique.ihm.model.PersonnelModel;
+import fr.eni.clinique.bll.exception.ManagerException;
+import fr.eni.clinique.bo.Client;
+import fr.eni.clinique.common.util.Item;
+import fr.eni.clinique.ihm.controller.ClientController;
+import fr.eni.clinique.ihm.model.ClientModel;
 
 public class RdvScreen extends JInternalFrame {
 	
 	private static final long serialVersionUID = -6328443080174868948L;
-
-	private PersonnelModel model;
-	private PersonnelController controller;
-	private JTable tableClient;
-	private JComboBox<?> CbxVeterinaire;
 	
-	public RdvScreen(PersonnelModel model, PersonnelController controller) {
+	private ClientController controllerClient;
+	private ClientModel Modelclient;
+	
+	JComboBox<Item> CbxClient;
+	
+	public RdvScreen() {
 		super("Prise de rendez-vous", true, true, true, true);
-		constructionFentre();
+		controllerClient = new ClientController(Modelclient);
+		constructionFenetre();
 	}
 	
-	private void constructionFentre() {
+	private void constructionFenetre() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{150, 0, 150, 0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{30, 130, 35, 191, 0, 0};
@@ -74,9 +80,31 @@ public class RdvScreen extends JInternalFrame {
 		gbc_lblClient.gridy = 0;
 		panel_Pour.add(lblClient, gbc_lblClient);
 		
-		JComboBox<?> CbxClient = new JComboBox<Object>();
+		try {
+			List<Client> clients = controllerClient.loadAllClient();
+			Vector<Item> modelCbxClient = new Vector<Item>();
+			if(!clients.isEmpty()) {
+				for (Client client : clients) {
+					modelCbxClient.addElement( new Item(client.getCodeClient(), client.getFullname()));
+				}
+			}
+			else {
+				modelCbxClient = null;
+			}
+			CbxClient = new JComboBox<Item>(modelCbxClient);
+			
+		} catch (ManagerException e) {
+			e.printStackTrace();
+		}
 		CbxClient.setMaximumSize(new Dimension(125, 20));
 		CbxClient.setMinimumSize(new Dimension(125, 20));
+		CbxClient.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Item item = (Item)CbxClient.getSelectedItem();
+				System.out.println(item.getId() + " : " + item.getDescription());
+			}
+		});
+		
 		GridBagConstraints gbc_CbxClient = new GridBagConstraints();
 		gbc_CbxClient.fill = GridBagConstraints.HORIZONTAL;
 		gbc_CbxClient.insets = new Insets(0, 10, 5, 5);
@@ -150,7 +178,7 @@ public class RdvScreen extends JInternalFrame {
 		gbc_labelVeterinaire.gridy = 0;
 		panel_Par.add(labelVeterinaire, gbc_labelVeterinaire);
 		
-		CbxVeterinaire = new JComboBox<Object>();
+		JComboBox<Object> CbxVeterinaire = new JComboBox<Object>();
 		CbxVeterinaire.setMinimumSize(new Dimension(100, 20));
 		GridBagConstraints gbc_CbxVeterinaire = new GridBagConstraints();
 		gbc_CbxVeterinaire.fill = GridBagConstraints.HORIZONTAL;
@@ -234,7 +262,7 @@ public class RdvScreen extends JInternalFrame {
 		gbc_comboBox_1.gridy = 3;
 		panelQuand.add(cbxMinute, gbc_comboBox_1);
 		
-		tableClient = new JTable();
+		JTable tableClient = new JTable();
 		GridBagConstraints gbc_tableClient = new GridBagConstraints();
 		gbc_tableClient.insets = new Insets(0, 0, 5, 5);
 		gbc_tableClient.fill = GridBagConstraints.VERTICAL;
@@ -270,4 +298,23 @@ public class RdvScreen extends JInternalFrame {
 		this.pack();
 		
 	}
+
+	/*
+	private Rdv readRdv() {
+
+		Rdv rdv = new Rdv();
+		
+		//Recupère les champs de l'ihm :
+		animal.setCodeAnimal((Integer.parseInt(recupLblAnimal.getText())));
+		animal.setNomAnimal(nomTbx.getText().trim());
+		animal.setCouleur(couleurTbx.getText().trim());
+		Race race = new Race();
+		race.setRace(raceCbx.getSelectedItem().toString());
+		race.setEspece(especeCbx.getSelectedItem().toString());
+		animal.setRace(race);
+		animal.setTatouage(tatouageTbx.getText().trim());
+
+		return animal;
+	}
+	 */
 }

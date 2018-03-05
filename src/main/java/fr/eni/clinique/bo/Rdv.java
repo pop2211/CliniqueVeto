@@ -6,7 +6,7 @@ public class Rdv {
 
 	
 	private Personnel veto; 
-	private GregorianCalendar dateRdv; //Rendez-vous tous les quarts d�heures : 00 ; 15 ; 30 ; 45
+	private GregorianCalendar dateRdv; //Rendez-vous tous les quarts d'heures : 00 ; 15 ; 30 ; 45
 	private Animal animal;
 	
 	

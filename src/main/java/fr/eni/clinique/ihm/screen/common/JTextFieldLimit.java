@@ -1,4 +1,4 @@
-package fr.eni.clinique.ihm.screen.field;
+package fr.eni.clinique.ihm.screen.common;
 
 import java.awt.FlowLayout;
 

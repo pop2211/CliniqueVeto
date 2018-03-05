@@ -25,10 +25,10 @@ import fr.eni.clinique.ihm.controller.PersonnelController;
 import fr.eni.clinique.ihm.model.ClientModel;
 import fr.eni.clinique.ihm.model.PersonnelModel;
 import fr.eni.clinique.ihm.screen.MainScreen;
+import fr.eni.clinique.ihm.screen.common.GenericScreen;
 
 
-public class GenericClientScreen extends JInternalFrame {
-
+public class GenericClientScreen extends GenericScreen {
 
 	protected MainScreen mainScreen;
 
@@ -49,19 +49,14 @@ public class GenericClientScreen extends JInternalFrame {
 	protected JTextField emailTbx;
 	protected JTextField remarqueTbx;
 	
-	public GenericClientScreen(String title, Boolean b1, Boolean b2,  Boolean b3,  Boolean b4){
-		super(title, b1, b2, b3, b4);
-	}
-	
-	
-	public MainScreen getMainScreen(){
-		if(this.mainScreen == null){
-			this.mainScreen = (MainScreen) this.getTopLevelAncestor();
-		}
-		return this.mainScreen;
-	}
-	
 
+	public GenericClientScreen(String title, Boolean b1, Boolean b2, Boolean b3, Boolean b4) {
+		super(title, b1, b2, b3, b4);
+        // Create Client Model & Controller
+		model = new ClientModel();
+        controller = new ClientController(model);
+	}
+	
 	/**
 	 * Show Client on the UI.
 	 * 
@@ -74,7 +69,9 @@ public class GenericClientScreen extends JInternalFrame {
 		}
 
 		// Rempli les champs de l'ihm :
-		codeTbx.setText(String.valueOf(client.getCodeClient()));
+		if(codeTbx != null){
+			codeTbx.setText(String.valueOf(client.getCodeClient()));
+		}
 		nomTbx.setText(ObjectUtil.nullToBlank(client.getNomClient()).trim());
 		prenomTbx.setText(ObjectUtil.nullToBlank(client.getPrenomClient()).trim());
 		adresse1Tbx.setText(ObjectUtil.nullToBlank(client.getAdresse1()).trim());
@@ -96,9 +93,14 @@ public class GenericClientScreen extends JInternalFrame {
 	public Client readClient() {
 
 		Client client = new Client();
+		
+		Integer codeClient = null;
+		if(codeTbx != null){
+			codeClient = Integer.parseInt(codeTbx.getText().trim());
+		}
 
 		// Recupère les champs de l'ihm :
-		client.setCodeClient(Integer.parseInt(codeTbx.getText().trim()));
+		client.setCodeClient(codeClient);
 		client.setNomClient(nomTbx.getText().trim());
 		client.setPrenomClient(prenomTbx.getText().trim());
 		client.setAdresse1(adresse1Tbx.getText().trim());
@@ -111,24 +113,6 @@ public class GenericClientScreen extends JInternalFrame {
 		client.setRemarque(remarqueTbx.getText().trim());
 
 		return client;
-	}
-
-	/**
-	 * Show TechnicalError.
-	 * 
-	 * @param message
-	 */
-	public void showFailureMessage(String message) {
-		JOptionPane.showMessageDialog(GenericClientScreen.this, message, "Erreur", JOptionPane.ERROR_MESSAGE);
-	}
-
-	/**
-	 * Show Success Message.
-	 * 
-	 * @param message
-	 */
-	public void showSuccessMessage(String message) {
-		JOptionPane.showMessageDialog(GenericClientScreen.this, message);
 	}
 
 }

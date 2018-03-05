@@ -33,7 +33,21 @@ public class ClientManagerImpl implements ClientManager{
         	clients = clientDAO.selectAll();
             
         } catch (DaoException e) {
-            throw new ManagerException("Erreur récupération Liste du client", e);
+            throw new ManagerException("Erreur récupération Liste des clients", e);
+        }
+        
+        return clients;
+	}
+	
+	@Override
+	public List<Client> selectSearch(String search) throws ManagerException {
+		List<Client> clients = null;
+        
+        try {
+        	clients = clientDAO.selectSearch(search);
+            
+        } catch (DaoException e) {
+            throw new ManagerException("Erreur récupération Liste des clients", e);
         }
         
         return clients;
@@ -94,16 +108,16 @@ public class ClientManagerImpl implements ClientManager{
 	private void validerClient(Client client) throws ManagerException {
 
         try {
-            ObjectUtil.checkNotNullWithMessage(client, "Une erreur technique st survenue");
-            ObjectUtil.checkNotNullWithMessage(client.getNomClient(), "Le Nom est obligatoire");
-            ObjectUtil.checkNotNullWithMessage(client.getPrenomClient(), "Le Prenom est obligatoire");
-            ObjectUtil.checkNotBlankWithMessage(client.getAdresse1(), "La première adresse est obligatoire");
-            ObjectUtil.checkNotNullWithMessage(client.getCodePostal(), "Le Code Postal est obligatoire");
-            ObjectUtil.checkNotBlankWithMessage(client.getVille(), "La Ville est obligatoire");
-            ObjectUtil.checkNotNullWithMessage(client.getNumTel(), "Le numéro de téléphone est obligatoire");
-            ObjectUtil.checkNotNullWithMessage(client.getAssurance(), "L'assurance est obligatoire");
-            ObjectUtil.checkNotBlankWithMessage(client.getEmail(), "L'Email est obligatoire");
-            ObjectUtil.checkNotBlankWithMessage(client.getRemarque(), "Le Rôle est obligatoire");
+            ObjectUtil.checkNotNullWithMessage(client, "Une erreur technique est survenue");
+            ObjectUtil.checkNotBlankWithMessage(client.getNomClient(), "Le Nom est obligatoire");
+            ObjectUtil.checkNotBlankWithMessage(client.getPrenomClient(), "Le Prenom est obligatoire");
+            //ObjectUtil.checkNotBlankWithMessage(client.getAdresse1(), "La première adresse est obligatoire");
+            //ObjectUtil.checkNotNullWithMessage(client.getCodePostal(), "Le Code Postal est obligatoire");
+            //ObjectUtil.checkNotBlankWithMessage(client.getVille(), "La Ville est obligatoire");
+            //ObjectUtil.checkNotBlankWithMessage(client.getNumTel(), "Le numéro de téléphone est obligatoire");
+            //ObjectUtil.checkNotBlankWithMessage(client.getAssurance(), "L'assurance est obligatoire");
+            //ObjectUtil.checkNotBlankWithMessage(client.getEmail(), "L'Email est obligatoire");
+            //ObjectUtil.checkNotBlankWithMessage(client.getRemarque(), "La Remarque est obligatoire");
             ObjectUtil.checkNotNullWithMessage(client.getArchive(), "L'Archive est obligatoire");
 
         } catch (IllegalArgumentException e) {
