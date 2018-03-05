@@ -38,6 +38,8 @@ public class RdvScreen extends JInternalFrame {
 	private ClientController controllerClient;
 	private ClientModel Modelclient;
 	
+	JComboBox<Item> CbxClient;
+	
 	public RdvScreen() {
 		super("Prise de rendez-vous", true, true, true, true);
 		controllerClient = new ClientController(Modelclient);
@@ -80,20 +82,28 @@ public class RdvScreen extends JInternalFrame {
 		
 		try {
 			List<Client> clients = controllerClient.loadAllClient();
+			Vector<Item> modelCbxClient = new Vector<Item>();
 			if(!clients.isEmpty()) {
-				 Vector<Item> modelCbxClient = new Vector<Item>();
-				//CbxClient.setModel(new DefaultComboBoxModel<Client>(clients.toArray(new Client[0])));
 				for (Client client : clients) {
 					modelCbxClient.addElement( new Item(client.getCodeClient(), client.getFullname()));
 				}
-				JComboBox CbxClient = new JComboBox( modelCbxClient );
 			}
-		} catch (ManagerException e) {
+			else {
+				modelCbxClient = null;
+			}
+			CbxClient = new JComboBox<Item>(modelCbxClient);
 			
+		} catch (ManagerException e) {
 			e.printStackTrace();
 		}
 		CbxClient.setMaximumSize(new Dimension(125, 20));
 		CbxClient.setMinimumSize(new Dimension(125, 20));
+		CbxClient.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Item item = (Item)CbxClient.getSelectedItem();
+				System.out.println(item.getId() + " : " + item.getDescription());
+			}
+		});
 		
 		GridBagConstraints gbc_CbxClient = new GridBagConstraints();
 		gbc_CbxClient.fill = GridBagConstraints.HORIZONTAL;
