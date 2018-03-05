@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JInternalFrame;
 import javax.swing.SwingConstants;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import fr.eni.clinique.bll.exception.ManagerException;
 import fr.eni.clinique.bo.Client;
@@ -36,6 +38,7 @@ public class SearchClientScreen extends GenericScreen {
 	
 	private ClientController controllerClient;
 	private ClientModel Modelclient;
+	private MainClientScreen parentScreen;
 	
 	private JTextField searchTbx;
 	private JList resultsLst;
@@ -46,12 +49,13 @@ public class SearchClientScreen extends GenericScreen {
 	/**
 	 * Create the frame.
 	 */
-	public SearchClientScreen(ClientModel model, ClientController controller) {
+	public SearchClientScreen(MainClientScreen parentScreen) {
 		
 		super("Recherche", true, true, true, true);
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		
-		controllerClient = new ClientController(Modelclient);
+		this.parentScreen = parentScreen;
+		this.controllerClient = new ClientController(Modelclient);
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 200, 0, 20, 0};
@@ -102,6 +106,20 @@ public class SearchClientScreen extends GenericScreen {
 		resultsLstModel = new Vector<Item>();
 		resultsLst = new JList<Item>();
 		resultsLst.setListData(resultsLstModel);
+		
+		resultsLst.addListSelectionListener(new ListSelectionListener() {
+		    public void valueChanged(ListSelectionEvent event) {
+		        if (!event.getValueIsAdjusting()){
+		            JList source = (JList)event.getSource();
+		            Item selectedItem = resultsLstModel.get(source.getSelectedIndex());
+		            Integer selectedCodeCli = selectedItem.getId();
+		            //System.out.println("JList valueChanged"+ selectedItem.getId() + " : " + selectedItem.getDescription());
+		            
+		            parentScreen.showClientById(selectedCodeCli);
+		            setVisible(false);
+		        }
+		    }
+		});
 		
 		gbc_resultsLst = new GridBagConstraints();
 		gbc_resultsLst.gridwidth = 2;

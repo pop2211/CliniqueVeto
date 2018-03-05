@@ -391,32 +391,28 @@ public class MainClientScreen extends GenericClientScreen {
 		getContentPane().add(remarqueTbx, gbc_remarqueTbx);
 
 		
-
 		// test chargement premier client a l'ouverture fenetre
-		Client firstClient;
-		try {
-			firstClient = controller.loadClient(1);
-			showClient(firstClient);
-		} catch (ManagerException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-
-		// INIT CONTROLLER
-		try {
-			controller.init();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		showClientById(1);
 		
 		this.pack();
 	}
 	
 	
+	public void showClientById(Integer id){
+		Client client;
+		try {
+			client = controller.loadClient(id);
+			showClient(client);
+		} catch (ManagerException e2) {
+			e2.printStackTrace();
+		}
+	}
+	
+	
 	public SearchClientScreen getFrameSearch(ClientModel model, ClientController controller) {
 		if (frameSearch == null) {
-			frameSearch = new SearchClientScreen(model, controller);
+			//frameSearch = new SearchClientScreen(model, controller);
+			frameSearch = new SearchClientScreen(this);
 			getMainScreen().getDesktopPane().add(frameSearch);
 		}
 		return frameSearch;
