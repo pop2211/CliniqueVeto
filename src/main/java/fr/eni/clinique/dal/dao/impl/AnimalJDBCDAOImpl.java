@@ -203,7 +203,6 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
         }
 	}
 
-	@Override
 	public List<Animal> selectByMaitre(Integer codeClient) throws DaoException {
 		Connection connection = null;
         PreparedStatement statement = null;
@@ -226,7 +225,5 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
         }
         return liste;
 	}
-
-	
 	
 }

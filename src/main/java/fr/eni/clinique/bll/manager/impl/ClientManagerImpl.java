@@ -40,6 +40,20 @@ public class ClientManagerImpl implements ClientManager{
 	}
 	
 	@Override
+	public List<Client> selectSearch(String search) throws ManagerException {
+		List<Client> clients = null;
+        
+        try {
+        	clients = clientDAO.selectSearch(search);
+            
+        } catch (DaoException e) {
+            throw new ManagerException("Erreur récupération Liste des clients", e);
+        }
+        
+        return clients;
+	}
+	
+	@Override
 	public Client selectById(Integer id) throws ManagerException {
 		Client client = new Client();
 		

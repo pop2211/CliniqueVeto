@@ -21,20 +21,12 @@ public class ClientController{
         this.model = model;
     }
 
-	
 	public void init() throws Exception {
 		System.out.println("Client Controler: init()");
 		
 	}
-
-	
-//	public void newClient(Client client) throws ManagerException {
-//		clientManager.insert(client);
-//	}
-	
 	
 	public void saveClient(Client client) throws Exception {
-		System.out.println(client.getCodeClient());
 		if(client.getCodeClient() == null){
 			System.out.println("clientManager.insert");
 			clientManager.insert(client);
@@ -50,6 +42,10 @@ public class ClientController{
 	
 	public List<Client> loadAllClient() throws ManagerException {
 		return clientManager.selectAll();
+	}
+	
+	public List<Client> loadSearchClient(String search) throws ManagerException {
+		return clientManager.selectSearch(search);
 	}
 	
 }

@@ -190,8 +190,7 @@ public class Client {
 		this.archive = archive;
 	}
 	
-
-	/*
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -222,15 +221,6 @@ public class Client {
 		builder.append(", archive=");
 		builder.append(archive);
 		builder.append("]");
-		return builder.toString();
-	}
-	*/
-	
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append(prenomClient);
-		builder.append(" ");
-		builder.append(nomClient);
 		return builder.toString();
 	}
 	
