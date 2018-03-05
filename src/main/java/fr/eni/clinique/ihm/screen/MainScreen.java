@@ -19,7 +19,7 @@ import fr.eni.clinique.ihm.model.AnimalModel;
 import fr.eni.clinique.ihm.model.ClientModel;
 import fr.eni.clinique.ihm.model.PersonnelModel;
 import fr.eni.clinique.ihm.screen.Rdv.RdvScreen;
-import fr.eni.clinique.ihm.screen.client.ClientScreen;
+import fr.eni.clinique.ihm.screen.client.MainClientScreen;
 import fr.eni.clinique.ihm.screen.login.InternalFrameLogin;
 
 public class MainScreen extends JFrame implements ActionListener {
@@ -47,7 +47,7 @@ public class MainScreen extends JFrame implements ActionListener {
 	private JMenuItem menuGestionDesAnimaux;
 	
 	private InternalFrameLogin frameLogin;
-	private ClientScreen clientScreen;
+	private MainClientScreen clientScreen;
 	private AnimalScreen animalScreen;
 	private RdvScreen rdvScreen;
 	
@@ -59,8 +59,8 @@ public class MainScreen extends JFrame implements ActionListener {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		int largeurFen = (int) Math.round(screenSize.width * 0.6);
-		int hauteurFen = (int) Math.round(screenSize.height * 0.6);
+		int largeurFen = (int) Math.round(screenSize.width * 0.7);
+		int hauteurFen = (int) Math.round(screenSize.height * 0.7);
 		setBounds(0, 0, largeurFen, hauteurFen);
 		setTitle(title);
 
@@ -224,11 +224,11 @@ public class MainScreen extends JFrame implements ActionListener {
 		return rdvScreen;
 	}
 
-	public ClientScreen getClientScreen(ClientModel model, ClientController controller) {
+	public MainClientScreen getClientScreen(ClientModel model, ClientController controller) {
 		/*if(clientScreen == null) {
 			clientScreen = new ClientScreen(model, controller);
 		}*/
-		clientScreen = new ClientScreen(model, controller);
+		clientScreen = new MainClientScreen(model, controller);
 		return clientScreen;
 	}
 	

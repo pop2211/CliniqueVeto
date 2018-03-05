@@ -27,7 +27,10 @@ import fr.eni.clinique.dal.dao.impl.RaceJDBCDAOImpl;
 import fr.eni.clinique.dal.exception.DaoException;
 import fr.eni.clinique.ihm.controller.AnimalController;
 import fr.eni.clinique.ihm.model.AnimalModel;
-import fr.eni.clinique.ihm.screen.client.ClientScreen;
+
+
+import fr.eni.clinique.ihm.model.PersonnelModel;
+import fr.eni.clinique.ihm.screen.client.MainClientScreen;
 
 import java.awt.Color;
 import java.awt.event.ItemListener;
@@ -206,6 +209,7 @@ public class AnimalScreen extends JInternalFrame {
 		tatouageTbx.setColumns(10);
 		
 		JButton validerBtn = new JButton("Valider");
+
 		validerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if("".equals(recupLblCli.getText()) || recupLblCli.getText() == null){
@@ -266,7 +270,9 @@ public class AnimalScreen extends JInternalFrame {
 		
 		getContentPane().add(sexeCbx, gbc_sexeCbx);
 		
-		validerBtn.setIcon(new ImageIcon(ClientScreen.class.getResource("/images/ico/done_32p.png")));
+
+		validerBtn.setIcon(new ImageIcon(MainClientScreen.class.getResource("/images/ico/done_32p.png")));
+
 		GridBagConstraints gbc_validerBtn = new GridBagConstraints();
 		gbc_validerBtn.insets = new Insets(0, 0, 5, 5);
 		gbc_validerBtn.gridx = 2;
@@ -274,6 +280,7 @@ public class AnimalScreen extends JInternalFrame {
 		getContentPane().add(validerBtn, gbc_validerBtn);
 		
 		JButton annulerBtn = new JButton("Annuler");
+
 		annulerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -286,7 +293,9 @@ public class AnimalScreen extends JInternalFrame {
 				}
 			}
 		});
-		annulerBtn.setIcon(new ImageIcon(ClientScreen.class.getResource("/images/ico/undo_27p.png")));
+
+		annulerBtn.setIcon(new ImageIcon(MainClientScreen.class.getResource("/images/ico/undo_27p.png")));
+
 		GridBagConstraints gbc_annulerBtn = new GridBagConstraints();
 		gbc_annulerBtn.insets = new Insets(0, 0, 5, 5);
 		gbc_annulerBtn.gridx = 4;
