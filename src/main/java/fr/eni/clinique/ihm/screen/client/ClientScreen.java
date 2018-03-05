@@ -25,32 +25,17 @@ import fr.eni.clinique.ihm.controller.PersonnelController;
 import fr.eni.clinique.ihm.model.ClientModel;
 import fr.eni.clinique.ihm.model.PersonnelModel;
 import fr.eni.clinique.ihm.screen.MainScreen;
-import fr.eni.clinique.ihm.screen.login.InternalFrameLogin;
+import fr.eni.clinique.ihm.screen.field.JTextFieldLimit;
 
-public class ClientScreen extends JInternalFrame {
+public class ClientScreen extends GenericClientScreen {
 
 	private static final long serialVersionUID = -9075041539974261255L;
 
 	private MainScreen mainScreen;
-
-	private ClientModel model;
-	private ClientController controller;
 	
 	private InternalFrameAddClient frameAdd;
 	private InternalFrameSearchClient frameSearch;
 
-	private JTextField codeTbx;
-	private JTextField nomTbx;
-	private JTextField prenomTbx;
-	private JTextField adresse1Tbx;
-	private JTextField adresse2Tbx;
-	private JTextField codePostalTbx;
-	private JTextField villeTbx;
-	private JTable animauxTable;
-	private JTextField numTelTbx;
-	private JTextField assuranceTbx;
-	private JTextField emailTbx;
-	private JTextField remarqueTbx;
 
 	public ClientScreen(ClientModel model, ClientController controller) {
 		super("Gestion des Clients", true, true, true, true);
@@ -92,7 +77,10 @@ public class ClientScreen extends JInternalFrame {
 		validerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					controller.saveClient(readClient());
+					Client saveIt = readClient();
+					System.out.println( saveIt );
+					
+					controller.saveClient(saveIt);
 					showSuccessMessage("Client enregistré !");
 				} catch (Exception e1) {
 					showFailureMessage(e1.getMessage());
@@ -199,6 +187,7 @@ public class ClientScreen extends JInternalFrame {
 		getContentPane().add(lblNom, gbc_lblNom);
 
 		nomTbx = new JTextField();
+		nomTbx.setDocument(new JTextFieldLimit(20));
 		nomTbx.setColumns(10);
 		GridBagConstraints gbc_nomTbx = new GridBagConstraints();
 		gbc_nomTbx.gridwidth = 5;
@@ -235,6 +224,7 @@ public class ClientScreen extends JInternalFrame {
 		getContentPane().add(lblAdresse, gbc_lblAdresse);
 
 		adresse1Tbx = new JTextField();
+		adresse1Tbx.setDocument(new JTextFieldLimit(30));
 		adresse1Tbx.setColumns(10);
 		GridBagConstraints gbc_adresse1Tbx = new GridBagConstraints();
 		gbc_adresse1Tbx.gridwidth = 5;
@@ -245,6 +235,7 @@ public class ClientScreen extends JInternalFrame {
 		getContentPane().add(adresse1Tbx, gbc_adresse1Tbx);
 
 		adresse2Tbx = new JTextField();
+		adresse2Tbx.setDocument(new JTextFieldLimit(5));
 		adresse2Tbx.setColumns(10);
 		GridBagConstraints gbc_adresse2Tbx = new GridBagConstraints();
 		gbc_adresse2Tbx.gridwidth = 5;
@@ -263,6 +254,7 @@ public class ClientScreen extends JInternalFrame {
 		getContentPane().add(lblCodePostal, gbc_lblCodePostal);
 
 		codePostalTbx = new JTextField();
+		codePostalTbx.setDocument(new JTextFieldLimit(5));
 		codePostalTbx.setColumns(10);
 		GridBagConstraints gbc_codePostalTbx = new GridBagConstraints();
 		gbc_codePostalTbx.gridwidth = 5;
@@ -281,6 +273,7 @@ public class ClientScreen extends JInternalFrame {
 		getContentPane().add(lblVille, gbc_lblVille);
 
 		villeTbx = new JTextField();
+		villeTbx.setDocument(new JTextFieldLimit(25));
 		villeTbx.setColumns(10);
 		GridBagConstraints gbc_villeTbx = new GridBagConstraints();
 		gbc_villeTbx.gridwidth = 5;
@@ -299,6 +292,7 @@ public class ClientScreen extends JInternalFrame {
 		getContentPane().add(lblNumTel, gbc_lblNumTel);
 
 		numTelTbx = new JTextField();
+		numTelTbx.setDocument(new JTextFieldLimit(15));
 		numTelTbx.setText("<dynamic>");
 		numTelTbx.setColumns(10);
 		GridBagConstraints gbc_numTelTbx = new GridBagConstraints();
@@ -318,6 +312,7 @@ public class ClientScreen extends JInternalFrame {
 		getContentPane().add(lblAssurance, gbc_lblAssurance);
 
 		assuranceTbx = new JTextField();
+		assuranceTbx.setDocument(new JTextFieldLimit(30));
 		assuranceTbx.setText("<dynamic>");
 		assuranceTbx.setColumns(10);
 		GridBagConstraints gbc_assuranceTbx = new GridBagConstraints();
@@ -337,6 +332,7 @@ public class ClientScreen extends JInternalFrame {
 		getContentPane().add(lblEmail, gbc_lblEmail);
 
 		emailTbx = new JTextField();
+		emailTbx.setDocument(new JTextFieldLimit(20));
 		emailTbx.setText("<dynamic>");
 		emailTbx.setColumns(10);
 		GridBagConstraints gbc_emailTbx = new GridBagConstraints();
@@ -422,14 +418,6 @@ public class ClientScreen extends JInternalFrame {
 	}
 	
 	
-	public MainScreen getMainScreen(){
-		if(this.mainScreen == null){
-			this.mainScreen = (MainScreen) this.getTopLevelAncestor();
-		}
-		return this.mainScreen;
-	}
-	
-	
 	public InternalFrameSearchClient getFrameSearch(ClientModel model, ClientController controller) {
 		if (frameSearch == null) {
 			frameSearch = new InternalFrameSearchClient(model, controller);
@@ -445,76 +433,5 @@ public class ClientScreen extends JInternalFrame {
 		return frameAdd;
 	}
 	
-	
-	
-
-	/**
-	 * Show Client on the UI.
-	 * 
-	 * @param article
-	 */
-	public void showClient(Client client) {
-
-		if (client == null) {
-			client = new Client();
-		}
-
-		// Rempli les champs de l'ihm :
-		codeTbx.setText(String.valueOf(client.getCodeClient()));
-		nomTbx.setText(ObjectUtil.nullToBlank(client.getNomClient()).trim());
-		prenomTbx.setText(ObjectUtil.nullToBlank(client.getPrenomClient()).trim());
-		adresse1Tbx.setText(ObjectUtil.nullToBlank(client.getAdresse1()).trim());
-		adresse2Tbx.setText(ObjectUtil.nullToBlank(client.getAdresse2()).trim());
-		codePostalTbx.setText(ObjectUtil.nullToBlank(client.getCodePostal()).trim());
-		villeTbx.setText(ObjectUtil.nullToBlank(client.getVille()).trim());
-		numTelTbx.setText(ObjectUtil.nullToBlank(client.getNumTel()).trim());
-		assuranceTbx.setText(ObjectUtil.nullToBlank(client.getAssurance()).trim());
-		emailTbx.setText(ObjectUtil.nullToBlank(client.getEmail()).trim());
-		remarqueTbx.setText(ObjectUtil.nullToBlank(client.getRemarque()).trim());
-
-	}
-
-	/**
-	 * Read Client From the UI.
-	 * 
-	 * @return
-	 */
-	private Client readClient() {
-
-		Client client = new Client();
-
-		// Recupère les champs de l'ihm :
-		client.setCodeClient(Integer.parseInt(codeTbx.getText().trim()));
-		client.setNomClient(nomTbx.getText().trim());
-		client.setPrenomClient(prenomTbx.getText().trim());
-		client.setAdresse1(adresse1Tbx.getText().trim());
-		client.setAdresse2(adresse2Tbx.getText().trim());
-		client.setCodePostal(codePostalTbx.getText().trim());
-		client.setVille(villeTbx.getText().trim());
-		client.setNumTel(numTelTbx.getText().trim());
-		client.setAssurance(assuranceTbx.getText().trim());
-		client.setEmail(emailTbx.getText().trim());
-		client.setRemarque(remarqueTbx.getText().trim());
-
-		return client;
-	}
-
-	/**
-	 * Show TechnicalError.
-	 * 
-	 * @param message
-	 */
-	public void showFailureMessage(String message) {
-		JOptionPane.showMessageDialog(ClientScreen.this, message, "Erreur", JOptionPane.ERROR_MESSAGE);
-	}
-
-	/**
-	 * Show Success Message.
-	 * 
-	 * @param message
-	 */
-	public void showSuccessMessage(String message) {
-		JOptionPane.showMessageDialog(ClientScreen.this, message);
-	}
 
 }
