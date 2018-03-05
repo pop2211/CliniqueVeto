@@ -22,7 +22,7 @@ public class ClientJDBCDAOImpl implements ClientDAO {
 	private static final String INSERT_QUERY = "INSERT INTO Clients(NomClient, PrenomClient, Adresse1, Adresse2, CodePostal, Ville, NumTel, Assurance, Email, Remarque, Archive) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 	private static final String DELETE_QUERY = "DELETE FROM Clients WHERE codeClient=?";
 	private static final String TRUNCATE_QUERY = "DELETE FROM Clients; DBCC CHECKIDENT(Clients, RESEED, 0);";
-	private static final String SEARCH_QUERY = "SELECT * FROM Clients";  //TODO
+	private static final String SEARCH_QUERY = "SELECT * FROM Clients WHERE NomClient LIKE ? OR PrenomClient LIKE ?";
 
 	private static ClientJDBCDAOImpl instance;
 
@@ -205,17 +205,20 @@ public class ClientJDBCDAOImpl implements ClientDAO {
 	@Override
 	public List<Client> selectSearch(String search) throws DaoException {
 		Connection connection = null;
-		Statement statement = null;
+		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		List<Client> liste = new ArrayList<Client>();
-		
-		//TODO
 
 		try {
 			connection = JdbcTools.get();
-			statement = connection.createStatement();
-			resultSet = statement.executeQuery(SEARCH_QUERY);
-
+			if("".equals(search)){
+				return selectAll();
+			}
+			statement = connection.prepareStatement(SEARCH_QUERY);
+			statement.setString(1, '%'+search+'%');
+			statement.setString(2, '%'+search+'%');
+			resultSet = statement.executeQuery();
+			
 			while (resultSet.next()) {
 				liste.add(resultSetEntryToClient(resultSet));
 			}
