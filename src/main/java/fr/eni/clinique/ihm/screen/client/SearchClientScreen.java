@@ -23,10 +23,9 @@ import java.awt.Color;
 
 public class SearchClientScreen extends JInternalFrame {
 
+
+	private static final long serialVersionUID = -5415116920585998148L;
 	
-	private static final long serialVersionUID = -7503557272432439802L;
-	private JTextField textField_1;
-	private JTextField textField_2;
 	private JTextField rechercherTbx;
 
 	/**

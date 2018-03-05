@@ -25,8 +25,10 @@ import java.awt.Color;
 public class AddClientScreen extends GenericClientScreen {
 
 	
-	private static final long serialVersionUID = -6767304758301746824L;
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1879188002908958230L;
 
 	/**
 	 * Create the frame.
