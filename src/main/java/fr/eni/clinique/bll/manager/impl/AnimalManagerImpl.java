@@ -33,7 +33,7 @@ public class AnimalManagerImpl implements AnimalManager{
 			animal = animalDAO.selectById(id);
             
         } catch (DaoException e) {
-            throw new ManagerException("Erreur récupération Liste du personnel", e);
+            throw new ManagerException("Erreur récupération Liste Animaux", e);
         }
 		return animal;
 	}
@@ -46,7 +46,7 @@ public class AnimalManagerImpl implements AnimalManager{
         	animal = animalDAO.selectAll();
             
         } catch (DaoException e) {
-            throw new ManagerException("Erreur récupération Liste du personnel", e);
+            throw new ManagerException("Erreur récupération Liste animaux", e);
         }
         
         return animal;
@@ -55,7 +55,7 @@ public class AnimalManagerImpl implements AnimalManager{
 	@Override
 	public Animal insert(Animal newAnimal) throws ManagerException {
 		if(newAnimal.getCodeAnimal() != null) {
-            throw new ManagerException("La personne est deja existante.");
+            throw new ManagerException("L'animal est deja existante.");
         }
         
         try {
@@ -64,7 +64,7 @@ public class AnimalManagerImpl implements AnimalManager{
         	newAnimal = animalDAO.insert(newAnimal);
             
         } catch (DaoException e) {
-            throw new ManagerException("Echec addPersonnel", e);
+            throw new ManagerException("Echec addAnimal", e);
         }
         return newAnimal;
 	}
@@ -97,11 +97,11 @@ public class AnimalManagerImpl implements AnimalManager{
             ObjectUtil.checkNotNullWithMessage(animal, "Une erreur technique st survenue");
             ObjectUtil.checkNotNullWithMessage(animal.getNomAnimal(), "Le Nom est obligatoire");
             ObjectUtil.checkNotNullWithMessage(animal.getCouleur(), "Le MDP est obligatoire");
-            ObjectUtil.checkNotBlankWithMessage(animal.getSexe(), "Le Rôle est obligatoire");
-            ObjectUtil.checkNotBlankWithMessage(animal.getTatouage(), "Le Rôle est obligatoire");
-            ObjectUtil.checkNotBlankWithMessage(animal.getAntecedants(), "Le Rôle est obligatoire");
-            ObjectUtil.checkNotNullWithMessage(animal.getCodeClient(), "Le Rôle est obligatoire");
-            ObjectUtil.checkNotNullWithMessage(animal.getRace(), "Le Rôle est obligatoire");
+            ObjectUtil.checkNotBlankWithMessage(animal.getSexe(), "Le Sexe est obligatoire");
+            ObjectUtil.checkNotBlankWithMessage(animal.getTatouage(), "Le Tatouage est obligatoire");
+            ObjectUtil.checkNotBlankWithMessage(animal.getAntecedents(), "Les Antécédents est obligatoire");
+            ObjectUtil.checkNotNullWithMessage(animal.getCodeClient(), "Le CodeClient est obligatoire");
+            ObjectUtil.checkNotNullWithMessage(animal.getRace(), "La Race est obligatoire");
             ObjectUtil.checkNotNullWithMessage(animal.isArchive(), "L'Archive est obligatoire");
 
         } catch (IllegalArgumentException e) {

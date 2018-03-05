@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
@@ -25,8 +26,9 @@ import fr.eni.clinique.dal.dao.impl.ClientJDBCDAOImpl;
 import fr.eni.clinique.dal.dao.impl.RaceJDBCDAOImpl;
 import fr.eni.clinique.dal.exception.DaoException;
 import fr.eni.clinique.ihm.controller.AnimalController;
-import fr.eni.clinique.ihm.controller.PersonnelController;
 import fr.eni.clinique.ihm.model.AnimalModel;
+
+
 import fr.eni.clinique.ihm.model.PersonnelModel;
 import fr.eni.clinique.ihm.screen.client.MainClientScreen;
 
@@ -37,6 +39,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import javax.swing.DefaultComboBoxModel;
 
 public class AnimalScreen extends JInternalFrame {
 	
@@ -50,8 +53,10 @@ public class AnimalScreen extends JInternalFrame {
 	private JTextField couleurTbx;
 	private JComboBox<String> especeCbx;
 	private JComboBox<String> raceCbx;
+	private JComboBox sexeCbx;
 	private JLabel recupLblCli;
 	private JLabel recupLblAnimal;
+	private JTextField antecedentsTbx;
 	private Integer codeClient = null;
 	RaceDAO raceDAO = new RaceJDBCDAOImpl();
 	ClientDAO clientDAO = new ClientJDBCDAOImpl();
@@ -83,7 +88,7 @@ public class AnimalScreen extends JInternalFrame {
 		gbc_labelCli.gridy = 2;
 		getContentPane().add(labelCli, gbc_labelCli);
 		
-		recupLblCli = new JLabel(recupLabelClient(2));
+		recupLblCli = new JLabel("");
 		recupLblCli.setHorizontalAlignment(SwingConstants.LEFT);
 		recupLblCli.setFont(new Font("Tahoma", Font.BOLD, 12));
 		recupLblCli.setForeground(new Color(255, 0, 0));
@@ -204,7 +209,70 @@ public class AnimalScreen extends JInternalFrame {
 		tatouageTbx.setColumns(10);
 		
 		JButton validerBtn = new JButton("Valider");
+
+		validerBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if("".equals(recupLblCli.getText()) || recupLblCli.getText() == null){
+					try {
+						System.out.println(recupLblCli.getText());
+						controller.newAnimal(readAnimal());
+						showSuccessMessage("Animal ajouté !");
+					} catch (Exception e1) {
+						showFailureMessage(e1.getMessage());
+					}
+					
+				}else{
+					try {
+						controller.saveAnimal(readAnimal());
+						showSuccessMessage("Animal enregistré !");
+					} catch (Exception e1) {
+						showFailureMessage(e1.getMessage());
+					}
+					
+				}
+			}
+		});
+		
+		JLabel lblAntcd = new JLabel("Antécédents");
+		lblAntcd.setHorizontalAlignment(SwingConstants.RIGHT);
+		GridBagConstraints gbc_lblAntcd = new GridBagConstraints();
+		gbc_lblAntcd.anchor = GridBagConstraints.EAST;
+		gbc_lblAntcd.insets = new Insets(0, 0, 5, 5);
+		gbc_lblAntcd.gridx = 3;
+		gbc_lblAntcd.gridy = 8;
+		getContentPane().add(lblAntcd, gbc_lblAntcd);
+		
+		antecedentsTbx = new JTextField();
+		GridBagConstraints gbc_antecedentsTbx = new GridBagConstraints();
+		gbc_antecedentsTbx.insets = new Insets(0, 0, 5, 5);
+		gbc_antecedentsTbx.fill = GridBagConstraints.HORIZONTAL;
+		gbc_antecedentsTbx.gridx = 4;
+		gbc_antecedentsTbx.gridy = 8;
+		getContentPane().add(antecedentsTbx, gbc_antecedentsTbx);
+		antecedentsTbx.setColumns(10);
+		
+		JLabel lblSexe = new JLabel("Sexe");
+		lblSexe.setHorizontalAlignment(SwingConstants.RIGHT);
+		GridBagConstraints gbc_lblSexe = new GridBagConstraints();
+		gbc_lblSexe.anchor = GridBagConstraints.EAST;
+		gbc_lblSexe.insets = new Insets(0, 0, 5, 5);
+		gbc_lblSexe.gridx = 1;
+		gbc_lblSexe.gridy = 9;
+		getContentPane().add(lblSexe, gbc_lblSexe);
+		
+		sexeCbx = new JComboBox();
+		sexeCbx.setModel(new DefaultComboBoxModel(new String[] {"M", "F", "H"}));
+		GridBagConstraints gbc_sexeCbx = new GridBagConstraints();
+		gbc_sexeCbx.insets = new Insets(0, 0, 5, 5);
+		gbc_sexeCbx.fill = GridBagConstraints.HORIZONTAL;
+		gbc_sexeCbx.gridx = 2;
+		gbc_sexeCbx.gridy = 9;
+		
+		getContentPane().add(sexeCbx, gbc_sexeCbx);
+		
+
 		validerBtn.setIcon(new ImageIcon(MainClientScreen.class.getResource("/images/ico/done_32p.png")));
+
 		GridBagConstraints gbc_validerBtn = new GridBagConstraints();
 		gbc_validerBtn.insets = new Insets(0, 0, 5, 5);
 		gbc_validerBtn.gridx = 2;
@@ -212,7 +280,22 @@ public class AnimalScreen extends JInternalFrame {
 		getContentPane().add(validerBtn, gbc_validerBtn);
 		
 		JButton annulerBtn = new JButton("Annuler");
+
+		annulerBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Animal currentAnimal = readAnimal();
+					Animal reloadedAnimal = controller.loadAnimal(currentAnimal.getCodeAnimal());
+					showAnimal(reloadedAnimal);
+					showSuccessMessage("Client rechargé !");
+				} catch (Exception e1) {
+					showFailureMessage(e1.getMessage());
+				}
+			}
+		});
+
 		annulerBtn.setIcon(new ImageIcon(MainClientScreen.class.getResource("/images/ico/undo_27p.png")));
+
 		GridBagConstraints gbc_annulerBtn = new GridBagConstraints();
 		gbc_annulerBtn.insets = new Insets(0, 0, 5, 5);
 		gbc_annulerBtn.gridx = 4;
@@ -285,9 +368,10 @@ public class AnimalScreen extends JInternalFrame {
 			nomTbx.setText(ObjectUtil.nullToBlank(animal.getNomAnimal()).trim());
 			couleurTbx.setText(ObjectUtil.nullToBlank(animal.getCouleur()).trim());
 			tatouageTbx.setText(ObjectUtil.nullToBlank(animal.getTatouage()).trim());
+			antecedentsTbx.setText(ObjectUtil.nullToBlank(animal.getAntecedents()).trim());
 			fillEspece(animal.getRace().getEspece());
 			fillRace(animal.getRace().getEspece(),animal.getRace().getRace());
-		
+			sexeCbx.setSelectedItem(animal.getSexe());
 	}
 
 	/**
@@ -295,12 +379,20 @@ public class AnimalScreen extends JInternalFrame {
 	 * 
 	 * @return
 	 */
-	private Animal readClient() {
+	private Animal readAnimal() {
+		
+		
 
 		Animal animal = new Animal();
 
 		//Recupère les champs de l'ihm :
-		animal.setCodeAnimal((Integer.parseInt(recupLblAnimal.getText())));
+		
+		if(recupLblCli.getText() != "" || recupLblCli.getText() != null){
+
+			System.out.println(recupLblCli.getText());		
+			animal.setCodeAnimal(1);
+		}
+
 		animal.setNomAnimal(nomTbx.getText().trim());
 		animal.setCouleur(couleurTbx.getText().trim());
 		Race race = new Race();
@@ -308,8 +400,30 @@ public class AnimalScreen extends JInternalFrame {
 		race.setEspece(especeCbx.getSelectedItem().toString());
 		animal.setRace(race);
 		animal.setTatouage(tatouageTbx.getText().trim());
+		animal.setAntecedents(antecedentsTbx.getText().trim());
+		animal.setSexe(sexeCbx.getSelectedItem().toString());
+		animal.setArchive(false);
+		animal.setCodeClient(1);
 
 		return animal;
+	}
+	
+	/**
+	 * Show TechnicalError.
+	 * 
+	 * @param message
+	 */
+	public void showFailureMessage(String message) {
+		JOptionPane.showMessageDialog(AnimalScreen.this, message, "Erreur", JOptionPane.ERROR_MESSAGE);
+	}
+
+	/**
+	 * Show Success Message.
+	 * 
+	 * @param message
+	 */
+	public void showSuccessMessage(String message) {
+		JOptionPane.showMessageDialog(AnimalScreen.this, message);
 	}
 
 }
