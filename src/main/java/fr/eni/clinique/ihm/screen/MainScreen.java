@@ -22,6 +22,7 @@ import fr.eni.clinique.ihm.screen.Rdv.RdvScreen;
 import fr.eni.clinique.ihm.screen.animal.AnimalScreen;
 import fr.eni.clinique.ihm.screen.client.MainClientScreen;
 import fr.eni.clinique.ihm.screen.login.InternalFrameLogin;
+import fr.eni.clinique.ihm.screen.personnel.PersonnelScreen;
 
 public class MainScreen extends JFrame implements ActionListener {
 
@@ -44,12 +45,13 @@ public class MainScreen extends JFrame implements ActionListener {
 	private JMenuBar menuBarre;
 	private JMenu menuGestionDesRendezvous;
 	private JMenu menuAgenda;
-	private JMenu menuGestionDuPersonnel;
+	private JMenuItem menuGestionDuPersonnel;
 	private JMenuItem menuGestionDesAnimaux;
 	
 	private InternalFrameLogin frameLogin;
 	private MainClientScreen clientScreen;
 	private AnimalScreen animalScreen;
+	private PersonnelScreen personnelScreen;
 	private RdvScreen rdvScreen;
 	
 
@@ -122,7 +124,7 @@ public class MainScreen extends JFrame implements ActionListener {
 		menuBarre.add(menuAgenda);
 		
 		//Menu GestionDuPersonnel
-		menuGestionDuPersonnel = new JMenu("Gestion du Personnel");
+		menuGestionDuPersonnel = new JMenuItem("Gestion du Personnel");
 		menuGestionDuPersonnel.setActionCommand("gestionPersonnel");
 		menuGestionDuPersonnel.addActionListener(this);
 		menuBarre.add(menuGestionDuPersonnel);
@@ -191,10 +193,24 @@ public class MainScreen extends JFrame implements ActionListener {
 			desktopPane.add(animalScreen);
 			animalScreen.setVisible(true);
 			break;
+		case "gestionPersonnel":
+			//frame GestionAnimaux
+
+            PersonnelModel personnelModel = new PersonnelModel();
+            PersonnelController personnelController = new PersonnelController(personnelModel);
+			personnelScreen = getPersonnelScreen(personnelModel, personnelController);
+			desktopPane.add(personnelScreen);
+			personnelScreen.setVisible(true);
+			break;
 		default:
 			System.out.println("Probleme Event = " + e);
 		}
 
+	}
+
+	private PersonnelScreen getPersonnelScreen(PersonnelModel personnelModel, PersonnelController personnelController) {
+		personnelScreen = new PersonnelScreen();
+		return personnelScreen;
 	}
 
 	public JDesktopPane getDesktopPane() {

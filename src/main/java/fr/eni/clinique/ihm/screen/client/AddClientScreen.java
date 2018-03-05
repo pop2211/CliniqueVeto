@@ -54,6 +54,7 @@ public class AddClientScreen extends GenericClientScreen {
 				System.out.println( "o" );
 				
 				Client saveIt2 = readClient();
+				
 				try {
 					controller.saveClient(saveIt2);
 					showSuccessMessage("Client ajouté !");
