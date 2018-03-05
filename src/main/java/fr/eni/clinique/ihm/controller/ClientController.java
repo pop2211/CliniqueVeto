@@ -28,13 +28,20 @@ public class ClientController{
 	}
 
 	
-	public void newClient(Client client) throws ManagerException {
-		clientManager.insert(client);
-	}
+//	public void newClient(Client client) throws ManagerException {
+//		clientManager.insert(client);
+//	}
 	
 	
 	public void saveClient(Client client) throws Exception {
-		clientManager.update(client);
+		System.out.println(client.getCodeClient());
+		if(client.getCodeClient() == null){
+			System.out.println("clientManager.insert");
+			clientManager.insert(client);
+		}else{
+			System.out.println("clientManager.update");
+			clientManager.update(client);
+		}
 	}
 	
 	public Client loadClient(Integer codeCli) throws ManagerException {

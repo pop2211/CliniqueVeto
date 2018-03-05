@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JInternalFrame;
 import javax.swing.SwingConstants;
 
+import fr.eni.clinique.bo.Client;
 import fr.eni.clinique.ihm.controller.ClientController;
 import fr.eni.clinique.ihm.model.ClientModel;
 
@@ -21,32 +22,23 @@ import javax.swing.JTextField;
 import javax.swing.JTable;
 import java.awt.Color;
 
-public class InternalFrameAddClient extends JInternalFrame {
+public class AddClientScreen extends GenericClientScreen {
 
 	
-	private static final long serialVersionUID = -6767304758301746824L;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField nomTbx;
-	private JTextField prenomTbx;
-	private JTextField adresse1Tbx;
-	private JTextField adresse2Tbx;
-	private JTextField codePostalTbx;
-	private JTextField villeTbx;
-	private JTextField numTelTbx;
-	private JTextField assuranceTbx;
-	private JTextField emailTbx;
-	private JTextField remarqueTbx;
-	private JLabel lblTlphone;
-	private JLabel lblAssurance;
-	private JLabel lblEmail;
-	private JLabel lblRemarque;
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1879188002908958230L;
 
 	/**
 	 * Create the frame.
 	 */
-	public InternalFrameAddClient(ClientModel model, ClientController controller) {
+	public AddClientScreen(ClientModel model, ClientController controller) {
+		super("Ajout", true, true, true, true);
+		
+		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
+		
+		
 		setBounds(100, 100, 350, 416);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{20, 0, 0, 0, 0, 0, 0, 20, 0};
@@ -56,9 +48,23 @@ public class InternalFrameAddClient extends JInternalFrame {
 		getContentPane().setLayout(gridBagLayout);
 		
 		JButton validerBtn = new JButton("Valider");
-		validerBtn.setIcon(new ImageIcon(InternalFrameAddClient.class.getResource("/images/ico/done_32p.png")));
+		validerBtn.setIcon(new ImageIcon(AddClientScreen.class.getResource("/images/ico/done_32p.png")));
 		validerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				System.out.println( "o" );
+				
+				Client saveIt2 = readClient();
+				try {
+					controller.saveClient(saveIt2);
+					showSuccessMessage("Client ajouté !");
+					setVisible(false);
+					
+					//getMainScreen().getFrameSearch()
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					errorOccured(e1);
+				}
 			}
 		});
 		validerBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -72,9 +78,11 @@ public class InternalFrameAddClient extends JInternalFrame {
 		JButton annulerBtn = new JButton("Annuler");
 		annulerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				showClient(new Client());	//reset fields
+				setVisible(false);
 			}
 		});
-		annulerBtn.setIcon(new ImageIcon(InternalFrameAddClient.class.getResource("/images/ico/undo_27p.png")));
+		annulerBtn.setIcon(new ImageIcon(AddClientScreen.class.getResource("/images/ico/undo_27p.png")));
 		annulerBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
 		annulerBtn.setHorizontalTextPosition(SwingConstants.CENTER);
 		GridBagConstraints gbc_annulerBtn = new GridBagConstraints();
@@ -185,7 +193,7 @@ public class InternalFrameAddClient extends JInternalFrame {
 		gbc_villeTbx.gridy = 8;
 		getContentPane().add(villeTbx, gbc_villeTbx);
 		
-		lblTlphone = new JLabel("Téléphone");
+		JLabel lblTlphone = new JLabel("Téléphone");
 		GridBagConstraints gbc_lblTlphone = new GridBagConstraints();
 		gbc_lblTlphone.insets = new Insets(0, 0, 5, 5);
 		gbc_lblTlphone.anchor = GridBagConstraints.WEST;
@@ -203,7 +211,7 @@ public class InternalFrameAddClient extends JInternalFrame {
 		gbc_numTelTbx.gridy = 9;
 		getContentPane().add(numTelTbx, gbc_numTelTbx);
 		
-		lblAssurance = new JLabel("Assurance");
+		JLabel lblAssurance = new JLabel("Assurance");
 		GridBagConstraints gbc_lblAssurance = new GridBagConstraints();
 		gbc_lblAssurance.insets = new Insets(0, 0, 5, 5);
 		gbc_lblAssurance.anchor = GridBagConstraints.WEST;
@@ -221,7 +229,7 @@ public class InternalFrameAddClient extends JInternalFrame {
 		gbc_assuranceTbx.gridy = 10;
 		getContentPane().add(assuranceTbx, gbc_assuranceTbx);
 		
-		lblEmail = new JLabel("Email");
+		JLabel lblEmail = new JLabel("Email");
 		GridBagConstraints gbc_lblEmail = new GridBagConstraints();
 		gbc_lblEmail.insets = new Insets(0, 0, 5, 5);
 		gbc_lblEmail.anchor = GridBagConstraints.WEST;
@@ -239,7 +247,7 @@ public class InternalFrameAddClient extends JInternalFrame {
 		gbc_emailTbx.gridy = 11;
 		getContentPane().add(emailTbx, gbc_emailTbx);
 		
-		lblRemarque = new JLabel("Remarque");
+		JLabel lblRemarque = new JLabel("Remarque");
 		GridBagConstraints gbc_lblRemarque = new GridBagConstraints();
 		gbc_lblRemarque.insets = new Insets(0, 0, 5, 5);
 		gbc_lblRemarque.anchor = GridBagConstraints.WEST;

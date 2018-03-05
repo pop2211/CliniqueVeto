@@ -69,7 +69,7 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
 		animal.setRace(new Race(resultSet.getString("Race"),resultSet.getString("Espece")));
 		animal.setCodeClient(resultSet.getInt("CodeClient"));
 		animal.setTatouage(resultSet.getString("Tatouage"));
-		animal.setAntecedants(resultSet.getString("Antecedents"));
+		animal.setAntecedents(resultSet.getString("Antecedents"));
 		animal.setArchive(resultSet.getBoolean("Archive"));
         
         
@@ -93,7 +93,7 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
             statement.setString(5, animal.getRace().getEspece());
             statement.setInt(6, animal.getCodeClient());
             statement.setString(7, animal.getTatouage());
-            statement.setString(8, animal.getAntecedants());
+            statement.setString(8, animal.getAntecedents());
             statement.setBoolean(9, animal.isArchive());
             
             if (statement.executeUpdate() == 1) {
@@ -126,11 +126,11 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
             statement.setString(5, animal.getRace().getEspece());
             statement.setInt(6, animal.getCodeClient());
             statement.setString(7, animal.getTatouage());
-            statement.setString(8, animal.getAntecedants());
+            statement.setString(8, animal.getAntecedents());
             statement.setBoolean(9, animal.isArchive());
             
-
             statement.setInt(10, animal.getCodeAnimal());
+            
 			if (statement.executeUpdate() == 0) {
 				throw new DaoException("Erreur update animal");
 			}

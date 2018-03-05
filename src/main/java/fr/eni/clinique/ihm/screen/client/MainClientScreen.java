@@ -25,34 +25,19 @@ import fr.eni.clinique.ihm.controller.PersonnelController;
 import fr.eni.clinique.ihm.model.ClientModel;
 import fr.eni.clinique.ihm.model.PersonnelModel;
 import fr.eni.clinique.ihm.screen.MainScreen;
-import fr.eni.clinique.ihm.screen.login.InternalFrameLogin;
+import fr.eni.clinique.ihm.screen.common.JTextFieldLimit;
 
-public class ClientScreen extends JInternalFrame {
+public class MainClientScreen extends GenericClientScreen {
 
 	private static final long serialVersionUID = -9075041539974261255L;
 
 	private MainScreen mainScreen;
-
-	private ClientModel model;
-	private ClientController controller;
 	
-	private InternalFrameAddClient frameAdd;
-	private InternalFrameSearchClient frameSearch;
+	private AddClientScreen frameAdd;
+	private SearchClientScreen frameSearch;
 
-	private JTextField codeTbx;
-	private JTextField nomTbx;
-	private JTextField prenomTbx;
-	private JTextField adresse1Tbx;
-	private JTextField adresse2Tbx;
-	private JTextField codePostalTbx;
-	private JTextField villeTbx;
-	private JTable animauxTable;
-	private JTextField numTelTbx;
-	private JTextField assuranceTbx;
-	private JTextField emailTbx;
-	private JTextField remarqueTbx;
 
-	public ClientScreen(ClientModel model, ClientController controller) {
+	public MainClientScreen(ClientModel model, ClientController controller) {
 		super("Gestion des Clients", true, true, true, true);
 		
 		this.controller = controller;
@@ -69,12 +54,11 @@ public class ClientScreen extends JInternalFrame {
 		getContentPane().setLayout(gridBagLayout);
 
 		JButton rechercherBtn = new JButton("Rechercher");
-		rechercherBtn.setIcon(new ImageIcon(ClientScreen.class.getResource("/images/ico/search_27p.png")));
+		rechercherBtn.setIcon(new ImageIcon(MainClientScreen.class.getResource("/images/ico/search_27p.png")));
 		rechercherBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("getFrameSearch");
 				frameSearch = getFrameSearch(model, controller);
-				getMainScreen().getDesktopPane().add(frameSearch);
 				frameSearch.setVisible(true);
 			}
 		});
@@ -88,11 +72,14 @@ public class ClientScreen extends JInternalFrame {
 		getContentPane().add(rechercherBtn, gbc_rechercherBtn);
 
 		JButton validerBtn = new JButton("Valider");
-		validerBtn.setIcon(new ImageIcon(ClientScreen.class.getResource("/images/ico/done_32p.png")));
+		validerBtn.setIcon(new ImageIcon(MainClientScreen.class.getResource("/images/ico/done_32p.png")));
 		validerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					controller.saveClient(readClient());
+					Client saveIt = readClient();
+					System.out.println( saveIt );
+					
+					controller.saveClient(saveIt);
 					showSuccessMessage("Client enregistré !");
 				} catch (Exception e1) {
 					showFailureMessage(e1.getMessage());
@@ -104,11 +91,10 @@ public class ClientScreen extends JInternalFrame {
 		ajouterBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frameAdd = getFrameAdd(model, controller);
-				getMainScreen().getDesktopPane().add(frameAdd);
 				frameAdd.setVisible(true);
 			}
 		});
-		ajouterBtn.setIcon(new ImageIcon(ClientScreen.class.getResource("/images/ico/add_27p.png")));
+		ajouterBtn.setIcon(new ImageIcon(MainClientScreen.class.getResource("/images/ico/add_27p.png")));
 		ajouterBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
 		ajouterBtn.setHorizontalTextPosition(SwingConstants.CENTER);
 		GridBagConstraints gbc_ajouterBtn = new GridBagConstraints();
@@ -118,7 +104,7 @@ public class ClientScreen extends JInternalFrame {
 		getContentPane().add(ajouterBtn, gbc_ajouterBtn);
 
 		JButton supprimerBtn = new JButton("Supprimer");
-		supprimerBtn.setIcon(new ImageIcon(ClientScreen.class.getResource("/images/ico/remove_27p.png")));
+		supprimerBtn.setIcon(new ImageIcon(MainClientScreen.class.getResource("/images/ico/remove_27p.png")));
 		supprimerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -151,7 +137,7 @@ public class ClientScreen extends JInternalFrame {
 				}
 			}
 		});
-		annulerBtn.setIcon(new ImageIcon(ClientScreen.class.getResource("/images/ico/undo_27p.png")));
+		annulerBtn.setIcon(new ImageIcon(MainClientScreen.class.getResource("/images/ico/undo_27p.png")));
 		annulerBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
 		annulerBtn.setHorizontalTextPosition(SwingConstants.CENTER);
 		GridBagConstraints gbc_annulerBtn = new GridBagConstraints();
@@ -199,6 +185,7 @@ public class ClientScreen extends JInternalFrame {
 		getContentPane().add(lblNom, gbc_lblNom);
 
 		nomTbx = new JTextField();
+		nomTbx.setDocument(new JTextFieldLimit(20));
 		nomTbx.setColumns(10);
 		GridBagConstraints gbc_nomTbx = new GridBagConstraints();
 		gbc_nomTbx.gridwidth = 5;
@@ -235,6 +222,7 @@ public class ClientScreen extends JInternalFrame {
 		getContentPane().add(lblAdresse, gbc_lblAdresse);
 
 		adresse1Tbx = new JTextField();
+		adresse1Tbx.setDocument(new JTextFieldLimit(30));
 		adresse1Tbx.setColumns(10);
 		GridBagConstraints gbc_adresse1Tbx = new GridBagConstraints();
 		gbc_adresse1Tbx.gridwidth = 5;
@@ -245,6 +233,7 @@ public class ClientScreen extends JInternalFrame {
 		getContentPane().add(adresse1Tbx, gbc_adresse1Tbx);
 
 		adresse2Tbx = new JTextField();
+		adresse2Tbx.setDocument(new JTextFieldLimit(5));
 		adresse2Tbx.setColumns(10);
 		GridBagConstraints gbc_adresse2Tbx = new GridBagConstraints();
 		gbc_adresse2Tbx.gridwidth = 5;
@@ -263,6 +252,7 @@ public class ClientScreen extends JInternalFrame {
 		getContentPane().add(lblCodePostal, gbc_lblCodePostal);
 
 		codePostalTbx = new JTextField();
+		codePostalTbx.setDocument(new JTextFieldLimit(5));
 		codePostalTbx.setColumns(10);
 		GridBagConstraints gbc_codePostalTbx = new GridBagConstraints();
 		gbc_codePostalTbx.gridwidth = 5;
@@ -281,6 +271,7 @@ public class ClientScreen extends JInternalFrame {
 		getContentPane().add(lblVille, gbc_lblVille);
 
 		villeTbx = new JTextField();
+		villeTbx.setDocument(new JTextFieldLimit(25));
 		villeTbx.setColumns(10);
 		GridBagConstraints gbc_villeTbx = new GridBagConstraints();
 		gbc_villeTbx.gridwidth = 5;
@@ -299,6 +290,7 @@ public class ClientScreen extends JInternalFrame {
 		getContentPane().add(lblNumTel, gbc_lblNumTel);
 
 		numTelTbx = new JTextField();
+		numTelTbx.setDocument(new JTextFieldLimit(15));
 		numTelTbx.setText("<dynamic>");
 		numTelTbx.setColumns(10);
 		GridBagConstraints gbc_numTelTbx = new GridBagConstraints();
@@ -318,6 +310,7 @@ public class ClientScreen extends JInternalFrame {
 		getContentPane().add(lblAssurance, gbc_lblAssurance);
 
 		assuranceTbx = new JTextField();
+		assuranceTbx.setDocument(new JTextFieldLimit(30));
 		assuranceTbx.setText("<dynamic>");
 		assuranceTbx.setColumns(10);
 		GridBagConstraints gbc_assuranceTbx = new GridBagConstraints();
@@ -337,6 +330,7 @@ public class ClientScreen extends JInternalFrame {
 		getContentPane().add(lblEmail, gbc_lblEmail);
 
 		emailTbx = new JTextField();
+		emailTbx.setDocument(new JTextFieldLimit(20));
 		emailTbx.setText("<dynamic>");
 		emailTbx.setColumns(10);
 		GridBagConstraints gbc_emailTbx = new GridBagConstraints();
@@ -348,7 +342,7 @@ public class ClientScreen extends JInternalFrame {
 		getContentPane().add(emailTbx, gbc_emailTbx);
 
 		JButton ajouterAnimalBtn = new JButton("Ajouter");
-		ajouterAnimalBtn.setIcon(new ImageIcon(ClientScreen.class.getResource("/images/ico/add_18p.png")));
+		ajouterAnimalBtn.setIcon(new ImageIcon(MainClientScreen.class.getResource("/images/ico/add_18p.png")));
 		ajouterAnimalBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
 		ajouterAnimalBtn.setHorizontalTextPosition(SwingConstants.CENTER);
 		GridBagConstraints gbc_ajouterAnimalBtn = new GridBagConstraints();
@@ -358,7 +352,7 @@ public class ClientScreen extends JInternalFrame {
 		getContentPane().add(ajouterAnimalBtn, gbc_ajouterAnimalBtn);
 
 		JButton supprimerAnimalBtn = new JButton("Supprimer");
-		supprimerAnimalBtn.setIcon(new ImageIcon(ClientScreen.class.getResource("/images/ico/remove_18p.png")));
+		supprimerAnimalBtn.setIcon(new ImageIcon(MainClientScreen.class.getResource("/images/ico/remove_18p.png")));
 		supprimerAnimalBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
 		supprimerAnimalBtn.setHorizontalTextPosition(SwingConstants.CENTER);
 		GridBagConstraints gbc_supprimerAnimalBtn = new GridBagConstraints();
@@ -368,7 +362,7 @@ public class ClientScreen extends JInternalFrame {
 		getContentPane().add(supprimerAnimalBtn, gbc_supprimerAnimalBtn);
 
 		JButton editerAnimalBtn = new JButton("Editer");
-		editerAnimalBtn.setIcon(new ImageIcon(ClientScreen.class.getResource("/images/ico/edit_18p.png")));
+		editerAnimalBtn.setIcon(new ImageIcon(MainClientScreen.class.getResource("/images/ico/edit_18p.png")));
 		editerAnimalBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
 		editerAnimalBtn.setHorizontalTextPosition(SwingConstants.CENTER);
 		GridBagConstraints gbc_editerAnimalBtn = new GridBagConstraints();
@@ -422,99 +416,22 @@ public class ClientScreen extends JInternalFrame {
 	}
 	
 	
-	public MainScreen getMainScreen(){
-		if(this.mainScreen == null){
-			this.mainScreen = (MainScreen) this.getTopLevelAncestor();
-		}
-		return this.mainScreen;
-	}
-	
-	
-	public InternalFrameSearchClient getFrameSearch(ClientModel model, ClientController controller) {
+	public SearchClientScreen getFrameSearch(ClientModel model, ClientController controller) {
 		if (frameSearch == null) {
-			frameSearch = new InternalFrameSearchClient(model, controller);
+			frameSearch = new SearchClientScreen(model, controller);
+			getMainScreen().getDesktopPane().add(frameSearch);
 		}
 		return frameSearch;
 	}
 	
 	
-	public InternalFrameAddClient getFrameAdd(ClientModel model, ClientController controller) {
+	public AddClientScreen getFrameAdd(ClientModel model, ClientController controller) {
 		if (frameAdd == null) {
-			frameAdd = new InternalFrameAddClient(model, controller);
+			frameAdd = new AddClientScreen(model, controller);
+			getMainScreen().getDesktopPane().add(frameAdd);
 		}
 		return frameAdd;
 	}
 	
-	
-	
-
-	/**
-	 * Show Client on the UI.
-	 * 
-	 * @param article
-	 */
-	public void showClient(Client client) {
-
-		if (client == null) {
-			client = new Client();
-		}
-
-		// Rempli les champs de l'ihm :
-		codeTbx.setText(String.valueOf(client.getCodeClient()));
-		nomTbx.setText(ObjectUtil.nullToBlank(client.getNomClient()).trim());
-		prenomTbx.setText(ObjectUtil.nullToBlank(client.getPrenomClient()).trim());
-		adresse1Tbx.setText(ObjectUtil.nullToBlank(client.getAdresse1()).trim());
-		adresse2Tbx.setText(ObjectUtil.nullToBlank(client.getAdresse2()).trim());
-		codePostalTbx.setText(ObjectUtil.nullToBlank(client.getCodePostal()).trim());
-		villeTbx.setText(ObjectUtil.nullToBlank(client.getVille()).trim());
-		numTelTbx.setText(ObjectUtil.nullToBlank(client.getNumTel()).trim());
-		assuranceTbx.setText(ObjectUtil.nullToBlank(client.getAssurance()).trim());
-		emailTbx.setText(ObjectUtil.nullToBlank(client.getEmail()).trim());
-		remarqueTbx.setText(ObjectUtil.nullToBlank(client.getRemarque()).trim());
-
-	}
-
-	/**
-	 * Read Client From the UI.
-	 * 
-	 * @return
-	 */
-	private Client readClient() {
-
-		Client client = new Client();
-
-		// Recupère les champs de l'ihm :
-		client.setCodeClient(Integer.parseInt(codeTbx.getText().trim()));
-		client.setNomClient(nomTbx.getText().trim());
-		client.setPrenomClient(prenomTbx.getText().trim());
-		client.setAdresse1(adresse1Tbx.getText().trim());
-		client.setAdresse2(adresse2Tbx.getText().trim());
-		client.setCodePostal(codePostalTbx.getText().trim());
-		client.setVille(villeTbx.getText().trim());
-		client.setNumTel(numTelTbx.getText().trim());
-		client.setAssurance(assuranceTbx.getText().trim());
-		client.setEmail(emailTbx.getText().trim());
-		client.setRemarque(remarqueTbx.getText().trim());
-
-		return client;
-	}
-
-	/**
-	 * Show TechnicalError.
-	 * 
-	 * @param message
-	 */
-	public void showFailureMessage(String message) {
-		JOptionPane.showMessageDialog(ClientScreen.this, message, "Erreur", JOptionPane.ERROR_MESSAGE);
-	}
-
-	/**
-	 * Show Success Message.
-	 * 
-	 * @param message
-	 */
-	public void showSuccessMessage(String message) {
-		JOptionPane.showMessageDialog(ClientScreen.this, message);
-	}
 
 }

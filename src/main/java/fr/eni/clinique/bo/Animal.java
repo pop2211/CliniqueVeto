@@ -7,7 +7,7 @@ public class Animal {
 	private String sexe;
 	private String couleur;
 	private String tatouage;
-	private String antecedants;
+	private String antecedents;
 	private Boolean archive;
 	private Race race;
 	private Integer codeClient;
@@ -17,27 +17,27 @@ public class Animal {
 		this.setArchive(false);
 	}
 	public Animal(Integer codeAnimal, String nomAnimal, String sexe, String couleur, String tatouage,
-			String antecedants, Boolean archive, Race race, Integer codeClient) {
+			String antecedents, Boolean archive, Race race, Integer codeClient) {
 		super();
 		this.codeAnimal = codeAnimal;
 		this.nomAnimal = nomAnimal;
 		this.sexe = sexe;
 		this.couleur = couleur;
 		this.tatouage = tatouage;
-		this.antecedants = antecedants;
+		this.antecedents = antecedents;
 		this.archive = archive;
 		this.race = race;
 		this.codeClient = codeClient;
 	}
 	
-	public Animal(String nomAnimal, String sexe, String couleur, String tatouage, String antecedants, Boolean archive,
+	public Animal(String nomAnimal, String sexe, String couleur, String tatouage, String antecedents, Boolean archive,
 			Race race, Integer codeClient) {
 		super();
 		this.nomAnimal = nomAnimal;
 		this.sexe = sexe;
 		this.couleur = couleur;
 		this.tatouage = tatouage;
-		this.antecedants = antecedants;
+		this.antecedents = antecedents;
 		this.archive = archive;
 		this.race = race;
 		this.codeClient = codeClient;
@@ -82,12 +82,12 @@ public class Animal {
 		this.tatouage = tatouage;
 	}
 	
-	public String getAntecedants() {
-		return antecedants;
+	public String getAntecedents() {
+		return antecedents;
 	}
 	
-	public void setAntecedants(String antecedants) {
-		this.antecedants = antecedants;
+	public void setAntecedents(String antecedants) {
+		this.antecedents = antecedants;
 	}
 	
 	public boolean isArchive() {
@@ -127,8 +127,8 @@ public class Animal {
 		builder.append(couleur);
 		builder.append(", tatouage=");
 		builder.append(tatouage);
-		builder.append(", antecedants=");
-		builder.append(antecedants);
+		builder.append(", antecedents=");
+		builder.append(antecedents);
 		builder.append(", archive=");
 		builder.append(archive);
 		builder.append(", race=");
