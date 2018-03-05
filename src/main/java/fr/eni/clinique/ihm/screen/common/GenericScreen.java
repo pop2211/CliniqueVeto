@@ -43,6 +43,7 @@ public class GenericScreen extends JInternalFrame {
 			this.mainScreen = (MainScreen) this.getTopLevelAncestor();
 		}
 		return this.mainScreen;
+		//return null if executed at end of constructor
 	}
 	
 

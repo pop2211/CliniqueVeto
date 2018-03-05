@@ -411,8 +411,6 @@ public class MainClientScreen extends GenericClientScreen {
 		}
 		
 		this.pack();
-		System.out.println("getMainScreen() null at end constructor: "+ getMainScreen());
-
 	}
 	
 	
