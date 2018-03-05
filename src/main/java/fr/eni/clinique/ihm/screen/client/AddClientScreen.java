@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JInternalFrame;
 import javax.swing.SwingConstants;
 
+import fr.eni.clinique.bo.Client;
 import fr.eni.clinique.ihm.controller.ClientController;
 import fr.eni.clinique.ihm.model.ClientModel;
 
@@ -45,6 +46,18 @@ public class AddClientScreen extends GenericClientScreen {
 		validerBtn.setIcon(new ImageIcon(AddClientScreen.class.getResource("/images/ico/done_32p.png")));
 		validerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				System.out.println( "o" );
+				try {
+					System.out.println( "o0" );
+					
+					Client saveIt = readClient();
+					System.out.println( saveIt );
+					
+					controller.saveClient(saveIt);
+					showSuccessMessage("Client ajouté !");
+				} catch (Exception e1) {
+					showFailureMessage(e1.getMessage());
+				}
 			}
 		});
 		validerBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -58,6 +71,7 @@ public class AddClientScreen extends GenericClientScreen {
 		JButton annulerBtn = new JButton("Annuler");
 		annulerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				System.out.println( "HEEYYYY" );
 			}
 		});
 		annulerBtn.setIcon(new ImageIcon(AddClientScreen.class.getResource("/images/ico/undo_27p.png")));
