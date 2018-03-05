@@ -25,7 +25,7 @@ import fr.eni.clinique.ihm.controller.PersonnelController;
 import fr.eni.clinique.ihm.model.ClientModel;
 import fr.eni.clinique.ihm.model.PersonnelModel;
 import fr.eni.clinique.ihm.screen.MainScreen;
-import fr.eni.clinique.ihm.screen.field.JTextFieldLimit;
+import fr.eni.clinique.ihm.screen.common.JTextFieldLimit;
 
 public class MainClientScreen extends GenericClientScreen {
 

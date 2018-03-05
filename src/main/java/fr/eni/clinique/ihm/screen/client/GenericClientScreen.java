@@ -25,10 +25,10 @@ import fr.eni.clinique.ihm.controller.PersonnelController;
 import fr.eni.clinique.ihm.model.ClientModel;
 import fr.eni.clinique.ihm.model.PersonnelModel;
 import fr.eni.clinique.ihm.screen.MainScreen;
+import fr.eni.clinique.ihm.screen.common.GenericScreen;
 
 
-public class GenericClientScreen extends JInternalFrame {
-
+public class GenericClientScreen extends GenericScreen {
 
 	protected MainScreen mainScreen;
 
@@ -49,19 +49,14 @@ public class GenericClientScreen extends JInternalFrame {
 	protected JTextField emailTbx;
 	protected JTextField remarqueTbx;
 	
-	public GenericClientScreen(String title, Boolean b1, Boolean b2,  Boolean b3,  Boolean b4){
-		super(title, b1, b2, b3, b4);
-	}
-	
-	
-	public MainScreen getMainScreen(){
-		if(this.mainScreen == null){
-			this.mainScreen = (MainScreen) this.getTopLevelAncestor();
-		}
-		return this.mainScreen;
-	}
-	
 
+	public GenericClientScreen(String title, Boolean b1, Boolean b2, Boolean b3, Boolean b4) {
+		super(title, b1, b2, b3, b4);
+        // Create Client Model & Controller
+		model = new ClientModel();
+        controller = new ClientController(model);
+	}
+	
 	/**
 	 * Show Client on the UI.
 	 * 
@@ -118,35 +113,6 @@ public class GenericClientScreen extends JInternalFrame {
 		client.setRemarque(remarqueTbx.getText().trim());
 
 		return client;
-	}
-	
-	
-	/**
-	 * Show TechnicalError and print StackTrace.
-	 * 
-	 * @param e
-	 */
-	public void errorOccured(Exception e) {
-		showFailureMessage(e.getMessage());
-		e.printStackTrace();
-	}
-
-	/**
-	 * Show TechnicalError.
-	 * 
-	 * @param message
-	 */
-	public void showFailureMessage(String message) {
-		JOptionPane.showMessageDialog(GenericClientScreen.this, message, "Erreur", JOptionPane.ERROR_MESSAGE);
-	}
-
-	/**
-	 * Show Success Message.
-	 * 
-	 * @param message
-	 */
-	public void showSuccessMessage(String message) {
-		JOptionPane.showMessageDialog(GenericClientScreen.this, message);
 	}
 
 }
