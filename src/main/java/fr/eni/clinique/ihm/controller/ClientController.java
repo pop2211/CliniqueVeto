@@ -1,5 +1,7 @@
 package fr.eni.clinique.ihm.controller;
 
+import java.util.List;
+
 import fr.eni.clinique.bll.exception.ManagerException;
 import fr.eni.clinique.bll.factory.ManagerFactory;
 import fr.eni.clinique.bll.manager.ClientManager;
@@ -37,6 +39,10 @@ public class ClientController{
 	
 	public Client loadClient(Integer codeCli) throws ManagerException {
 		return clientManager.selectById(codeCli);
+	}
+	
+	public List<Client> loadAllClient() throws ManagerException {
+		return clientManager.selectAll();
 	}
 	
 }

@@ -160,10 +160,6 @@ public class InternalFrameLogin extends JInternalFrame{
         return personnel;
     }
     
-    public void MenuVisible() {
-		this.menu.setVisible(true);
-	}
-    
     /**
      * Show TechnicalError.
      * 

@@ -33,7 +33,7 @@ public class ClientManagerImpl implements ClientManager{
         	clients = clientDAO.selectAll();
             
         } catch (DaoException e) {
-            throw new ManagerException("Erreur récupération Liste du client", e);
+            throw new ManagerException("Erreur récupération Liste des clients", e);
         }
         
         return clients;

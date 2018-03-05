@@ -220,7 +220,7 @@ public class MainScreen extends JFrame implements ActionListener {
 		/*if (frameLogin == null) {
 			frameLogin = new InternalFrameLogin(model, controller);
 		}*/
-		RdvScreen rdvScreen = new RdvScreen(model, controller);
+		RdvScreen rdvScreen = new RdvScreen();
 		return rdvScreen;
 	}
 
