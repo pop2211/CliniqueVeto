@@ -202,7 +202,6 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
             ResourceUtil.safeClose(connection, statement);
         }
 	}
-
 	
 	
 }
