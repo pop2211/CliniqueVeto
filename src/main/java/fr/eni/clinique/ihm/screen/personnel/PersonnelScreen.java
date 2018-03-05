@@ -54,16 +54,17 @@ public class PersonnelScreen extends JInternalFrame {
 		
 		setBounds(100, 100, 450, 486);
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0};
+		gridBagLayout.columnWidths = new int[]{0, 238, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 80, 81, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 1.0, 1.0, Double.MIN_VALUE};
 		getContentPane().setLayout(gridBagLayout);
 		
 		JPanel panel = new JPanel();
+		panel.setBorder(new LineBorder(new Color(0, 0, 0), 2));
 		GridBagConstraints gbc_panel = new GridBagConstraints();
+		gbc_panel.insets = new Insets(5, 5, 5, 5);
 		gbc_panel.anchor = GridBagConstraints.NORTH;
-		gbc_panel.insets = new Insets(20, 20, 20, 20);
 		gbc_panel.fill = GridBagConstraints.HORIZONTAL;
 		gbc_panel.gridx = 1;
 		gbc_panel.gridy = 1;
@@ -87,6 +88,7 @@ public class PersonnelScreen extends JInternalFrame {
 		panel.add(ajouterBtn, gbc_ajouterBtn);
 		
 		JButton supprimerBtn = new JButton("");
+		supprimerBtn.setBorderPainted(false);
 		supprimerBtn.setIcon(new ImageIcon(PersonnelScreen.class.getResource("/images/ico/remove_27p.png")));
 		supprimerBtn.setOpaque(false);
 		supprimerBtn.setContentAreaFilled(false);
@@ -108,9 +110,9 @@ public class PersonnelScreen extends JInternalFrame {
 		panel.add(reinitialiserBtn, gbc_reinitialiserBtn);
 		
 		JLabel lblNewLabel = new JLabel("Ajouter");
-		lblNewLabel.setHorizontalTextPosition(SwingConstants.RIGHT);
+		lblNewLabel.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.insets = new Insets(0, 0, 0, 5);
 		gbc_lblNewLabel.gridx = 0;
@@ -118,9 +120,9 @@ public class PersonnelScreen extends JInternalFrame {
 		panel.add(lblNewLabel, gbc_lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Supprimer");
-		lblNewLabel_1.setHorizontalTextPosition(SwingConstants.RIGHT);
+		lblNewLabel_1.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
 		gbc_lblNewLabel_1.insets = new Insets(0, 0, 0, 5);
 		gbc_lblNewLabel_1.gridx = 1;
@@ -128,8 +130,8 @@ public class PersonnelScreen extends JInternalFrame {
 		panel.add(lblNewLabel_1, gbc_lblNewLabel_1);
 		
 		JLabel lblReinitialiser = new JLabel("Reinitialiser");
-		lblReinitialiser.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblReinitialiser.setHorizontalTextPosition(SwingConstants.RIGHT);
+		lblReinitialiser.setHorizontalAlignment(SwingConstants.CENTER);
+		lblReinitialiser.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblReinitialiser.setFont(new Font("Tahoma", Font.BOLD, 12));
 		GridBagConstraints gbc_lblReinitialiser = new GridBagConstraints();
 		gbc_lblReinitialiser.gridx = 2;
