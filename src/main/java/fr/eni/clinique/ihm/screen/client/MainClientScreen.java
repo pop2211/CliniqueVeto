@@ -27,17 +27,17 @@ import fr.eni.clinique.ihm.model.PersonnelModel;
 import fr.eni.clinique.ihm.screen.MainScreen;
 import fr.eni.clinique.ihm.screen.field.JTextFieldLimit;
 
-public class ClientScreen extends GenericClientScreen {
+public class MainClientScreen extends GenericClientScreen {
 
 	private static final long serialVersionUID = -9075041539974261255L;
 
 	private MainScreen mainScreen;
 	
-	private InternalFrameAddClient frameAdd;
-	private InternalFrameSearchClient frameSearch;
+	private AddClientScreen frameAdd;
+	private SearchClientScreen frameSearch;
 
 
-	public ClientScreen(ClientModel model, ClientController controller) {
+	public MainClientScreen(ClientModel model, ClientController controller) {
 		super("Gestion des Clients", true, true, true, true);
 		
 		this.controller = controller;
@@ -54,7 +54,7 @@ public class ClientScreen extends GenericClientScreen {
 		getContentPane().setLayout(gridBagLayout);
 
 		JButton rechercherBtn = new JButton("Rechercher");
-		rechercherBtn.setIcon(new ImageIcon(ClientScreen.class.getResource("/images/ico/search_27p.png")));
+		rechercherBtn.setIcon(new ImageIcon(MainClientScreen.class.getResource("/images/ico/search_27p.png")));
 		rechercherBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("getFrameSearch");
@@ -73,7 +73,7 @@ public class ClientScreen extends GenericClientScreen {
 		getContentPane().add(rechercherBtn, gbc_rechercherBtn);
 
 		JButton validerBtn = new JButton("Valider");
-		validerBtn.setIcon(new ImageIcon(ClientScreen.class.getResource("/images/ico/done_32p.png")));
+		validerBtn.setIcon(new ImageIcon(MainClientScreen.class.getResource("/images/ico/done_32p.png")));
 		validerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -96,7 +96,7 @@ public class ClientScreen extends GenericClientScreen {
 				frameAdd.setVisible(true);
 			}
 		});
-		ajouterBtn.setIcon(new ImageIcon(ClientScreen.class.getResource("/images/ico/add_27p.png")));
+		ajouterBtn.setIcon(new ImageIcon(MainClientScreen.class.getResource("/images/ico/add_27p.png")));
 		ajouterBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
 		ajouterBtn.setHorizontalTextPosition(SwingConstants.CENTER);
 		GridBagConstraints gbc_ajouterBtn = new GridBagConstraints();
@@ -106,7 +106,7 @@ public class ClientScreen extends GenericClientScreen {
 		getContentPane().add(ajouterBtn, gbc_ajouterBtn);
 
 		JButton supprimerBtn = new JButton("Supprimer");
-		supprimerBtn.setIcon(new ImageIcon(ClientScreen.class.getResource("/images/ico/remove_27p.png")));
+		supprimerBtn.setIcon(new ImageIcon(MainClientScreen.class.getResource("/images/ico/remove_27p.png")));
 		supprimerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -139,7 +139,7 @@ public class ClientScreen extends GenericClientScreen {
 				}
 			}
 		});
-		annulerBtn.setIcon(new ImageIcon(ClientScreen.class.getResource("/images/ico/undo_27p.png")));
+		annulerBtn.setIcon(new ImageIcon(MainClientScreen.class.getResource("/images/ico/undo_27p.png")));
 		annulerBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
 		annulerBtn.setHorizontalTextPosition(SwingConstants.CENTER);
 		GridBagConstraints gbc_annulerBtn = new GridBagConstraints();
@@ -344,7 +344,7 @@ public class ClientScreen extends GenericClientScreen {
 		getContentPane().add(emailTbx, gbc_emailTbx);
 
 		JButton ajouterAnimalBtn = new JButton("Ajouter");
-		ajouterAnimalBtn.setIcon(new ImageIcon(ClientScreen.class.getResource("/images/ico/add_18p.png")));
+		ajouterAnimalBtn.setIcon(new ImageIcon(MainClientScreen.class.getResource("/images/ico/add_18p.png")));
 		ajouterAnimalBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
 		ajouterAnimalBtn.setHorizontalTextPosition(SwingConstants.CENTER);
 		GridBagConstraints gbc_ajouterAnimalBtn = new GridBagConstraints();
@@ -354,7 +354,7 @@ public class ClientScreen extends GenericClientScreen {
 		getContentPane().add(ajouterAnimalBtn, gbc_ajouterAnimalBtn);
 
 		JButton supprimerAnimalBtn = new JButton("Supprimer");
-		supprimerAnimalBtn.setIcon(new ImageIcon(ClientScreen.class.getResource("/images/ico/remove_18p.png")));
+		supprimerAnimalBtn.setIcon(new ImageIcon(MainClientScreen.class.getResource("/images/ico/remove_18p.png")));
 		supprimerAnimalBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
 		supprimerAnimalBtn.setHorizontalTextPosition(SwingConstants.CENTER);
 		GridBagConstraints gbc_supprimerAnimalBtn = new GridBagConstraints();
@@ -364,7 +364,7 @@ public class ClientScreen extends GenericClientScreen {
 		getContentPane().add(supprimerAnimalBtn, gbc_supprimerAnimalBtn);
 
 		JButton editerAnimalBtn = new JButton("Editer");
-		editerAnimalBtn.setIcon(new ImageIcon(ClientScreen.class.getResource("/images/ico/edit_18p.png")));
+		editerAnimalBtn.setIcon(new ImageIcon(MainClientScreen.class.getResource("/images/ico/edit_18p.png")));
 		editerAnimalBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
 		editerAnimalBtn.setHorizontalTextPosition(SwingConstants.CENTER);
 		GridBagConstraints gbc_editerAnimalBtn = new GridBagConstraints();
@@ -418,17 +418,17 @@ public class ClientScreen extends GenericClientScreen {
 	}
 	
 	
-	public InternalFrameSearchClient getFrameSearch(ClientModel model, ClientController controller) {
+	public SearchClientScreen getFrameSearch(ClientModel model, ClientController controller) {
 		if (frameSearch == null) {
-			frameSearch = new InternalFrameSearchClient(model, controller);
+			frameSearch = new SearchClientScreen(model, controller);
 		}
 		return frameSearch;
 	}
 	
 	
-	public InternalFrameAddClient getFrameAdd(ClientModel model, ClientController controller) {
+	public AddClientScreen getFrameAdd(ClientModel model, ClientController controller) {
 		if (frameAdd == null) {
-			frameAdd = new InternalFrameAddClient(model, controller);
+			frameAdd = new AddClientScreen(model, controller);
 		}
 		return frameAdd;
 	}

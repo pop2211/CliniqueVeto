@@ -21,7 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.JTable;
 import java.awt.Color;
 
-public class InternalFrameSearchClient extends JInternalFrame {
+public class SearchClientScreen extends JInternalFrame {
 
 	
 	private static final long serialVersionUID = -7503557272432439802L;
@@ -32,7 +32,7 @@ public class InternalFrameSearchClient extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public InternalFrameSearchClient(ClientModel model, ClientController controller) {
+	public SearchClientScreen(ClientModel model, ClientController controller) {
 		//setBounds(100, 100, 598, 440);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 200, 0, 20, 0};
@@ -42,7 +42,7 @@ public class InternalFrameSearchClient extends JInternalFrame {
 		getContentPane().setLayout(gridBagLayout);
 		
 		JButton rechercherBtn = new JButton("Rechercher");
-		rechercherBtn.setIcon(new ImageIcon(InternalFrameSearchClient.class.getResource("/images/ico/search_27p.png")));
+		rechercherBtn.setIcon(new ImageIcon(SearchClientScreen.class.getResource("/images/ico/search_27p.png")));
 		rechercherBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
