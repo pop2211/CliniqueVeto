@@ -78,6 +78,11 @@ public class Client {
 	public void setNomClient(String nomClient) {
 		this.nomClient = nomClient;
 	}
+	
+	
+	public String getFullname() {
+		return nomClient + " " + prenomClient;
+	}
 
 
 	public String getPrenomClient() {
