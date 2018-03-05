@@ -387,7 +387,7 @@ public class AnimalScreen extends JInternalFrame {
 
 		//Recupère les champs de l'ihm :
 		
-		if(recupLblCli.getText() != "" || recupLblCli.getText() != null){
+		if(recupLblCli.getText() != "" && recupLblCli.getText() != null){
 
 			System.out.println(recupLblCli.getText());		
 			animal.setCodeAnimal(1);
