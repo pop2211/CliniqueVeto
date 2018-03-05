@@ -75,5 +75,18 @@ public class GenericScreen extends JInternalFrame {
 	public void showSuccessMessage(String message) {
 		JOptionPane.showMessageDialog(GenericScreen.this, message);
 	}
+	
+	/**
+	 * Show Dialog Message and return result.
+	 * 
+	 * @param message
+	 */
+	public boolean showConfirmDialog(String message) {
+		String title = "Confirmation";
+		int dialogButton = JOptionPane.YES_NO_OPTION;
+		int dialogResult = JOptionPane.showConfirmDialog(null, message, title, dialogButton);
+		return (dialogResult == JOptionPane.YES_OPTION);
+	}
+	
 
 }

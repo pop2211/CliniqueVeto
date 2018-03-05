@@ -107,6 +107,10 @@ public class MainClientScreen extends GenericClientScreen {
 		supprimerBtn.setIcon(new ImageIcon(MainClientScreen.class.getResource("/images/ico/remove_27p.png")));
 		supprimerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(showConfirmDialog("Êtes-vous sûr de vouloir supprimer le client ?")){
+					System.out.println("SUPPRRR!!!");
+				}
+				
 			}
 		});
 		supprimerBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
