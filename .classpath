@@ -8,5 +8,6 @@
 	<classpathentry exported="true" kind="lib" path="src/main/resources/logging/logback-core-1.2.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="src/main/resources/logging/slf4j-api-1.7.25.jar"/>
 	<classpathentry exported="true" kind="lib" path="src/main/resources/calendrier/jdatepicker-2.0.3.jar"/>
+	<classpathentry kind="lib" path="src/main/resources/jgoodies-forms-1.8.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

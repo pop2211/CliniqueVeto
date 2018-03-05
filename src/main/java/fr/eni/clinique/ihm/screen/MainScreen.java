@@ -59,8 +59,8 @@ public class MainScreen extends JFrame implements ActionListener {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		int largeurFen = (int) Math.round(screenSize.width * 0.6);
-		int hauteurFen = (int) Math.round(screenSize.height * 0.6);
+		int largeurFen = (int) Math.round(screenSize.width * 0.7);
+		int hauteurFen = (int) Math.round(screenSize.height * 0.7);
 		setBounds(0, 0, largeurFen, hauteurFen);
 		setTitle(title);
 
