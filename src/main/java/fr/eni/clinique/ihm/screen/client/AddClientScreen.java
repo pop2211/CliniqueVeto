@@ -36,6 +36,9 @@ public class AddClientScreen extends GenericClientScreen {
 	public AddClientScreen(ClientModel model, ClientController controller) {
 		super("Ajout", true, true, true, true);
 		
+		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
+		
+		
 		setBounds(100, 100, 350, 416);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{20, 0, 0, 0, 0, 0, 0, 20, 0};
@@ -49,16 +52,18 @@ public class AddClientScreen extends GenericClientScreen {
 		validerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println( "o" );
+				
+				Client saveIt2 = readClient();
 				try {
-					System.out.println( "o0" );
-					
-					Client saveIt = readClient();
-					System.out.println( saveIt );
-					
-					controller.saveClient(saveIt);
+					controller.saveClient(saveIt2);
 					showSuccessMessage("Client ajouté !");
+					setVisible(false);
+					
+					//getMainScreen().getFrameSearch()
 				} catch (Exception e1) {
-					showFailureMessage(e1.getMessage());
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					errorOccured(e1);
 				}
 			}
 		});
@@ -73,7 +78,8 @@ public class AddClientScreen extends GenericClientScreen {
 		JButton annulerBtn = new JButton("Annuler");
 		annulerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println( "HEEYYYY" );
+				//resetClient();
+				setVisible(false);
 			}
 		});
 		annulerBtn.setIcon(new ImageIcon(AddClientScreen.class.getResource("/images/ico/undo_27p.png")));

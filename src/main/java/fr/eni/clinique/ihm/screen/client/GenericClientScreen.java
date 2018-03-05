@@ -96,9 +96,14 @@ public class GenericClientScreen extends JInternalFrame {
 	public Client readClient() {
 
 		Client client = new Client();
+		
+		Integer codeClient = null;
+		if(codeTbx != null){
+			codeClient = Integer.parseInt(codeTbx.getText().trim());
+		}
 
 		// Recupère les champs de l'ihm :
-		client.setCodeClient(Integer.parseInt(codeTbx.getText().trim()));
+		client.setCodeClient(codeClient);
 		client.setNomClient(nomTbx.getText().trim());
 		client.setPrenomClient(prenomTbx.getText().trim());
 		client.setAdresse1(adresse1Tbx.getText().trim());
@@ -111,6 +116,17 @@ public class GenericClientScreen extends JInternalFrame {
 		client.setRemarque(remarqueTbx.getText().trim());
 
 		return client;
+	}
+	
+	
+	/**
+	 * Show TechnicalError and print StackTrace.
+	 * 
+	 * @param e
+	 */
+	public void errorOccured(Exception e) {
+		showFailureMessage(e.getMessage());
+		e.printStackTrace();
 	}
 
 	/**
