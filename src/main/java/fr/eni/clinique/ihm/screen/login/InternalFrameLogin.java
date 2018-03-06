@@ -165,5 +165,12 @@ public class InternalFrameLogin extends GenericScreen{
         
         return personnel;
     }
+
+
+	@Override
+	public void processEvent(String eventName, Object eventParam) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
