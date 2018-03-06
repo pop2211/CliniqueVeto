@@ -68,7 +68,7 @@ public class MainScreen extends JFrame implements ActionListener {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int largeurFen = (int) Math.round(screenSize.width * 0.7);
 		int hauteurFen = (int) Math.round(screenSize.height * 0.7);
-		setBounds(0, 0, 849, 478);
+		setBounds(0, 0, largeurFen, hauteurFen);
 		setTitle(title);
 
 		// initialiser l'ecran MDI
