@@ -35,26 +35,23 @@ import fr.eni.clinique.ihm.controller.PersonnelController;
 import fr.eni.clinique.ihm.model.AnimalModel;
 import fr.eni.clinique.ihm.model.ClientModel;
 import fr.eni.clinique.ihm.model.PersonnelModel;
-import fr.eni.clinique.ihm.screen.client.GenericClientScreen;
+import fr.eni.clinique.ihm.screen.client.AddClientScreen;
+import fr.eni.clinique.ihm.screen.common.GenericScreen;
 
-public class RdvScreen extends GenericClientScreen {
+public class RdvScreen extends GenericScreen {
 	
 	private static final long serialVersionUID = -6328443080174868948L;
 	
-	private ClientController controllerClient;
-	private ClientModel Modelclient;
-	private AnimalController controllerAnimal;
-	private AnimalModel ModelAnimal;
-	private PersonnelController controllerPersonnel;
-	private PersonnelModel ModelPersonnel;
+	private AddClientScreen frameAdd;
 	
+	JComboBox<Item<Integer>> CbxClient;
 	JComboBox<Item<Integer>> CbxAnimal;
 	
 	public RdvScreen() {
 		super("Prise de rendez-vous", true, true, true, true);
-		controllerClient = new ClientController(Modelclient);
-		controllerAnimal = new AnimalController(ModelAnimal);
-		controllerPersonnel = new PersonnelController(ModelPersonnel);
+		controllerClient = new ClientController(modelClient);
+		controllerAnimal = new AnimalController(modelAnimal);
+		controllerPersonnel = new PersonnelController(modelPersonnel);
 		constructionFenetre();
 	}
 	
@@ -92,25 +89,8 @@ public class RdvScreen extends GenericClientScreen {
 		gbc_lblClient.gridy = 0;
 		panel_Pour.add(lblClient, gbc_lblClient);
 		
-		JComboBox<Item<Integer>> CbxClient = new JComboBox<Item<Integer>>();
-		try {
-			List<Client> clients = controllerClient.loadAllClient();
-			
-			if(!clients.isEmpty()) {
-				for (Client client : clients) {
-					CbxClient.addItem( new Item<Integer>(client.getCodeClient(), client.getFullname()));
-				}
-			}
-		} catch (ManagerException e) {
-			e.printStackTrace();
-		}
-		CbxClient.setMaximumSize(new Dimension(125, 20));
-		CbxClient.setMinimumSize(new Dimension(125, 20));
-		CbxClient.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				chargeAnimaux(((Item<Integer>) CbxClient.getSelectedItem()).getId());
-			}
-		});
+		CbxClient = new JComboBox<Item<Integer>>();
+		chargeClient();
 		
 		GridBagConstraints gbc_CbxClient = new GridBagConstraints();
 		gbc_CbxClient.fill = GridBagConstraints.HORIZONTAL;
@@ -125,7 +105,8 @@ public class RdvScreen extends GenericClientScreen {
 		BtnAddClient.setIcon(new ImageIcon(RdvScreen.class.getResource("/images/ico/add_18p.png")));
 		BtnAddClient.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//new AddClientScreen(parentScreen);
+				frameAdd = getFrameAdd();
+				frameAdd.setVisible(true);
 			}
 		});
 		GridBagConstraints gbc_BtnAddClient = new GridBagConstraints();
@@ -337,6 +318,30 @@ public class RdvScreen extends GenericClientScreen {
 		this.pack();
 		
 	}
+	
+	private void chargeClient() {
+		try {
+			List<Client> clients = controllerClient.loadAllClient();
+			
+			if(!clients.isEmpty()) {
+				CbxClient.removeAllItems();
+				for (Client client : clients) {
+					CbxClient.addItem( new Item<Integer>(client.getCodeClient(), client.getFullname()));
+				}
+			}
+		} catch (ManagerException e) {
+			e.printStackTrace();
+		}
+		CbxClient.setMaximumSize(new Dimension(125, 20));
+		CbxClient.setMinimumSize(new Dimension(125, 20));
+		CbxClient.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(CbxClient.getItemCount() > 0) {
+					chargeAnimaux(((Item<Integer>) CbxClient.getSelectedItem()).getId());
+				}
+			}
+		});
+	}
 
 	private void chargeAnimaux(int CodeClient) {
 		List<Animal> animaux;
@@ -350,6 +355,15 @@ public class RdvScreen extends GenericClientScreen {
 			}
 		} catch (ManagerException e) {
 			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void processEvent(String eventName, Object eventParam) {
+		switch(eventName){
+		case "AddClient":
+			chargeClient();
+		break;
 		}
 	}
 
@@ -371,4 +385,11 @@ public class RdvScreen extends GenericClientScreen {
 		return animal;
 	}
 	 */
+	public AddClientScreen getFrameAdd() {
+		if (frameAdd == null) {
+			frameAdd = new AddClientScreen((GenericScreen)this);
+			getMainScreen().getDesktopPane().add(frameAdd);
+		}
+		return frameAdd;
+	}
 }

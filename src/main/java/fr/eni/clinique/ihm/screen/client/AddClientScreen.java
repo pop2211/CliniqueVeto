@@ -1,27 +1,19 @@
 package fr.eni.clinique.ihm.screen.client;
 
-import java.awt.EventQueue;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.JInternalFrame;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import fr.eni.clinique.bo.Client;
-import fr.eni.clinique.ihm.controller.ClientController;
-import fr.eni.clinique.ihm.model.ClientModel;
 import fr.eni.clinique.ihm.screen.common.GenericScreen;
-
-import javax.swing.JButton;
-import java.awt.BorderLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.ImageIcon;
-import java.awt.Insets;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JTable;
-import java.awt.Color;
 
 public class AddClientScreen extends GenericClientScreen {
 
@@ -57,7 +49,7 @@ public class AddClientScreen extends GenericClientScreen {
 				try {
 					controllerClient.saveClient(saveIt);
 					showSuccessMessage("Client ajouté !");
-					parentScreen.processEvent("showClientById", saveIt.getCodeClient());
+					parentScreen.processEvent("AddClient", saveIt.getCodeClient());
 					setVisible(false);
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block

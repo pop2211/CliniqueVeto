@@ -170,4 +170,9 @@ public class PersonnelScreen extends GenericScreen {
 		return frameAdd;
 	}
 
+	@Override
+	public void processEvent(String eventName, Object eventParam) {
+		
+	}
+
 }

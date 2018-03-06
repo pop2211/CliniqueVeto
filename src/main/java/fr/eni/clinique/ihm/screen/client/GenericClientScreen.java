@@ -115,11 +115,10 @@ public class GenericClientScreen extends GenericScreen {
 	}
 
 
-
 	@Override
 	public void processEvent(String eventName, Object eventParam){
 		switch(eventName){
-			case "showClientById":
+			case "AddClient":
 				Integer id = (Integer) eventParam;
 				try {
 					Client client = controllerClient.loadClient(id);
