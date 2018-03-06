@@ -225,7 +225,7 @@ public class MainScreen extends JFrame implements ActionListener {
 	}
 
 	private PersonnelScreen getPersonnelScreen(PersonnelModel personnelModel, PersonnelController personnelController) {
-		personnelScreen = new PersonnelScreen();
+		personnelScreen = new PersonnelScreen(personnelController, personnelModel);
 		return personnelScreen;
 	}
 

@@ -208,6 +208,8 @@ public class AnimalScreen extends JInternalFrame {
 		getContentPane().add(tatouageTbx, gbc_tatouageTbx);
 		tatouageTbx.setColumns(10);
 		
+		// Validation de l'ajout ou de la modification
+		
 		JButton validerBtn = new JButton("Valider");
 
 		validerBtn.addActionListener(new ActionListener() {
@@ -278,6 +280,8 @@ public class AnimalScreen extends JInternalFrame {
 		gbc_validerBtn.gridx = 2;
 		gbc_validerBtn.gridy = 10;
 		getContentPane().add(validerBtn, gbc_validerBtn);
+		
+		//Ferme la fenetre en cas de nouvel animal, reviens à l'animal d'origine en cas de modification
 		
 		JButton annulerBtn = new JButton("Annuler");
 

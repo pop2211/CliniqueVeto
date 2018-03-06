@@ -4,17 +4,23 @@ package fr.eni.clinique.ihm.screen.personnel;
 import javax.swing.JInternalFrame;
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.Font;
 import javax.swing.JTextField;
 
+import fr.eni.clinique.bll.exception.ManagerException;
 import fr.eni.clinique.bo.Personnel;
 import fr.eni.clinique.common.util.ObjectUtil;
+import fr.eni.clinique.ihm.controller.PersonnelController;
+import fr.eni.clinique.ihm.model.PersonnelModel;
 
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
-import java.awt.Color;
 
 public class AddPersonnelScreen extends JInternalFrame {
 	/**
@@ -25,12 +31,18 @@ public class AddPersonnelScreen extends JInternalFrame {
 	private JTextField nomTbx;
 	private JTextField mdpTbx;
 	private JTextField roleTbx;
+	private PersonnelController personnelController;
+	private PersonnelModel personnelModel;
 
 
 	/**
 	 * Create the frame.
+	 * @param model 
 	 */
-	public AddPersonnelScreen() {
+	public AddPersonnelScreen(PersonnelScreen personnelScreen, PersonnelModel model, PersonnelController controller) {
+		
+		personnelController = controller;
+		personnelModel = model;
 		
 		setBounds(100, 100, 450, 300);
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -96,27 +108,40 @@ public class AddPersonnelScreen extends JInternalFrame {
 		getContentPane().add(roleTbx, gbc_roleTbx);
 		roleTbx.setColumns(10);
 		
-		JButton btnNewButton = new JButton("Valider");
-		btnNewButton.setIcon(new ImageIcon(AddPersonnelScreen.class.getResource("/images/ico/done_16p.png")));
-		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-		gbc_btnNewButton.insets = new Insets(0, 0, 0, 5);
-		gbc_btnNewButton.gridx = 1;
-		gbc_btnNewButton.gridy = 9;
-		getContentPane().add(btnNewButton, gbc_btnNewButton);
+		JButton validerBtn = new JButton("Valider");
+		validerBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					controller.newPersonnel(readPersonnel());
+					showSuccessMessage("Personnel ajouté !");
+				} catch (ManagerException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}		
+			}			
+		});
 		
-		JButton btnNewButton_1 = new JButton("Annuler");
-		btnNewButton_1.setIcon(new ImageIcon(AddPersonnelScreen.class.getResource("/images/ico/undo_18p.png")));
-		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
-		gbc_btnNewButton_1.insets = new Insets(0, 0, 0, 5);
-		gbc_btnNewButton_1.gridx = 2;
-		gbc_btnNewButton_1.gridy = 9;
-		getContentPane().add(btnNewButton_1, gbc_btnNewButton_1);
+		
+		validerBtn.setIcon(new ImageIcon(AddPersonnelScreen.class.getResource("/images/ico/done_16p.png")));
+		GridBagConstraints gbc_validerBtn = new GridBagConstraints();
+		gbc_validerBtn.insets = new Insets(0, 0, 0, 5);
+		gbc_validerBtn.gridx = 1;
+		gbc_validerBtn.gridy = 9;
+		getContentPane().add(validerBtn, gbc_validerBtn);
+		
+		JButton annulerBtn = new JButton("Annuler");
+		annulerBtn.setIcon(new ImageIcon(AddPersonnelScreen.class.getResource("/images/ico/undo_18p.png")));
+		GridBagConstraints gbc_annulerBtn = new GridBagConstraints();
+		gbc_annulerBtn.insets = new Insets(0, 0, 0, 5);
+		gbc_annulerBtn.gridx = 2;
+		gbc_annulerBtn.gridy = 9;
+		getContentPane().add(annulerBtn, gbc_annulerBtn);
 
 		
 	}
 	
-	
-	
+
+
 	public void showPersonnel(Personnel personnnel) {
 
 		if(personnnel == null){
@@ -148,6 +173,14 @@ public class AddPersonnelScreen extends JInternalFrame {
 		personnel.setArchive(false);
 		
 		return personnel;
+	}
+	
+	private void showFailureMessage(String message) {
+		JOptionPane.showMessageDialog(AddPersonnelScreen.this, message, "Erreur", JOptionPane.ERROR_MESSAGE);
+	}
+
+	private void showSuccessMessage(String message) {
+		JOptionPane.showMessageDialog(AddPersonnelScreen.this, message);		
 	}
 	
 
