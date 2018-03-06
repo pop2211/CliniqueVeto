@@ -108,8 +108,7 @@ public class RdvScreen extends GenericClientScreen {
 		CbxClient.setMinimumSize(new Dimension(125, 20));
 		CbxClient.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Item<Integer> item = (Item<Integer>) CbxClient.getSelectedItem();
-				chargeAnimaux((int) item.getId());
+				chargeAnimaux(((Item<Integer>) CbxClient.getSelectedItem()).getId());
 			}
 		});
 		
@@ -151,7 +150,7 @@ public class RdvScreen extends GenericClientScreen {
 				
 				if(!animaux.isEmpty()) {
 					for (Animal animal : animaux) {
-						CbxAnimal.addItem( new Item(animal.getCodeAnimal(), animal.getNomAnimal()));
+						CbxAnimal.addItem( new Item<Integer>(animal.getCodeAnimal(), animal.getNomAnimal()));
 					}
 				}
 			}
@@ -204,13 +203,13 @@ public class RdvScreen extends GenericClientScreen {
 		gbc_labelVeterinaire.gridy = 0;
 		panel_Par.add(labelVeterinaire, gbc_labelVeterinaire);
 		
-		JComboBox<Item> CbxVeterinaire = new JComboBox<Item>();
+		JComboBox<Item<Integer>> CbxVeterinaire = new JComboBox<Item<Integer>>();
 		try {
 			List<Personnel> vetos = controllerPersonnel.loadPersonnelByRole(EnumRole.VETERINAIRE.getCode());
 			
 			if(!vetos.isEmpty()) {
 				for (Personnel veto : vetos) {
-					CbxVeterinaire.addItem( new Item(veto.getCodePers(), veto.getNom()));
+					CbxVeterinaire.addItem( new Item<Integer>(veto.getCodePers(), veto.getNom()));
 				}
 			}
 		} catch (ManagerException e) {
@@ -218,12 +217,6 @@ public class RdvScreen extends GenericClientScreen {
 		}
 		CbxVeterinaire.setMaximumSize(new Dimension(125, 20));
 		CbxVeterinaire.setMinimumSize(new Dimension(125, 20));
-		CbxVeterinaire.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Item<Integer> item = (Item<Integer>)CbxClient.getSelectedItem();
-				chargeAnimaux((int)item.getId());
-			}
-		});
 		
 		CbxVeterinaire.setMinimumSize(new Dimension(100, 20));
 		GridBagConstraints gbc_CbxVeterinaire = new GridBagConstraints();
@@ -262,7 +255,7 @@ public class RdvScreen extends GenericClientScreen {
 		
 		//Paramètre du Datepicker
 		ComponentFormatDefaults defaults = ComponentFormatDefaults.getInstance();
-		defaults.setFormat(ComponentFormatDefaults.Key.TODAY_SELECTOR, new SimpleDateFormat("EEE dd MM yy"));
+		defaults.setFormat(ComponentFormatDefaults.Key.TODAY_SELECTOR, new SimpleDateFormat("EEE dd/MM/yyyy"));
         defaults.setFormat(ComponentFormatDefaults.Key.DOW_HEADER, new SimpleDateFormat("EEEE"));
         defaults.setFormat(ComponentFormatDefaults.Key.SELECTED_DATE_FIELD, new SimpleDateFormat("dd/MM/yyyy"));
         defaults.setFormat(ComponentFormatDefaults.Key.MONTH_SELECTOR, new SimpleDateFormat("MMM"));
@@ -352,7 +345,7 @@ public class RdvScreen extends GenericClientScreen {
 			animaux = controllerAnimal.loadAnimalByMaitre(CodeClient);
 			if(!animaux.isEmpty()) {
 				for (Animal animal : animaux) {
-					CbxAnimal.addItem(new Item(animal.getCodeAnimal(), animal.getNomAnimal()));
+					CbxAnimal.addItem(new Item<Integer>(animal.getCodeAnimal(), animal.getNomAnimal()));
 				}
 			}
 		} catch (ManagerException e) {
