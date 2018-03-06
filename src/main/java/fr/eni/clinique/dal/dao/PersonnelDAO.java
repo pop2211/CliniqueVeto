@@ -11,4 +11,6 @@ public interface PersonnelDAO extends GenericDAO<Personnel, Integer> {
 	
 	List<Personnel> selectByNomMdp(String nom,String mdp) throws DaoException;
 	
+	List<Personnel> selectByRole(String role) throws DaoException;
+	
 }

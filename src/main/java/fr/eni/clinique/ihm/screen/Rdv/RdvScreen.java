@@ -31,8 +31,10 @@ import fr.eni.clinique.bo.Client;
 import fr.eni.clinique.common.util.Item;
 import fr.eni.clinique.ihm.controller.AnimalController;
 import fr.eni.clinique.ihm.controller.ClientController;
+import fr.eni.clinique.ihm.controller.PersonnelController;
 import fr.eni.clinique.ihm.model.AnimalModel;
 import fr.eni.clinique.ihm.model.ClientModel;
+import fr.eni.clinique.ihm.model.PersonnelModel;
 
 public class RdvScreen extends JInternalFrame {
 	
@@ -42,6 +44,8 @@ public class RdvScreen extends JInternalFrame {
 	private ClientModel Modelclient;
 	private AnimalController controllerAnimal;
 	private AnimalModel ModelAnimal;
+	private PersonnelController controllerPersonnel;
+	private PersonnelModel ModelPersonnel;
 	
 	JComboBox<Item> CbxAnimal = new JComboBox<Item>();
 	
@@ -49,6 +53,7 @@ public class RdvScreen extends JInternalFrame {
 		super("Prise de rendez-vous", true, true, true, true); 
 		controllerClient = new ClientController(Modelclient);
 		controllerAnimal = new AnimalController(ModelAnimal);
+		controllerPersonnel = new PersonnelController(ModelPersonnel);
 		constructionFenetre();
 	}
 	
