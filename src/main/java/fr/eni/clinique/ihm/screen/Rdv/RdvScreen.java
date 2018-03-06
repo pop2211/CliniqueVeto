@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Vector;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -28,6 +27,8 @@ import org.jdatepicker.JDatePicker;
 import fr.eni.clinique.bll.exception.ManagerException;
 import fr.eni.clinique.bo.Animal;
 import fr.eni.clinique.bo.Client;
+import fr.eni.clinique.bo.EnumRole;
+import fr.eni.clinique.bo.Personnel;
 import fr.eni.clinique.common.util.Item;
 import fr.eni.clinique.ihm.controller.AnimalController;
 import fr.eni.clinique.ihm.controller.ClientController;
@@ -35,8 +36,11 @@ import fr.eni.clinique.ihm.controller.PersonnelController;
 import fr.eni.clinique.ihm.model.AnimalModel;
 import fr.eni.clinique.ihm.model.ClientModel;
 import fr.eni.clinique.ihm.model.PersonnelModel;
+import fr.eni.clinique.ihm.screen.client.AddClientScreen;
+import fr.eni.clinique.ihm.screen.client.GenericClientScreen;
+import fr.eni.clinique.ihm.screen.client.MainClientScreen;
 
-public class RdvScreen extends JInternalFrame {
+public class RdvScreen extends GenericClientScreen {
 	
 	private static final long serialVersionUID = -6328443080174868948L;
 	
@@ -47,10 +51,13 @@ public class RdvScreen extends JInternalFrame {
 	private PersonnelController controllerPersonnel;
 	private PersonnelModel ModelPersonnel;
 	
+	private MainClientScreen parentScreen;
+	
 	JComboBox<Item> CbxAnimal = new JComboBox<Item>();
 	
 	public RdvScreen() {
 		super("Prise de rendez-vous", true, true, true, true); 
+		parentScreen = (MainClientScreen) this.getTopLevelAncestor();
 		controllerClient = new ClientController(Modelclient);
 		controllerAnimal = new AnimalController(ModelAnimal);
 		controllerPersonnel = new PersonnelController(ModelPersonnel);
@@ -59,7 +66,7 @@ public class RdvScreen extends JInternalFrame {
 	
 	private void constructionFenetre() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{150, 0, 150, 0, 0, 0, 0};
+		gridBagLayout.columnWidths = new int[]{220, 0, 220, 0, 110, 110, 0};
 		gridBagLayout.rowHeights = new int[]{30, 130, 35, 191, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
@@ -77,7 +84,7 @@ public class RdvScreen extends JInternalFrame {
 		gbc_panel_Pour.gridy = 1;
 		getContentPane().add(panel_Pour, gbc_panel_Pour);
 		GridBagLayout gbl_panel_Pour = new GridBagLayout();
-		gbl_panel_Pour.columnWidths = new int[]{125, 0, 0};
+		gbl_panel_Pour.columnWidths = new int[]{150, 0, 0};
 		gbl_panel_Pour.rowHeights = new int[]{0, 0, 0, 0, 0};
 		gbl_panel_Pour.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		gbl_panel_Pour.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
@@ -123,6 +130,11 @@ public class RdvScreen extends JInternalFrame {
 		BtnAddClient.setBorderPainted(false);
 		BtnAddClient.setContentAreaFilled(false);
 		BtnAddClient.setIcon(new ImageIcon(RdvScreen.class.getResource("/images/ico/add_18p.png")));
+		BtnAddClient.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				new AddClientScreen(parentScreen);
+			}
+		});
 		GridBagConstraints gbc_BtnAddClient = new GridBagConstraints();
 		gbc_BtnAddClient.fill = GridBagConstraints.HORIZONTAL;
 		gbc_BtnAddClient.insets = new Insets(0, 0, 5, 0);
@@ -154,8 +166,8 @@ public class RdvScreen extends JInternalFrame {
 		CbxAnimal.setMaximumSize(new Dimension(125, 20));
 		CbxAnimal.setMinimumSize(new Dimension(125, 20));
 		GridBagConstraints gbc_CbXAnimal = new GridBagConstraints();
-		gbc_CbXAnimal.insets = new Insets(0, 10, 5, 5);
 		gbc_CbXAnimal.fill = GridBagConstraints.HORIZONTAL;
+		gbc_CbXAnimal.insets = new Insets(0, 10, 5, 5);
 		gbc_CbXAnimal.gridx = 0;
 		gbc_CbXAnimal.gridy = 3;
 		panel_Pour.add(CbxAnimal, gbc_CbXAnimal);
@@ -183,7 +195,7 @@ public class RdvScreen extends JInternalFrame {
 		gbc_panel_Par.gridy = 1;
 		getContentPane().add(panel_Par, gbc_panel_Par);
 		GridBagLayout gbl_panel_Par = new GridBagLayout();
-		gbl_panel_Par.columnWidths = new int[]{125, 0};
+		gbl_panel_Par.columnWidths = new int[]{150, 0};
 		gbl_panel_Par.rowHeights = new int[]{0, 0, 0};
 		gbl_panel_Par.columnWeights = new double[]{0.0, Double.MIN_VALUE};
 		gbl_panel_Par.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
@@ -197,7 +209,27 @@ public class RdvScreen extends JInternalFrame {
 		gbc_labelVeterinaire.gridy = 0;
 		panel_Par.add(labelVeterinaire, gbc_labelVeterinaire);
 		
-		JComboBox<Object> CbxVeterinaire = new JComboBox<Object>();
+		JComboBox<Item> CbxVeterinaire = new JComboBox<Item>();
+		try {
+			List<Personnel> vetos = controllerPersonnel.loadPersonnelByRole(EnumRole.VETERINAIRE.getCode());
+			
+			if(!vetos.isEmpty()) {
+				for (Personnel veto : vetos) {
+					CbxVeterinaire.addItem( new Item(veto.getCodePers(), veto.getNom()));
+				}
+			}
+		} catch (ManagerException e) {
+			e.printStackTrace();
+		}
+		CbxVeterinaire.setMaximumSize(new Dimension(125, 20));
+		CbxVeterinaire.setMinimumSize(new Dimension(125, 20));
+		CbxVeterinaire.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Item item = (Item)CbxClient.getSelectedItem();
+				chargeAnimaux(item.getId());
+			}
+		});
+		
 		CbxVeterinaire.setMinimumSize(new Dimension(100, 20));
 		GridBagConstraints gbc_CbxVeterinaire = new GridBagConstraints();
 		gbc_CbxVeterinaire.fill = GridBagConstraints.HORIZONTAL;
@@ -243,7 +275,7 @@ public class RdvScreen extends JInternalFrame {
         JDatePicker datePicker = new JDatePicker();
         datePicker.getFormattedTextField().setColumns(1);
 		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.gridwidth = 3;
+		gbc_textField.gridwidth = 4;
 		gbc_textField.insets = new Insets(0, 10, 5, 0);
 		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField.gridx = 0;

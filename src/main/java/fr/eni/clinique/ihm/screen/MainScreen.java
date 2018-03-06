@@ -12,6 +12,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
+import fr.eni.clinique.common.AppConstants;
+import fr.eni.clinique.common.util.StringUtil;
 import fr.eni.clinique.ihm.controller.AnimalController;
 import fr.eni.clinique.ihm.controller.ClientController;
 import fr.eni.clinique.ihm.controller.PersonnelController;
@@ -94,7 +96,7 @@ public class MainScreen extends JFrame implements ActionListener {
 		menu.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		menuBarre.add(menu);
 			
-			// Sous menu Déconnexion
+			// Sous menu Connexion / Déconnexion
 			JMenuItem menuItem = new JMenuItem("Connexion / Déconnexion");
 			menuItem.setActionCommand("deco/reco");
 			menuItem.addActionListener(this);
@@ -174,13 +176,10 @@ public class MainScreen extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case "deco/reco":
-			if(profil == "")
-			{
-				frameLogin.setVisible(true);
+			if(!StringUtil.isNull(profil)) {
+				setProfil(AppConstants.EMPTY);
 			}
-			else {
-				setProfil("");
-			}
+			frameLogin.setVisible(true);
 			break;
 		case "fermer":
 			System.exit(0);
@@ -224,11 +223,6 @@ public class MainScreen extends JFrame implements ActionListener {
 
 	}
 
-	private PersonnelScreen getPersonnelScreen(PersonnelModel personnelModel, PersonnelController personnelController) {
-		personnelScreen = new PersonnelScreen();
-		return personnelScreen;
-	}
-
 	public JDesktopPane getDesktopPane() {
 		return desktopPane;
 	}
@@ -247,6 +241,11 @@ public class MainScreen extends JFrame implements ActionListener {
 			frameLogin = new InternalFrameLogin(model, controller);
 		}
 		return frameLogin;
+	}
+	
+	private PersonnelScreen getPersonnelScreen(PersonnelModel personnelModel, PersonnelController personnelController) {
+		personnelScreen = new PersonnelScreen();
+		return personnelScreen;
 	}
 	
 	public RdvScreen getRdvScreen(PersonnelModel model, PersonnelController controller) {

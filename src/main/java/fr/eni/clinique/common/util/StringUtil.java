@@ -30,4 +30,12 @@ public class StringUtil {
         
         return result;
     }
+    
+    public static final Boolean isNull(String str) {
+	    Boolean result = true;
+    	if(str != null && !str.isEmpty()){
+    		result = false;
+	    }
+    	return result;
+    }
 }

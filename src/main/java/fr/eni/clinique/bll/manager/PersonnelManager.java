@@ -4,7 +4,6 @@ package fr.eni.clinique.bll.manager;
 import java.util.List;
 
 import fr.eni.clinique.bll.exception.ManagerException;
-import fr.eni.clinique.bo.Animal;
 import fr.eni.clinique.bo.Personnel;
 
 public interface PersonnelManager extends GenericManager<Personnel, Integer>{
