@@ -16,6 +16,8 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.border.LineBorder;
 
+import fr.eni.clinique.bll.exception.ManagerException;
+import fr.eni.clinique.bo.Personnel;
 import fr.eni.clinique.ihm.controller.PersonnelController;
 import fr.eni.clinique.ihm.model.PersonnelModel;
 import fr.eni.clinique.ihm.model.TableModelPersonnel;
@@ -37,7 +39,7 @@ public class PersonnelScreen extends GenericScreen {
 	 */
 	private static final long serialVersionUID = -840620127348344756L;
 
-	private TableModelPersonnel modeleTable;
+	private TableModelPersonnel modelTable;
 	private AddPersonnelScreen frameAdd;
 	private PersonnelController controller;
 	private PersonnelModel model;
@@ -54,7 +56,7 @@ public class PersonnelScreen extends GenericScreen {
 		this.controller = controller; 
 		this.model = model;
 			
-		modeleTable = new TableModelPersonnel();
+		modelTable = new TableModelPersonnel();
 		
 		setBounds(100, 100, 450, 486);
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -99,6 +101,8 @@ public class PersonnelScreen extends GenericScreen {
 		panel.add(ajouterBtn, gbc_ajouterBtn);
 		
 		JButton supprimerBtn = new JButton("");
+		
+		
 		supprimerBtn.setBorderPainted(false);
 		supprimerBtn.setIcon(new ImageIcon(PersonnelScreen.class.getResource("/images/ico/remove_27p.png")));
 		supprimerBtn.setOpaque(false);
@@ -149,7 +153,7 @@ public class PersonnelScreen extends GenericScreen {
 		gbc_lblReinitialiser.gridy = 1;
 		panel.add(lblReinitialiser, gbc_lblReinitialiser);
 		
-		table = new JTable(modeleTable);
+		table = new JTable(modelTable);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		GridBagConstraints gbc_table = new GridBagConstraints();
 		gbc_table.insets = new Insets(0, 0, 0, 5);
@@ -157,6 +161,24 @@ public class PersonnelScreen extends GenericScreen {
 		gbc_table.gridx = 1;
 		gbc_table.gridy = 2;
 		getContentPane().add(new JScrollPane(table), gbc_table);
+		
+		table.getColumnModel().getColumn(0).setMinWidth(0);
+		table.getColumnModel().getColumn(0).setMaxWidth(0);
+		
+		supprimerBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Integer personnelId = getCurrentPersonnelId();
+					controller.deletePersonnel(personnelId);
+					modelTable.refresh();
+					showSuccessMessage("Personnel archivé !");
+				} catch (Exception e1) {
+					showFailureMessage(e1.getMessage());
+				}
+			}
+
+			
+		});
 
 		
 		pack();
@@ -168,6 +190,13 @@ public class PersonnelScreen extends GenericScreen {
 			getMainScreen().getDesktopPane().add(frameAdd);
 		}
 		return frameAdd;
+	}
+	
+	private Integer getCurrentPersonnelId() {
+		int column = 0;
+		int row = table.getSelectedRow();
+		Integer codePersonnel = Integer.parseInt(table.getModel().getValueAt(row, column).toString());
+		return codePersonnel;
 	}
 
 	@Override

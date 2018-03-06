@@ -32,17 +32,18 @@ import fr.eni.clinique.ihm.model.PersonnelModel;
 import fr.eni.clinique.ihm.model.TableModelAnimal;
 import fr.eni.clinique.ihm.model.TableModelPersonnel;
 import fr.eni.clinique.ihm.screen.MainScreen;
+import fr.eni.clinique.ihm.screen.animal.AnimalScreen;
 import fr.eni.clinique.ihm.screen.common.GenericScreen;
 import fr.eni.clinique.ihm.screen.common.JTextFieldLimit;
 
 public class MainClientScreen extends GenericClientScreen {
 
 	private static final long serialVersionUID = -9075041539974261255L;
-
-	private MainScreen mainScreen;
 	
-	private AddClientScreen frameAdd;
-	private SearchClientScreen frameSearch;
+	private AddClientScreen frameClientAdd;
+	private SearchClientScreen frameClientSearch;
+	
+	private AnimalScreen frameAnimal;
 
 
 	public MainClientScreen(ClientModel model, ClientController controller) {
@@ -70,12 +71,11 @@ public class MainClientScreen extends GenericClientScreen {
 		rechercherBtn.setIcon(new ImageIcon(MainClientScreen.class.getResource("/images/ico/search_27p.png")));
 		rechercherBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				frameSearch = getFrameSearch();
-				//
-				//=> ERR
-				frameSearch.setVisible(true);
+				frameClientSearch = getFrameClientSearch();
+				frameClientSearch.setVisible(true);
+				
 				//frameSearch.launchSearch(); //hide removed client from previous search results
-				//=> ERR TOO
+				//=> ERR (avant ou apres setVisible true)
 			}
 		});
 		rechercherBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -104,8 +104,8 @@ public class MainClientScreen extends GenericClientScreen {
 		JButton ajouterBtn = new JButton("Ajouter");
 		ajouterBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frameAdd = getFrameAdd();
-				frameAdd.setVisible(true);
+				frameClientAdd = getFrameClientAdd();
+				frameClientAdd.setVisible(true);
 			}
 		});
 		ajouterBtn.setIcon(new ImageIcon(MainClientScreen.class.getResource("/images/ico/add_27p.png")));
@@ -367,6 +367,12 @@ public class MainClientScreen extends GenericClientScreen {
 		getContentPane().add(emailTbx, gbc_emailTbx);
 
 		JButton ajouterAnimalBtn = new JButton("Ajouter");
+		ajouterAnimalBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frameAnimal = getFrameAnimal();
+				frameAnimal.setVisible(true);
+			}
+		});
 		ajouterAnimalBtn.setIcon(new ImageIcon(MainClientScreen.class.getResource("/images/ico/add_18p.png")));
 		ajouterAnimalBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
 		ajouterAnimalBtn.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -456,21 +462,29 @@ public class MainClientScreen extends GenericClientScreen {
 	}
 	
 	
-	public SearchClientScreen getFrameSearch() {
-		if (frameSearch == null) {
-			frameSearch = new SearchClientScreen((GenericScreen)this);
-			getMainScreen().getDesktopPane().add(frameSearch);
+	public SearchClientScreen getFrameClientSearch() {
+		if (frameClientSearch == null) {
+			frameClientSearch = new SearchClientScreen((GenericScreen)this);
+			getMainScreen().getDesktopPane().add(frameClientSearch);
 		}
-		return frameSearch;
+		return frameClientSearch;
 	}
 	
 	
-	public AddClientScreen getFrameAdd() {
-		if (frameAdd == null) {
-			frameAdd = new AddClientScreen((GenericScreen)this);
-			getMainScreen().getDesktopPane().add(frameAdd);
+	public AddClientScreen getFrameClientAdd() {
+		if (frameClientAdd == null) {
+			frameClientAdd = new AddClientScreen((GenericScreen)this);
+			getMainScreen().getDesktopPane().add(frameClientAdd);
 		}
-		return frameAdd;
+		return frameClientAdd;
+	}
+	
+	public AnimalScreen getFrameAnimal() {
+		if (frameAnimal == null) {
+			frameAnimal = new AnimalScreen((GenericScreen)this);
+			getMainScreen().getDesktopPane().add(frameAnimal);
+		}
+		return frameAnimal;
 	}
 	
 

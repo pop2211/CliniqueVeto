@@ -17,6 +17,7 @@ public abstract class GenericScreen extends JInternalFrame {
 
 	private static final long serialVersionUID = 1L;
 	protected MainScreen mainScreen;
+	protected GenericScreen parentScreen;
 	
 	public GenericScreen(String title, Boolean b1, Boolean b2,  Boolean b3,  Boolean b4){
 		super(title, b1, b2, b3, b4);

@@ -31,6 +31,7 @@ import fr.eni.clinique.ihm.model.AnimalModel;
 
 import fr.eni.clinique.ihm.model.PersonnelModel;
 import fr.eni.clinique.ihm.screen.client.MainClientScreen;
+import fr.eni.clinique.ihm.screen.common.GenericScreen;
 
 import java.awt.Color;
 import java.awt.event.ItemListener;
@@ -41,7 +42,7 @@ import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.DefaultComboBoxModel;
 
-public class AnimalScreen extends JInternalFrame {
+public class AnimalScreen extends GenericScreen {
 	
 	private static final long serialVersionUID = -1179642960437851179L;
 	
@@ -61,11 +62,16 @@ public class AnimalScreen extends JInternalFrame {
 	RaceDAO raceDAO = new RaceJDBCDAOImpl();
 	ClientDAO clientDAO = new ClientJDBCDAOImpl();
 	
-	public AnimalScreen(AnimalModel model, AnimalController controller) {
+	
+	
+	public AnimalScreen() {
 		super("Gestion des Animaux", true, true, true,true);
 		setBackground(Color.WHITE);
-		this.controller = controller;
-		this.model = model;
+		
+		//TODO
+		//this.controller = parentScreen.getAnimalController();
+		//this.model = model;
+		
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		
 		//Animal animal = new Animal("MamandeBambi", "h", "bleu", "symbole", "alcoolique", false , new Race("Worchair", "Chat") , 2);
@@ -317,6 +323,11 @@ public class AnimalScreen extends JInternalFrame {
 		this.pack();
 	}
 	
+	public AnimalScreen(GenericScreen parentScreen) {
+		this();
+		this.parentScreen = parentScreen;
+	}
+
 	public void fillEspece(String currentEspece){
 		try {
 			List<String> especes = raceDAO.selectEspeceDistinct();
@@ -415,23 +426,11 @@ public class AnimalScreen extends JInternalFrame {
 
 		return animal;
 	}
-	
-	/**
-	 * Show TechnicalError.
-	 * 
-	 * @param message
-	 */
-	public void showFailureMessage(String message) {
-		JOptionPane.showMessageDialog(AnimalScreen.this, message, "Erreur", JOptionPane.ERROR_MESSAGE);
-	}
 
-	/**
-	 * Show Success Message.
-	 * 
-	 * @param message
-	 */
-	public void showSuccessMessage(String message) {
-		JOptionPane.showMessageDialog(AnimalScreen.this, message);
+	@Override
+	public void processEvent(String eventName, Object eventParam) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

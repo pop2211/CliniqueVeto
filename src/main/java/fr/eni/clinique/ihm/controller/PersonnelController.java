@@ -26,12 +26,23 @@ public class PersonnelController{
 		System.out.println("Personnel Controler: init()");
 		
 	}
-
 	
+	public Personnel selectPersonnel(Integer codePers) throws ManagerException{
+		return personnelManager.selectById(codePers);
+	}
+
 	public void newPersonnel(Personnel personnel) throws ManagerException{
 		personnelManager.insert(personnel);
 	}
 	
+	public void deletePersonnel(Integer codePers) throws ManagerException{
+		personnelManager.delete(codePers);
+	}
+	
+	
+	public void savePersonnel(Personnel personnel) throws ManagerException{
+		personnelManager.update(personnel);
+	}
 	
 	public Boolean connectPersonnel(Personnel personnel) throws Exception {
 		return personnelManager.connexion(personnel);
@@ -39,6 +50,9 @@ public class PersonnelController{
 	
 	public List<Personnel> loadPersonnelByRole(String role) throws ManagerException {
 		return personnelManager.selectByRole(role);
-	} 
+	}
+
+
+	
 	
 }
