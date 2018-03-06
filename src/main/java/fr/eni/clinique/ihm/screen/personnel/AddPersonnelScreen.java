@@ -14,13 +14,18 @@ import java.awt.Font;
 import javax.swing.JTextField;
 
 import fr.eni.clinique.bll.exception.ManagerException;
+import fr.eni.clinique.bo.Animal;
+import fr.eni.clinique.bo.EnumRole;
 import fr.eni.clinique.bo.Personnel;
+import fr.eni.clinique.common.util.Item;
 import fr.eni.clinique.common.util.ObjectUtil;
 import fr.eni.clinique.ihm.controller.PersonnelController;
 import fr.eni.clinique.ihm.model.PersonnelModel;
+import fr.eni.clinique.ihm.screen.common.JTextFieldLimit;
 
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 
 public class AddPersonnelScreen extends JInternalFrame {
 	/**
@@ -30,9 +35,9 @@ public class AddPersonnelScreen extends JInternalFrame {
 	
 	private JTextField nomTbx;
 	private JTextField mdpTbx;
-	private JTextField roleTbx;
 	private PersonnelController personnelController;
 	private PersonnelModel personnelModel;
+	private JComboBox<Item<String>> comboBox;
 
 
 	/**
@@ -40,6 +45,7 @@ public class AddPersonnelScreen extends JInternalFrame {
 	 * @param model 
 	 */
 	public AddPersonnelScreen(PersonnelScreen personnelScreen, PersonnelModel model, PersonnelController controller) {
+		super("Ajout du personnel", true, true, true,true);
 		
 		personnelController = controller;
 		personnelModel = model;
@@ -68,6 +74,7 @@ public class AddPersonnelScreen extends JInternalFrame {
 		getContentPane().add(lblNom, gbc_lblNom);
 		
 		nomTbx = new JTextField();
+		nomTbx.setDocument(new JTextFieldLimit(20));
 		GridBagConstraints gbc_nomTbx = new GridBagConstraints();
 		gbc_nomTbx.insets = new Insets(0, 0, 5, 5);
 		gbc_nomTbx.fill = GridBagConstraints.HORIZONTAL;
@@ -84,6 +91,7 @@ public class AddPersonnelScreen extends JInternalFrame {
 		getContentPane().add(lblMotDePasse, gbc_lblMotDePasse);
 		
 		mdpTbx = new JTextField();
+		mdpTbx.setDocument(new JTextFieldLimit(10));
 		GridBagConstraints gbc_mdpTbx = new GridBagConstraints();
 		gbc_mdpTbx.insets = new Insets(0, 0, 5, 5);
 		gbc_mdpTbx.fill = GridBagConstraints.HORIZONTAL;
@@ -99,15 +107,6 @@ public class AddPersonnelScreen extends JInternalFrame {
 		gbc_lblNewLabel.gridy = 7;
 		getContentPane().add(lblNewLabel, gbc_lblNewLabel);
 		
-		roleTbx = new JTextField();
-		GridBagConstraints gbc_roleTbx = new GridBagConstraints();
-		gbc_roleTbx.insets = new Insets(0, 0, 5, 5);
-		gbc_roleTbx.fill = GridBagConstraints.HORIZONTAL;
-		gbc_roleTbx.gridx = 2;
-		gbc_roleTbx.gridy = 7;
-		getContentPane().add(roleTbx, gbc_roleTbx);
-		roleTbx.setColumns(10);
-		
 		JButton validerBtn = new JButton("Valider");
 		validerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -122,6 +121,22 @@ public class AddPersonnelScreen extends JInternalFrame {
 		});
 		
 		
+		
+		comboBox = new JComboBox<Item<String>>();
+		for(EnumRole role : EnumRole.getList()){
+			comboBox.addItem(new Item<String>(role.getCode(), role.getLibelle()));
+			
+		}
+		GridBagConstraints gbc_comboBox = new GridBagConstraints();
+		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
+		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboBox.gridx = 2;
+		gbc_comboBox.gridy = 7;
+		getContentPane().add(comboBox, gbc_comboBox);
+		
+		
+		
+		
 		validerBtn.setIcon(new ImageIcon(AddPersonnelScreen.class.getResource("/images/ico/done_16p.png")));
 		GridBagConstraints gbc_validerBtn = new GridBagConstraints();
 		gbc_validerBtn.insets = new Insets(0, 0, 0, 5);
@@ -130,6 +145,11 @@ public class AddPersonnelScreen extends JInternalFrame {
 		getContentPane().add(validerBtn, gbc_validerBtn);
 		
 		JButton annulerBtn = new JButton("Annuler");
+		annulerBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {			
+					setVisible(false);
+			}
+		});
 		annulerBtn.setIcon(new ImageIcon(AddPersonnelScreen.class.getResource("/images/ico/undo_18p.png")));
 		GridBagConstraints gbc_annulerBtn = new GridBagConstraints();
 		gbc_annulerBtn.insets = new Insets(0, 0, 0, 5);
@@ -150,7 +170,8 @@ public class AddPersonnelScreen extends JInternalFrame {
 		// Rempli les champs de l'ihm :
 			nomTbx.setText(ObjectUtil.nullToBlank(personnnel.getNom()).trim());
 			mdpTbx.setText(ObjectUtil.nullToBlank(personnnel.getMdp()).trim());
-			roleTbx.setText(ObjectUtil.nullToBlank(personnnel.getRole()).trim());		
+			String libelle = EnumRole.libelleByCode(personnnel.getRole());
+			comboBox.setSelectedItem(libelle);		
 			
 	}
 
@@ -169,7 +190,8 @@ public class AddPersonnelScreen extends JInternalFrame {
 
 		personnel.setNom(nomTbx.getText().trim());
 		personnel.setMdp(mdpTbx.getText().trim());
-		personnel.setRole(roleTbx.getText().trim());
+		Item selectedItem = (Item) comboBox.getSelectedItem();
+		personnel.setRole((String) selectedItem.getId());
 		personnel.setArchive(false);
 		
 		return personnel;

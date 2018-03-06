@@ -47,7 +47,7 @@ public class RdvScreen extends JInternalFrame {
 	private PersonnelController controllerPersonnel;
 	private PersonnelModel ModelPersonnel;
 	
-	JComboBox<Item> CbxAnimal = new JComboBox<Item>();
+	JComboBox<Item<Integer>> CbxAnimal = new JComboBox<Item<Integer>>();
 	
 	public RdvScreen() {
 		super("Prise de rendez-vous", true, true, true, true); 
@@ -91,7 +91,7 @@ public class RdvScreen extends JInternalFrame {
 		gbc_lblClient.gridy = 0;
 		panel_Pour.add(lblClient, gbc_lblClient);
 		
-		JComboBox<Item> CbxClient = new JComboBox<Item>();
+		JComboBox<Item<Integer>> CbxClient = new JComboBox<Item<Integer>>();
 		try {
 			List<Client> clients = controllerClient.loadAllClient();
 			
@@ -108,7 +108,7 @@ public class RdvScreen extends JInternalFrame {
 		CbxClient.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Item item = (Item)CbxClient.getSelectedItem();
-				chargeAnimaux(item.getId());
+				chargeAnimaux((int) item.getId());
 			}
 		});
 		
