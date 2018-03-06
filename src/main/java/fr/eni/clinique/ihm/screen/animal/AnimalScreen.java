@@ -46,9 +46,6 @@ public class AnimalScreen extends GenericScreen {
 	
 	private static final long serialVersionUID = -1179642960437851179L;
 	
-	private AnimalModel model;
-	private AnimalController controller;
-	
 	private JTextField tatouageTbx;
 	private JTextField nomTbx;
 	private JTextField couleurTbx;
@@ -68,9 +65,9 @@ public class AnimalScreen extends GenericScreen {
 		super("Gestion des Animaux", true, true, true,true);
 		setBackground(Color.WHITE);
 		
-		//TODO
-		//this.controller = parentScreen.getAnimalController();
-		//this.model = model;
+        this.modelAnimal = new AnimalModel();
+		this.controllerAnimal = new AnimalController(this.modelAnimal);
+		
 		
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		
@@ -223,7 +220,7 @@ public class AnimalScreen extends GenericScreen {
 				if("".equals(recupLblCli.getText()) || recupLblCli.getText() == null){
 					try {
 						System.out.println(recupLblCli.getText());
-						controller.newAnimal(readAnimal());
+						controllerAnimal.newAnimal(readAnimal());
 						showSuccessMessage("Animal ajouté !");
 					} catch (Exception e1) {
 						showFailureMessage(e1.getMessage());
@@ -231,7 +228,7 @@ public class AnimalScreen extends GenericScreen {
 					
 				}else{
 					try {
-						controller.saveAnimal(readAnimal());
+						controllerAnimal.saveAnimal(readAnimal());
 						showSuccessMessage("Animal enregistré !");
 					} catch (Exception e1) {
 						showFailureMessage(e1.getMessage());
@@ -298,7 +295,7 @@ public class AnimalScreen extends GenericScreen {
 				}else{
 					try {
 						Animal currentAnimal = readAnimal();
-						Animal reloadedAnimal = controller.loadAnimal(currentAnimal.getCodeAnimal());
+						Animal reloadedAnimal = controllerAnimal.loadAnimal(currentAnimal.getCodeAnimal());
 						showAnimal(reloadedAnimal);
 						showSuccessMessage("Client rechargé !");
 					} catch (Exception e1) {
