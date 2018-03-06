@@ -96,10 +96,12 @@ public class SearchClientScreen extends GenericClientScreen {
 		    public void valueChanged(ListSelectionEvent event) {
 		        if (!event.getValueIsAdjusting()){
 		            JList source = (JList)event.getSource();
-		            Item selectedItem = resultsLstModel.get(source.getSelectedIndex());
-		            Integer selectedCodeCli = (Integer) selectedItem.getId();
-		            //System.out.println("JList valueChanged"+ selectedItem.getId() + " : " + selectedItem.getDescription());
-		            parentScreen.processEvent("showClientById", selectedCodeCli);
+		            Integer found = source.getSelectedIndex();
+		            if(found > -1){
+			            Item selectedItem = resultsLstModel.get(source.getSelectedIndex());
+			            Integer selectedCodeCli = (Integer) selectedItem.getId();
+			            parentScreen.processEvent("showClientById", selectedCodeCli);
+		            }
 		            setVisible(false);
 		        }
 		    }
