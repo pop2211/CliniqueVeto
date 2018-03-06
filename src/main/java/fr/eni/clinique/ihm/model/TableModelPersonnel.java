@@ -11,7 +11,12 @@ import fr.eni.clinique.bo.Personnel;
 
 public class TableModelPersonnel extends AbstractTableModel{
 	
-	private final String[] entetes = { "Nom","Role","Mdp"};	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4414244363450220508L;
+
+	private final String[] entetes = {"CodePerso", "Nom","Role","Mdp"};	
 	
 	private PersonnelManagerImpl personnelManagerImpl;
 
@@ -25,6 +30,17 @@ public class TableModelPersonnel extends AbstractTableModel{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public void refresh(){
+		try {
+			this.personnels = personnelManagerImpl.selectAll();
+		} catch (ManagerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		this.fireTableDataChanged();	//UI Refresh
 	}
 	
 	public List<Personnel> getNotes() {
@@ -51,16 +67,19 @@ public class TableModelPersonnel extends AbstractTableModel{
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		switch (columnIndex) {
-
+		
 		case 0:
+			return personnels.get(rowIndex).getCodePers();
+			
+		case 1:
 
 			return personnels.get(rowIndex).getNom();
 
-		case 1:		
+		case 2:		
 			
 			return EnumRole.libelleByCode(personnels.get(rowIndex).getRole());
 
-		case 2:
+		case 3:
 
 			return personnels.get(rowIndex).getMdp();
 
