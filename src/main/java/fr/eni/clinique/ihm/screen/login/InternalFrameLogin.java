@@ -25,10 +25,12 @@ import fr.eni.clinique.bo.Personnel;
 import fr.eni.clinique.ihm.controller.PersonnelController;
 import fr.eni.clinique.ihm.model.PersonnelModel;
 import fr.eni.clinique.ihm.screen.MainScreen;
+import fr.eni.clinique.ihm.screen.common.GenericScreen;
 
-public class InternalFrameLogin extends JInternalFrame{
+public class InternalFrameLogin extends GenericScreen{
 	
-	private static final long serialVersionUID = -4557163862895833172L;
+	
+	private static final long serialVersionUID = -6157689225828979560L;
 	
 	private PersonnelModel model;
 	private PersonnelController controller;
@@ -46,82 +48,83 @@ public class InternalFrameLogin extends JInternalFrame{
 		this.model = model;
 		
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
-		setBounds(100, 100,400, 200);
+		//setBounds(100, 100,350, 170);
 		
-		//AppConstants.EMPTY
-		loginInput = createTextField("u", "Votre Nom");
-		passwordInput = createPasswordField("u", "Votre MDP");
+		String defaultLogin = "u";
+		String defaultPassword = "u";
 		
-		setContentPane(createMainPanel());
-		
-        addFormRow("Nom", loginInput, 1);
-        addFormRow("Mot de passe", passwordInput, 2);    
+        mainPanel = new JPanel();
+        mainPanel.setOpaque(true);
+		setContentPane(mainPanel);
+		GridBagLayout gbl_mainPanel = new GridBagLayout();
+		gbl_mainPanel.columnWidths = new int[]{20, 68, 0, 80, 80, 20, 0};
+		gbl_mainPanel.rowHeights = new int[]{20, 0, 0, 35, 20, 0};
+		gbl_mainPanel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_mainPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		mainPanel.setLayout(gbl_mainPanel);
         
-        mainPanel.add(ButtonValider(), createGridBagConstraints(0.7, 1, 3));
-     
-	}
-
-	private JButton ButtonValider()	{
-		validateButton = new JButton("Valider");
-		
+        JLabel lblNom = new JLabel("Nom:");
+        GridBagConstraints gbc_lblNom = new GridBagConstraints();
+        gbc_lblNom.insets = new Insets(0, 0, 5, 5);
+        gbc_lblNom.gridx = 1;
+        gbc_lblNom.gridy = 1;
+        mainPanel.add(lblNom, gbc_lblNom);
+        
+        loginInput = new JTextField(defaultLogin);
+        loginInput.setToolTipText("Votre Nom");
+        GridBagConstraints gbc_loginInput = new GridBagConstraints();
+        gbc_loginInput.fill = GridBagConstraints.HORIZONTAL;
+        gbc_loginInput.gridwidth = 2;
+        gbc_loginInput.insets = new Insets(0, 0, 5, 5);
+        gbc_loginInput.gridx = 3;
+        gbc_loginInput.gridy = 1;
+        mainPanel.add(loginInput, gbc_loginInput);
+        
+        JLabel lblPrenom = new JLabel("Mot de passe:");
+        GridBagConstraints gbc_lblPrenom = new GridBagConstraints();
+        gbc_lblPrenom.insets = new Insets(0, 0, 5, 5);
+        gbc_lblPrenom.gridx = 1;
+        gbc_lblPrenom.gridy = 2;
+        mainPanel.add(lblPrenom, gbc_lblPrenom);
+        
+        passwordInput = new JPasswordField(defaultPassword);
+        passwordInput.setToolTipText("Votre MDP");
+        GridBagConstraints gbc_passwordInput = new GridBagConstraints();
+        gbc_passwordInput.fill = GridBagConstraints.HORIZONTAL;
+        gbc_passwordInput.gridwidth = 2;
+        gbc_passwordInput.insets = new Insets(0, 0, 5, 5);
+        gbc_passwordInput.gridx = 3;
+        gbc_passwordInput.gridy = 2;
+        mainPanel.add(passwordInput, gbc_passwordInput); 
+        
 		Image img = null;
 		try {
 			img = ImageIO.read(new File("src//main//resources//images//ico//done_16p.png"));
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		validateButton.setIcon(new ImageIcon(img));
 		
+        validateButton = new JButton("Valider");
+        validateButton.setIcon(new ImageIcon(img));
 	    validateButton.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
 	        	connectPersonnel();
 	        }
 	    });
-	    return validateButton;
-	} 
-	   
-    private JTextField createTextField(String defaultValue, String tooltip) {
-        
-        JTextField textField = new JTextField(defaultValue);
-        textField.setToolTipText(tooltip);
-        return textField;
-    }
-    
-    private JPasswordField createPasswordField(String defaultValue, String tooltip) {
-        
-    	JPasswordField password = new JPasswordField(defaultValue);
-    	password.setToolTipText(tooltip);
-        return password;
-    }
-    
-    private void addFormRow(String label, JComponent component, int lineNumber) {
-        mainPanel.add(createLabel(label.concat(":")), createGridBagConstraints(0.3, 0, lineNumber));
-        mainPanel.add(component, createGridBagConstraints(0.7, 1, lineNumber));
-    }
-    
-    private JPanel createMainPanel() {
-        mainPanel = new JPanel();
-        mainPanel.setOpaque(true);
-        mainPanel.setLayout(new GridBagLayout());
-        return mainPanel;
-    }
-    
-    private JLabel createLabel(String text) {
-        return new JLabel(text);
-    }
-    
-    private GridBagConstraints createGridBagConstraints(double weight, int cellX, int cellY) {
-        
-        GridBagConstraints gridBagConstraints = new GridBagConstraints();
-        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new Insets(5, 5, 5, 5);
-        gridBagConstraints.gridx = cellX;
-        gridBagConstraints.gridy = cellY;
-        gridBagConstraints.weightx = weight;
-        
-        return gridBagConstraints;
-    }
+	    
+        GridBagConstraints gbc_validateButton = new GridBagConstraints();
+        gbc_validateButton.fill = GridBagConstraints.HORIZONTAL;
+        gbc_validateButton.insets = new Insets(0, 0, 5, 5);
+        gbc_validateButton.gridx = 4;
+        gbc_validateButton.gridy = 3;
+        mainPanel.add(validateButton, gbc_validateButton);
+
+		
+		this.pack();
+     
+	}
+	
 
     /**
      * Connect Personnel.
@@ -139,10 +142,13 @@ public class InternalFrameLogin extends JInternalFrame{
             	//acces au MainScreen
             	MainScreen parent = (MainScreen) this.getTopLevelAncestor();
             	parent.setProfil("test");
+            	
+            	//TODO :
+            	getMainScreen().setProfil("test2");
             }
             
         } catch (Exception e) {
-            showFailureMessage(e.getMessage());
+            errorOccured(e);
         }
         return testLoginPass;
     }
@@ -158,25 +164,6 @@ public class InternalFrameLogin extends JInternalFrame{
         personnel.setMdp(passwordInput.getText().trim());
         
         return personnel;
-    }
-    
-    /**
-     * Show TechnicalError.
-     * 
-     * @param message
-     */
-    private void showFailureMessage(String message) {
-        JOptionPane.showMessageDialog(InternalFrameLogin.this, message, "Erreur", JOptionPane.ERROR_MESSAGE);
-    }
-    
-    
-    /**
-     * Show Success Message.
-     * 
-     * @param message
-     */
-    private void showSuccessMessage(String message) {
-        JOptionPane.showMessageDialog(InternalFrameLogin.this, message);
     }
 	
 }
