@@ -19,7 +19,7 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
 	
 	private static final String NOT_ARCHIVE = " AND Archive<>1";
 	private static final String SELECT_BY_ID_QUERY = "SELECT * FROM Animaux WHERE CodeAnimal=?"+ NOT_ARCHIVE;
-	private static final String SELECT_ALL_QUERY = "SELECT * FROM Animaux"+ NOT_ARCHIVE;
+	private static final String SELECT_ALL_QUERY = "SELECT * FROM Animaux WHERE 1=1"+ NOT_ARCHIVE;
 	private static final String UPDATE_QUERY = "UPDATE Animaux SET NomAnimal=?, Sexe=?, Couleur=?, Race=?, Espece=?, CodeClient=?, Tatouage=?, Antecedents=?, Archive=? WHERE CodeAnimal=?";
     private static final String INSERT_QUERY = "INSERT INTO Animaux(NomAnimal, Sexe, Couleur, Race, Espece, CodeClient, Tatouage, Antecedents, Archive) VALUES (?,?,?,?,?,?,?,?,?)";
     private static final String DELETE_QUERY = "UPDATE Animaux SET Archive=1 WHERE CodeAnimal=?";

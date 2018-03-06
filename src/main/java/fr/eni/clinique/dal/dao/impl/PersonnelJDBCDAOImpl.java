@@ -18,7 +18,7 @@ public class PersonnelJDBCDAOImpl implements PersonnelDAO{
 
 	private static final String NOT_ARCHIVE = " AND Archive<>1";
 	private static final String SELECT_BY_ID_QUERY = "SELECT * FROM Personnels WHERE CodePers = ?"+ NOT_ARCHIVE;
-	private static final String SELECT_ALL_QUERY = "SELECT * FROM Personnels"+ NOT_ARCHIVE;
+	private static final String SELECT_ALL_QUERY = "SELECT * FROM Personnels WHERE 1=1"+ NOT_ARCHIVE;
 	private static final String SELECT_BY_NAME_QUERY = "SELECT * FROM Personnels WHERE Nom = ?"+ NOT_ARCHIVE;
 	private static final String SELECT_BY_NAME_PSW_QUERY = "SELECT * FROM Personnels WHERE Nom = ? AND MotPasse = ?"+ NOT_ARCHIVE;
 	private static final String UPDATE_QUERY = "UPDATE Personnels SET Nom=?, MotPasse=?, Role=?, Archive=? WHERE CodePers=?";
