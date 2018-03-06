@@ -32,8 +32,8 @@ public class GenericClientScreen extends GenericScreen {
 
 	protected MainScreen mainScreen;
 
-	protected ClientModel model;
-	protected ClientController controller;
+	protected ClientModel modelClient;
+	protected ClientController controllerClient;
 	
 	//champs pour editer un client
 	protected JTextField codeTbx;
@@ -52,9 +52,15 @@ public class GenericClientScreen extends GenericScreen {
 
 	public GenericClientScreen(String title, Boolean b1, Boolean b2, Boolean b3, Boolean b4) {
 		super(title, b1, b2, b3, b4);
-        // Create Client Model & Controller
-		model = new ClientModel();
-        controller = new ClientController(model);
+	}
+	
+	
+	
+	public ClientModel getModelClient(){
+		return this.modelClient;
+	}
+	public ClientController getControllerClient(){
+		return this.controllerClient;
 	}
 	
 	/**
@@ -70,7 +76,9 @@ public class GenericClientScreen extends GenericScreen {
 
 		// Rempli les champs de l'ihm :
 		if(codeTbx != null){
-			codeTbx.setText(String.valueOf(client.getCodeClient()));
+			String txt = ObjectUtil.nullToBlank(String.valueOf(client.getCodeClient()));
+			System.out.println("txt: "+ txt);		//... nullToBlank NOK
+			codeTbx.setText(txt);
 		}
 		nomTbx.setText(ObjectUtil.nullToBlank(client.getNomClient()).trim());
 		prenomTbx.setText(ObjectUtil.nullToBlank(client.getPrenomClient()).trim());

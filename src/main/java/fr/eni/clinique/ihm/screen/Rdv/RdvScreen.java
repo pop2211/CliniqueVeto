@@ -43,12 +43,10 @@ public class RdvScreen extends JInternalFrame {
 	private AnimalController controllerAnimal;
 	private AnimalModel ModelAnimal;
 	
-	
-	JComboBox<Item> CbxClient;
-	JComboBox<Item> CbxAnimal;
+	JComboBox<Item> CbxAnimal = new JComboBox<Item>();
 	
 	public RdvScreen() {
-		super("Prise de rendez-vous", true, true, true, true);
+		super("Prise de rendez-vous", true, true, true, true); 
 		controllerClient = new ClientController(Modelclient);
 		controllerAnimal = new AnimalController(ModelAnimal);
 		constructionFenetre();
@@ -88,21 +86,15 @@ public class RdvScreen extends JInternalFrame {
 		gbc_lblClient.gridy = 0;
 		panel_Pour.add(lblClient, gbc_lblClient);
 		
-		Vector<Item> modelCbxClient = new Vector<Item>();
-		//JComboBox<Item> CbxClient = new JComboBox<Item>();
+		JComboBox<Item> CbxClient = new JComboBox<Item>();
 		try {
 			List<Client> clients = controllerClient.loadAllClient();
 			
 			if(!clients.isEmpty()) {
 				for (Client client : clients) {
-					modelCbxClient.addElement( new Item(client.getCodeClient(), client.getFullname()));
+					CbxClient.addItem( new Item(client.getCodeClient(), client.getFullname()));
 				}
 			}
-			else {
-				modelCbxClient = null;
-			}
-			CbxClient = new JComboBox<Item>(modelCbxClient);
-			
 		} catch (ManagerException e) {
 			e.printStackTrace();
 		}
@@ -142,21 +134,15 @@ public class RdvScreen extends JInternalFrame {
 		panel_Pour.add(labelAnimal, gbc_labelAnimal);
 		
 		try {
-			Vector<Item> modelCbxAnimal = new Vector<Item>();
 			if(CbxClient.getItemCount() > 0 ){
 				List<Animal> animaux = controllerAnimal.loadAnimalByMaitre(CbxClient.getItemAt(0).getId());
 				
 				if(!animaux.isEmpty()) {
 					for (Animal animal : animaux) {
-						modelCbxAnimal.addElement( new Item(animal.getCodeAnimal(), animal.getNomAnimal()));
+						CbxAnimal.addItem( new Item(animal.getCodeAnimal(), animal.getNomAnimal()));
 					}
 				}
-				else {
-					modelCbxAnimal = null;
-				}
 			}
-			CbxAnimal = new JComboBox<Item>(modelCbxAnimal);
-			
 		} catch (ManagerException e) {
 			e.printStackTrace();
 		}
