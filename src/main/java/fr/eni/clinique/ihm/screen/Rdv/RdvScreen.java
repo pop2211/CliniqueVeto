@@ -14,7 +14,6 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -36,9 +35,7 @@ import fr.eni.clinique.ihm.controller.PersonnelController;
 import fr.eni.clinique.ihm.model.AnimalModel;
 import fr.eni.clinique.ihm.model.ClientModel;
 import fr.eni.clinique.ihm.model.PersonnelModel;
-import fr.eni.clinique.ihm.screen.client.AddClientScreen;
 import fr.eni.clinique.ihm.screen.client.GenericClientScreen;
-import fr.eni.clinique.ihm.screen.client.MainClientScreen;
 
 public class RdvScreen extends GenericClientScreen {
 	
@@ -51,13 +48,10 @@ public class RdvScreen extends GenericClientScreen {
 	private PersonnelController controllerPersonnel;
 	private PersonnelModel ModelPersonnel;
 	
-	private MainClientScreen parentScreen;
-	
-	JComboBox<Item> CbxAnimal = new JComboBox<Item>();
+	JComboBox<Item<Integer>> CbxAnimal;
 	
 	public RdvScreen() {
-		super("Prise de rendez-vous", true, true, true, true); 
-		parentScreen = (MainClientScreen) this.getTopLevelAncestor();
+		super("Prise de rendez-vous", true, true, true, true);
 		controllerClient = new ClientController(Modelclient);
 		controllerAnimal = new AnimalController(ModelAnimal);
 		controllerPersonnel = new PersonnelController(ModelPersonnel);
@@ -98,13 +92,13 @@ public class RdvScreen extends GenericClientScreen {
 		gbc_lblClient.gridy = 0;
 		panel_Pour.add(lblClient, gbc_lblClient);
 		
-		JComboBox<Item> CbxClient = new JComboBox<Item>();
+		JComboBox<Item<Integer>> CbxClient = new JComboBox<Item<Integer>>();
 		try {
 			List<Client> clients = controllerClient.loadAllClient();
 			
 			if(!clients.isEmpty()) {
 				for (Client client : clients) {
-					CbxClient.addItem( new Item(client.getCodeClient(), client.getFullname()));
+					CbxClient.addItem( new Item<Integer>(client.getCodeClient(), client.getFullname()));
 				}
 			}
 		} catch (ManagerException e) {
@@ -114,8 +108,8 @@ public class RdvScreen extends GenericClientScreen {
 		CbxClient.setMinimumSize(new Dimension(125, 20));
 		CbxClient.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Item item = (Item)CbxClient.getSelectedItem();
-				chargeAnimaux(item.getId());
+				Item<Integer> item = (Item<Integer>) CbxClient.getSelectedItem();
+				chargeAnimaux((int) item.getId());
 			}
 		});
 		
@@ -132,7 +126,7 @@ public class RdvScreen extends GenericClientScreen {
 		BtnAddClient.setIcon(new ImageIcon(RdvScreen.class.getResource("/images/ico/add_18p.png")));
 		BtnAddClient.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new AddClientScreen(parentScreen);
+				//new AddClientScreen(parentScreen);
 			}
 		});
 		GridBagConstraints gbc_BtnAddClient = new GridBagConstraints();
@@ -150,6 +144,7 @@ public class RdvScreen extends GenericClientScreen {
 		gbc_labelAnimal.gridy = 2;
 		panel_Pour.add(labelAnimal, gbc_labelAnimal);
 		
+		CbxAnimal = new JComboBox<Item<Integer>>();
 		try {
 			if(CbxClient.getItemCount() > 0 ){
 				List<Animal> animaux = controllerAnimal.loadAnimalByMaitre(CbxClient.getItemAt(0).getId());
@@ -225,8 +220,8 @@ public class RdvScreen extends GenericClientScreen {
 		CbxVeterinaire.setMinimumSize(new Dimension(125, 20));
 		CbxVeterinaire.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Item item = (Item)CbxClient.getSelectedItem();
-				chargeAnimaux(item.getId());
+				Item<Integer> item = (Item<Integer>)CbxClient.getSelectedItem();
+				chargeAnimaux((int)item.getId());
 			}
 		});
 		

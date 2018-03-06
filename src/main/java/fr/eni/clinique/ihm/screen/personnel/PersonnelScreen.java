@@ -10,10 +10,17 @@ import javax.swing.JScrollPane;
 import java.awt.GridBagConstraints;
 import javax.swing.JButton;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.ImageIcon;
 import javax.swing.border.LineBorder;
 
+import fr.eni.clinique.ihm.controller.PersonnelController;
+import fr.eni.clinique.ihm.model.PersonnelModel;
 import fr.eni.clinique.ihm.model.TableModelPersonnel;
+import fr.eni.clinique.ihm.screen.client.AddClientScreen;
+import fr.eni.clinique.ihm.screen.common.GenericScreen;
 
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -23,41 +30,31 @@ import javax.swing.JTable;
 import java.awt.Dimension;
 import javax.swing.ListSelectionModel;
 
-public class PersonnelScreen extends JInternalFrame {
+public class PersonnelScreen extends GenericScreen {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -840620127348344756L;
 
-	private TableModelPersonnel modele;
+	private TableModelPersonnel modeleTable;
+	private AddPersonnelScreen frameAdd;
+	private PersonnelController controller;
+	private PersonnelModel model;
 	
 	private JTable table;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PersonnelScreen frame = new PersonnelScreen();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
 	 */
-	public PersonnelScreen() {
-		
+	public PersonnelScreen(PersonnelController controller, PersonnelModel model) {
 		super("Gestion du personnel", true, true, true,true);
 		
-		modele = new TableModelPersonnel();
+		this.controller = controller; 
+		this.model = model;
+			
+		modeleTable = new TableModelPersonnel();
 		
 		setBounds(100, 100, 450, 486);
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -84,6 +81,13 @@ public class PersonnelScreen extends JInternalFrame {
 		panel.setLayout(gbl_panel);
 		
 		JButton ajouterBtn = new JButton("");
+		ajouterBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frameAdd = getFrameAdd();
+				frameAdd.setVisible(true);
+			}
+		});
+		
 		ajouterBtn.setContentAreaFilled(false);
 		ajouterBtn.setBorderPainted(false);
 		ajouterBtn.setOpaque(false);
@@ -145,7 +149,7 @@ public class PersonnelScreen extends JInternalFrame {
 		gbc_lblReinitialiser.gridy = 1;
 		panel.add(lblReinitialiser, gbc_lblReinitialiser);
 		
-		table = new JTable(modele);
+		table = new JTable(modeleTable);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		GridBagConstraints gbc_table = new GridBagConstraints();
 		gbc_table.insets = new Insets(0, 0, 0, 5);
@@ -156,6 +160,14 @@ public class PersonnelScreen extends JInternalFrame {
 
 		
 		pack();
+	}
+	
+	public AddPersonnelScreen getFrameAdd() {
+		if (frameAdd == null) {
+			frameAdd = new AddPersonnelScreen(this,this.model,this.controller);
+			getMainScreen().getDesktopPane().add(frameAdd);
+		}
+		return frameAdd;
 	}
 
 }

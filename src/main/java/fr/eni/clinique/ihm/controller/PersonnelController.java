@@ -28,9 +28,8 @@ public class PersonnelController{
 	}
 
 	
-	public void newPersonnel() {
-		// TODO Auto-generated method stub
-		
+	public void newPersonnel(Personnel personnel) throws ManagerException{
+		personnelManager.insert(personnel);
 	}
 	
 	

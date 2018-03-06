@@ -39,6 +39,15 @@ public class AnimalController {
 	}
 	
 	
+	public void removeAnimalById(Integer codeAnimal) throws Exception {
+		animalManager.delete(codeAnimal);
+	}
+	
+	public void removeAnimal(Animal animal) throws Exception {
+		animalManager.delete(animal.getCodeAnimal());
+	}
+	
+	
 	public Animal loadAnimal(Integer codeAnimal) throws ManagerException {
 		return animalManager.selectById(codeAnimal);
 	}

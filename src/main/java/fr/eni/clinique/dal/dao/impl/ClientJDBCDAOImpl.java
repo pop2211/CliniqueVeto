@@ -16,13 +16,14 @@ import fr.eni.clinique.dal.factory.JdbcTools;
 
 public class ClientJDBCDAOImpl implements ClientDAO {
 
-	private static final String SELECT_BY_ID_QUERY = "SELECT * FROM Clients WHERE codeClient = ?";
-	private static final String SELECT_ALL_QUERY = "SELECT * FROM Clients";
+	private static final String NOT_ARCHIVE = " AND Archive<>1";
+	private static final String SELECT_BY_ID_QUERY = "SELECT * FROM Clients WHERE codeClient=?"+ NOT_ARCHIVE;
+	private static final String SELECT_ALL_QUERY = "SELECT * FROM Clients WHERE 1=1"+ NOT_ARCHIVE;
 	private static final String UPDATE_QUERY = "UPDATE Clients SET NomClient=?, PrenomClient=?, Adresse1=?, Adresse2=?, CodePostal=?, Ville=?, NumTel=?, Assurance=?, Email=?, Remarque=?, Archive=? WHERE codeClient=?";
 	private static final String INSERT_QUERY = "INSERT INTO Clients(NomClient, PrenomClient, Adresse1, Adresse2, CodePostal, Ville, NumTel, Assurance, Email, Remarque, Archive) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-	private static final String DELETE_QUERY = "DELETE FROM Clients WHERE codeClient=?";
+	private static final String DELETE_QUERY = "UPDATE Clients SET Archive=1 WHERE codeClient=?"+ NOT_ARCHIVE;
 	private static final String TRUNCATE_QUERY = "DELETE FROM Clients; DBCC CHECKIDENT(Clients, RESEED, 0);";
-	private static final String SEARCH_QUERY = "SELECT * FROM Clients WHERE NomClient LIKE ? OR PrenomClient LIKE ?";
+	private static final String SEARCH_QUERY = "SELECT * FROM Clients WHERE NomClient LIKE ? OR PrenomClient LIKE ?"+ NOT_ARCHIVE;
 
 	private static ClientJDBCDAOImpl instance;
 

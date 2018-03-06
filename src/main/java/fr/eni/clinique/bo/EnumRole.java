@@ -1,5 +1,9 @@
 package fr.eni.clinique.bo;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public enum EnumRole {
 	
     ADMIN("ADM", "Administrateur", "gestion administrative de la clinique (financière et ressources humaines)"), 
@@ -29,6 +33,23 @@ public enum EnumRole {
     
     public String getDescription() {
         return  this.description;  
+    }
+    
+    public static List<EnumRole> getList(){
+    	List<EnumRole> myList = new ArrayList<EnumRole>();
+    	myList.addAll(Arrays.asList(ADMIN, USER,SECRETAIRE,VETERINAIRE, SUPPORT_TECH, DEVELOPPEUR));
+		return myList;
+    	
+    }
+ 
+    public static String libelleByCode(String code){
+    	List<EnumRole> myList = getList();
+    	for(EnumRole role : myList){
+    		if(role.getCode().equals(code)){
+    			return role.getLibelle();
+    		}
+    	}
+    	return null;
     }
 	
 }
