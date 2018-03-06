@@ -6,6 +6,7 @@ import javax.swing.table.AbstractTableModel;
 
 import fr.eni.clinique.bll.exception.ManagerException;
 import fr.eni.clinique.bll.manager.impl.PersonnelManagerImpl;
+import fr.eni.clinique.bo.EnumRole;
 import fr.eni.clinique.bo.Personnel;
 
 public class TableModelPersonnel extends AbstractTableModel{
@@ -52,17 +53,16 @@ public class TableModelPersonnel extends AbstractTableModel{
 		switch (columnIndex) {
 
 		case 0:
-			// Nom
+
 			return personnels.get(rowIndex).getNom();
 
-		case 1:
-			// Prenom
-			return personnels.get(rowIndex).getRole();
+		case 1:		
+			
+			return EnumRole.libelleByCode(personnels.get(rowIndex).getRole());
 
 		case 2:
-			// Annee
-			return personnels.get(rowIndex).getMdp();
 
+			return personnels.get(rowIndex).getMdp();
 
 		default:
 			throw new IllegalArgumentException();

@@ -92,7 +92,7 @@ public class SearchClientScreen extends GenericClientScreen {
 		gbc_searchBtn.gridx = 2;
 		gbc_searchBtn.gridy = 1;
 		getContentPane().add(searchBtn, gbc_searchBtn);
-		resultsLst = new JList<Item>();
+		resultsLst = new JList<Item<Integer>>();
 		resultsLst.setListData(resultsLstModel);
 		
 		resultsLst.addListSelectionListener(new ListSelectionListener() {
@@ -100,7 +100,7 @@ public class SearchClientScreen extends GenericClientScreen {
 		        if (!event.getValueIsAdjusting()){
 		            JList source = (JList)event.getSource();
 		            Item selectedItem = resultsLstModel.get(source.getSelectedIndex());
-		            Integer selectedCodeCli = selectedItem.getId();
+		            Integer selectedCodeCli = (Integer) selectedItem.getId();
 		            //System.out.println("JList valueChanged"+ selectedItem.getId() + " : " + selectedItem.getDescription());
 		            
 		            parentScreen.showClientById(selectedCodeCli);

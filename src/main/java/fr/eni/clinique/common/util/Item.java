@@ -2,18 +2,21 @@ package fr.eni.clinique.common.util;
 
 //utilisé pour les combobox
 
-public class Item
+public class Item<T>
 {
-    private int id;
+    private T id;
     private String description;
+    
+ 
 
-    public Item(int id, String description)
+    public Item(T id, String description)
     {
         this.id = id;
         this.description = description;
     }
 
-    public int getId()
+
+	public T getId()
     {
         return id;
     }
