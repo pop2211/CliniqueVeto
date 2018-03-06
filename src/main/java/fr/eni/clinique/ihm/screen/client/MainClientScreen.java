@@ -448,7 +448,7 @@ public class MainClientScreen extends GenericClientScreen {
 
 		
 		// test chargement premier client a l'ouverture fenetre
-		processEvent("showClientById", 1);
+		processEvent("AddClient", 1);
 		
 		this.pack();
 	}

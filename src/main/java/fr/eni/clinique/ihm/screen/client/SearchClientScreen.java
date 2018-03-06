@@ -100,7 +100,7 @@ public class SearchClientScreen extends GenericClientScreen {
 		            if(found > -1){
 			            Item selectedItem = resultsLstModel.get(source.getSelectedIndex());
 			            Integer selectedCodeCli = (Integer) selectedItem.getId();
-			            parentScreen.processEvent("showClientById", selectedCodeCli);
+			            parentScreen.processEvent("AddClient", selectedCodeCli);
 		            }
 		            setVisible(false);
 		        }
