@@ -81,20 +81,7 @@ public class SearchClientScreen extends GenericClientScreen {
 		searchBtn.setIcon(new ImageIcon(SearchClientScreen.class.getResource("/images/ico/search_27p.png")));
 		searchBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String searchValue = searchTbx.getText().trim();
-				try {
-					List<Client> clients = controllerClient.loadSearchClient(searchValue);
-					resultsLstModel.removeAllElements();
-					if(!clients.isEmpty()) {
-						for (Client client : clients) {
-							resultsLstModel.addElement( new Item(client.getCodeClient(), client.getFullname()));
-							System.out.println("rempli modelLstClient: "+ client.getCodeClient() +""+ client.getFullname());
-						}
-					}
-				} catch (ManagerException e) {
-					e.printStackTrace();
-				}
-				resultsLst.setListData(resultsLstModel);
+				launchSearch();
 			}
 		});
 		searchBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -133,6 +120,22 @@ public class SearchClientScreen extends GenericClientScreen {
 		
 		this.pack();  //remplace: setBounds(100, 100, 598, 440)
 
+	}
+	
+	public void launchSearch(){
+		String searchValue = searchTbx.getText().trim();
+		try {
+			List<Client> clients = controllerClient.loadSearchClient(searchValue);
+			resultsLstModel.removeAllElements();
+			if(!clients.isEmpty()) {
+				for (Client client : clients) {
+					resultsLstModel.addElement( new Item(client.getCodeClient(), client.getFullname()));
+				}
+			}
+		} catch (ManagerException e) {
+			e.printStackTrace();
+		}
+		resultsLst.setListData(resultsLstModel);
 	}
 	
 	

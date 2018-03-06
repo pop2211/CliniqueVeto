@@ -75,7 +75,10 @@ public class MainClientScreen extends GenericClientScreen {
 		rechercherBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				frameSearch = getFrameSearch();
+				//
+				//=> ERR
 				frameSearch.setVisible(true);
+				frameSearch.launchSearch(); //hide removed client from previous search results
 			}
 		});
 		rechercherBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -122,12 +125,15 @@ public class MainClientScreen extends GenericClientScreen {
 		supprimerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(showConfirmDialog("Êtes-vous sûr de vouloir supprimer le client ?")){
-					
-					showClient(new Client());
-					
-					System.out.println("SUPPRRR!!!");
+					Client rmCli = readClient();
+					try {
+						controllerClient.removeClient(rmCli);
+						showClient(new Client());
+						showSuccessMessage("Client archivé !");
+					} catch (ManagerException e1) {
+						errorOccured(e1);
+					}
 				}
-				
 			}
 		});
 		supprimerBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
