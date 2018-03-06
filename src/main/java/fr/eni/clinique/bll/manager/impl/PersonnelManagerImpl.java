@@ -142,6 +142,19 @@ public class PersonnelManagerImpl implements PersonnelManager {
         
 	}
 
+	@Override
+	public List<Personnel> selectByRole(String role) throws ManagerException {
+		List<Personnel> personnels = null;
+		
+		try {
+			personnels = personnelDAO.selectByRole(role);
+            
+        } catch (DaoException e) {
+            throw new ManagerException("Erreur récupération liste du personnel par Role", e);
+        }
+		return personnels;
+	}
+
 
 
 }

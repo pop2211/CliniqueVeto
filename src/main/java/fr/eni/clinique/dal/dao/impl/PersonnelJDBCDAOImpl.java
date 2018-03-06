@@ -24,6 +24,7 @@ public class PersonnelJDBCDAOImpl implements PersonnelDAO{
     private static final String INSERT_QUERY = "INSERT INTO Personnels(Nom, MotPasse, Role, Archive) VALUES (?,?,?,?)";
     private static final String DELETE_QUERY = "DELETE FROM Personnels WHERE CodePers=?";
     private static final String TRUNCATE_QUERY = "DELETE FROM Personnels; DBCC CHECKIDENT(Personnels, RESEED, 0);";
+    private static final String SELECT_BY_ROLE = "SELECT * FROM Personnels WHERE Role = ?";
     
     private static PersonnelJDBCDAOImpl instance;
     
@@ -225,6 +226,31 @@ public class PersonnelJDBCDAOImpl implements PersonnelDAO{
             statement = connection.prepareStatement(SELECT_BY_NAME_PSW_QUERY);
             statement.setString(1, nom);
             statement.setString(2, mdp);
+            resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                liste.add(resultSetEntryToPersonnel(resultSet));
+            }
+            
+        } catch(SQLException e) {
+            throw new DaoException(e.getMessage(), e);
+        } finally {
+            ResourceUtil.safeClose(connection, statement);
+        }
+        
+        return liste;
+	}
+
+	@Override
+	public List<Personnel> selectByRole(String role) throws DaoException {
+		Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        List<Personnel> liste = new ArrayList<Personnel>();
+        try {
+            connection = JdbcTools.get();
+            statement = connection.prepareStatement(SELECT_BY_ROLE);
+            statement.setString(1, role);
             resultSet = statement.executeQuery();
 
             while (resultSet.next()) {

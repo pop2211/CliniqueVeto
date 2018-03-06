@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 import javax.swing.JInternalFrame;
 import java.awt.GridBagLayout;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
 import java.awt.GridBagConstraints;
 import javax.swing.JButton;
 import java.awt.Insets;
@@ -22,11 +24,13 @@ import java.awt.Dimension;
 import javax.swing.ListSelectionModel;
 
 public class PersonnelScreen extends JInternalFrame {
-	
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -840620127348344756L;
+
 	private TableModelPersonnel modele;
-	
-	
-	
 	
 	private JTable table;
 
@@ -50,6 +54,9 @@ public class PersonnelScreen extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public PersonnelScreen() {
+		
+		super("Gestion du personnel", true, true, true,true);
+		
 		modele = new TableModelPersonnel();
 		
 		setBounds(100, 100, 450, 486);
@@ -145,7 +152,7 @@ public class PersonnelScreen extends JInternalFrame {
 		gbc_table.fill = GridBagConstraints.BOTH;
 		gbc_table.gridx = 1;
 		gbc_table.gridy = 2;
-		getContentPane().add(table, gbc_table);
+		getContentPane().add(new JScrollPane(table), gbc_table);
 
 		
 		pack();
