@@ -39,6 +39,10 @@ public class PersonnelController{
 		personnelManager.delete(codePers);
 	}
 	
+	public void changePswPersonnel(Integer codePerso ,String mdp) throws ManagerException{
+		personnelManager.updateByCode(codePerso, mdp);
+	}
+	
 	
 	public void savePersonnel(Personnel personnel) throws ManagerException{
 		personnelManager.update(personnel);

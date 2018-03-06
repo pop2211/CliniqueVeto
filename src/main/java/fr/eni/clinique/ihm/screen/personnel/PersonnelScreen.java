@@ -41,6 +41,7 @@ public class PersonnelScreen extends GenericScreen {
 
 	private TableModelPersonnel modelTable;
 	private AddPersonnelScreen frameAdd;
+	private RebootPasswordPersonnelScreen frameChange;
 	private PersonnelController controller;
 	private PersonnelModel model;
 	
@@ -114,6 +115,14 @@ public class PersonnelScreen extends GenericScreen {
 		panel.add(supprimerBtn, gbc_supprimerBtn);
 		
 		JButton reinitialiserBtn = new JButton("");
+		ajouterBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frameChange = getFrameChange();
+				frameAdd.setVisible(true);
+			}
+
+			
+		});
 		reinitialiserBtn.setBorderPainted(false);
 		reinitialiserBtn.setContentAreaFilled(false);
 		reinitialiserBtn.setOpaque(false);
@@ -197,6 +206,18 @@ public class PersonnelScreen extends GenericScreen {
 		int row = table.getSelectedRow();
 		Integer codePersonnel = Integer.parseInt(table.getModel().getValueAt(row, column).toString());
 		return codePersonnel;
+	}
+
+	private RebootPasswordPersonnelScreen getFrameChange() {
+
+		return null;
+	}
+	
+	
+	@Override
+	public void processEvent(String eventName, Object eventParam) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

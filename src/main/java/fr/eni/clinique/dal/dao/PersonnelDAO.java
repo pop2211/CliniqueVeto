@@ -13,4 +13,6 @@ public interface PersonnelDAO extends GenericDAO<Personnel, Integer> {
 	
 	List<Personnel> selectByRole(String role) throws DaoException;
 	
+	public void updateByCode(Integer codePersonnel, String mdp) throws DaoException;
+	
 }
