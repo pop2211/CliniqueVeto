@@ -5,7 +5,6 @@ import java.util.List;
 import fr.eni.clinique.bll.exception.ManagerException;
 import fr.eni.clinique.bll.factory.ManagerFactory;
 import fr.eni.clinique.bll.manager.PersonnelManager;
-import fr.eni.clinique.bo.Animal;
 import fr.eni.clinique.bo.Personnel;
 import fr.eni.clinique.ihm.model.PersonnelModel;
 
@@ -29,9 +28,8 @@ public class PersonnelController{
 	}
 
 	
-	public void newPersonnel() {
-		// TODO Auto-generated method stub
-		
+	public void newPersonnel(Personnel personnel) throws ManagerException{
+		personnelManager.insert(personnel);
 	}
 	
 	
