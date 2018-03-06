@@ -30,8 +30,6 @@ import fr.eni.clinique.ihm.screen.common.GenericScreen;
 
 public class GenericClientScreen extends GenericScreen {
 
-	protected MainScreen mainScreen;
-	protected GenericScreen parentScreen;
 	
 	//champs pour editer un client
 	protected JTextField codeTbx;
@@ -115,11 +113,10 @@ public class GenericClientScreen extends GenericScreen {
 	}
 
 
-
 	@Override
 	public void processEvent(String eventName, Object eventParam){
 		switch(eventName){
-			case "showClientById":
+			case "AddClient":
 				Integer id = (Integer) eventParam;
 				try {
 					Client client = controllerClient.loadClient(id);
@@ -127,6 +124,9 @@ public class GenericClientScreen extends GenericScreen {
 				} catch (ManagerException e2) {
 					e2.printStackTrace();
 				}
+			default :
+				System.out.println("GenericClientScreen unknow event: "+ eventName);
+				//TODO throws Exception
 			break;
 		}
 	}

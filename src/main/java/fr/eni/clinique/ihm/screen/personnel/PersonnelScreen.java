@@ -208,6 +208,7 @@ public class PersonnelScreen extends GenericScreen {
 		return codePersonnel;
 	}
 
+
 	private RebootPasswordPersonnelScreen getFrameChange() {
 
 		return null;
@@ -217,7 +218,6 @@ public class PersonnelScreen extends GenericScreen {
 	@Override
 	public void processEvent(String eventName, Object eventParam) {
 		// TODO Auto-generated method stub
-		
-	}
 
+	}
 }
