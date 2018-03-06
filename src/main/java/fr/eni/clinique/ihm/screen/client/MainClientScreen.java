@@ -38,11 +38,13 @@ public class MainClientScreen extends GenericClientScreen {
 
 
 	public MainClientScreen(ClientModel model, ClientController controller) {
-		super("Gestion des Clients", true, true, true, true);
 		
-		this.controller = controller;
-		this.model = model;
+		super("Gestion des Clients", true, true, true, true);
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
+		
+		this.modelClient = model;
+		this.controllerClient = controller;
+		
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 20, 0, 0, 0, 0, 0, 147, 0, 0, 0, 0, 0, 0, 20, 0 };
@@ -56,9 +58,8 @@ public class MainClientScreen extends GenericClientScreen {
 		JButton rechercherBtn = new JButton("Rechercher");
 		rechercherBtn.setIcon(new ImageIcon(MainClientScreen.class.getResource("/images/ico/search_27p.png")));
 		rechercherBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("getFrameSearch");
-				frameSearch = getFrameSearch(model, controller);
+			public void actionPerformed(ActionEvent evt) {
+				frameSearch = getFrameSearch();
 				frameSearch.setVisible(true);
 			}
 		});
@@ -77,9 +78,7 @@ public class MainClientScreen extends GenericClientScreen {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					Client saveIt = readClient();
-					System.out.println( saveIt );
-					
-					controller.saveClient(saveIt);
+					controllerClient.saveClient(saveIt);
 					showSuccessMessage("Client enregistré !");
 				} catch (Exception e1) {
 					showFailureMessage(e1.getMessage());
@@ -90,7 +89,7 @@ public class MainClientScreen extends GenericClientScreen {
 		JButton ajouterBtn = new JButton("Ajouter");
 		ajouterBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frameAdd = getFrameAdd(model, controller);
+				frameAdd = getFrameAdd();
 				frameAdd.setVisible(true);
 			}
 		});
@@ -108,6 +107,9 @@ public class MainClientScreen extends GenericClientScreen {
 		supprimerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(showConfirmDialog("Êtes-vous sûr de vouloir supprimer le client ?")){
+					
+					showClient(new Client());
+					
 					System.out.println("SUPPRRR!!!");
 				}
 				
@@ -133,7 +135,7 @@ public class MainClientScreen extends GenericClientScreen {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					Client currentCli = readClient();
-					Client reloadedCli = controller.loadClient(currentCli.getCodeClient());
+					Client reloadedCli = controllerClient.loadClient(currentCli.getCodeClient());
 					showClient(reloadedCli);
 					showSuccessMessage("Client rechargé !");
 				} catch (Exception e1) {
@@ -405,7 +407,7 @@ public class MainClientScreen extends GenericClientScreen {
 	public void showClientById(Integer id){
 		Client client;
 		try {
-			client = controller.loadClient(id);
+			client = controllerClient.loadClient(id);
 			showClient(client);
 		} catch (ManagerException e2) {
 			e2.printStackTrace();
@@ -413,9 +415,8 @@ public class MainClientScreen extends GenericClientScreen {
 	}
 	
 	
-	public SearchClientScreen getFrameSearch(ClientModel model, ClientController controller) {
+	public SearchClientScreen getFrameSearch() {
 		if (frameSearch == null) {
-			//frameSearch = new SearchClientScreen(model, controller);
 			frameSearch = new SearchClientScreen(this);
 			getMainScreen().getDesktopPane().add(frameSearch);
 		}
@@ -423,9 +424,9 @@ public class MainClientScreen extends GenericClientScreen {
 	}
 	
 	
-	public AddClientScreen getFrameAdd(ClientModel model, ClientController controller) {
+	public AddClientScreen getFrameAdd() {
 		if (frameAdd == null) {
-			frameAdd = new AddClientScreen(model, controller);
+			frameAdd = new AddClientScreen(this);
 			getMainScreen().getDesktopPane().add(frameAdd);
 		}
 		return frameAdd;

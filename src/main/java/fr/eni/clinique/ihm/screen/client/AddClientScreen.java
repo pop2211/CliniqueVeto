@@ -29,14 +29,22 @@ public class AddClientScreen extends GenericClientScreen {
 	 * 
 	 */
 	private static final long serialVersionUID = 1879188002908958230L;
-
+	
+	//private ClientModel modelClient;
+	//private ClientController controllerClient;
+	private MainClientScreen parentScreen;
+	
 	/**
 	 * Create the frame.
 	 */
-	public AddClientScreen(ClientModel model, ClientController controller) {
+	public AddClientScreen(MainClientScreen parentScreen) {
 		super("Ajout", true, true, true, true);
 		
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
+		
+		this.parentScreen = parentScreen;
+		this.modelClient = parentScreen.getModelClient();
+		this.controllerClient = parentScreen.getControllerClient();
 		
 		
 		setBounds(100, 100, 350, 416);
@@ -51,16 +59,12 @@ public class AddClientScreen extends GenericClientScreen {
 		validerBtn.setIcon(new ImageIcon(AddClientScreen.class.getResource("/images/ico/done_32p.png")));
 		validerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println( "o" );
-				
-				Client saveIt2 = readClient();
-				
+				Client saveIt = readClient();
 				try {
-					controller.saveClient(saveIt2);
+					controllerClient.saveClient(saveIt);
 					showSuccessMessage("Client ajouté !");
+					parentScreen.showClientById(saveIt.getCodeClient());
 					setVisible(false);
-					
-					//getMainScreen().getFrameSearch()
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

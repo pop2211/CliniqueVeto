@@ -31,13 +31,13 @@ import java.awt.Color;
 import javax.swing.JComboBox;
 import javax.swing.JList;
 
-public class SearchClientScreen extends GenericScreen {
+public class SearchClientScreen extends GenericClientScreen {
 
 
 	private static final long serialVersionUID = -5415116920585998148L;
 	
-	private ClientController controllerClient;
-	private ClientModel Modelclient;
+	//private ClientModel modelClient;
+	//private ClientController controllerClient;
 	private MainClientScreen parentScreen;
 	
 	private JTextField searchTbx;
@@ -55,7 +55,8 @@ public class SearchClientScreen extends GenericScreen {
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		
 		this.parentScreen = parentScreen;
-		this.controllerClient = new ClientController(Modelclient);
+		this.modelClient = parentScreen.getModelClient();
+		this.controllerClient = parentScreen.getControllerClient();
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{20, 200, 0, 20, 0};
