@@ -23,6 +23,10 @@ import fr.eni.clinique.ihm.screen.animal.AnimalScreen;
 import fr.eni.clinique.ihm.screen.client.MainClientScreen;
 import fr.eni.clinique.ihm.screen.login.InternalFrameLogin;
 import fr.eni.clinique.ihm.screen.personnel.PersonnelScreen;
+import java.awt.Component;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
+import javax.swing.SwingConstants;
 
 public class MainScreen extends JFrame implements ActionListener {
 
@@ -64,7 +68,7 @@ public class MainScreen extends JFrame implements ActionListener {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int largeurFen = (int) Math.round(screenSize.width * 0.7);
 		int hauteurFen = (int) Math.round(screenSize.height * 0.7);
-		setBounds(0, 0, largeurFen, hauteurFen);
+		setBounds(0, 0, 849, 478);
 		setTitle(title);
 
 		// initialiser l'ecran MDI
@@ -87,6 +91,7 @@ public class MainScreen extends JFrame implements ActionListener {
 								
 		// Menu Fichier
 		JMenu menu = new JMenu("Fichier");
+		menu.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		menuBarre.add(menu);
 			
 			// Sous menu Déconnexion
@@ -103,6 +108,7 @@ public class MainScreen extends JFrame implements ActionListener {
 		
 		//Menu Gestion Des Rendez-vous
 		menuGestionDesRendezvous = new JMenu("Gestion des rendez-vous");
+		menuGestionDesRendezvous.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		menuBarre.add(menuGestionDesRendezvous);
 		
 			// Sous menu Gestion Rdv
@@ -119,18 +125,28 @@ public class MainScreen extends JFrame implements ActionListener {
 		
 		//Menu Agenda
 		menuAgenda = new JMenu("Agenda");
+		menuAgenda.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		menuAgenda.setActionCommand("gestionAgenda");
 		menuAgenda.addActionListener(this);
 		menuBarre.add(menuAgenda);
 		
 		//Menu GestionDuPersonnel
 		menuGestionDuPersonnel = new JMenuItem("Gestion du Personnel");
+		menuGestionDuPersonnel.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		menuGestionDuPersonnel.setAlignmentX(Component.LEFT_ALIGNMENT);
+		menuGestionDuPersonnel.setPreferredSize(new Dimension(130, 22));
+		menuGestionDuPersonnel.setMaximumSize(new Dimension(130, 22));
+		menuGestionDuPersonnel.setMinimumSize(new Dimension(130, 22));
 		menuGestionDuPersonnel.setActionCommand("gestionPersonnel");
 		menuGestionDuPersonnel.addActionListener(this);
 		menuBarre.add(menuGestionDuPersonnel);
 		
 		//Menu Gestion des animaux
 		menuGestionDesAnimaux = new JMenuItem("Gestion des Animaux");
+		menuGestionDesAnimaux.setMinimumSize(new Dimension(140, 22));
+		menuGestionDesAnimaux.setPreferredSize(new Dimension(140, 22));
+		menuGestionDesAnimaux.setMaximumSize(new Dimension(140, 22));
+		menuGestionDesAnimaux.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		menuGestionDesAnimaux.setActionCommand("gestionAnimaux");
 		menuGestionDesAnimaux.addActionListener(this);
 		menuBarre.add(menuGestionDesAnimaux);
