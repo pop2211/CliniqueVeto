@@ -8,6 +8,7 @@ import javax.swing.SwingConstants;
 import fr.eni.clinique.bo.Client;
 import fr.eni.clinique.ihm.controller.ClientController;
 import fr.eni.clinique.ihm.model.ClientModel;
+import fr.eni.clinique.ihm.screen.common.GenericScreen;
 
 import javax.swing.JButton;
 import java.awt.BorderLayout;
@@ -24,20 +25,14 @@ import java.awt.Color;
 
 public class AddClientScreen extends GenericClientScreen {
 
+	private static final long serialVersionUID = 4425015574384790305L;
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1879188002908958230L;
-	
-	//private ClientModel modelClient;
-	//private ClientController controllerClient;
-	private MainClientScreen parentScreen;
+	private GenericScreen parentScreen;
 	
 	/**
 	 * Create the frame.
 	 */
-	public AddClientScreen(MainClientScreen parentScreen) {
+	public AddClientScreen(GenericScreen parentScreen) {
 		super("Ajout", true, true, true, true);
 		
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
@@ -63,7 +58,7 @@ public class AddClientScreen extends GenericClientScreen {
 				try {
 					controllerClient.saveClient(saveIt);
 					showSuccessMessage("Client ajouté !");
-					parentScreen.showClientById(saveIt.getCodeClient());
+					parentScreen.processEvent("showClientById", saveIt.getCodeClient());
 					setVisible(false);
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block

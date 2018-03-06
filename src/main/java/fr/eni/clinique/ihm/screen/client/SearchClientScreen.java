@@ -33,12 +33,10 @@ import javax.swing.JList;
 
 public class SearchClientScreen extends GenericClientScreen {
 
-
-	private static final long serialVersionUID = -5415116920585998148L;
 	
-	//private ClientModel modelClient;
-	//private ClientController controllerClient;
-	private MainClientScreen parentScreen;
+	private static final long serialVersionUID = 5958490170882467370L;
+
+	private GenericScreen parentScreen;
 	
 	private JTextField searchTbx;
 	private JList resultsLst;
@@ -49,7 +47,7 @@ public class SearchClientScreen extends GenericClientScreen {
 	/**
 	 * Create the frame.
 	 */
-	public SearchClientScreen(MainClientScreen parentScreen) {
+	public SearchClientScreen(GenericScreen genericScreen) {
 		
 		super("Recherche", true, true, true, true);
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
@@ -102,8 +100,7 @@ public class SearchClientScreen extends GenericClientScreen {
 		            Item selectedItem = resultsLstModel.get(source.getSelectedIndex());
 		            Integer selectedCodeCli = (Integer) selectedItem.getId();
 		            //System.out.println("JList valueChanged"+ selectedItem.getId() + " : " + selectedItem.getDescription());
-		            
-		            parentScreen.showClientById(selectedCodeCli);
+		            parentScreen.processEvent("showClientById", selectedCodeCli);
 		            setVisible(false);
 		        }
 		    }
