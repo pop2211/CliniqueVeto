@@ -34,11 +34,8 @@ import javax.swing.JList;
 public class SearchClientScreen extends GenericClientScreen {
 
 
-	private static final long serialVersionUID = -5415116920585998148L;
-	
-	//private ClientModel modelClient;
-	//private ClientController controllerClient;
-	private MainClientScreen parentScreen;
+	private static final long serialVersionUID = 6599224006738672027L;
+
 	
 	private JTextField searchTbx;
 	private JList resultsLst;
@@ -49,7 +46,7 @@ public class SearchClientScreen extends GenericClientScreen {
 	/**
 	 * Create the frame.
 	 */
-	public SearchClientScreen(MainClientScreen parentScreen) {
+	public SearchClientScreen(GenericScreen parentScreen) {
 		
 		super("Recherche", true, true, true, true);
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
@@ -99,11 +96,12 @@ public class SearchClientScreen extends GenericClientScreen {
 		    public void valueChanged(ListSelectionEvent event) {
 		        if (!event.getValueIsAdjusting()){
 		            JList source = (JList)event.getSource();
-		            Item selectedItem = resultsLstModel.get(source.getSelectedIndex());
-		            Integer selectedCodeCli = (Integer) selectedItem.getId();
-		            //System.out.println("JList valueChanged"+ selectedItem.getId() + " : " + selectedItem.getDescription());
-		            
-		            parentScreen.showClientById(selectedCodeCli);
+		            Integer found = source.getSelectedIndex();
+		            if(found > -1){
+			            Item selectedItem = resultsLstModel.get(source.getSelectedIndex());
+			            Integer selectedCodeCli = (Integer) selectedItem.getId();
+			            parentScreen.processEvent("showClientById", selectedCodeCli);
+		            }
 		            setVisible(false);
 		        }
 		    }

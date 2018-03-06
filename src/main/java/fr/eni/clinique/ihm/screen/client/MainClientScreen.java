@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -31,6 +32,7 @@ import fr.eni.clinique.ihm.model.PersonnelModel;
 import fr.eni.clinique.ihm.model.TableModelAnimal;
 import fr.eni.clinique.ihm.model.TableModelPersonnel;
 import fr.eni.clinique.ihm.screen.MainScreen;
+import fr.eni.clinique.ihm.screen.common.GenericScreen;
 import fr.eni.clinique.ihm.screen.common.JTextFieldLimit;
 
 public class MainClientScreen extends GenericClientScreen {
@@ -41,12 +43,6 @@ public class MainClientScreen extends GenericClientScreen {
 	
 	private AddClientScreen frameAdd;
 	private SearchClientScreen frameSearch;
-	
-	private AnimalModel modelAnimal;
-	private TableModelAnimal modelTableAnimal;
-	private AnimalController controllerAnimal;
-
-	
 
 
 	public MainClientScreen(ClientModel model, ClientController controller) {
@@ -58,7 +54,7 @@ public class MainClientScreen extends GenericClientScreen {
 		this.controllerClient = controller;
 		
 		this.modelAnimal = new AnimalModel();
-		this.modelTableAnimal = new TableModelAnimal(null);
+		this.modelAnimalTable = new TableModelAnimal(null);
 		this.controllerAnimal = new AnimalController(this.modelAnimal);
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -78,7 +74,8 @@ public class MainClientScreen extends GenericClientScreen {
 				//
 				//=> ERR
 				frameSearch.setVisible(true);
-				frameSearch.launchSearch(); //hide removed client from previous search results
+				//frameSearch.launchSearch(); //hide removed client from previous search results
+				//=> ERR TOO
 			}
 		});
 		rechercherBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -192,7 +189,7 @@ public class MainClientScreen extends GenericClientScreen {
 		getContentPane().add(codeTbx, gbc_codeTbx);
 		codeTbx.setColumns(10);
 
-		animauxTable = new JTable(modelTableAnimal);
+		animauxTable = new JTable(modelAnimalTable);
 		animauxTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		//animauxTable.setBackground(Color.LIGHT_GRAY);
 		GridBagConstraints gbc_animauxTable = new GridBagConstraints();
@@ -385,7 +382,7 @@ public class MainClientScreen extends GenericClientScreen {
 				try {
 					Integer animalId = getCurrentAnimalId();
 					controllerAnimal.removeAnimalById(animalId);
-					modelTableAnimal.refresh();
+					modelAnimalTable.refresh();
 					showSuccessMessage("Animal archivé !");
 				} catch (Exception e1) {
 					showFailureMessage(e1.getMessage());
@@ -445,7 +442,7 @@ public class MainClientScreen extends GenericClientScreen {
 
 		
 		// test chargement premier client a l'ouverture fenetre
-		showClientById(1);
+		processEvent("showClientById", 1);
 		
 		this.pack();
 	}
@@ -459,20 +456,9 @@ public class MainClientScreen extends GenericClientScreen {
 	}
 	
 	
-	public void showClientById(Integer id){
-		Client client;
-		try {
-			client = controllerClient.loadClient(id);
-			showClient(client);
-		} catch (ManagerException e2) {
-			e2.printStackTrace();
-		}
-	}
-	
-	
 	public SearchClientScreen getFrameSearch() {
 		if (frameSearch == null) {
-			frameSearch = new SearchClientScreen(this);
+			frameSearch = new SearchClientScreen((GenericScreen)this);
 			getMainScreen().getDesktopPane().add(frameSearch);
 		}
 		return frameSearch;
@@ -481,7 +467,7 @@ public class MainClientScreen extends GenericClientScreen {
 	
 	public AddClientScreen getFrameAdd() {
 		if (frameAdd == null) {
-			frameAdd = new AddClientScreen(this);
+			frameAdd = new AddClientScreen((GenericScreen)this);
 			getMainScreen().getDesktopPane().add(frameAdd);
 		}
 		return frameAdd;
