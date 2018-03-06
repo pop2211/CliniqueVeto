@@ -33,10 +33,9 @@ import javax.swing.JList;
 
 public class SearchClientScreen extends GenericClientScreen {
 
-	
-	private static final long serialVersionUID = 5958490170882467370L;
 
-	private GenericScreen parentScreen;
+	private static final long serialVersionUID = 6599224006738672027L;
+
 	
 	private JTextField searchTbx;
 	private JList resultsLst;
@@ -47,7 +46,7 @@ public class SearchClientScreen extends GenericClientScreen {
 	/**
 	 * Create the frame.
 	 */
-	public SearchClientScreen(GenericScreen genericScreen) {
+	public SearchClientScreen(GenericScreen parentScreen) {
 		
 		super("Recherche", true, true, true, true);
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);

@@ -43,11 +43,6 @@ public class MainClientScreen extends GenericClientScreen {
 	
 	private AddClientScreen frameAdd;
 	private SearchClientScreen frameSearch;
-	
-
-
-
-	
 
 
 	public MainClientScreen(ClientModel model, ClientController controller) {
@@ -79,7 +74,8 @@ public class MainClientScreen extends GenericClientScreen {
 				//
 				//=> ERR
 				frameSearch.setVisible(true);
-				frameSearch.launchSearch(); //hide removed client from previous search results
+				//frameSearch.launchSearch(); //hide removed client from previous search results
+				//=> ERR TOO
 			}
 		});
 		rechercherBtn.setVerticalTextPosition(SwingConstants.BOTTOM);

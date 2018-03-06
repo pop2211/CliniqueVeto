@@ -27,7 +27,6 @@ public class AddClientScreen extends GenericClientScreen {
 
 	private static final long serialVersionUID = 4425015574384790305L;
 	
-	private GenericScreen parentScreen;
 	
 	/**
 	 * Create the frame.

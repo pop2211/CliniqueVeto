@@ -31,6 +31,7 @@ import fr.eni.clinique.ihm.screen.common.GenericScreen;
 public class GenericClientScreen extends GenericScreen {
 
 	protected MainScreen mainScreen;
+	protected GenericScreen parentScreen;
 	
 	//champs pour editer un client
 	protected JTextField codeTbx;
