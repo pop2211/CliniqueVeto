@@ -1,28 +1,8 @@
 package fr.eni.clinique.ihm.screen.common;
 
-import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 
-import com.sun.javafx.collections.MappingChange.Map;
-
-import fr.eni.clinique.bll.exception.ManagerException;
-import fr.eni.clinique.bo.Client;
-import fr.eni.clinique.common.util.ObjectUtil;
 import fr.eni.clinique.ihm.controller.AnimalController;
 import fr.eni.clinique.ihm.controller.ClientController;
 import fr.eni.clinique.ihm.controller.PersonnelController;
@@ -35,6 +15,7 @@ import fr.eni.clinique.ihm.screen.MainScreen;
 
 public abstract class GenericScreen extends JInternalFrame {
 
+	private static final long serialVersionUID = 1L;
 	protected MainScreen mainScreen;
 	protected GenericScreen parentScreen;
 	
@@ -102,6 +83,9 @@ public abstract class GenericScreen extends JInternalFrame {
 	protected AnimalModel modelAnimal;
 	protected TableModelAnimal modelAnimalTable;
 	protected AnimalController controllerAnimal;
+	//Personnel
+	protected PersonnelModel modelPersonnel;
+	protected PersonnelController controllerPersonnel;
 	
 	public ClientModel getModelClient() {
 		return modelClient;

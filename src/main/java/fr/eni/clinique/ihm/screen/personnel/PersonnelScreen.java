@@ -199,4 +199,9 @@ public class PersonnelScreen extends GenericScreen {
 		return codePersonnel;
 	}
 
+	@Override
+	public void processEvent(String eventName, Object eventParam) {
+		
+	}
+
 }
