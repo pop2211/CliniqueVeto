@@ -16,16 +16,15 @@ import fr.eni.clinique.dal.factory.JdbcTools;
 
 public class PersonnelJDBCDAOImpl implements PersonnelDAO{
 
-	private static final String NOT_ARCHIVE = " AND Archive<>1";
-	private static final String SELECT_BY_ID_QUERY = "SELECT * FROM Personnels WHERE CodePers = ?"+ NOT_ARCHIVE;
-	private static final String SELECT_ALL_QUERY = "SELECT * FROM Personnels"+ NOT_ARCHIVE;
-	private static final String SELECT_BY_NAME_QUERY = "SELECT * FROM Personnels WHERE Nom = ?"+ NOT_ARCHIVE;
-	private static final String SELECT_BY_NAME_PSW_QUERY = "SELECT * FROM Personnels WHERE Nom = ? AND MotPasse = ?"+ NOT_ARCHIVE;
+	private static final String SELECT_BY_ID_QUERY = "SELECT * FROM Personnels WHERE CodePers = ?";
+	private static final String SELECT_ALL_QUERY = "SELECT * FROM Personnels";
+	private static final String SELECT_BY_NAME_QUERY = "SELECT * FROM Personnels WHERE Nom = ?";
+	private static final String SELECT_BY_NAME_PSW_QUERY = "SELECT * FROM Personnels WHERE Nom = ? AND MotPasse = ?";
 	private static final String UPDATE_QUERY = "UPDATE Personnels SET Nom=?, MotPasse=?, Role=?, Archive=? WHERE CodePers=?";
     private static final String INSERT_QUERY = "INSERT INTO Personnels(Nom, MotPasse, Role, Archive) VALUES (?,?,?,?)";
-    private static final String DELETE_QUERY = "UPDATE Personnels SET Archive=1 WHERE CodePers=?";
+    private static final String DELETE_QUERY = "DELETE FROM Personnels WHERE CodePers=?";
     private static final String TRUNCATE_QUERY = "DELETE FROM Personnels; DBCC CHECKIDENT(Personnels, RESEED, 0);";
-    private static final String SELECT_BY_ROLE = "SELECT * FROM Personnels WHERE Role = ?"+ NOT_ARCHIVE;
+    private static final String SELECT_BY_ROLE = "SELECT * FROM Personnels WHERE Role = ?";
     
     private static PersonnelJDBCDAOImpl instance;
     
