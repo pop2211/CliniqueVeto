@@ -23,6 +23,7 @@ import fr.eni.clinique.ihm.model.PersonnelModel;
 import fr.eni.clinique.ihm.screen.Rdv.RdvScreen;
 import fr.eni.clinique.ihm.screen.animal.AnimalScreen;
 import fr.eni.clinique.ihm.screen.client.MainClientScreen;
+import fr.eni.clinique.ihm.screen.common.GenericScreen;
 import fr.eni.clinique.ihm.screen.login.InternalFrameLogin;
 import fr.eni.clinique.ihm.screen.personnel.PersonnelScreen;
 import java.awt.Component;
@@ -201,10 +202,7 @@ public class MainScreen extends JFrame implements ActionListener {
 			break;
 		case "gestionAnimaux":
 			//frame GestionAnimaux
-
-            AnimalModel animalModel = new AnimalModel();
-            AnimalController animalController = new AnimalController(animalModel);
-			animalScreen = getAnimalScreen(animalModel, animalController);
+			animalScreen = getAnimalScreen();
 			desktopPane.add(animalScreen);
 			animalScreen.setVisible(true);
 			break;
@@ -264,11 +262,11 @@ public class MainScreen extends JFrame implements ActionListener {
 		return clientScreen;
 	}
 	
-	public AnimalScreen getAnimalScreen(AnimalModel model, AnimalController controller) {
+	public AnimalScreen getAnimalScreen() {
 		/*if(animalScreen == null) {
 			animalScreen = new AnimalScreen(model, controller);
 		}*/
-		animalScreen = new AnimalScreen(model, controller);
+		animalScreen = new AnimalScreen();
 		return animalScreen;
 	}
     
