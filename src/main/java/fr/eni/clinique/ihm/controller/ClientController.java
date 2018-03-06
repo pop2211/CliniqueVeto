@@ -20,18 +20,11 @@ public class ClientController{
         super();
         this.model = model;
     }
-
-	public void init() throws Exception {
-		System.out.println("Client Controler: init()");
-		
-	}
 	
 	public void saveClient(Client client) throws Exception {
 		if(client.getCodeClient() == null){
-			System.out.println("clientManager.insert");
 			clientManager.insert(client);
 		}else{
-			System.out.println("clientManager.update");
 			clientManager.update(client);
 		}
 	}
@@ -46,6 +39,11 @@ public class ClientController{
 	
 	public List<Client> loadSearchClient(String search) throws ManagerException {
 		return clientManager.selectSearch(search);
+	}
+
+	public void removeClient(Client rmCli) throws ManagerException {
+		Integer rmIdCli = rmCli.getCodeClient();
+		clientManager.delete(rmIdCli);
 	}
 	
 }
