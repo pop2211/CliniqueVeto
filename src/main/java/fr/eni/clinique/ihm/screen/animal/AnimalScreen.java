@@ -1,18 +1,19 @@
 package fr.eni.clinique.ihm.screen.animal;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.SystemColor;
-import java.util.ArrayList;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
@@ -27,20 +28,8 @@ import fr.eni.clinique.dal.dao.impl.RaceJDBCDAOImpl;
 import fr.eni.clinique.dal.exception.DaoException;
 import fr.eni.clinique.ihm.controller.AnimalController;
 import fr.eni.clinique.ihm.model.AnimalModel;
-
-
-import fr.eni.clinique.ihm.model.PersonnelModel;
 import fr.eni.clinique.ihm.screen.client.MainClientScreen;
 import fr.eni.clinique.ihm.screen.common.GenericScreen;
-
-import java.awt.Color;
-import java.awt.event.ItemListener;
-import java.io.Console;
-import java.awt.event.ItemEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Font;
-import javax.swing.DefaultComboBoxModel;
 
 public class AnimalScreen extends GenericScreen {
 	

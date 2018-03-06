@@ -32,9 +32,7 @@ import fr.eni.clinique.common.util.Item;
 import fr.eni.clinique.ihm.controller.AnimalController;
 import fr.eni.clinique.ihm.controller.ClientController;
 import fr.eni.clinique.ihm.controller.PersonnelController;
-import fr.eni.clinique.ihm.model.AnimalModel;
-import fr.eni.clinique.ihm.model.ClientModel;
-import fr.eni.clinique.ihm.model.PersonnelModel;
+import fr.eni.clinique.ihm.screen.animal.AnimalScreen;
 import fr.eni.clinique.ihm.screen.client.AddClientScreen;
 import fr.eni.clinique.ihm.screen.common.GenericScreen;
 
@@ -42,7 +40,9 @@ public class RdvScreen extends GenericScreen {
 	
 	private static final long serialVersionUID = -6328443080174868948L;
 	
-	private AddClientScreen frameAdd;
+	private AddClientScreen frameAddClient;
+	private AnimalScreen frameAddAnimal;
+	
 	
 	JComboBox<Item<Integer>> CbxClient;
 	JComboBox<Item<Integer>> CbxAnimal;
@@ -105,8 +105,8 @@ public class RdvScreen extends GenericScreen {
 		BtnAddClient.setIcon(new ImageIcon(RdvScreen.class.getResource("/images/ico/add_18p.png")));
 		BtnAddClient.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				frameAdd = getFrameAdd();
-				frameAdd.setVisible(true);
+				frameAddClient = getFrameAddClient();
+				frameAddClient.setVisible(true);
 			}
 		});
 		GridBagConstraints gbc_BtnAddClient = new GridBagConstraints();
@@ -364,6 +364,8 @@ public class RdvScreen extends GenericScreen {
 		case "AddClient":
 			chargeClient();
 		break;
+		case "AddAnimal":
+			//chargeAnimaux();
 		}
 	}
 
@@ -385,11 +387,19 @@ public class RdvScreen extends GenericScreen {
 		return animal;
 	}
 	 */
-	public AddClientScreen getFrameAdd() {
-		if (frameAdd == null) {
-			frameAdd = new AddClientScreen((GenericScreen)this);
-			getMainScreen().getDesktopPane().add(frameAdd);
+	public AddClientScreen getFrameAddClient() {
+		if (frameAddClient == null) {
+			frameAddClient = new AddClientScreen((GenericScreen)this);
+			getMainScreen().getDesktopPane().add(frameAddClient);
 		}
-		return frameAdd;
+		return frameAddClient;
+	}
+	
+	public AnimalScreen getFrameAddAnimal() {
+		if (frameAddAnimal == null) {
+			frameAddAnimal = new AnimalScreen((GenericScreen)this);
+			getMainScreen().getDesktopPane().add(frameAddAnimal);
+		}
+		return frameAddAnimal;
 	}
 }
