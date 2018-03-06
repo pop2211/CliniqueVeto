@@ -1,6 +1,5 @@
 package fr.eni.clinique.ihm.screen.personnel;
 
-import java.awt.EventQueue;
 
 import javax.swing.JInternalFrame;
 import java.awt.GridBagLayout;
@@ -9,40 +8,36 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Font;
 import javax.swing.JTextField;
+
+import fr.eni.clinique.bo.Personnel;
+import fr.eni.clinique.common.util.ObjectUtil;
+
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
+import java.awt.Color;
 
 public class AddPersonnelScreen extends JInternalFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5507847919355001252L;
+	
 	private JTextField nomTbx;
 	private JTextField mdpTbx;
 	private JTextField roleTbx;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AddPersonnelScreen frame = new AddPersonnelScreen();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
 	 */
 	public AddPersonnelScreen() {
+		
 		setBounds(100, 100, 450, 300);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		getContentPane().setLayout(gridBagLayout);
 		
 		JLabel lblNewLabel_1 = new JLabel("Ajout Personnel");
@@ -117,6 +112,43 @@ public class AddPersonnelScreen extends JInternalFrame {
 		gbc_btnNewButton_1.gridy = 9;
 		getContentPane().add(btnNewButton_1, gbc_btnNewButton_1);
 
+		
 	}
+	
+	
+	
+	public void showPersonnel(Personnel personnnel) {
+
+		if(personnnel == null){
+			personnnel = new Personnel();
+		}
+		// Rempli les champs de l'ihm :
+			nomTbx.setText(ObjectUtil.nullToBlank(personnnel.getNom()).trim());
+			mdpTbx.setText(ObjectUtil.nullToBlank(personnnel.getMdp()).trim());
+			roleTbx.setText(ObjectUtil.nullToBlank(personnnel.getRole()).trim());		
+			
+	}
+
+	/**
+	 * Read Client From the UI.
+	 * 
+	 * @return
+	 */
+	private Personnel readPersonnel() {
+		
+		
+
+		Personnel personnel = new Personnel();
+
+
+
+		personnel.setNom(nomTbx.getText().trim());
+		personnel.setMdp(mdpTbx.getText().trim());
+		personnel.setRole(roleTbx.getText().trim());
+		personnel.setArchive(false);
+		
+		return personnel;
+	}
+	
 
 }
