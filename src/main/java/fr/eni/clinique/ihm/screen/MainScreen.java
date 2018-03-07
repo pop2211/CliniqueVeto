@@ -12,6 +12,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
+import fr.eni.clinique.bo.EnumRole;
 import fr.eni.clinique.common.AppConstants;
 import fr.eni.clinique.common.util.StringUtil;
 import fr.eni.clinique.ihm.controller.AnimalController;
@@ -60,6 +61,7 @@ public class MainScreen extends JFrame implements ActionListener {
 	private AnimalScreen animalScreen;
 	private PersonnelScreen personnelScreen;
 	private RdvScreen rdvScreen;
+	
 	
 
 	public MainScreen(String title, PersonnelModel model, PersonnelController controller) {
@@ -148,12 +150,39 @@ public class MainScreen extends JFrame implements ActionListener {
 	}
 	
 	public void MenuProfil(String profil) {
-		if(profil != "") {
+
+		switch (profil) {
+		case EnumRole.ADM:
+			menuGestionDesRendezvous.setVisible(false);
+			menuAgenda.setVisible(false);
+			menuGestionDuPersonnel.setVisible(true);
+			break;
+		case EnumRole.USR:
+			menuGestionDesRendezvous.setVisible(true);
+			menuAgenda.setVisible(true);
+			menuGestionDuPersonnel.setVisible(false);
+			break;
+		case EnumRole.SEC: 
+			menuGestionDesRendezvous.setVisible(true);
+			menuAgenda.setVisible(false);
+			menuGestionDuPersonnel.setVisible(false);
+			break;
+		case EnumRole.VET:
+			menuGestionDesRendezvous.setVisible(false);
+			menuAgenda.setVisible(true);
+			menuGestionDuPersonnel.setVisible(false);
+			break;
+		case EnumRole.SUP:
+			menuGestionDesRendezvous.setVisible(false);
+			menuAgenda.setVisible(true);
+			menuGestionDuPersonnel.setVisible(false);
+			break;
+		case EnumRole.DEV:
 			menuGestionDesRendezvous.setVisible(true);
 			menuAgenda.setVisible(true);
 			menuGestionDuPersonnel.setVisible(true);
-		}
-		else {
+			break;
+		default:
 			menuGestionDesRendezvous.setVisible(false);
 			menuAgenda.setVisible(false);
 			menuGestionDuPersonnel.setVisible(false);

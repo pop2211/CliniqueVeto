@@ -138,28 +138,21 @@ public class InternalFrameLogin extends GenericScreen{
     /**
      * Connect Personnel.
      */
-    private Boolean connectPersonnel() {
-    	Boolean testLoginPass = false;
+    private void connectPersonnel() {
+    	Personnel connectPersonnel = null;
     	try {
         	Personnel identifiants = readPersonnelLoginPassword();
 
-        	testLoginPass = controller.connectPersonnel(identifiants);
+        	connectPersonnel = controller.connectPersonnel(identifiants);
         	
-            if(testLoginPass){
-            	
+            if(connectPersonnel != null){
             	this.setVisible(false);
             	//acces au MainScreen
-            	MainScreen parent = (MainScreen) this.getTopLevelAncestor();
-            	parent.setProfil("test");
-            	
-            	//TODO :
-            	getMainScreen().setProfil("test2");
-            }
-            
+            	getMainScreen().setProfil(connectPersonnel.getRole());
+            } 
         } catch (Exception e) {
             errorOccured(e);
         }
-        return testLoginPass;
     }
 
 	/**

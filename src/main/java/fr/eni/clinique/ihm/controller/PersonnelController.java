@@ -48,7 +48,7 @@ public class PersonnelController{
 		personnelManager.update(personnel);
 	}
 	
-	public Boolean connectPersonnel(Personnel personnel) throws Exception {
+	public Personnel connectPersonnel(Personnel personnel) throws Exception {
 		return personnelManager.connexion(personnel);
 	}
 	
