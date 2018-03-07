@@ -16,6 +16,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 
 import fr.eni.clinique.bll.exception.ManagerException;
+import fr.eni.clinique.bo.Animal;
 import fr.eni.clinique.bo.Client;
 import fr.eni.clinique.common.util.ObjectUtil;
 import fr.eni.clinique.ihm.controller.AnimalController;
@@ -451,7 +452,13 @@ public class MainClientScreen extends GenericClientScreen {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("editerAnimalBtn getCurrentCodeAnimal: "+ getCurrentCodeAnimal());
 				frameAnimal = getFrameAnimal(Integer.parseInt(codeTbx.getText()));
-				frameAnimal.setVisible(true);
+				try {
+					Animal currAnimal = controllerAnimal.loadAnimal(getCurrentCodeAnimal());
+					frameAnimal.showAnimal(currAnimal);
+					frameAnimal.setVisible(true);
+				} catch (ManagerException e1) {
+					errorOccured(e1);
+				}
 			}
 		});
 		editerAnimalBtn.setIcon(new ImageIcon(MainClientScreen.class.getResource("/images/ico/edit_18p.png")));
