@@ -100,7 +100,6 @@ public class RebootPasswordPersonnelScreen extends JInternalFrame {
 		gbc_validerBtn.gridy = 7;
 		getContentPane().add(validerBtn, gbc_validerBtn);
 
-		System.out.println("Ma Bite");
 		pack();
 	}
 	
