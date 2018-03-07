@@ -9,7 +9,7 @@ import fr.eni.clinique.dal.exception.DaoException;
 
 public interface PersonnelManager extends GenericManager<Personnel, Integer>{
 	
-	Boolean connexion(Personnel personnel) throws ManagerException;
+	Personnel connexion(Personnel personnel) throws ManagerException;
 	
 	List<Personnel> selectByRole(String role) throws ManagerException;
 	
