@@ -93,7 +93,7 @@ public class PersonnelManagerImpl implements PersonnelManager {
             if(!personnel_nom.isEmpty()) {
             	List<Personnel> personnel_nom_mdp = personnelDAO.selectByNomMdp(personnel.getNom(), personnel.getMdp());
             	if(personnel_nom_mdp.isEmpty() || personnel_nom_mdp.size() != 1) {
-            		throw new IllegalArgumentException("Le mot de passe est incorrecte");
+            		throw new IllegalArgumentException("Le mot de passe est incorrect");
             	}
             	else {
             		connectPersonnel = personnel_nom_mdp.get(0);

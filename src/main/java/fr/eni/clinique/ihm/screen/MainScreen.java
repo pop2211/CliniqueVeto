@@ -4,9 +4,12 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyVetoException;
 
+import javax.swing.DesktopManager;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -197,6 +200,22 @@ public class MainScreen extends JFrame implements ActionListener {
 			if(!StringUtil.isNull(profil)) {
 				setProfil(AppConstants.EMPTY);
 			}
+			//close all previously oppened JInternalFrames :
+			JInternalFrame frames[] = desktopPane.getAllFrames();
+			DesktopManager dm = desktopPane.getDesktopManager();
+			for (int i = 0 ; i < frames.length ; i ++)
+			{
+				if(frames[i] != frameLogin)
+				{
+					dm.closeFrame(frames[i]);
+					try {
+						frames[i].setClosed(false);
+					} catch (PropertyVetoException e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+			//show login form
 			frameLogin.setVisible(true);
 			break;
 		case "fermer":
