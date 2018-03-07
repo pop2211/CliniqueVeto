@@ -9,6 +9,8 @@ import javax.swing.JScrollPane;
 
 import java.awt.GridBagConstraints;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -53,6 +55,7 @@ public class PersonnelScreen extends GenericScreen {
 	 */
 	public PersonnelScreen(PersonnelController controller, PersonnelModel model) {
 		super("Gestion du personnel", true, true, true,true);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		
 		this.controller = controller; 
 		this.model = model;
@@ -115,10 +118,15 @@ public class PersonnelScreen extends GenericScreen {
 		panel.add(supprimerBtn, gbc_supprimerBtn);
 		
 		JButton reinitialiserBtn = new JButton("");
-		ajouterBtn.addActionListener(new ActionListener() {
+		reinitialiserBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frameChange = getFrameChange();
-				frameAdd.setVisible(true);
+				Integer personnelId = getCurrentPersonnelId();
+				if(personnelId == -1){
+					showFailureMessage("Aucun utilisateur séléctionné");
+				}else{
+					frameChange = getFrameChange(personnelId);
+					frameChange.setVisible(true);
+				}
 			}
 
 			
@@ -204,14 +212,24 @@ public class PersonnelScreen extends GenericScreen {
 	private Integer getCurrentPersonnelId() {
 		int column = 0;
 		int row = table.getSelectedRow();
-		Integer codePersonnel = Integer.parseInt(table.getModel().getValueAt(row, column).toString());
+		Integer codePersonnel = -1;
+		if(row >= 0){
+			codePersonnel = Integer.parseInt(table.getModel().getValueAt(row, column).toString());
+		}
 		return codePersonnel;
 	}
 
+	public TableModelPersonnel getTableModel(){
+		return modelTable;
+	}
 
-	private RebootPasswordPersonnelScreen getFrameChange() {
-
-		return null;
+	private RebootPasswordPersonnelScreen getFrameChange(Integer CodePerso) {
+		if (frameChange == null) {
+			System.out.println("Ma Bite");
+			frameChange = new RebootPasswordPersonnelScreen(this,this.model,this.controller, CodePerso);
+			getMainScreen().getDesktopPane().add(frameChange);
+		}
+		return frameChange;
 	}
 	
 	

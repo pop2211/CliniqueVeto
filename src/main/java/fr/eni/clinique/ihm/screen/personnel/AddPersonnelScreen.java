@@ -26,6 +26,7 @@ import fr.eni.clinique.ihm.screen.common.JTextFieldLimit;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 
 public class AddPersonnelScreen extends JInternalFrame {
 	/**
@@ -46,6 +47,7 @@ public class AddPersonnelScreen extends JInternalFrame {
 	 */
 	public AddPersonnelScreen(PersonnelScreen personnelScreen, PersonnelModel model, PersonnelController controller) {
 		super("Ajout du personnel", true, true, true,true);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		
 		personnelController = controller;
 		personnelModel = model;
@@ -113,6 +115,8 @@ public class AddPersonnelScreen extends JInternalFrame {
 				try {
 					controller.newPersonnel(readPersonnel());
 					showSuccessMessage("Personnel ajouté !");
+					setVisible(false);
+					personnelScreen.getTableModel().refresh();
 				} catch (ManagerException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

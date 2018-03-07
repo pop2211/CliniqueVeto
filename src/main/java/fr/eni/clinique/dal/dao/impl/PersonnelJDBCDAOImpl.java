@@ -26,7 +26,7 @@ public class PersonnelJDBCDAOImpl implements PersonnelDAO{
     private static final String DELETE_QUERY = "UPDATE Personnels SET Archive=1 WHERE CodePers=?";
     private static final String TRUNCATE_QUERY = "DELETE FROM Personnels; DBCC CHECKIDENT(Personnels, RESEED, 0);";
     private static final String SELECT_BY_ROLE = "SELECT * FROM Personnels WHERE Role = ?"+ NOT_ARCHIVE;
-	private static final String UPDATE_PSW_QUERY = "UPDATE Personnels Set MotPasse WHERE CodePers=?";
+	private static final String UPDATE_PSW_QUERY = "UPDATE Personnels Set MotPasse=? WHERE CodePers=?";
     
     private static PersonnelJDBCDAOImpl instance;
     
