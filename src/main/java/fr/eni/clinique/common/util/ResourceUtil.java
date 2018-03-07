@@ -2,12 +2,6 @@ package fr.eni.clinique.common.util;
 
 import fr.eni.clinique.common.exception.TechnicalException;
 
-/**
- * Util Functions for App.
- * 
- * @author DEFORTESCU
- *
- */
 public class ResourceUtil {
 
     private ResourceUtil() {

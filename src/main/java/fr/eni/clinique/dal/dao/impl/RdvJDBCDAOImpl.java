@@ -35,6 +35,8 @@ public class RdvJDBCDAOImpl implements RdvDAO{
     private static final String TRUNCATE_QUERY = "DELETE FROM Agendas";
     
     private static RdvJDBCDAOImpl instance;
+    private static PersonnelJDBCDAOImpl PersonnelDAO;
+    private static AnimalJDBCDAOImpl AnimalDAO;
     
 	public static RdvDAO getInstance() {
 		if(instance == null) {
@@ -88,12 +90,8 @@ public class RdvJDBCDAOImpl implements RdvDAO{
 		Integer codeVeto = resultSet.getInt("CodeVeto");
 		Integer codeAnimal = resultSet.getInt("CodeAnimal");
 		
-		Personnel veto = new Personnel();
-		Animal animal = new Animal();
-		//================================
-		//TODO: veto.setNom ect...
-		//================================
-		
+		Personnel veto = PersonnelDAO.selectById(codeVeto);
+		Animal animal = AnimalDAO.selectById(codeAnimal);
 		
 		rdv.setVeto(veto);
 		rdv.setDateRdv(calendar);

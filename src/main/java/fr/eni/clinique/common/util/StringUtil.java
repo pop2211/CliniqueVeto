@@ -1,5 +1,11 @@
 package fr.eni.clinique.common.util;
 
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import fr.eni.clinique.common.AppConstants;
 
 /**
@@ -38,4 +44,19 @@ public class StringUtil {
 	    }
     	return result;
     }
+    
+    public static Timestamp convertStringToTimestamp(String str_date) {
+        try {
+          DateFormat formatter;
+          formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+           // you can change format of date
+          Date date = formatter.parse(str_date);
+          java.sql.Timestamp timeStampDate = new Timestamp(date.getTime());
+
+          return timeStampDate;
+        } catch (ParseException e) {
+          System.out.println("Exception :" + e);
+          return null;
+        }
+      }
 }

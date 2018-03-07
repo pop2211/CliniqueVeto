@@ -73,4 +73,11 @@ public class ObjectUtil {
             throw new IllegalArgumentException(message);
         }
     }
+    
+    public static void checkTimestamp(Object element, String message) {
+        if(((String) element).matches("/d{4}-/d{2}-/d{2} /d{2}:/d{2}")) {
+            throw new IllegalArgumentException(message);
+        }
+    }
+    
 }

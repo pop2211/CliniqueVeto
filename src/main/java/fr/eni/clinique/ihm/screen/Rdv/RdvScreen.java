@@ -7,7 +7,9 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
@@ -24,11 +26,17 @@ import org.jdatepicker.ComponentFormatDefaults;
 import org.jdatepicker.JDatePicker;
 
 import fr.eni.clinique.bll.exception.ManagerException;
+import fr.eni.clinique.bll.manager.impl.RdvManagerImpl;
 import fr.eni.clinique.bo.Animal;
 import fr.eni.clinique.bo.Client;
 import fr.eni.clinique.bo.EnumRole;
 import fr.eni.clinique.bo.Personnel;
+import fr.eni.clinique.bo.Race;
+import fr.eni.clinique.bo.Rdv;
 import fr.eni.clinique.common.util.Item;
+import fr.eni.clinique.common.util.StringUtil;
+import fr.eni.clinique.dal.dao.impl.RdvJDBCDAOImpl;
+import fr.eni.clinique.dal.exception.DaoException;
 import fr.eni.clinique.ihm.controller.AnimalController;
 import fr.eni.clinique.ihm.controller.ClientController;
 import fr.eni.clinique.ihm.controller.PersonnelController;
@@ -46,6 +54,11 @@ public class RdvScreen extends GenericScreen {
 	
 	JComboBox<Item<Integer>> CbxClient;
 	JComboBox<Item<Integer>> CbxAnimal;
+	JComboBox<Item<Integer>> CbxVeterinaire;
+	JComboBox<String> cbxHeure;
+	JComboBox<String> cbxMinute;
+	JDatePicker datePicker;
+	RdvManagerImpl rdvimp;
 	
 	public RdvScreen() {
 		super("Prise de rendez-vous", true, true, true, true);
@@ -194,7 +207,7 @@ public class RdvScreen extends GenericScreen {
 		gbc_labelVeterinaire.gridy = 0;
 		panel_Par.add(labelVeterinaire, gbc_labelVeterinaire);
 		
-		JComboBox<Item<Integer>> CbxVeterinaire = new JComboBox<Item<Integer>>();
+		CbxVeterinaire = new JComboBox<Item<Integer>>();
 		try {
 			List<Personnel> vetos = controllerPersonnel.loadPersonnelByRole(EnumRole.VETERINAIRE.getCode());
 			
@@ -251,7 +264,7 @@ public class RdvScreen extends GenericScreen {
         defaults.setFormat(ComponentFormatDefaults.Key.SELECTED_DATE_FIELD, new SimpleDateFormat("dd/MM/yyyy"));
         defaults.setFormat(ComponentFormatDefaults.Key.MONTH_SELECTOR, new SimpleDateFormat("MMM"));
         
-        JDatePicker datePicker = new JDatePicker();
+        datePicker = new JDatePicker();
         datePicker.getFormattedTextField().setColumns(1);
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		gbc_textField.gridwidth = 4;
@@ -269,7 +282,7 @@ public class RdvScreen extends GenericScreen {
 		gbc_lblHeure.gridy = 2;
 		panelQuand.add(lblHeure, gbc_lblHeure);
 		
-		JComboBox<String> cbxHeure = new JComboBox<String>();
+		cbxHeure = new JComboBox<String>();
 		cbxHeure.setModel(new DefaultComboBoxModel<String>(new String[] {"8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"}));
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.insets = new Insets(0, 10, 0, 5);
@@ -284,8 +297,8 @@ public class RdvScreen extends GenericScreen {
 		gbc_label.gridy = 3;
 		panelQuand.add(labelH, gbc_label);
 		
-		JComboBox<String> cbxMinute = new JComboBox<String>();
-		cbxMinute.setModel(new DefaultComboBoxModel<String>(new String[] {"0", "15", "30", "45"}));
+		cbxMinute = new JComboBox<String>();
+		cbxMinute.setModel(new DefaultComboBoxModel<String>(new String[] {"00", "15", "30", "45"}));
 		GridBagConstraints gbc_comboBox_1 = new GridBagConstraints();
 		gbc_comboBox_1.anchor = GridBagConstraints.WEST;
 		gbc_comboBox_1.gridx = 2;
@@ -312,6 +325,21 @@ public class RdvScreen extends GenericScreen {
 		JButton btnValider = new JButton("Valider");
 		btnValider.setMinimumSize(new Dimension(100, 23));
 		btnValider.setMaximumSize(new Dimension(100, 23));
+		btnValider.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					//change ça BASTIEN
+					rdvimp.insert(readRdv());
+					/*controllerRdv.newRdv(readRdv());
+					parentScreen.processEvent("AddAnimal", null);
+					showSuccessMessage("Animal enregistré !");
+					setVisible(false);*/
+				} catch (ManagerException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 		GridBagConstraints gbc_btnValider = new GridBagConstraints();
 		gbc_btnValider.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnValider.insets = new Insets(0, 0, 15, 5);
@@ -379,24 +407,32 @@ public class RdvScreen extends GenericScreen {
 		}
 	}
 
-	/*
+	
 	private Rdv readRdv() {
 
 		Rdv rdv = new Rdv();
 		
-		//Recupère les champs de l'ihm :
-		animal.setCodeAnimal((Integer.parseInt(recupLblAnimal.getText())));
-		animal.setNomAnimal(nomTbx.getText().trim());
-		animal.setCouleur(couleurTbx.getText().trim());
-		Race race = new Race();
-		race.setRace(raceCbx.getSelectedItem().toString());
-		race.setEspece(especeCbx.getSelectedItem().toString());
-		animal.setRace(race);
-		animal.setTatouage(tatouageTbx.getText().trim());
-
-		return animal;
+		try {
+			//Recupère les champs de l'ihm :
+			Integer codeAnimal = ((Item<Integer>) CbxClient.getSelectedItem()).getId();
+			Animal animal = controllerAnimal.loadAnimal(codeAnimal);
+			rdv.setAnimal(animal);
+			
+			Integer codePers = ((Item<Integer>) CbxVeterinaire.getSelectedItem()).getId();
+			Personnel personnel = controllerPersonnel.selectPersonnel(codePers);
+			rdv.setVeto(personnel);
+		
+			String DateTime = (datePicker.getFormattedTextField().getText() + " " + cbxHeure.getSelectedItem() + ":" + cbxMinute.getSelectedItem());
+			Timestamp Timestamp = StringUtil.convertStringToTimestamp(DateTime);
+			System.out.println(Timestamp);
+			
+		} catch (ManagerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return rdv;
 	}
-	 */
+	 
 	public AddClientScreen getFrameAddClient() {
 		if (frameAddClient == null) {
 			frameAddClient = new AddClientScreen((GenericScreen)this);
