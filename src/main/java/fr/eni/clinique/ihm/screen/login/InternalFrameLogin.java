@@ -1,9 +1,11 @@
 package fr.eni.clinique.ihm.screen.login;
 
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -41,9 +43,10 @@ public class InternalFrameLogin extends GenericScreen{
     private JButton validateButton;
     private JMenu menu;
 	
-	public InternalFrameLogin(PersonnelModel model, PersonnelController controller) {
+	public InternalFrameLogin(MainScreen mainScreen, PersonnelModel model, PersonnelController controller) {
 		//Ecran avec un titre, redimensionable, fermable, agrandissable, iconifiable
 		super("Connexion", true, false, true, false);
+		this.mainScreen = mainScreen;
 		this.controller = controller;
 		this.model = model;
 		
@@ -122,6 +125,12 @@ public class InternalFrameLogin extends GenericScreen{
 
 		
 		this.pack();
+		//this.setLocationRelativeTo(null);
+		
+		Dimension dim = this.mainScreen.getSize();
+		Integer x = (dim.width-this.getSize().width)/2;
+		Integer y = ((dim.height-this.getSize().height)/2)-150;
+		this.setLocation(x, y);
      
 	}
 	

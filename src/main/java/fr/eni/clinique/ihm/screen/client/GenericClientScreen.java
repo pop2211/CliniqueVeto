@@ -124,6 +124,7 @@ public class GenericClientScreen extends GenericScreen {
 				} catch (ManagerException e2) {
 					e2.printStackTrace();
 				}
+			break;
 			default :
 				System.out.println("GenericClientScreen unknow event: "+ eventName);
 				//TODO throws Exception
