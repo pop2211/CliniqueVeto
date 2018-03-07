@@ -70,12 +70,11 @@ public class GenericClientScreen extends GenericScreen {
 	public void showClient(Client client) {
 
 		//Active les champs si un client est selectionne
-		Boolean enableFields = true;
 		if (client == null) {
 			client = new Client();
-			enableFields = false;
 		}
 		currentCodeClient = client.getCodeClient();
+		Boolean enableFields = (currentCodeClient != null);
 		
 		codeTbx.setEnabled(false);	//(code always disabled)
 		nomTbx.setEnabled(enableFields);
