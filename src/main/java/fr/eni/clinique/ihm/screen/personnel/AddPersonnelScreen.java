@@ -181,13 +181,8 @@ public class AddPersonnelScreen extends JInternalFrame {
 	 * @return
 	 */
 	private Personnel readPersonnel() {
-		
-		
-
 		Personnel personnel = new Personnel();
-
-
-
+		
 		personnel.setNom(nomTbx.getText().trim());
 		personnel.setMdp(mdpTbx.getText().trim());
 		Item selectedItem = (Item) comboBox.getSelectedItem();

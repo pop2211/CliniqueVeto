@@ -50,13 +50,17 @@ public class AnimalScreen extends GenericScreen {
 	
 	
 	
-	public AnimalScreen() {
+	public AnimalScreen(GenericScreen parentScreen, Integer CodeCli) {
 		super("Gestion des Animaux", true, true, true,true);
 		setBackground(Color.WHITE);
 		
+		this.parentScreen = parentScreen;
+		this.modelClient = parentScreen.getModelClient();
+		this.controllerClient = parentScreen.getControllerClient();
+		
         this.modelAnimal = new AnimalModel();
 		this.controllerAnimal = new AnimalController(this.modelAnimal);
-		
+		codeClient = CodeCli;
 		
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		
@@ -84,6 +88,7 @@ public class AnimalScreen extends GenericScreen {
 		recupLblCli.setHorizontalAlignment(SwingConstants.LEFT);
 		recupLblCli.setFont(new Font("Tahoma", Font.BOLD, 12));
 		recupLblCli.setForeground(new Color(255, 0, 0));
+		setLabelClient(codeClient);
 		GridBagConstraints gbc_recupLabelClient = new GridBagConstraints();
 		gbc_recupLabelClient.insets = new Insets(0, 0, 5, 5);
 		gbc_recupLabelClient.gridx = 3;
@@ -206,28 +211,18 @@ public class AnimalScreen extends GenericScreen {
 
 		validerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if("".equals(recupLblCli.getText()) || recupLblCli.getText() == null){
-					try {
-						System.out.println(recupLblCli.getText());
-						controllerAnimal.newAnimal(readAnimal());
-						showSuccessMessage("Animal ajouté !");
-					} catch (Exception e1) {
-						showFailureMessage(e1.getMessage());
-					}
-					
-				}else{
-					try {
-						controllerAnimal.saveAnimal(readAnimal());
-						showSuccessMessage("Animal enregistré !");
-					} catch (Exception e1) {
-						showFailureMessage(e1.getMessage());
-					}
-					
+				try {
+					controllerAnimal.saveAnimal(readAnimal());
+					parentScreen.processEvent("AddAnimal", null);
+					setVisible(false);
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
+				showSuccessMessage("Animal enregistré !");
 			}
 		});
 		
-		JLabel lblAntcd = new JLabel("Antécédents");
+		/*JLabel lblAntcd = new JLabel("Antécédents");
 		lblAntcd.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_lblAntcd = new GridBagConstraints();
 		gbc_lblAntcd.anchor = GridBagConstraints.EAST;
@@ -243,7 +238,7 @@ public class AnimalScreen extends GenericScreen {
 		gbc_antecedentsTbx.gridx = 4;
 		gbc_antecedentsTbx.gridy = 8;
 		getContentPane().add(antecedentsTbx, gbc_antecedentsTbx);
-		antecedentsTbx.setColumns(10);
+		antecedentsTbx.setColumns(10);*/
 		
 		JLabel lblSexe = new JLabel("Sexe");
 		lblSexe.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -301,19 +296,10 @@ public class AnimalScreen extends GenericScreen {
 		gbc_annulerBtn.gridx = 4;
 		gbc_annulerBtn.gridy = 10;
 		getContentPane().add(annulerBtn, gbc_annulerBtn);
-
-	    
-		//showAnimal(null);
-		
 		
 		this.pack();
 	}
 	
-	public AnimalScreen(GenericScreen parentScreen) {
-		this();
-		this.parentScreen = parentScreen;
-	}
-
 	public void fillEspece(String currentEspece){
 		try {
 			List<String> especes = raceDAO.selectEspeceDistinct();
@@ -348,18 +334,16 @@ public class AnimalScreen extends GenericScreen {
 		}
     }
 	
-	public String recupLabelClient(Integer id){
+	public void setLabelClient(Integer id){
 		String result = null;
 		try {
 			Client clients = clientDAO.selectById(id);
-			result = clients.getNomClient();
+			result = clients.getFullname();
+			recupLblCli.setText(result);
 		} catch (DaoException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		return result;
-		
     }
 	
 	public void showAnimal(Animal animal) {
@@ -373,7 +357,7 @@ public class AnimalScreen extends GenericScreen {
 			nomTbx.setText(ObjectUtil.nullToBlank(animal.getNomAnimal()).trim());
 			couleurTbx.setText(ObjectUtil.nullToBlank(animal.getCouleur()).trim());
 			tatouageTbx.setText(ObjectUtil.nullToBlank(animal.getTatouage()).trim());
-			antecedentsTbx.setText(ObjectUtil.nullToBlank(animal.getAntecedents()).trim());
+			//antecedentsTbx.setText(ObjectUtil.nullToBlank(animal.getAntecedents()).trim());
 			fillEspece(animal.getRace().getEspece());
 			fillRace(animal.getRace().getEspece(),animal.getRace().getRace());
 			sexeCbx.setSelectedItem(animal.getSexe());
@@ -385,8 +369,6 @@ public class AnimalScreen extends GenericScreen {
 	 * @return
 	 */
 	private Animal readAnimal() {
-		
-		
 
 		Animal animal = new Animal();
 
@@ -405,10 +387,10 @@ public class AnimalScreen extends GenericScreen {
 		race.setEspece(especeCbx.getSelectedItem().toString());
 		animal.setRace(race);
 		animal.setTatouage(tatouageTbx.getText().trim());
-		animal.setAntecedents(antecedentsTbx.getText().trim());
+		//animal.setAntecedents(antecedentsTbx.getText().trim());
 		animal.setSexe(sexeCbx.getSelectedItem().toString());
 		animal.setArchive(false);
-		animal.setCodeClient(1);
+		animal.setCodeClient(codeClient);
 
 		return animal;
 	}

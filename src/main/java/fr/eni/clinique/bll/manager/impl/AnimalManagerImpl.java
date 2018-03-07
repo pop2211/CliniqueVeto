@@ -99,10 +99,8 @@ public class AnimalManagerImpl implements AnimalManager{
             ObjectUtil.checkNotNullWithMessage(animal.getCouleur(), "Le MDP est obligatoire");
             ObjectUtil.checkNotBlankWithMessage(animal.getSexe(), "Le Sexe est obligatoire");
             ObjectUtil.checkNotBlankWithMessage(animal.getTatouage(), "Le Tatouage est obligatoire");
-            ObjectUtil.checkNotBlankWithMessage(animal.getAntecedents(), "Les Antécédents est obligatoire");
             ObjectUtil.checkNotNullWithMessage(animal.getCodeClient(), "Le CodeClient est obligatoire");
             ObjectUtil.checkNotNullWithMessage(animal.getRace(), "La Race est obligatoire");
-            ObjectUtil.checkNotNullWithMessage(animal.isArchive(), "L'Archive est obligatoire");
 
         } catch (IllegalArgumentException e) {
             throw new ManagerException(String.format("Erreur de validation : %s", e.getMessage()), e);

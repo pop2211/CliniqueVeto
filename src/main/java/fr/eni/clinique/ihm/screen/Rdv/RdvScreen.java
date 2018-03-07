@@ -151,6 +151,16 @@ public class RdvScreen extends GenericScreen {
 		BtnAddAnimal.setBorderPainted(false);
 		BtnAddAnimal.setContentAreaFilled(false);
 		BtnAddAnimal.setIcon(new ImageIcon(RdvScreen.class.getResource("/images/ico/add_18p.png")));
+		BtnAddAnimal.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Integer CodeCli = null;
+				if (CbxClient.getSelectedItem() != null) {
+					CodeCli = ((Item<Integer>) CbxClient.getSelectedItem()).getId();
+				}
+				frameAddAnimal = getFrameAddAnimal(CodeCli);
+				frameAddAnimal.setVisible(true);
+			}
+		});
 		GridBagConstraints gbc_BtnAddAnimal = new GridBagConstraints();
 		gbc_BtnAddAnimal.insets = new Insets(0, 0, 5, 0);
 		gbc_BtnAddAnimal.fill = GridBagConstraints.HORIZONTAL;
@@ -395,9 +405,10 @@ public class RdvScreen extends GenericScreen {
 		return frameAddClient;
 	}
 	
-	public AnimalScreen getFrameAddAnimal() {
+	public AnimalScreen getFrameAddAnimal(Integer CodeCli) {
 		if (frameAddAnimal == null) {
-			frameAddAnimal = new AnimalScreen((GenericScreen)this);
+			
+			frameAddAnimal = new AnimalScreen((GenericScreen)this, CodeCli);
 			getMainScreen().getDesktopPane().add(frameAddAnimal);
 		}
 		return frameAddAnimal;

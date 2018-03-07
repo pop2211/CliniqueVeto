@@ -1,19 +1,14 @@
 package fr.eni.clinique.ihm.screen.client;
 
-import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JDesktopPane;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -22,16 +17,11 @@ import javax.swing.SwingConstants;
 
 import fr.eni.clinique.bll.exception.ManagerException;
 import fr.eni.clinique.bo.Client;
-import fr.eni.clinique.common.util.ObjectUtil;
 import fr.eni.clinique.ihm.controller.AnimalController;
 import fr.eni.clinique.ihm.controller.ClientController;
-import fr.eni.clinique.ihm.controller.PersonnelController;
 import fr.eni.clinique.ihm.model.AnimalModel;
 import fr.eni.clinique.ihm.model.ClientModel;
-import fr.eni.clinique.ihm.model.PersonnelModel;
 import fr.eni.clinique.ihm.model.TableModelAnimal;
-import fr.eni.clinique.ihm.model.TableModelPersonnel;
-import fr.eni.clinique.ihm.screen.MainScreen;
 import fr.eni.clinique.ihm.screen.animal.AnimalScreen;
 import fr.eni.clinique.ihm.screen.common.GenericScreen;
 import fr.eni.clinique.ihm.screen.common.JTextFieldLimit;
@@ -369,7 +359,7 @@ public class MainClientScreen extends GenericClientScreen {
 		JButton ajouterAnimalBtn = new JButton("Ajouter");
 		ajouterAnimalBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frameAnimal = getFrameAnimal();
+				frameAnimal = getFrameAnimal(Integer.parseInt(codeTbx.getText()));
 				frameAnimal.setVisible(true);
 			}
 		});
@@ -479,12 +469,30 @@ public class MainClientScreen extends GenericClientScreen {
 		return frameClientAdd;
 	}
 	
-	public AnimalScreen getFrameAnimal() {
+	public AnimalScreen getFrameAnimal(Integer CodeCli) {
 		if (frameAnimal == null) {
-			frameAnimal = new AnimalScreen((GenericScreen)this);
+			frameAnimal = new AnimalScreen((GenericScreen)this, CodeCli);
 			getMainScreen().getDesktopPane().add(frameAnimal);
 		}
 		return frameAnimal;
+	}
+	
+	@Override
+	public void processEvent(String eventName, Object eventParam){
+		switch(eventName){
+			case "AddClient":
+				Integer id = (Integer) eventParam;
+				try {
+					Client client = controllerClient.loadClient(id);
+					showClient(client);
+				} catch (ManagerException e2) {
+					e2.printStackTrace();
+				}
+			break;
+			case "AddAnimal":
+				modelAnimalTable.refresh();
+			break;
+		}
 	}
 	
 

@@ -200,12 +200,6 @@ public class MainScreen extends JFrame implements ActionListener {
 			desktopPane.add(clientScreen);
 			clientScreen.setVisible(true);
 			break;
-		case "gestionAnimaux":
-			//frame GestionAnimaux
-			animalScreen = getAnimalScreen();
-			desktopPane.add(animalScreen);
-			animalScreen.setVisible(true);
-			break;
 		case "gestionPersonnel":
 			//frame GestionAnimaux
 
@@ -262,14 +256,6 @@ public class MainScreen extends JFrame implements ActionListener {
 		return clientScreen;
 	}
 	
-	public AnimalScreen getAnimalScreen() {
-		/*if(animalScreen == null) {
-			animalScreen = new AnimalScreen(model, controller);
-		}*/
-		animalScreen = new AnimalScreen();
-		return animalScreen;
-	}
-    
     /**
      * Show TechnicalError.
      * 
