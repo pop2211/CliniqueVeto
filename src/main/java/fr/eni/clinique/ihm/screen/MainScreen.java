@@ -143,16 +143,6 @@ public class MainScreen extends JFrame implements ActionListener {
 		menuGestionDuPersonnel.setActionCommand("gestionPersonnel");
 		menuGestionDuPersonnel.addActionListener(this);
 		menuBarre.add(menuGestionDuPersonnel);
-		
-		//Menu Gestion des animaux
-		menuGestionDesAnimaux = new JMenuItem("Gestion des Animaux");
-		menuGestionDesAnimaux.setMinimumSize(new Dimension(140, 22));
-		menuGestionDesAnimaux.setPreferredSize(new Dimension(140, 22));
-		menuGestionDesAnimaux.setMaximumSize(new Dimension(140, 22));
-		menuGestionDesAnimaux.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
-		menuGestionDesAnimaux.setActionCommand("gestionAnimaux");
-		menuGestionDesAnimaux.addActionListener(this);
-		menuBarre.add(menuGestionDesAnimaux);
 
 		MenuProfil(getProfil());
 	}
@@ -162,13 +152,11 @@ public class MainScreen extends JFrame implements ActionListener {
 			menuGestionDesRendezvous.setVisible(true);
 			menuAgenda.setVisible(true);
 			menuGestionDuPersonnel.setVisible(true);
-			menuGestionDesAnimaux.setVisible(true);
 		}
 		else {
 			menuGestionDesRendezvous.setVisible(false);
 			menuAgenda.setVisible(false);
 			menuGestionDuPersonnel.setVisible(false);
-			menuGestionDesAnimaux.setVisible(false);
 		}
 	}
 
@@ -201,7 +189,7 @@ public class MainScreen extends JFrame implements ActionListener {
 			clientScreen.setVisible(true);
 			break;
 		case "gestionPersonnel":
-			//frame GestionAnimaux
+			//frame GestionPersonnel
 
             PersonnelModel personnelModel = new PersonnelModel();
             PersonnelController personnelController = new PersonnelController(personnelModel);
