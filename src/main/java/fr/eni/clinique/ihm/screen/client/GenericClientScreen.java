@@ -74,7 +74,9 @@ public class GenericClientScreen extends GenericScreen {
 		currentCodeClient = client.getCodeClient();
 		
 		// Rempli les champs de l'ihm :
-		codeTbx.setText(ObjectUtil.nullToBlank(client.getCodeClient()).trim());
+		if(codeTbx != null){
+			codeTbx.setText(ObjectUtil.nullToBlank(currentCodeClient));
+		}
 		nomTbx.setText(ObjectUtil.nullToBlank(client.getNomClient()).trim());
 		prenomTbx.setText(ObjectUtil.nullToBlank(client.getPrenomClient()).trim());
 		adresse1Tbx.setText(ObjectUtil.nullToBlank(client.getAdresse1()).trim());

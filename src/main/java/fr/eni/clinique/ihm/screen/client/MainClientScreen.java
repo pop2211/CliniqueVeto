@@ -569,9 +569,9 @@ public class MainClientScreen extends GenericClientScreen {
 		assuranceTbx.setEnabled(enableFields);
 		emailTbx.setEnabled(enableFields);
 		remarqueTbx.setEnabled(enableFields);
-		//on laisse juste rechercherBtn si aucun client n'a ete selectionne :
+		//si aucun client n'a ete selectionne :
+		//on laisse juste rechercherBtn et ajouterBtn
 	    validerBtn.setEnabled(enableFields);
-	    ajouterBtn.setEnabled(enableFields);
 		supprimerBtn.setEnabled(enableFields);
 		annulerBtn.setEnabled(enableFields);
 		ajouterAnimalBtn.setEnabled(enableFields);

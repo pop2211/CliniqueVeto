@@ -30,14 +30,14 @@ public class AddClientScreen extends GenericClientScreen {
 	public AddClientScreen(GenericScreen parentScreen) {
 		super("Ajout", true, true, true, true);
 		
+		setBounds(100, 100, 350, 416);
+		
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		
 		this.parentScreen = parentScreen;
 		this.modelClient = parentScreen.getModelClient();
 		this.controllerClient = parentScreen.getControllerClient();
 		
-		
-		setBounds(100, 100, 350, 416);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{20, 0, 0, 0, 0, 0, 0, 20, 0};
 		gridBagLayout.rowHeights = new int[]{20, 85, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20, 0};
@@ -83,7 +83,8 @@ public class AddClientScreen extends GenericClientScreen {
 		panel.add(annulerBtn);
 		annulerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				showClient(new Client());	//reset fields
+				//cancel: reset fields and hide JFrame
+				showClient(null);
 				setVisible(false);
 			}
 		});
@@ -273,6 +274,8 @@ public class AddClientScreen extends GenericClientScreen {
 		gbc_remarqueTbx.gridx = 2;
 		gbc_remarqueTbx.gridy = 12;
 		getContentPane().add(remarqueTbx, gbc_remarqueTbx);
-
+		
+		//this.pack(); //remplace: setBounds(100, 100, 350, 416);
+		//=> FAIL BTN ANNULER PLUS VISIBLE
 	}
 }

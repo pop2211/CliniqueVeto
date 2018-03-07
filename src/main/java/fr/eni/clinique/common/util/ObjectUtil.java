@@ -20,7 +20,7 @@ public class ObjectUtil {
         String result = AppConstants.EMPTY;
 
         if(data != null) {
-            result = data.toString(); 
+        	result = data.toString(); 
         }
         
         return result;
