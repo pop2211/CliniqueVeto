@@ -30,6 +30,10 @@ import javax.swing.JTable;
 import java.awt.Color;
 import javax.swing.JComboBox;
 import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
+import java.awt.Dimension;
+import javax.swing.JScrollPane;
 
 public class SearchClientScreen extends GenericClientScreen {
 
@@ -40,7 +44,8 @@ public class SearchClientScreen extends GenericClientScreen {
 	private JTextField searchTbx;
 	private JList resultsLst;
 	private Vector<Item> resultsLstModel;
-	private GridBagConstraints gbc_resultsLst;
+	private JPanel panel;
+	private JScrollPane scrollPane;
 	
 	
 	/**
@@ -56,25 +61,48 @@ public class SearchClientScreen extends GenericClientScreen {
 		this.controllerClient = parentScreen.getControllerClient();
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{20, 200, 0, 20, 0};
+		gridBagLayout.columnWidths = new int[]{20, 200, 20, 0};
 		gridBagLayout.rowHeights = new int[]{20, 20, 10, 198, 20, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		getContentPane().setLayout(gridBagLayout);
-		
-		searchTbx = new JTextField();
-		GridBagConstraints gbc_searchTbx = new GridBagConstraints();
-		gbc_searchTbx.insets = new Insets(0, 0, 5, 5);
-		gbc_searchTbx.fill = GridBagConstraints.HORIZONTAL;
-		gbc_searchTbx.gridx = 1;
-		gbc_searchTbx.gridy = 1;
-		getContentPane().add(searchTbx, gbc_searchTbx);
-		searchTbx.setColumns(10);
 		
 
 		resultsLstModel = new Vector<Item>();
 		
+		panel = new JPanel();
+		panel.setToolTipText("Pour");
+		panel.setMinimumSize(new Dimension(200, 90));
+		panel.setMaximumSize(new Dimension(200, 90));
+		panel.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
+		GridBagConstraints gbc_panel = new GridBagConstraints();
+		gbc_panel.insets = new Insets(0, 0, 5, 5);
+		gbc_panel.fill = GridBagConstraints.BOTH;
+		gbc_panel.gridx = 1;
+		gbc_panel.gridy = 1;
+		getContentPane().add(panel, gbc_panel);
+		GridBagLayout gbl_panel = new GridBagLayout();
+		gbl_panel.columnWidths = new int[]{20, 85, 0, 0, 20, 0};
+		gbl_panel.rowHeights = new int[]{90, 0};
+		gbl_panel.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		panel.setLayout(gbl_panel);
+		
+		searchTbx = new JTextField();
+		GridBagConstraints gbc_searchTbx = new GridBagConstraints();
+		gbc_searchTbx.fill = GridBagConstraints.HORIZONTAL;
+		gbc_searchTbx.insets = new Insets(0, 0, 0, 5);
+		gbc_searchTbx.gridx = 1;
+		gbc_searchTbx.gridy = 0;
+		panel.add(searchTbx, gbc_searchTbx);
+		searchTbx.setColumns(10);
+		
 		JButton searchBtn = new JButton("Rechercher");
+		GridBagConstraints gbc_searchBtn = new GridBagConstraints();
+		gbc_searchBtn.insets = new Insets(0, 0, 0, 5);
+		gbc_searchBtn.gridx = 3;
+		gbc_searchBtn.gridy = 0;
+		panel.add(searchBtn, gbc_searchBtn);
 		searchBtn.setIcon(new ImageIcon(SearchClientScreen.class.getResource("/images/ico/search_27p.png")));
 		searchBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -84,12 +112,15 @@ public class SearchClientScreen extends GenericClientScreen {
 		searchBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
 		searchBtn.setHorizontalTextPosition(SwingConstants.CENTER);
 		
-		GridBagConstraints gbc_searchBtn = new GridBagConstraints();
-		gbc_searchBtn.insets = new Insets(0, 0, 5, 5);
-		gbc_searchBtn.gridx = 2;
-		gbc_searchBtn.gridy = 1;
-		getContentPane().add(searchBtn, gbc_searchBtn);
+		scrollPane = new JScrollPane();
+		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+		gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
+		gbc_scrollPane.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane.gridx = 1;
+		gbc_scrollPane.gridy = 3;
+		getContentPane().add(scrollPane, gbc_scrollPane);
 		resultsLst = new JList<Item<Integer>>();
+		scrollPane.setViewportView(resultsLst);
 		resultsLst.setListData(resultsLstModel);
 		
 		resultsLst.addListSelectionListener(new ListSelectionListener() {
@@ -106,14 +137,6 @@ public class SearchClientScreen extends GenericClientScreen {
 		        }
 		    }
 		});
-		
-		gbc_resultsLst = new GridBagConstraints();
-		gbc_resultsLst.gridwidth = 2;
-		gbc_resultsLst.insets = new Insets(0, 0, 5, 5);
-		gbc_resultsLst.fill = GridBagConstraints.BOTH;
-		gbc_resultsLst.gridx = 1;
-		gbc_resultsLst.gridy = 3;
-		getContentPane().add(resultsLst, gbc_resultsLst);
 		
 		
 		this.pack();  //remplace: setBounds(100, 100, 598, 440)
