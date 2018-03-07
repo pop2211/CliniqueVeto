@@ -226,14 +226,14 @@ public class AnimalScreen extends GenericScreen {
 					if(StringUtil.isNull(recupLblAnimal.getText())) {
 						controllerAnimal.newAnimal(readAnimal());
 						parentScreen.processEvent("AddAnimal", null);
-						showSuccessMessage("Animal enregistré !");
 						setVisible(false);
+						showSuccessMessage("Animal enregistré !");
 					}
 					else {
 						controllerAnimal.saveAnimal(readAnimal());
 						parentScreen.processEvent("UpdateAnimal", null);
-						showSuccessMessage("Animal mise à jour !");
 						setVisible(false);
+						showSuccessMessage("Animal mise à jour !");
 					}
 					
 				} catch (Exception e) {
