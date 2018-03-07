@@ -64,7 +64,7 @@ public class MainClientScreen extends GenericClientScreen {
 		this.controllerClient = controller;
 		
 		this.modelAnimal = new AnimalModel();
-		this.modelAnimalTable = new TableModelAnimal(null);
+		this.modelAnimalTable = new TableModelAnimal();
 		this.controllerAnimal = new AnimalController(this.modelAnimal);
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -549,12 +549,15 @@ public class MainClientScreen extends GenericClientScreen {
 	 * @param article
 	 */
 	public void showClient(Client client) {
-		//Rempli les champs
+		//Rempli les champs textes
 		super.showClient(client);
+		
+		//Met a jour le tableau des animaux
+		this.modelAnimalTable.setCurrentClientId(currentCodeClient);
+		this.modelAnimalTable.refresh();
 		
 		//Active les champs et les boutons si un client est selectionne
 		Boolean enableFields = (currentCodeClient != null);
-		
 		codeTbx.setEnabled(false);	//(code always disabled)
 		nomTbx.setEnabled(enableFields);
 		prenomTbx.setEnabled(enableFields);
