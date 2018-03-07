@@ -477,9 +477,12 @@ public class MainClientScreen extends GenericClientScreen {
 	
 	
 	public Integer getCurrentCodeAnimal(){
+		Integer codeAnimal = -1;
 		int column = 0;
 		int row = animauxTable.getSelectedRow();
-		Integer codeAnimal = Integer.parseInt(animauxTable.getModel().getValueAt(row, column).toString());
+		if(row >= 0){
+			codeAnimal = Integer.parseInt(animauxTable.getModel().getValueAt(row, column).toString());
+		}
 		return codeAnimal;
 	}
 	
