@@ -38,7 +38,7 @@ public class AddPersonnelScreen extends JInternalFrame {
 	private JTextField mdpTbx;
 	private PersonnelController personnelController;
 	private PersonnelModel personnelModel;
-	private JComboBox<Item<String>> comboBox;
+	private JComboBox<Item> comboBox;
 
 
 	/**
@@ -125,9 +125,9 @@ public class AddPersonnelScreen extends JInternalFrame {
 		
 		
 		
-		comboBox = new JComboBox<Item<String>>();
+		comboBox = new JComboBox<Item>();
 		for(EnumRole role : EnumRole.getList()){
-			comboBox.addItem(new Item<String>(role.getCode(), role.getLibelle()));
+			comboBox.addItem(new Item(role.getCode(), role.getLibelle()));
 			
 		}
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();

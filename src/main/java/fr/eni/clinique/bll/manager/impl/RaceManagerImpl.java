@@ -24,7 +24,6 @@ public class RaceManagerImpl implements RaceManager{
 		}
 		return instance;
 	}
-
 	
 	private void validerRace(Race race) throws ManagerException {
 

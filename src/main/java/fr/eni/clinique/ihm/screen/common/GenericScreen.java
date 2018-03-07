@@ -6,9 +6,11 @@ import javax.swing.JOptionPane;
 import fr.eni.clinique.ihm.controller.AnimalController;
 import fr.eni.clinique.ihm.controller.ClientController;
 import fr.eni.clinique.ihm.controller.PersonnelController;
+import fr.eni.clinique.ihm.controller.RdvController;
 import fr.eni.clinique.ihm.model.AnimalModel;
 import fr.eni.clinique.ihm.model.ClientModel;
 import fr.eni.clinique.ihm.model.PersonnelModel;
+import fr.eni.clinique.ihm.model.RdvModel;
 import fr.eni.clinique.ihm.model.TableModelAnimal;
 import fr.eni.clinique.ihm.screen.MainScreen;
 
@@ -86,6 +88,9 @@ public abstract class GenericScreen extends JInternalFrame {
 	//Personnel
 	protected PersonnelModel modelPersonnel;
 	protected PersonnelController controllerPersonnel;
+	//RDV
+	protected RdvModel modelRdv;
+	protected RdvController controllerRdv;
 	
 	public ClientModel getModelClient() {
 		return modelClient;
