@@ -52,12 +52,11 @@ public class AddPersonnelScreen extends JInternalFrame {
 		personnelController = controller;
 		personnelModel = model;
 		
-		setBounds(100, 100, 450, 300);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		getContentPane().setLayout(gridBagLayout);
 		
 		JLabel lblNewLabel_1 = new JLabel("Ajout Personnel");
@@ -72,7 +71,7 @@ public class AddPersonnelScreen extends JInternalFrame {
 		GridBagConstraints gbc_lblNom = new GridBagConstraints();
 		gbc_lblNom.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNom.gridx = 1;
-		gbc_lblNom.gridy = 3;
+		gbc_lblNom.gridy = 2;
 		getContentPane().add(lblNom, gbc_lblNom);
 		
 		nomTbx = new JTextField();
@@ -81,7 +80,7 @@ public class AddPersonnelScreen extends JInternalFrame {
 		gbc_nomTbx.insets = new Insets(0, 0, 5, 5);
 		gbc_nomTbx.fill = GridBagConstraints.HORIZONTAL;
 		gbc_nomTbx.gridx = 2;
-		gbc_nomTbx.gridy = 3;
+		gbc_nomTbx.gridy = 2;
 		getContentPane().add(nomTbx, gbc_nomTbx);
 		nomTbx.setColumns(10);
 		
@@ -89,7 +88,7 @@ public class AddPersonnelScreen extends JInternalFrame {
 		GridBagConstraints gbc_lblMotDePasse = new GridBagConstraints();
 		gbc_lblMotDePasse.insets = new Insets(0, 0, 5, 5);
 		gbc_lblMotDePasse.gridx = 1;
-		gbc_lblMotDePasse.gridy = 5;
+		gbc_lblMotDePasse.gridy = 4;
 		getContentPane().add(lblMotDePasse, gbc_lblMotDePasse);
 		
 		mdpTbx = new JTextField();
@@ -98,7 +97,7 @@ public class AddPersonnelScreen extends JInternalFrame {
 		gbc_mdpTbx.insets = new Insets(0, 0, 5, 5);
 		gbc_mdpTbx.fill = GridBagConstraints.HORIZONTAL;
 		gbc_mdpTbx.gridx = 2;
-		gbc_mdpTbx.gridy = 5;
+		gbc_mdpTbx.gridy = 4;
 		getContentPane().add(mdpTbx, gbc_mdpTbx);
 		mdpTbx.setColumns(10);
 		
@@ -106,7 +105,7 @@ public class AddPersonnelScreen extends JInternalFrame {
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel.gridx = 1;
-		gbc_lblNewLabel.gridy = 7;
+		gbc_lblNewLabel.gridy = 6;
 		getContentPane().add(lblNewLabel, gbc_lblNewLabel);
 		
 		JButton validerBtn = new JButton("Valider");
@@ -135,7 +134,7 @@ public class AddPersonnelScreen extends JInternalFrame {
 		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBox.gridx = 2;
-		gbc_comboBox.gridy = 7;
+		gbc_comboBox.gridy = 6;
 		getContentPane().add(comboBox, gbc_comboBox);
 		
 		
@@ -145,7 +144,7 @@ public class AddPersonnelScreen extends JInternalFrame {
 		GridBagConstraints gbc_validerBtn = new GridBagConstraints();
 		gbc_validerBtn.insets = new Insets(0, 0, 0, 5);
 		gbc_validerBtn.gridx = 1;
-		gbc_validerBtn.gridy = 9;
+		gbc_validerBtn.gridy = 8;
 		getContentPane().add(validerBtn, gbc_validerBtn);
 		
 		JButton annulerBtn = new JButton("Annuler");
@@ -158,10 +157,10 @@ public class AddPersonnelScreen extends JInternalFrame {
 		GridBagConstraints gbc_annulerBtn = new GridBagConstraints();
 		gbc_annulerBtn.insets = new Insets(0, 0, 0, 5);
 		gbc_annulerBtn.gridx = 2;
-		gbc_annulerBtn.gridy = 9;
+		gbc_annulerBtn.gridy = 8;
 		getContentPane().add(annulerBtn, gbc_annulerBtn);
 
-		
+		pack();
 	}
 	
 
