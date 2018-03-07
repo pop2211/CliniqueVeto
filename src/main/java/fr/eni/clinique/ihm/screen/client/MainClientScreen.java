@@ -143,8 +143,7 @@ public class MainClientScreen extends GenericClientScreen {
 		annulerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					Client currentCli = readClient();
-					Client reloadedCli = controllerClient.loadClient(currentCli.getCodeClient());
+					Client reloadedCli = controllerClient.loadClient(currentCodeClient);
 					showClient(reloadedCli);
 					showSuccessMessage("Client rechargé !");
 				} catch (Exception e1) {
@@ -375,7 +374,7 @@ public class MainClientScreen extends GenericClientScreen {
 		supprimerAnimalBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					Integer animalId = getCurrentAnimalId();
+					Integer animalId = getCurrentCodeAnimal();
 					controllerAnimal.removeAnimalById(animalId);
 					modelAnimalTable.refresh();
 					showSuccessMessage("Animal archivé !");
@@ -397,7 +396,7 @@ public class MainClientScreen extends GenericClientScreen {
 		editerAnimalBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					System.out.println("editerAnimalBtn getCurrentAnimalId: "+ getCurrentAnimalId());
+					System.out.println("editerAnimalBtn getCurrentCodeAnimal: "+ getCurrentCodeAnimal());
 					//Client currentCli = readClient();
 					//Client reloadedCli = controllerClient.loadClient(currentCli.getCodeClient());
 					//showClient(reloadedCli);
@@ -433,16 +432,20 @@ public class MainClientScreen extends GenericClientScreen {
 		gbc_remarqueTbx.gridx = 2;
 		gbc_remarqueTbx.gridy = 13;
 		getContentPane().add(remarqueTbx, gbc_remarqueTbx);
-
 		
-		// test chargement premier client a l'ouverture fenetre
-		processEvent("AddClient", 1);
+		//load first client
+		//processEvent("AddClient", 1);
+		
+		//open window without selected client (fields disabled)
+		showClient(null);
+		
 		
 		this.pack();
 	}
 	
 	
-	public Integer getCurrentAnimalId(){
+	
+	public Integer getCurrentCodeAnimal(){
 		int column = 0;
 		int row = animauxTable.getSelectedRow();
 		Integer codeAnimal = Integer.parseInt(animauxTable.getModel().getValueAt(row, column).toString());

@@ -5,11 +5,22 @@ import fr.eni.clinique.common.AppConstants;
 public class ObjectUtil {
     
     public static final String nullToBlank(String data) {
-        
+
         String result = AppConstants.EMPTY;
-        
+
         if(data != null) {
             result = data; 
+        }
+        
+        return result;
+    }
+    
+    public static final String nullToBlank(Integer data) {
+    	
+        String result = AppConstants.EMPTY;
+
+        if(data != null) {
+            result = data.toString(); 
         }
         
         return result;

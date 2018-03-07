@@ -30,6 +30,8 @@ import fr.eni.clinique.ihm.screen.common.GenericScreen;
 
 public class GenericClientScreen extends GenericScreen {
 
+	//code du client en cours d'edition
+	protected Integer currentCodeClient;
 	
 	//champs pour editer un client
 	protected JTextField codeTbx;
@@ -67,16 +69,28 @@ public class GenericClientScreen extends GenericScreen {
 	 */
 	public void showClient(Client client) {
 
+		//Active les champs si un client est selectionne
+		Boolean enableFields = true;
 		if (client == null) {
 			client = new Client();
+			enableFields = false;
 		}
-
+		currentCodeClient = client.getCodeClient();
+		
+		codeTbx.setEnabled(false);	//(code always disabled)
+		nomTbx.setEnabled(enableFields);
+		prenomTbx.setEnabled(enableFields);
+		adresse1Tbx.setEnabled(enableFields);
+		adresse2Tbx.setEnabled(enableFields);
+		codePostalTbx.setEnabled(enableFields);
+		villeTbx.setEnabled(enableFields);
+		numTelTbx.setEnabled(enableFields);
+		assuranceTbx.setEnabled(enableFields);
+		emailTbx.setEnabled(enableFields);
+		remarqueTbx.setEnabled(enableFields);
+		
 		// Rempli les champs de l'ihm :
-		if(codeTbx != null){
-			String txt = ObjectUtil.nullToBlank(String.valueOf(client.getCodeClient()));
-			System.out.println("txt: "+ txt);		//... nullToBlank NOK
-			codeTbx.setText(txt);
-		}
+		codeTbx.setText(ObjectUtil.nullToBlank(client.getCodeClient()).trim());
 		nomTbx.setText(ObjectUtil.nullToBlank(client.getNomClient()).trim());
 		prenomTbx.setText(ObjectUtil.nullToBlank(client.getPrenomClient()).trim());
 		adresse1Tbx.setText(ObjectUtil.nullToBlank(client.getAdresse1()).trim());
@@ -87,7 +101,6 @@ public class GenericClientScreen extends GenericScreen {
 		assuranceTbx.setText(ObjectUtil.nullToBlank(client.getAssurance()).trim());
 		emailTbx.setText(ObjectUtil.nullToBlank(client.getEmail()).trim());
 		remarqueTbx.setText(ObjectUtil.nullToBlank(client.getRemarque()).trim());
-
 	}
 
 	/**
@@ -119,9 +132,12 @@ public class GenericClientScreen extends GenericScreen {
 
 		return client;
 	}
-
-
+	
 	@Override
 	public void processEvent(String eventName, Object eventParam){
+	}
+	
+	public Integer getCurrentCodeClient(){
+		return currentCodeClient;
 	}
 }
