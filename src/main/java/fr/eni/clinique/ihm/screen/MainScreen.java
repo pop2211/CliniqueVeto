@@ -24,7 +24,7 @@ import fr.eni.clinique.ihm.screen.Rdv.RdvScreen;
 import fr.eni.clinique.ihm.screen.animal.AnimalScreen;
 import fr.eni.clinique.ihm.screen.client.MainClientScreen;
 import fr.eni.clinique.ihm.screen.common.GenericScreen;
-import fr.eni.clinique.ihm.screen.login.InternalFrameLogin;
+import fr.eni.clinique.ihm.screen.login.LoginScreen;
 import fr.eni.clinique.ihm.screen.personnel.PersonnelScreen;
 import java.awt.Component;
 import javax.swing.border.LineBorder;
@@ -55,7 +55,7 @@ public class MainScreen extends JFrame implements ActionListener {
 	private JMenuItem menuGestionDuPersonnel;
 	private JMenuItem menuGestionDesAnimaux;
 	
-	private InternalFrameLogin frameLogin;
+	private LoginScreen frameLogin;
 	private MainClientScreen clientScreen;
 	private AnimalScreen animalScreen;
 	private PersonnelScreen personnelScreen;
@@ -216,9 +216,9 @@ public class MainScreen extends JFrame implements ActionListener {
 		return menuBarre;
 	}
 
-	public InternalFrameLogin getFrameLogin(PersonnelModel model, PersonnelController controller) {
+	public LoginScreen getFrameLogin(PersonnelModel model, PersonnelController controller) {
 		if (frameLogin == null) {
-			frameLogin = new InternalFrameLogin(this, model, controller);
+			frameLogin = new LoginScreen(this, model, controller);
 		}
 		return frameLogin;
 	}
