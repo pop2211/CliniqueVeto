@@ -17,6 +17,7 @@ import javax.swing.SwingConstants;
 
 import fr.eni.clinique.bll.exception.ManagerException;
 import fr.eni.clinique.bo.Client;
+import fr.eni.clinique.common.util.ObjectUtil;
 import fr.eni.clinique.ihm.controller.AnimalController;
 import fr.eni.clinique.ihm.controller.ClientController;
 import fr.eni.clinique.ihm.model.AnimalModel;
@@ -33,7 +34,17 @@ public class MainClientScreen extends GenericClientScreen {
 	private AddClientScreen frameClientAdd;
 	private SearchClientScreen frameClientSearch;
 	
+	private JTable animauxTable;
 	private AnimalScreen frameAnimal;
+	
+	JButton rechercherBtn;
+	JButton validerBtn;
+	JButton ajouterBtn;
+	JButton supprimerBtn;
+	JButton annulerBtn;
+	JButton ajouterAnimalBtn;
+	JButton supprimerAnimalBtn;
+	JButton editerAnimalBtn;
 
 
 	public MainClientScreen(ClientModel model, ClientController controller) {
@@ -57,7 +68,7 @@ public class MainClientScreen extends GenericClientScreen {
 				0.0, Double.MIN_VALUE };
 		getContentPane().setLayout(gridBagLayout);
 
-		JButton rechercherBtn = new JButton("Rechercher");
+		rechercherBtn = new JButton("Rechercher");
 		rechercherBtn.setIcon(new ImageIcon(MainClientScreen.class.getResource("/images/ico/search_27p.png")));
 		rechercherBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -77,7 +88,7 @@ public class MainClientScreen extends GenericClientScreen {
 		gbc_rechercherBtn.gridy = 1;
 		getContentPane().add(rechercherBtn, gbc_rechercherBtn);
 
-		JButton validerBtn = new JButton("Valider");
+		validerBtn = new JButton("Valider");
 		validerBtn.setIcon(new ImageIcon(MainClientScreen.class.getResource("/images/ico/done_32p.png")));
 		validerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -91,7 +102,7 @@ public class MainClientScreen extends GenericClientScreen {
 			}
 		});
 
-		JButton ajouterBtn = new JButton("Ajouter");
+		ajouterBtn = new JButton("Ajouter");
 		ajouterBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frameClientAdd = getFrameClientAdd();
@@ -107,7 +118,7 @@ public class MainClientScreen extends GenericClientScreen {
 		gbc_ajouterBtn.gridy = 1;
 		getContentPane().add(ajouterBtn, gbc_ajouterBtn);
 
-		JButton supprimerBtn = new JButton("Supprimer");
+		supprimerBtn = new JButton("Supprimer");
 		supprimerBtn.setIcon(new ImageIcon(MainClientScreen.class.getResource("/images/ico/remove_27p.png")));
 		supprimerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -138,12 +149,11 @@ public class MainClientScreen extends GenericClientScreen {
 		gbc_validerBtn.gridy = 1;
 		getContentPane().add(validerBtn, gbc_validerBtn);
 
-		JButton annulerBtn = new JButton("Annuler");
+		annulerBtn = new JButton("Annuler");
 		annulerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					Client currentCli = readClient();
-					Client reloadedCli = controllerClient.loadClient(currentCli.getCodeClient());
+					Client reloadedCli = controllerClient.loadClient(currentCodeClient);
 					showClient(reloadedCli);
 					showSuccessMessage("Client rechargé !");
 				} catch (Exception e1) {
@@ -200,7 +210,7 @@ public class MainClientScreen extends GenericClientScreen {
 		getContentPane().add(lblNom, gbc_lblNom);
 
 		nomTbx = new JTextField();
-		nomTbx.setDocument(new JTextFieldLimit(20));
+		nomTbx.setDocument(new JTextFieldLimit(MAXLENGTH_NOM));
 		nomTbx.setColumns(10);
 		GridBagConstraints gbc_nomTbx = new GridBagConstraints();
 		gbc_nomTbx.gridwidth = 5;
@@ -219,6 +229,7 @@ public class MainClientScreen extends GenericClientScreen {
 		getContentPane().add(lblPrnom, gbc_lblPrnom);
 
 		prenomTbx = new JTextField();
+		prenomTbx.setDocument(new JTextFieldLimit(MAXLENGTH_PRENOM));
 		prenomTbx.setColumns(10);
 		GridBagConstraints gbc_prenomTbx = new GridBagConstraints();
 		gbc_prenomTbx.gridwidth = 5;
@@ -237,7 +248,7 @@ public class MainClientScreen extends GenericClientScreen {
 		getContentPane().add(lblAdresse, gbc_lblAdresse);
 
 		adresse1Tbx = new JTextField();
-		adresse1Tbx.setDocument(new JTextFieldLimit(30));
+		adresse1Tbx.setDocument(new JTextFieldLimit(MAXLENGTH_ADRESSE1));
 		adresse1Tbx.setColumns(10);
 		GridBagConstraints gbc_adresse1Tbx = new GridBagConstraints();
 		gbc_adresse1Tbx.gridwidth = 5;
@@ -248,7 +259,7 @@ public class MainClientScreen extends GenericClientScreen {
 		getContentPane().add(adresse1Tbx, gbc_adresse1Tbx);
 
 		adresse2Tbx = new JTextField();
-		adresse2Tbx.setDocument(new JTextFieldLimit(5));
+		adresse2Tbx.setDocument(new JTextFieldLimit(MAXLENGTH_ADRESSE2));
 		adresse2Tbx.setColumns(10);
 		GridBagConstraints gbc_adresse2Tbx = new GridBagConstraints();
 		gbc_adresse2Tbx.gridwidth = 5;
@@ -267,7 +278,7 @@ public class MainClientScreen extends GenericClientScreen {
 		getContentPane().add(lblCodePostal, gbc_lblCodePostal);
 
 		codePostalTbx = new JTextField();
-		codePostalTbx.setDocument(new JTextFieldLimit(5));
+		codePostalTbx.setDocument(new JTextFieldLimit(MAXLENGTH_CODEPOSTAL));
 		codePostalTbx.setColumns(10);
 		GridBagConstraints gbc_codePostalTbx = new GridBagConstraints();
 		gbc_codePostalTbx.gridwidth = 5;
@@ -286,7 +297,7 @@ public class MainClientScreen extends GenericClientScreen {
 		getContentPane().add(lblVille, gbc_lblVille);
 
 		villeTbx = new JTextField();
-		villeTbx.setDocument(new JTextFieldLimit(25));
+		villeTbx.setDocument(new JTextFieldLimit(MAXLENGTH_VILLE));
 		villeTbx.setColumns(10);
 		GridBagConstraints gbc_villeTbx = new GridBagConstraints();
 		gbc_villeTbx.gridwidth = 5;
@@ -305,8 +316,7 @@ public class MainClientScreen extends GenericClientScreen {
 		getContentPane().add(lblNumTel, gbc_lblNumTel);
 
 		numTelTbx = new JTextField();
-		numTelTbx.setDocument(new JTextFieldLimit(15));
-		numTelTbx.setText("<dynamic>");
+		numTelTbx.setDocument(new JTextFieldLimit(MAXLENGTH_NUMTEL));
 		numTelTbx.setColumns(10);
 		GridBagConstraints gbc_numTelTbx = new GridBagConstraints();
 		gbc_numTelTbx.gridwidth = 5;
@@ -325,8 +335,7 @@ public class MainClientScreen extends GenericClientScreen {
 		getContentPane().add(lblAssurance, gbc_lblAssurance);
 
 		assuranceTbx = new JTextField();
-		assuranceTbx.setDocument(new JTextFieldLimit(30));
-		assuranceTbx.setText("<dynamic>");
+		assuranceTbx.setDocument(new JTextFieldLimit(MAXLENGTH_ASSURANCE));
 		assuranceTbx.setColumns(10);
 		GridBagConstraints gbc_assuranceTbx = new GridBagConstraints();
 		gbc_assuranceTbx.gridwidth = 5;
@@ -345,8 +354,7 @@ public class MainClientScreen extends GenericClientScreen {
 		getContentPane().add(lblEmail, gbc_lblEmail);
 
 		emailTbx = new JTextField();
-		emailTbx.setDocument(new JTextFieldLimit(20));
-		emailTbx.setText("<dynamic>");
+		emailTbx.setDocument(new JTextFieldLimit(MAXLENGTH_EMAIL));
 		emailTbx.setColumns(10);
 		GridBagConstraints gbc_emailTbx = new GridBagConstraints();
 		gbc_emailTbx.gridwidth = 5;
@@ -356,7 +364,7 @@ public class MainClientScreen extends GenericClientScreen {
 		gbc_emailTbx.gridy = 12;
 		getContentPane().add(emailTbx, gbc_emailTbx);
 
-		JButton ajouterAnimalBtn = new JButton("Ajouter");
+		ajouterAnimalBtn = new JButton("Ajouter");
 		ajouterAnimalBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frameAnimal = getFrameAnimal(Integer.parseInt(codeTbx.getText()));
@@ -372,11 +380,11 @@ public class MainClientScreen extends GenericClientScreen {
 		gbc_ajouterAnimalBtn.gridy = 12;
 		getContentPane().add(ajouterAnimalBtn, gbc_ajouterAnimalBtn);
 
-		JButton supprimerAnimalBtn = new JButton("Supprimer");
+		supprimerAnimalBtn = new JButton("Supprimer");
 		supprimerAnimalBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					Integer animalId = getCurrentAnimalId();
+					Integer animalId = getCurrentCodeAnimal();
 					controllerAnimal.removeAnimalById(animalId);
 					modelAnimalTable.refresh();
 					showSuccessMessage("Animal archivé !");
@@ -394,11 +402,11 @@ public class MainClientScreen extends GenericClientScreen {
 		gbc_supprimerAnimalBtn.gridy = 12;
 		getContentPane().add(supprimerAnimalBtn, gbc_supprimerAnimalBtn);
 
-		JButton editerAnimalBtn = new JButton("Editer");
+		editerAnimalBtn = new JButton("Editer");
 		editerAnimalBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					System.out.println("editerAnimalBtn getCurrentAnimalId: "+ getCurrentAnimalId());
+					System.out.println("editerAnimalBtn getCurrentCodeAnimal: "+ getCurrentCodeAnimal());
 					//Client currentCli = readClient();
 					//Client reloadedCli = controllerClient.loadClient(currentCli.getCodeClient());
 					//showClient(reloadedCli);
@@ -426,25 +434,28 @@ public class MainClientScreen extends GenericClientScreen {
 		getContentPane().add(lblRemarque, gbc_lblRemarque);
 
 		remarqueTbx = new JTextField();
-		remarqueTbx.setText("<dynamic>");
 		remarqueTbx.setColumns(10);
 		GridBagConstraints gbc_remarqueTbx = new GridBagConstraints();
-		gbc_remarqueTbx.gridwidth = 4;
+		gbc_remarqueTbx.gridwidth = 5;
 		gbc_remarqueTbx.insets = new Insets(0, 0, 5, 5);
 		gbc_remarqueTbx.fill = GridBagConstraints.HORIZONTAL;
-		gbc_remarqueTbx.gridx = 3;
+		gbc_remarqueTbx.gridx = 2;
 		gbc_remarqueTbx.gridy = 13;
 		getContentPane().add(remarqueTbx, gbc_remarqueTbx);
-
 		
-		// test chargement premier client a l'ouverture fenetre
-		processEvent("AddClient", 1);
+		//load first client
+		//processEvent("AddClient", 1);
+		
+		//open window without selected client (fields disabled)
+		showClient(null);
+		
 		
 		this.pack();
 	}
 	
 	
-	public Integer getCurrentAnimalId(){
+	
+	public Integer getCurrentCodeAnimal(){
 		int column = 0;
 		int row = animauxTable.getSelectedRow();
 		Integer codeAnimal = Integer.parseInt(animauxTable.getModel().getValueAt(row, column).toString());
@@ -498,6 +509,40 @@ public class MainClientScreen extends GenericClientScreen {
 				//TODO throws Exception
 			break;
 		}
+	}
+	
+	
+	/**
+	 * Show Client on the UI.
+	 * 
+	 * @param article
+	 */
+	public void showClient(Client client) {
+		//Rempli les champs
+		super.showClient(client);
+		
+		//Active les champs et les boutons si un client est selectionne
+		Boolean enableFields = (currentCodeClient != null);
+		
+		codeTbx.setEnabled(false);	//(code always disabled)
+		nomTbx.setEnabled(enableFields);
+		prenomTbx.setEnabled(enableFields);
+		adresse1Tbx.setEnabled(enableFields);
+		adresse2Tbx.setEnabled(enableFields);
+		codePostalTbx.setEnabled(enableFields);
+		villeTbx.setEnabled(enableFields);
+		numTelTbx.setEnabled(enableFields);
+		assuranceTbx.setEnabled(enableFields);
+		emailTbx.setEnabled(enableFields);
+		remarqueTbx.setEnabled(enableFields);
+		//on laisse juste rechercherBtn si aucun client n'a ete selectionne :
+	    validerBtn.setEnabled(enableFields);
+	    ajouterBtn.setEnabled(enableFields);
+		supprimerBtn.setEnabled(enableFields);
+		annulerBtn.setEnabled(enableFields);
+		ajouterAnimalBtn.setEnabled(enableFields);
+		supprimerAnimalBtn.setEnabled(enableFields);
+		editerAnimalBtn.setEnabled(enableFields);
 	}
 	
 

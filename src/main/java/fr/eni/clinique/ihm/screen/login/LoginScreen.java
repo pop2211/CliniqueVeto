@@ -29,7 +29,7 @@ import fr.eni.clinique.ihm.model.PersonnelModel;
 import fr.eni.clinique.ihm.screen.MainScreen;
 import fr.eni.clinique.ihm.screen.common.GenericScreen;
 
-public class InternalFrameLogin extends GenericScreen{
+public class LoginScreen extends GenericScreen{
 	
 	
 	private static final long serialVersionUID = -6157689225828979560L;
@@ -43,7 +43,7 @@ public class InternalFrameLogin extends GenericScreen{
     private JButton validateButton;
     private JMenu menu;
 	
-	public InternalFrameLogin(MainScreen mainScreen, PersonnelModel model, PersonnelController controller) {
+	public LoginScreen(MainScreen mainScreen, PersonnelModel model, PersonnelController controller) {
 		//Ecran avec un titre, redimensionable, fermable, agrandissable, iconifiable
 		super("Connexion", true, false, true, false);
 		this.mainScreen = mainScreen;

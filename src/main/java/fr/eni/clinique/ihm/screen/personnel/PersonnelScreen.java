@@ -225,7 +225,6 @@ public class PersonnelScreen extends GenericScreen {
 
 	private RebootPasswordPersonnelScreen getFrameChange(Integer CodePerso) {
 		if (frameChange == null) {
-			System.out.println("Ma Bite");
 			frameChange = new RebootPasswordPersonnelScreen(this,this.model,this.controller, CodePerso);
 			getMainScreen().getDesktopPane().add(frameChange);
 		}

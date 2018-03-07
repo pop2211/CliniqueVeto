@@ -30,6 +30,8 @@ import fr.eni.clinique.ihm.screen.common.GenericScreen;
 
 public class GenericClientScreen extends GenericScreen {
 
+	//code du client en cours d'edition
+	protected Integer currentCodeClient;
 	
 	//champs pour editer un client
 	protected JTextField codeTbx;
@@ -39,13 +41,21 @@ public class GenericClientScreen extends GenericScreen {
 	protected JTextField adresse2Tbx;
 	protected JTextField codePostalTbx;
 	protected JTextField villeTbx;
-	protected JTable animauxTable;
 	protected JTextField numTelTbx;
 	protected JTextField assuranceTbx;
 	protected JTextField emailTbx;
 	protected JTextField remarqueTbx;
 	
-
+	final int MAXLENGTH_NOM = 20;
+	final int MAXLENGTH_PRENOM = 20;
+	final int MAXLENGTH_ADRESSE1 = 30;
+	final int MAXLENGTH_ADRESSE2 = 30;
+	final int MAXLENGTH_CODEPOSTAL = 5;
+	final int MAXLENGTH_VILLE = 25;
+	final int MAXLENGTH_NUMTEL = 15;
+	final int MAXLENGTH_ASSURANCE = 30;
+	final int MAXLENGTH_EMAIL = 20;
+	
 	public GenericClientScreen(String title, Boolean b1, Boolean b2, Boolean b3, Boolean b4) {
 		super(title, b1, b2, b3, b4);
 	}
@@ -58,17 +68,13 @@ public class GenericClientScreen extends GenericScreen {
 	 * @param article
 	 */
 	public void showClient(Client client) {
-
 		if (client == null) {
 			client = new Client();
 		}
-
+		currentCodeClient = client.getCodeClient();
+		
 		// Rempli les champs de l'ihm :
-		if(codeTbx != null){
-			String txt = ObjectUtil.nullToBlank(String.valueOf(client.getCodeClient()));
-			System.out.println("txt: "+ txt);		//... nullToBlank NOK
-			codeTbx.setText(txt);
-		}
+		codeTbx.setText(ObjectUtil.nullToBlank(client.getCodeClient()).trim());
 		nomTbx.setText(ObjectUtil.nullToBlank(client.getNomClient()).trim());
 		prenomTbx.setText(ObjectUtil.nullToBlank(client.getPrenomClient()).trim());
 		adresse1Tbx.setText(ObjectUtil.nullToBlank(client.getAdresse1()).trim());
@@ -79,7 +85,6 @@ public class GenericClientScreen extends GenericScreen {
 		assuranceTbx.setText(ObjectUtil.nullToBlank(client.getAssurance()).trim());
 		emailTbx.setText(ObjectUtil.nullToBlank(client.getEmail()).trim());
 		remarqueTbx.setText(ObjectUtil.nullToBlank(client.getRemarque()).trim());
-
 	}
 
 	/**
@@ -111,9 +116,12 @@ public class GenericClientScreen extends GenericScreen {
 
 		return client;
 	}
-
-
+	
 	@Override
 	public void processEvent(String eventName, Object eventParam){
+	}
+	
+	public Integer getCurrentCodeClient(){
+		return currentCodeClient;
 	}
 }

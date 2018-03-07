@@ -14,6 +14,7 @@ import javax.swing.SwingConstants;
 
 import fr.eni.clinique.bo.Client;
 import fr.eni.clinique.ihm.screen.common.GenericScreen;
+import fr.eni.clinique.ihm.screen.common.JTextFieldLimit;
 
 public class AddClientScreen extends GenericClientScreen {
 
@@ -93,6 +94,7 @@ public class AddClientScreen extends GenericClientScreen {
 		getContentPane().add(lblNom, gbc_lblNom);
 		
 		nomTbx = new JTextField();
+		nomTbx.setDocument(new JTextFieldLimit(MAXLENGTH_NOM));
 		nomTbx.setColumns(10);
 		GridBagConstraints gbc_nomTbx = new GridBagConstraints();
 		gbc_nomTbx.gridwidth = 5;
@@ -111,6 +113,7 @@ public class AddClientScreen extends GenericClientScreen {
 		getContentPane().add(lblPrnom, gbc_lblPrnom);
 		
 		prenomTbx = new JTextField();
+		prenomTbx.setDocument(new JTextFieldLimit(MAXLENGTH_PRENOM));
 		prenomTbx.setColumns(10);
 		GridBagConstraints gbc_prenomTbx = new GridBagConstraints();
 		gbc_prenomTbx.gridwidth = 5;
@@ -129,6 +132,7 @@ public class AddClientScreen extends GenericClientScreen {
 		getContentPane().add(lblAdresse, gbc_lblAdresse);
 		
 		adresse1Tbx = new JTextField();
+		adresse1Tbx.setDocument(new JTextFieldLimit(MAXLENGTH_ADRESSE1));
 		adresse1Tbx.setColumns(10);
 		GridBagConstraints gbc_adresse1Tbx = new GridBagConstraints();
 		gbc_adresse1Tbx.gridwidth = 5;
@@ -139,6 +143,7 @@ public class AddClientScreen extends GenericClientScreen {
 		getContentPane().add(adresse1Tbx, gbc_adresse1Tbx);
 		
 		adresse2Tbx = new JTextField();
+		adresse2Tbx.setDocument(new JTextFieldLimit(MAXLENGTH_ADRESSE2));
 		adresse2Tbx.setColumns(10);
 		GridBagConstraints gbc_adresse2Tbx = new GridBagConstraints();
 		gbc_adresse2Tbx.gridwidth = 5;
@@ -157,6 +162,7 @@ public class AddClientScreen extends GenericClientScreen {
 		getContentPane().add(lblCodePostal, gbc_lblCodePostal);
 		
 		codePostalTbx = new JTextField();
+		codePostalTbx.setDocument(new JTextFieldLimit(MAXLENGTH_CODEPOSTAL));
 		codePostalTbx.setColumns(10);
 		GridBagConstraints gbc_codePostalTbx = new GridBagConstraints();
 		gbc_codePostalTbx.gridwidth = 5;
@@ -175,6 +181,7 @@ public class AddClientScreen extends GenericClientScreen {
 		getContentPane().add(lblVille, gbc_lblVille);
 		
 		villeTbx = new JTextField();
+		villeTbx.setDocument(new JTextFieldLimit(MAXLENGTH_VILLE));
 		villeTbx.setColumns(10);
 		GridBagConstraints gbc_villeTbx = new GridBagConstraints();
 		gbc_villeTbx.gridwidth = 5;
@@ -193,6 +200,7 @@ public class AddClientScreen extends GenericClientScreen {
 		getContentPane().add(lblTlphone, gbc_lblTlphone);
 		
 		numTelTbx = new JTextField();
+		numTelTbx.setDocument(new JTextFieldLimit(MAXLENGTH_NUMTEL));
 		numTelTbx.setColumns(10);
 		GridBagConstraints gbc_numTelTbx = new GridBagConstraints();
 		gbc_numTelTbx.gridwidth = 5;
@@ -211,6 +219,7 @@ public class AddClientScreen extends GenericClientScreen {
 		getContentPane().add(lblAssurance, gbc_lblAssurance);
 		
 		assuranceTbx = new JTextField();
+		assuranceTbx.setDocument(new JTextFieldLimit(MAXLENGTH_ASSURANCE));
 		assuranceTbx.setColumns(10);
 		GridBagConstraints gbc_assuranceTbx = new GridBagConstraints();
 		gbc_assuranceTbx.gridwidth = 5;
@@ -229,6 +238,7 @@ public class AddClientScreen extends GenericClientScreen {
 		getContentPane().add(lblEmail, gbc_lblEmail);
 		
 		emailTbx = new JTextField();
+		emailTbx.setDocument(new JTextFieldLimit(MAXLENGTH_EMAIL));
 		emailTbx.setColumns(10);
 		GridBagConstraints gbc_emailTbx = new GridBagConstraints();
 		gbc_emailTbx.gridwidth = 5;
