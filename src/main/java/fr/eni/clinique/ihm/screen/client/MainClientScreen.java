@@ -470,10 +470,8 @@ public class MainClientScreen extends GenericClientScreen {
 	}
 	
 	public AnimalScreen getFrameAnimal(Integer CodeCli) {
-		if (frameAnimal == null) {
-			frameAnimal = new AnimalScreen((GenericScreen)this, CodeCli);
-			getMainScreen().getDesktopPane().add(frameAnimal);
-		}
+		frameAnimal = new AnimalScreen((GenericScreen)this, CodeCli);
+		getMainScreen().getDesktopPane().add(frameAnimal);
 		return frameAnimal;
 	}
 	
@@ -490,6 +488,9 @@ public class MainClientScreen extends GenericClientScreen {
 				}
 			break;
 			case "AddAnimal":
+				modelAnimalTable.refresh();
+			break;
+			case "UpdateAnimal":
 				modelAnimalTable.refresh();
 			break;
 			default :

@@ -17,10 +17,13 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import com.sun.xml.internal.ws.util.StringUtils;
+
 import fr.eni.clinique.bo.Animal;
 import fr.eni.clinique.bo.Client;
 import fr.eni.clinique.bo.Race;
 import fr.eni.clinique.common.util.ObjectUtil;
+import fr.eni.clinique.common.util.StringUtil;
 import fr.eni.clinique.dal.dao.ClientDAO;
 import fr.eni.clinique.dal.dao.RaceDAO;
 import fr.eni.clinique.dal.dao.impl.ClientJDBCDAOImpl;
@@ -30,6 +33,7 @@ import fr.eni.clinique.ihm.controller.AnimalController;
 import fr.eni.clinique.ihm.model.AnimalModel;
 import fr.eni.clinique.ihm.screen.client.MainClientScreen;
 import fr.eni.clinique.ihm.screen.common.GenericScreen;
+import fr.eni.clinique.ihm.screen.common.JTextFieldLimit;
 
 public class AnimalScreen extends GenericScreen {
 	
@@ -55,17 +59,14 @@ public class AnimalScreen extends GenericScreen {
 		setBackground(Color.WHITE);
 		
 		this.parentScreen = parentScreen;
-		this.modelClient = parentScreen.getModelClient();
-		this.controllerClient = parentScreen.getControllerClient();
 		
         this.modelAnimal = new AnimalModel();
 		this.controllerAnimal = new AnimalController(this.modelAnimal);
 		codeClient = CodeCli;
 		
+		System.out.println(CodeCli);
+		
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
-		
-		//Animal animal = new Animal("MamandeBambi", "h", "bleu", "symbole", "alcoolique", false , new Race("Worchair", "Chat") , 2);
-		
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{20, 0, 0, 0, 0, 0, 20, 0};
@@ -95,6 +96,7 @@ public class AnimalScreen extends GenericScreen {
 		gbc_recupLabelClient.gridy = 2;
 		getContentPane().add(recupLblCli, gbc_recupLabelClient);
 		
+		
 		JLabel lblNewLabel = new JLabel("Code");
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.anchor = GridBagConstraints.EAST;
@@ -102,14 +104,20 @@ public class AnimalScreen extends GenericScreen {
 		gbc_lblNewLabel.gridx = 1;
 		gbc_lblNewLabel.gridy = 4;
 		getContentPane().add(lblNewLabel, gbc_lblNewLabel);
-		
+	
 		recupLblAnimal = new JLabel("");
-		recupLblAnimal.setForeground(new Color(124, 252, 0));
+		recupLblAnimal.setHorizontalAlignment(SwingConstants.LEFT);
+		recupLblAnimal.setForeground(new Color(163,163,163));
 		GridBagConstraints gbc_recupLblAnimal = new GridBagConstraints();
 		gbc_recupLblAnimal.insets = new Insets(0, 0, 5, 5);
 		gbc_recupLblAnimal.gridx = 2;
 		gbc_recupLblAnimal.gridy = 4;
 		getContentPane().add(recupLblAnimal, gbc_recupLblAnimal);
+		
+		if (codeClient == null){
+			lblNewLabel.setVisible(false);
+			recupLblAnimal.setVisible(false);
+		}
 		
 		JLabel lblNewLabel_1 = new JLabel("Nom");
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
@@ -120,6 +128,7 @@ public class AnimalScreen extends GenericScreen {
 		getContentPane().add(lblNewLabel_1, gbc_lblNewLabel_1);
 		
 		nomTbx = new JTextField();
+		nomTbx.setDocument(new JTextFieldLimit(30));
 		GridBagConstraints gbc_nomTbx = new GridBagConstraints();
 		gbc_nomTbx.insets = new Insets(0, 0, 5, 5);
 		gbc_nomTbx.fill = GridBagConstraints.HORIZONTAL;
@@ -138,6 +147,7 @@ public class AnimalScreen extends GenericScreen {
 		getContentPane().add(lblNewLabel_2, gbc_lblNewLabel_2);
 		
 		couleurTbx = new JTextField();
+		couleurTbx.setDocument(new JTextFieldLimit(20));
 		GridBagConstraints gbc_couleurTbx = new GridBagConstraints();
 		gbc_couleurTbx.insets = new Insets(0, 0, 5, 5);
 		gbc_couleurTbx.fill = GridBagConstraints.HORIZONTAL;
@@ -197,6 +207,7 @@ public class AnimalScreen extends GenericScreen {
 		getContentPane().add(lblNewLabel_5, gbc_lblNewLabel_5);
 		
 		tatouageTbx = new JTextField();
+		tatouageTbx.setDocument(new JTextFieldLimit(10));
 		GridBagConstraints gbc_tatouageTbx = new GridBagConstraints();
 		gbc_tatouageTbx.insets = new Insets(0, 0, 5, 5);
 		gbc_tatouageTbx.fill = GridBagConstraints.HORIZONTAL;
@@ -212,13 +223,22 @@ public class AnimalScreen extends GenericScreen {
 		validerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					controllerAnimal.saveAnimal(readAnimal());
-					parentScreen.processEvent("AddAnimal", null);
-					setVisible(false);
+					if(StringUtil.isNull(recupLblAnimal.getText())) {
+						controllerAnimal.newAnimal(readAnimal());
+						parentScreen.processEvent("AddAnimal", null);
+						showSuccessMessage("Animal enregistré !");
+						setVisible(false);
+					}
+					else {
+						controllerAnimal.saveAnimal(readAnimal());
+						parentScreen.processEvent("UpdateAnimal", null);
+						showSuccessMessage("Animal mise à jour !");
+						setVisible(false);
+					}
+					
 				} catch (Exception e) {
-					e.printStackTrace();
+					showFailureMessage(e.getMessage());
 				}
-				showSuccessMessage("Animal enregistré !");
 			}
 		});
 		
@@ -373,13 +393,6 @@ public class AnimalScreen extends GenericScreen {
 		Animal animal = new Animal();
 
 		//Recupère les champs de l'ihm :
-		
-		if(recupLblCli.getText() != "" && recupLblCli.getText() != null){
-
-			System.out.println(recupLblCli.getText());		
-			animal.setCodeAnimal(1);
-		}
-
 		animal.setNomAnimal(nomTbx.getText().trim());
 		animal.setCouleur(couleurTbx.getText().trim());
 		Race race = new Race();
