@@ -82,8 +82,8 @@ public class PersonnelManagerImpl implements PersonnelManager {
 		
 	}
 	
-	public Boolean connexion(Personnel personnel) throws ManagerException {
-		Boolean testCo = false;
+	public Personnel connexion(Personnel personnel) throws ManagerException {
+		Personnel connectPersonnel = null;
         try {
         	
         	ObjectUtil.checkNotBlankWithMessage(personnel.getNom(), "Le login est obligatoire");
@@ -93,10 +93,10 @@ public class PersonnelManagerImpl implements PersonnelManager {
             if(!personnel_nom.isEmpty()) {
             	List<Personnel> personnel_nom_mdp = personnelDAO.selectByNomMdp(personnel.getNom(), personnel.getMdp());
             	if(personnel_nom_mdp.isEmpty() || personnel_nom_mdp.size() != 1) {
-            		throw new IllegalArgumentException("Le mot de passe est incorrecte");
+            		throw new IllegalArgumentException("Le mot de passe est incorrect");
             	}
             	else {
-            		testCo = true;
+            		connectPersonnel = personnel_nom_mdp.get(0);
             	}
             }
             else{
@@ -108,7 +108,7 @@ public class PersonnelManagerImpl implements PersonnelManager {
         } catch (Exception e) {
             throw new TechnicalException(e.getMessage(), e);
         }
-        return testCo;
+        return connectPersonnel;
      }
 	
 	private void validerPersonnel(Personnel personnel) throws ManagerException {

@@ -70,17 +70,50 @@ public class AppliTestDAL {
     		LOGGER.info("Check inserting Animal : {}", animalDAO.insert(animal));
             LOGGER.info("Check reading Animal : {}", animalDAO.selectAll());
             
-            Personnel veto = new Personnel("leveterinaire", "123456", EnumRole.VETERINAIRE.getCode(), false);
-            LOGGER.info("Check inserting Veto : {}");
-            personnelDAO.insert(veto);	//veto has now code
+
             
-            Personnel u = new Personnel("u", "u", EnumRole.VETERINAIRE.getCode(), false);
+            Personnel u = new Personnel("u", "u", EnumRole.VET, false);
             LOGGER.info("Check inserting u : {}");
             personnelDAO.insert(u);
             
             
+            
+            Personnel admin = new Personnel("admin", "1", EnumRole.ADM, false);
+            LOGGER.info("Check inserting admin : {}");
+            personnelDAO.insert(admin); //new Personnel inserted, now code
+            
+            Personnel dev = new Personnel("dev", "1", EnumRole.DEV, false);
+            LOGGER.info("Check inserting dev : {}");
+            personnelDAO.insert(dev);
+            
+            Personnel secretaire = new Personnel("secretaire", "1", EnumRole.SEC, false);
+            LOGGER.info("Check inserting secretaire : {}");
+            personnelDAO.insert(secretaire);
+            
+            Personnel directeurtech = new Personnel("directeurtech", "1", EnumRole.SUP, false);
+            LOGGER.info("Check inserting directeurtech : {}");
+            personnelDAO.insert(directeurtech);
+            
+            Personnel assistant = new Personnel("assistant", "1", EnumRole.USR, false);
+            LOGGER.info("Check inserting assistant : {}");
+            personnelDAO.insert(assistant);
+            Personnel stagiaire = new Personnel("stagiaire", "1", EnumRole.USR, false);
+            LOGGER.info("Check inserting stagiaire : {}");
+            personnelDAO.insert(stagiaire);
+            
+            Personnel veterinaire = new Personnel("veterinaire", "1", EnumRole.VET, false);
+            LOGGER.info("Check inserting Veto : {}");
+            personnelDAO.insert(veterinaire);	
+            
+
+            
+
+            
+
+            
+            
             GregorianCalendar dateRdv = new GregorianCalendar();
-            Rdv rdv = new Rdv(veto, dateRdv, animal);
+            Rdv rdv = new Rdv(veterinaire, dateRdv, animal);
             LOGGER.info("Check inserting Rdv : {}", rdvDAO.insert(rdv));
             LOGGER.info("Check reading Rdv: {}", rdvDAO.selectById(rdv));
             LOGGER.info("Check reading all Rdv : {}", rdvDAO.selectAll());

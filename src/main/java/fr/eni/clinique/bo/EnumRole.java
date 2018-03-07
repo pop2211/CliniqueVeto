@@ -6,13 +6,20 @@ import java.util.List;
 
 public enum EnumRole {
 	
-    ADMIN("ADM", "Administrateur", "gestion administrative de la clinique (financière et ressources humaines)"), 
+	
+	ADMIN("ADM", "Administrateur", "gestion administrative de la clinique (financière et ressources humaines)"), 
     USER("USR", "Utilisateur", "aider les vétérinaires lors des consultations à la clinique en exécutant les actes de base. Souvent des stagiaires provenant des écoles vétérinaires."),
     SECRETAIRE("SEC", "Secrétaire", "lien entre la clinique et le client. Prise de rendez-vous téléphonique, préparation des tournées, facturation."), 
     VETERINAIRE("VET", "Vétérinaire", "effectuer des consultations à la clinique sur rendez-vous et effectuer des consultations à domicile (tournée planifiée)"),
     SUPPORT_TECH("SUP", "Support technique", "gestion du parc matériel de la clinique (matériel professionnel, bureautique et informatique)"),
     DEVELOPPEUR("DEV", "Développeur", "");
     
+	public static final String ADM = "ADM";
+	public static final String USR = "USR";
+	public static final String SEC = "SEC";
+	public static final String VET = "VET";
+	public static final String SUP = "SUP";
+	public static final String DEV = "DEV";
 	private String code; 
     private String libelle;
     private String description;

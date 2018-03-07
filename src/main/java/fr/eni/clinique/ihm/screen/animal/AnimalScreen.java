@@ -226,18 +226,18 @@ public class AnimalScreen extends GenericScreen {
 					if(StringUtil.isNull(recupLblAnimal.getText())) {
 						controllerAnimal.newAnimal(readAnimal());
 						parentScreen.processEvent("AddAnimal", null);
-						showSuccessMessage("Animal enregistré !");
 						setVisible(false);
+						showSuccessMessage("Animal enregistré !");
 					}
 					else {
 						controllerAnimal.saveAnimal(readAnimal());
+						
 						parentScreen.processEvent("UpdateAnimal", null);
-						showSuccessMessage("Animal mise à jour !");
 						setVisible(false);
+						showSuccessMessage("Animal mise à jour !");
 					}
-					
 				} catch (Exception e) {
-					showFailureMessage(e.getMessage());
+					errorOccured(e);
 				}
 			}
 		});
@@ -392,7 +392,13 @@ public class AnimalScreen extends GenericScreen {
 
 		Animal animal = new Animal();
 
-		//Recupère les champs de l'ihm :
+		Integer codeAnimal = null;
+		if(!StringUtil.isNull(recupLblAnimal.getText())) {
+			codeAnimal = Integer.parseInt(recupLblAnimal.getText());
+		}
+		
+		// Recupère les champs de l'ihm :
+		animal.setCodeAnimal(codeAnimal);
 		animal.setNomAnimal(nomTbx.getText().trim());
 		animal.setCouleur(couleurTbx.getText().trim());
 		Race race = new Race();

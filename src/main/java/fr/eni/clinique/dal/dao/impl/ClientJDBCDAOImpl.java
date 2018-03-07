@@ -23,7 +23,7 @@ public class ClientJDBCDAOImpl implements ClientDAO {
 	private static final String INSERT_QUERY = "INSERT INTO Clients(NomClient, PrenomClient, Adresse1, Adresse2, CodePostal, Ville, NumTel, Assurance, Email, Remarque, Archive) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 	private static final String DELETE_QUERY = "UPDATE Clients SET Archive=1 WHERE codeClient=?; UPDATE Animaux SET Archive=1 FROM Animaux a JOIN Clients c ON a.CodeClient = c.CodeClient WHERE c.Archive=1;";
 	private static final String TRUNCATE_QUERY = "DELETE FROM Clients; DBCC CHECKIDENT(Clients, RESEED, 0);";
-	private static final String SEARCH_QUERY = "SELECT * FROM Clients WHERE NomClient LIKE ? OR PrenomClient LIKE ?"+ NOT_ARCHIVE;
+	private static final String SEARCH_QUERY = "SELECT * FROM Clients WHERE (NomClient LIKE ? OR PrenomClient LIKE ?)"+ NOT_ARCHIVE;
 
 	private static ClientJDBCDAOImpl instance;
 

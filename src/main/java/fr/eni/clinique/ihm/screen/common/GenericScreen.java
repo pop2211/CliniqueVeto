@@ -42,8 +42,8 @@ public abstract class GenericScreen extends JInternalFrame {
 	 * @param e
 	 */
 	public void errorOccured(Exception e) {
+		e.printStackTrace(); //before modal popup
 		showFailureMessage(e.getMessage());
-		e.printStackTrace();
 	}
 
 	/**
