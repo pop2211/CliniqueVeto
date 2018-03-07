@@ -71,7 +71,7 @@ public class PersonnelScreen extends GenericScreen {
 		getContentPane().setLayout(gridBagLayout);
 		
 		JPanel panel = new JPanel();
-		panel.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+		panel.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.insets = new Insets(5, 5, 5, 5);
 		gbc_panel.anchor = GridBagConstraints.NORTH;

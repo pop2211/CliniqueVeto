@@ -375,7 +375,7 @@ public class RdvScreen extends GenericScreen {
 			chargeClient();
 		break;
 		case "AddAnimal":
-			//chargeAnimaux();
+			chargeAnimaux(((Item<Integer>) CbxClient.getSelectedItem()).getId());
 		}
 	}
 
@@ -406,11 +406,9 @@ public class RdvScreen extends GenericScreen {
 	}
 	
 	public AnimalScreen getFrameAddAnimal(Integer CodeCli) {
-		if (frameAddAnimal == null) {
-			
-			frameAddAnimal = new AnimalScreen((GenericScreen)this, CodeCli);
-			getMainScreen().getDesktopPane().add(frameAddAnimal);
-		}
+		frameAddAnimal = new AnimalScreen((GenericScreen)this, CodeCli);
+		getMainScreen().getDesktopPane().add(frameAddAnimal);
+		
 		return frameAddAnimal;
 	}
 }

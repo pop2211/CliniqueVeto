@@ -20,23 +20,31 @@ public class TableModelAnimal extends AbstractTableModel{
 	private List<Animal> animaux;
 	private Integer currentClientId;
 	
-	public TableModelAnimal(Integer currentClientId){
+	public TableModelAnimal(){
 		this.animalManagerImpl = AnimalManagerImpl.getInstance();
-		this.currentClientId = currentClientId;
 		refresh();
 	}
 	
+	public TableModelAnimal(Integer currentClientId){
+		this.animalManagerImpl = AnimalManagerImpl.getInstance();
+		setCurrentClientId(currentClientId);
+		refresh();
+	}
+	
+	public void setCurrentClientId(Integer currentClientId){
+		this.currentClientId = currentClientId;
+	}
+	
 	public void refresh(){
-		this.animaux = new ArrayList<Animal>();
 		try {
+			this.animaux = new ArrayList<Animal>();
 			if(currentClientId != null){
-				//TODO: ANIMAUX DU CLIENT AFFICHE
+				this.animaux = animalManagerImpl.selectByMaitre(currentClientId);
 			}
-			else{
-				this.animaux = animalManagerImpl.selectAll();
-			}
+			//else{
+			//	this.animaux = animalManagerImpl.selectAll();
+			//}
 		} catch (ManagerException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		this.fireTableDataChanged();	//UI Refresh

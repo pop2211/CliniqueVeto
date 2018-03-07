@@ -68,25 +68,10 @@ public class GenericClientScreen extends GenericScreen {
 	 * @param article
 	 */
 	public void showClient(Client client) {
-
-		//Active les champs si un client est selectionne
 		if (client == null) {
 			client = new Client();
 		}
 		currentCodeClient = client.getCodeClient();
-		Boolean enableFields = (currentCodeClient != null);
-		
-		codeTbx.setEnabled(false);	//(code always disabled)
-		nomTbx.setEnabled(enableFields);
-		prenomTbx.setEnabled(enableFields);
-		adresse1Tbx.setEnabled(enableFields);
-		adresse2Tbx.setEnabled(enableFields);
-		codePostalTbx.setEnabled(enableFields);
-		villeTbx.setEnabled(enableFields);
-		numTelTbx.setEnabled(enableFields);
-		assuranceTbx.setEnabled(enableFields);
-		emailTbx.setEnabled(enableFields);
-		remarqueTbx.setEnabled(enableFields);
 		
 		// Rempli les champs de l'ihm :
 		codeTbx.setText(ObjectUtil.nullToBlank(client.getCodeClient()).trim());

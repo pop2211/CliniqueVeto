@@ -15,6 +15,9 @@ import javax.swing.SwingConstants;
 import fr.eni.clinique.bo.Client;
 import fr.eni.clinique.ihm.screen.common.GenericScreen;
 import fr.eni.clinique.ihm.screen.common.JTextFieldLimit;
+import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
 
 public class AddClientScreen extends GenericClientScreen {
 
@@ -37,12 +40,25 @@ public class AddClientScreen extends GenericClientScreen {
 		setBounds(100, 100, 350, 416);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{20, 0, 0, 0, 0, 0, 0, 20, 0};
-		gridBagLayout.rowHeights = new int[]{20, 0, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowHeights = new int[]{20, 85, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		getContentPane().setLayout(gridBagLayout);
 		
+		JPanel panel = new JPanel();
+		panel.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
+		panel.setLayout(null);
+		GridBagConstraints gbc_panel = new GridBagConstraints();
+		gbc_panel.gridwidth = 6;
+		gbc_panel.insets = new Insets(0, 0, 5, 5);
+		gbc_panel.fill = GridBagConstraints.BOTH;
+		gbc_panel.gridx = 1;
+		gbc_panel.gridy = 1;
+		getContentPane().add(panel, gbc_panel);
+		
 		JButton validerBtn = new JButton("Valider");
+		validerBtn.setBounds(109, 10, 75, 59);
+		panel.add(validerBtn);
 		validerBtn.setIcon(new ImageIcon(AddClientScreen.class.getResource("/images/ico/done_32p.png")));
 		validerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -61,13 +77,10 @@ public class AddClientScreen extends GenericClientScreen {
 		});
 		validerBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
 		validerBtn.setHorizontalTextPosition(SwingConstants.CENTER);
-		GridBagConstraints gbc_validerBtn = new GridBagConstraints();
-		gbc_validerBtn.insets = new Insets(0, 0, 5, 5);
-		gbc_validerBtn.gridx = 4;
-		gbc_validerBtn.gridy = 1;
-		getContentPane().add(validerBtn, gbc_validerBtn);
 		
 		JButton annulerBtn = new JButton("Annuler");
+		annulerBtn.setBounds(194, 11, 75, 58);
+		panel.add(annulerBtn);
 		annulerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				showClient(new Client());	//reset fields
@@ -77,11 +90,6 @@ public class AddClientScreen extends GenericClientScreen {
 		annulerBtn.setIcon(new ImageIcon(AddClientScreen.class.getResource("/images/ico/undo_27p.png")));
 		annulerBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
 		annulerBtn.setHorizontalTextPosition(SwingConstants.CENTER);
-		GridBagConstraints gbc_annulerBtn = new GridBagConstraints();
-		gbc_annulerBtn.insets = new Insets(0, 0, 5, 5);
-		gbc_annulerBtn.gridx = 5;
-		gbc_annulerBtn.gridy = 1;
-		getContentPane().add(annulerBtn, gbc_annulerBtn);
 		
 		
 		
