@@ -39,13 +39,21 @@ public class GenericClientScreen extends GenericScreen {
 	protected JTextField adresse2Tbx;
 	protected JTextField codePostalTbx;
 	protected JTextField villeTbx;
-	protected JTable animauxTable;
 	protected JTextField numTelTbx;
 	protected JTextField assuranceTbx;
 	protected JTextField emailTbx;
 	protected JTextField remarqueTbx;
 	
-
+	final int MAXLENGTH_NOM = 20;
+	final int MAXLENGTH_PRENOM = 20;
+	final int MAXLENGTH_ADRESSE1 = 30;
+	final int MAXLENGTH_ADRESSE2 = 30;
+	final int MAXLENGTH_CODEPOSTAL = 5;
+	final int MAXLENGTH_VILLE = 25;
+	final int MAXLENGTH_NUMTEL = 15;
+	final int MAXLENGTH_ASSURANCE = 30;
+	final int MAXLENGTH_EMAIL = 20;
+	
 	public GenericClientScreen(String title, Boolean b1, Boolean b2, Boolean b3, Boolean b4) {
 		super(title, b1, b2, b3, b4);
 	}
