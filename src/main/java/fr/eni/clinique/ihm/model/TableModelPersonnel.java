@@ -81,7 +81,7 @@ public class TableModelPersonnel extends AbstractTableModel{
 
 		case 3:
 
-			return personnels.get(rowIndex).getMdp();
+			return personnels.get(rowIndex).getMdp().replaceAll(".", "*");
 
 		default:
 			throw new IllegalArgumentException();

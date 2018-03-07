@@ -26,6 +26,7 @@ public class PersonnelJDBCDAOImpl implements PersonnelDAO{
     private static final String DELETE_QUERY = "UPDATE Personnels SET Archive=1 WHERE CodePers=?";
     private static final String TRUNCATE_QUERY = "DELETE FROM Personnels; DBCC CHECKIDENT(Personnels, RESEED, 0);";
     private static final String SELECT_BY_ROLE = "SELECT * FROM Personnels WHERE Role = ?"+ NOT_ARCHIVE;
+	private static final String UPDATE_PSW_QUERY = "UPDATE Personnels Set MotPasse=? WHERE CodePers=?";
     
     private static PersonnelJDBCDAOImpl instance;
     
@@ -116,7 +117,7 @@ public class PersonnelJDBCDAOImpl implements PersonnelDAO{
             statement.setString(3, personnel.getRole());
             statement.setBoolean(4, personnel.isArchive());
             
-            statement.setInt(12, personnel.getCodePers());
+            statement.setInt(5, personnel.getCodePers());
 			if (statement.executeUpdate() == 0) {
 				throw new DaoException("Erreur update personnel");
 			}
@@ -142,6 +143,30 @@ public class PersonnelJDBCDAOImpl implements PersonnelDAO{
             statement = connection.prepareStatement(DELETE_QUERY);
             statement.setInt(1, id);
             statement.executeUpdate();
+            
+        } catch(SQLException e) {
+            throw new DaoException(e.getMessage(), e);
+        } finally {
+            ResourceUtil.safeClose(connection, statement);
+        }
+	}
+	
+	public void updateByCode(Integer codePersonnel, String mdp) throws DaoException {
+		Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+	    	connection = JdbcTools.get();
+	         
+	        statement = connection.prepareStatement(UPDATE_PSW_QUERY);
+	        
+	        statement.setString(1, mdp);
+            statement.setInt(2, codePersonnel);
+	        
+            
+			if (statement.executeUpdate() == 0) {
+				throw new DaoException("Erreur update personnel");
+			}
+            
             
         } catch(SQLException e) {
             throw new DaoException(e.getMessage(), e);

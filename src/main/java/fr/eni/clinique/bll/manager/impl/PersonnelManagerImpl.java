@@ -155,6 +155,18 @@ public class PersonnelManagerImpl implements PersonnelManager {
 		return personnels;
 	}
 
+	@Override
+	public void updateByCode(Integer codePersonnel, String mdp) throws ManagerException {
+			
+		try {
+            
+        	personnelDAO.updateByCode(codePersonnel, mdp);
+            
+        } catch (DaoException e) {
+            throw new ManagerException("Erreur update personnel par Code", e);
+        }
+	}
+
 
 
 }

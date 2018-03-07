@@ -230,7 +230,7 @@ public class MainScreen extends JFrame implements ActionListener {
 
 	public InternalFrameLogin getFrameLogin(PersonnelModel model, PersonnelController controller) {
 		if (frameLogin == null) {
-			frameLogin = new InternalFrameLogin(model, controller);
+			frameLogin = new InternalFrameLogin(this, model, controller);
 		}
 		return frameLogin;
 	}

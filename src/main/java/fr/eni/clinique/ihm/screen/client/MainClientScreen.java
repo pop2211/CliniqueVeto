@@ -438,7 +438,7 @@ public class MainClientScreen extends GenericClientScreen {
 
 		
 		// test chargement premier client a l'ouverture fenetre
-		processEvent("showClientById", 1);
+		processEvent("AddClient", 1);
 		
 		this.pack();
 	}
@@ -491,6 +491,10 @@ public class MainClientScreen extends GenericClientScreen {
 			break;
 			case "AddAnimal":
 				modelAnimalTable.refresh();
+			break;
+			default :
+				System.out.println("GenericClientScreen unknow event: "+ eventName);
+				//TODO throws Exception
 			break;
 		}
 	}
