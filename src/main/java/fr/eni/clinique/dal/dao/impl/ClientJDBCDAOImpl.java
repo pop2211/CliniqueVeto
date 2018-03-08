@@ -225,24 +225,17 @@ public class ClientJDBCDAOImpl implements ClientDAO {
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		List<Client> liste = new ArrayList<Client>();
-
-		System.out.println("iiiiiiiiiiiiiiiiiii");
-		System.out.println(SEARCH_QUERY);
 		
 		try {
 			connection = JdbcTools.get();
-			//if("".equals(search)){
-			//	return selectAll();
-			// => resultSet not have nbAnimaux
-			//}
 			statement = connection.prepareStatement(SEARCH_QUERY);
+			//(SELECT_ALL resultSet not have nbAnimaux)
 			statement.setString(1, '%'+search+'%');
 			statement.setString(2, '%'+search+'%');
 			resultSet = statement.executeQuery();
 			
 			while (resultSet.next()) {
 				Client cli = resultSetEntryToClient(resultSet);
-				//cli.setNbAnimaux(resultSet.getInt("NbAnimaux"));
 				liste.add(cli);
 			}
 		} catch (Exception e) {
