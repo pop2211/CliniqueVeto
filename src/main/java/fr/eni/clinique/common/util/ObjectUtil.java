@@ -1,5 +1,9 @@
 package fr.eni.clinique.common.util;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import fr.eni.clinique.common.AppConstants;
 
 public class ObjectUtil {
@@ -74,8 +78,11 @@ public class ObjectUtil {
         }
     }
     
-    public static void checkTimestamp(Object element, String message) {
-        if(((String) element).matches("/d{4}-/d{2}-/d{2} /d{2}:/d{2}")) {
+    public static void checkTimestamp(Timestamp timestamp, String message) {
+    	Date date = new Date();
+    	date.setTime(timestamp.getTime());
+    	String formattedDate = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(date);
+    	if(formattedDate.matches("/d{4}-/d{2}-/d{2} /d{2}:/d{2}")) {
             throw new IllegalArgumentException(message);
         }
     }

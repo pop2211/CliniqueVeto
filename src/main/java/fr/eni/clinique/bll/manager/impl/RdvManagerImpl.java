@@ -9,10 +9,11 @@ import fr.eni.clinique.bo.Rdv;
 import fr.eni.clinique.common.exception.TechnicalException;
 import fr.eni.clinique.common.util.ObjectUtil;
 import fr.eni.clinique.dal.dao.RdvDAO;
+import fr.eni.clinique.dal.exception.DaoException;
 import fr.eni.clinique.dal.factory.DaoFactory;
 
 public class RdvManagerImpl implements RdvManager{
-	private RdvDAO RdvDAO = DaoFactory.RdvDAO();
+	private RdvDAO rdvDAO = DaoFactory.RdvDAO();
     
 	private static RdvManagerImpl instance;
 	 
@@ -24,9 +25,16 @@ public class RdvManagerImpl implements RdvManager{
 	}
 
 	@Override
-	public Rdv insert(Rdv element) throws ManagerException {
-		validerRdv(element);
-		return null;
+	public Rdv insert(Rdv rdv) throws ManagerException {
+        try {
+        	validerRdv(rdv);
+            
+        	rdv = rdvDAO.insert(rdv);
+            
+        } catch (DaoException e) {
+            throw new ManagerException("Echec addRdv", e);
+        }
+        return rdv;
 	}
 
 	@Override

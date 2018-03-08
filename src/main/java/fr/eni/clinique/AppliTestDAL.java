@@ -1,5 +1,6 @@
 package fr.eni.clinique;
 
+import java.sql.Timestamp;
 import java.util.GregorianCalendar;
 
 import org.slf4j.Logger;
@@ -111,8 +112,8 @@ public class AppliTestDAL {
             
 
             
-            
-            GregorianCalendar dateRdv = new GregorianCalendar();
+            java.util.Date date= new java.util.Date();
+            Timestamp dateRdv = new Timestamp(date.getTime());
             Rdv rdv = new Rdv(veterinaire, dateRdv, animal);
             LOGGER.info("Check inserting Rdv : {}", rdvDAO.insert(rdv));
             LOGGER.info("Check reading Rdv: {}", rdvDAO.selectById(rdv));
