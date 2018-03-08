@@ -156,14 +156,16 @@ public class PersonnelManagerImpl implements PersonnelManager {
 	}
 
 	@Override
-	public void updateByCode(Integer codePersonnel, String mdp) throws ManagerException {
-			
-		try {
-            
-        	personnelDAO.updateByCode(codePersonnel, mdp);
-            
-        } catch (DaoException e) {
-            throw new ManagerException("Erreur update personnel par Code", e);
+	public void updatePasswordByCode(Integer codePersonnel, String mdp) throws ManagerException {
+        if(mdp.length() < 3){
+        	throw  new ManagerException("Veuillez saisir au moins 3 caractères pour le mot de passe");
+        }
+        else{
+    		try {
+            	personnelDAO.updateByCode(codePersonnel, mdp);
+            } catch (DaoException e) {
+                throw new ManagerException("Une erreur s'est produite lors de la mise a jour du personnel", e);
+            }
         }
 	}
 

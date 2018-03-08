@@ -69,7 +69,7 @@ public class AnimalDossierMedicalScreen extends GenericScreen {
 	
 	
 	public AnimalDossierMedicalScreen(GenericScreen parentScreen, Integer CodeClient, Integer CodeAnimal) {
-		super("Gestion des Animaux", true, true, true,true);
+		super("Modification de l'animal", true, true, true,true);
 		
 		setBounds(100, 100, 609, 452);
 		
