@@ -4,30 +4,35 @@ import java.awt.EventQueue;
 
 import javax.swing.JInternalFrame;
 
-public class AgendaScreen extends JInternalFrame {
+import fr.eni.clinique.ihm.screen.common.GenericScreen;
+
+public class AgendaScreen extends GenericScreen {
+
 
 	/**
-	 * Launch the application.
+	 * 
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AgendaScreen frame = new AgendaScreen();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private static final long serialVersionUID = -6638231117920115532L;
 
 	/**
 	 * Create the frame.
 	 */
 	public AgendaScreen() {
+		
+		super("Gestion des Agendas", true, true, true, true);
+		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
+		
 		setBounds(100, 100, 450, 300);
+		
+		
+		
+		this.pack();
+	}
 
+	@Override
+	public void processEvent(String eventName, Object eventParam) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
