@@ -20,27 +20,23 @@ public class TableModelRDV extends AbstractTableModel{
 	private ClientController controller;
 	private RdvManagerImpl rdvManagerImpl;
 	private Integer currentVetoId;
+	private String currentDate;
 
 	private List<Rdv> rdvs;
-	
-	public TableModelRDV() {
-		rdvManagerImpl = RdvManagerImpl.getInstance();
-		try {
-			rdvs = rdvManagerImpl.selectAll();
-		} catch (ManagerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 	
 	public TableModelRDV(Integer currentVetoId){
 		this.rdvManagerImpl = RdvManagerImpl.getInstance();
 		setCurrentVetoId(currentVetoId);
+		setCurrentDate(currentDate);
 		refresh();
 	}
 	
 	public void setCurrentVetoId(Integer currentVetoId){
 		this.currentVetoId = currentVetoId;
+	}
+	
+	public void setCurrentDate(String currentDate){
+		this.currentDate = currentDate;
 	}
 	
 	public void refresh(){

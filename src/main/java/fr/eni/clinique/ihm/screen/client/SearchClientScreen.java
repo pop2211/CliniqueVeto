@@ -47,6 +47,8 @@ public class SearchClientScreen extends GenericClientScreen {
 	private JPanel panel;
 	private JScrollPane scrollPane;
 	
+	private Boolean loadingResultsLst = false;
+	
 	
 	/**
 	 * Create the frame.
@@ -125,7 +127,7 @@ public class SearchClientScreen extends GenericClientScreen {
 		
 		resultsLst.addListSelectionListener(new ListSelectionListener() {
 		    public void valueChanged(ListSelectionEvent event) {
-		        if (!event.getValueIsAdjusting()){
+		        if (!event.getValueIsAdjusting() && !loadingResultsLst){
 		            JList source = (JList)event.getSource();
 		            Integer found = source.getSelectedIndex();
 		            if(found > -1){
@@ -144,19 +146,27 @@ public class SearchClientScreen extends GenericClientScreen {
 	}
 	
 	public void launchSearch(){
+		loadingResultsLst = true;
 		String searchValue = searchTbx.getText().trim();
 		try {
 			List<Client> clients = controllerClient.loadSearchClient(searchValue);
 			resultsLstModel.removeAllElements();
 			if(!clients.isEmpty()) {
 				for (Client client : clients) {
-					resultsLstModel.addElement( new Item(client.getCodeClient(), client.getFullname()));
+					String resultLabel = client.getFullname();
+					if(client.getNbAnimaux() != null && client.getNbAnimaux() > 0){
+						resultLabel += " ("+ client.getNbAnimaux();
+						if(client.getNbAnimaux()==1) resultLabel += " animal)";
+						else resultLabel += " animaux)";
+					}
+					resultsLstModel.addElement( new Item(client.getCodeClient(), resultLabel));
 				}
 			}
 		} catch (ManagerException e) {
 			e.printStackTrace();
 		}
 		resultsLst.setListData(resultsLstModel);
+		loadingResultsLst = false;
 	}
 	
 	

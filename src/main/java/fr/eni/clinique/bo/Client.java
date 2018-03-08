@@ -16,7 +16,8 @@ public class Client {
 	private String assurance;
 	private String email;
 	private String remarque;
-	private List<Animal> animaux = new ArrayList<Animal>();
+	//private List<Animal> animaux = new ArrayList<Animal>();
+	private Integer nbAnimaux;
 	private Boolean archive;
 
 	public Client() {
@@ -26,7 +27,7 @@ public class Client {
 
 	public Client(Integer codeClient, String nomClient, String prenomClient, String adresse1, String adresse2,
 			String codePostal, String ville, String numTel, String assurance, String email, String remarque,
-			List<Animal> animaux, Boolean archive) {
+			Integer nbAnimaux, Boolean archive) {
 		super();
 		this.codeClient = codeClient;
 		this.nomClient = nomClient;
@@ -39,7 +40,8 @@ public class Client {
 		this.assurance = assurance;
 		this.email = email;
 		this.remarque = remarque;
-		this.animaux = animaux;
+		//this.animaux = animaux;
+		this.nbAnimaux = nbAnimaux;
 		this.archive = archive;
 	}
 	
@@ -174,13 +176,22 @@ public class Client {
 		this.remarque = remarque;
 	}
 	
-	public List<Animal> getAnimaux() {
-		return animaux;
+//	public List<Animal> getAnimaux() {
+//		return animaux;
+//	}
+//
+//	public void setAnimaux(List<Animal> animaux) {
+//		this.animaux = animaux;
+//	}
+	
+	public Integer getNbAnimaux() {
+		return nbAnimaux;
 	}
 
-	public void setAnimaux(List<Animal> animaux) {
-		this.animaux = animaux;
+	public void setNbAnimaux(Integer nbAnimaux) {
+		this.nbAnimaux = nbAnimaux;
 	}
+
 
 	public Boolean getArchive() {
 		return archive;
@@ -216,8 +227,8 @@ public class Client {
 		builder.append(email);
 		builder.append(", remarque=");
 		builder.append(remarque);
-		builder.append(", animaux=");
-		builder.append(animaux);
+		builder.append(", nbAnimaux=");
+		builder.append(nbAnimaux);
 		builder.append(", archive=");
 		builder.append(archive);
 		builder.append("]");
