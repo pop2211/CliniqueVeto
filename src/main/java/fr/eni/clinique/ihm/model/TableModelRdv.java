@@ -36,8 +36,7 @@ public class TableModelRdv extends AbstractTableModel{
 	public void refresh(Integer currentVetoId, String date){
 		try {
 			this.rdvs = rdvManagerImpl.selectByVetAndDate(currentVetoId, date);
-			System.out.println(rdvs);
-		} catch (ManagerException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
@@ -64,29 +63,39 @@ public class TableModelRdv extends AbstractTableModel{
 		return rdvs.size();
 	}
 	
-
+	
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
+		String txt = "";
+		
 		switch (columnIndex) {
 		
 		case 0:
-			
 			return rdvs.get(rowIndex).getTime();
 			
 		case 1:
 			try {
-				return (clientManagerImpl.selectById(rdvs.get(rowIndex).getAnimal().getCodeClient())).getFullname();
-			} catch (ManagerException e) {
-				e.printStackTrace();
+				txt = clientManagerImpl.selectById(rdvs.get(rowIndex).getAnimal().getCodeClient()).getFullname();
+			} catch (Exception e) {
+				//e.printStackTrace();
 			}
+			return txt;
 
 		case 2:		
-			
-			return rdvs.get(rowIndex).getAnimal().getNomAnimal();
+			try {
+				txt = rdvs.get(rowIndex).getAnimal().getNomAnimal();
+			} catch (Exception e) {
+				//e.printStackTrace();
+			}
+			return txt;
 
 		case 3:
-
-			return rdvs.get(rowIndex).getAnimal().getRace().getRace();
+			try {
+				txt = rdvs.get(rowIndex).getAnimal().getRace().getRace();
+			} catch (Exception e) {
+				//e.printStackTrace();
+			}
+			return txt;
 
 		default:
 			throw new IllegalArgumentException();
