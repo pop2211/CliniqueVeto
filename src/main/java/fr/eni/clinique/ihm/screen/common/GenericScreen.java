@@ -98,6 +98,7 @@ public abstract class GenericScreen extends JInternalFrame {
 	public ClientController getControllerClient() {
 		return controllerClient;
 	}
+	
 	//=============================================
 	
 	
