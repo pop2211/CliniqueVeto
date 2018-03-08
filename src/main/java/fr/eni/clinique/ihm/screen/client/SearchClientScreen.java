@@ -47,6 +47,8 @@ public class SearchClientScreen extends GenericClientScreen {
 	private JPanel panel;
 	private JScrollPane scrollPane;
 	
+	private Boolean loadingResultsLst = false;
+	
 	
 	/**
 	 * Create the frame.
@@ -125,7 +127,7 @@ public class SearchClientScreen extends GenericClientScreen {
 		
 		resultsLst.addListSelectionListener(new ListSelectionListener() {
 		    public void valueChanged(ListSelectionEvent event) {
-		        if (!event.getValueIsAdjusting()){
+		        if (!event.getValueIsAdjusting() && !loadingResultsLst){
 		            JList source = (JList)event.getSource();
 		            Integer found = source.getSelectedIndex();
 		            if(found > -1){
@@ -144,6 +146,7 @@ public class SearchClientScreen extends GenericClientScreen {
 	}
 	
 	public void launchSearch(){
+		loadingResultsLst = true;
 		String searchValue = searchTbx.getText().trim();
 		try {
 			List<Client> clients = controllerClient.loadSearchClient(searchValue);
@@ -163,6 +166,7 @@ public class SearchClientScreen extends GenericClientScreen {
 			e.printStackTrace();
 		}
 		resultsLst.setListData(resultsLstModel);
+		loadingResultsLst = false;
 	}
 	
 	
