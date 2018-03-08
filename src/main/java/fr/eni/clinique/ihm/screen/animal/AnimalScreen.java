@@ -37,6 +37,8 @@ import fr.eni.clinique.ihm.screen.common.JTextFieldLimit;
 
 public class AnimalScreen extends GenericScreen {
 	
+	//Screen to create new animal or edit existing one
+	
 	private static final long serialVersionUID = -1179642960437851179L;
 	
 	private JTextField tatouageTbx;
@@ -294,14 +296,17 @@ public class AnimalScreen extends GenericScreen {
 
 		annulerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if("".equals(recupLblCli.getText()) || recupLblCli.getText() == null){
+				String codeAnimal = recupLblAnimal.getText();
+				if("".equals(codeAnimal) || codeAnimal == null){
+					//annule ajout animal
 					setVisible(false);
 				}else{
 					try {
+						//annule edition animal existant et recharge les champs
 						Animal currentAnimal = readAnimal();
 						Animal reloadedAnimal = controllerAnimal.loadAnimal(currentAnimal.getCodeAnimal());
 						showAnimal(reloadedAnimal);
-						showSuccessMessage("Client rechargé !");
+						showSuccessMessage("Animal rechargé !");
 					} catch (Exception e1) {
 						showFailureMessage(e1.getMessage());
 					}
