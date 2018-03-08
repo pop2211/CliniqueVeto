@@ -109,6 +109,7 @@ public class RdvJDBCDAOImpl implements RdvDAO{
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
+        	
             connection = JdbcTools.get();
             
             statement = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS);

@@ -45,9 +45,13 @@ public class RdvManagerImpl implements RdvManager{
 	}
 
 	@Override
-	public void delete(Integer id) throws ManagerException {
-		// TODO Auto-generated method stub
-		
+	public void deleteRdv(Rdv rdv) throws ManagerException {
+		try {
+        	rdvDAO.delete(rdv);
+            
+        } catch (DaoException e) {
+            throw new ManagerException("Echec addRdv", e);
+        }
 	}
 
 	@Override
@@ -88,6 +92,12 @@ public class RdvManagerImpl implements RdvManager{
             throw new ManagerException("Erreur récupération Liste RDV", e);
         }
 		return listeRendezVous;
+	}
+
+	@Override
+	public void delete(Integer id) throws ManagerException {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

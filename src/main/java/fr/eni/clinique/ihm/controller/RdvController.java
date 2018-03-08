@@ -28,4 +28,12 @@ public class RdvController {
 		return rdvManager.selectByVetAndDate(codeAnimal, date);
 	}
 
+	public void remove(Rdv rdv) {
+		try {
+			rdvManager.deleteRdv(rdv);
+		} catch (ManagerException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

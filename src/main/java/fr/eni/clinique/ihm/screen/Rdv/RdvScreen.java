@@ -25,7 +25,6 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableCellRenderer;
 
 import org.jdatepicker.ComponentFormatDefaults;
 import org.jdatepicker.JDatePicker;
@@ -225,8 +224,11 @@ public class RdvScreen extends GenericScreen {
 		}
 		CbxVeterinaire.setMaximumSize(new Dimension(125, 20));
 		CbxVeterinaire.setMinimumSize(new Dimension(125, 20));
-		
-		CbxVeterinaire.setMinimumSize(new Dimension(100, 20));
+		CbxVeterinaire.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				processEvent("ChangeVeto", null);
+			}
+		});
 		GridBagConstraints gbc_CbxVeterinaire = new GridBagConstraints();
 		gbc_CbxVeterinaire.fill = GridBagConstraints.HORIZONTAL;
 		gbc_CbxVeterinaire.insets = new Insets(0, 10, 0, 0);
@@ -271,7 +273,12 @@ public class RdvScreen extends GenericScreen {
         datePicker = new JDatePicker();
         datePicker.getFormattedTextField().setColumns(1);
         datePicker.getFormattedTextField().setText(new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime()));
-		GridBagConstraints gbc_textField = new GridBagConstraints();
+        datePicker.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				processEvent("ChangeDate", null);
+			}
+		});
+        GridBagConstraints gbc_textField = new GridBagConstraints();
 		gbc_textField.gridwidth = 4;
 		gbc_textField.insets = new Insets(0, 10, 5, 0);
 		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
@@ -331,6 +338,10 @@ public class RdvScreen extends GenericScreen {
 		btnSupprimer.setMaximumSize(new Dimension(100, 23));
 		btnSupprimer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				Rdv rdv = tableModelRdv.getRdvs().get(tableClient.getSelectedRow());
+				controllerRdv.remove(rdv);
+				processEvent("DeleteRdv", null);
+				showSuccessMessage("Rendez-vous Supprimé !");
 			}
 		});
 		
@@ -414,20 +425,35 @@ public class RdvScreen extends GenericScreen {
 				chargeAnimaux(((Item<Integer>) CbxClient.getSelectedItem()).getId());
 			break;
 			case "AddRdv":
-				Integer numVeto = ((Item<Integer>) CbxVeterinaire.getSelectedItem()).getId();
-				try {
-					Date initDate = new SimpleDateFormat("dd/MM/yyyy").parse(datePicker.getFormattedTextField().getText());
-					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-				    String parsedDate = formatter.format(initDate);
-				    tableModelRdv.refresh(numVeto, parsedDate);
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			break;	
+				tableModelRdv.refresh(getActualVeto(), getActualDate());
+			break;
+			case "DeleteRdv":
+				tableModelRdv.refresh(getActualVeto(), getActualDate());
+			break;
+			case "ChangeVeto":
+			    tableModelRdv.refresh(getActualVeto(), getActualDate());
+			break;
+			case "ChangeDate":
+			    tableModelRdv.refresh(getActualVeto(), getActualDate());
+			break;
 		}
 	}
-
+	
+	private String getActualDate() {
+		String parsedDate = null;
+		try {
+			Date initDate = new SimpleDateFormat("dd/MM/yyyy").parse(datePicker.getFormattedTextField().getText());
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		    parsedDate = formatter.format(initDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		 return parsedDate;
+	}
+	
+	private Integer getActualVeto() {
+		return ((Item<Integer>) CbxVeterinaire.getSelectedItem()).getId();
+	}
 	
 	private Rdv readRdv() {
 

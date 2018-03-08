@@ -4,12 +4,9 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import fr.eni.clinique.bll.exception.ManagerException;
-import fr.eni.clinique.bll.manager.impl.AnimalManagerImpl;
 import fr.eni.clinique.bll.manager.impl.ClientManagerImpl;
 import fr.eni.clinique.bll.manager.impl.RdvManagerImpl;
 import fr.eni.clinique.bo.Rdv;
-import fr.eni.clinique.ihm.controller.ClientController;
 
 public class TableModelRdv extends AbstractTableModel{
 
@@ -43,7 +40,7 @@ public class TableModelRdv extends AbstractTableModel{
 		this.fireTableDataChanged();	//UI Refresh
 	}
 	
-	public List<Rdv> getNotes() {
+	public List<Rdv> getRdvs() {
 		return rdvs;
 	}
 	
