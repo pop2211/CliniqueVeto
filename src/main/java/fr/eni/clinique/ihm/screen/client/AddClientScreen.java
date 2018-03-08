@@ -65,12 +65,10 @@ public class AddClientScreen extends GenericClientScreen {
 				Client saveIt = readClient();
 				try {
 					controllerClient.saveClient(saveIt);
-					showSuccessMessage("Client ajouté !");
 					parentScreen.processEvent("AddClient", saveIt.getCodeClient());
 					setVisible(false);
+					showSuccessMessage("Client ajouté !");
 				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
 					errorOccured(e1);
 				}
 			}
