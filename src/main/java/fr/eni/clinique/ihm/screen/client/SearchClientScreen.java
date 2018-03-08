@@ -150,7 +150,13 @@ public class SearchClientScreen extends GenericClientScreen {
 			resultsLstModel.removeAllElements();
 			if(!clients.isEmpty()) {
 				for (Client client : clients) {
-					resultsLstModel.addElement( new Item(client.getCodeClient(), client.getFullname()));
+					String resultLabel = client.getFullname();
+					if(client.getNbAnimaux() != null && client.getNbAnimaux() > 0){
+						resultLabel += " ("+ client.getNbAnimaux();
+						if(client.getNbAnimaux()==1) resultLabel += " animal)";
+						else resultLabel += " animaux)";
+					}
+					resultsLstModel.addElement( new Item(client.getCodeClient(), resultLabel));
 				}
 			}
 		} catch (ManagerException e) {

@@ -453,7 +453,6 @@ public class MainClientScreen extends GenericClientScreen {
 		editerAnimalBtn = new JButton("Editer");
 		editerAnimalBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("editerAnimalBtn getCurrentCodeAnimal: "+ getCurrentCodeAnimal());
 				frameAnimal = getFrameAnimal(Integer.parseInt(codeTbx.getText()));
 				try {
 					Integer animalId = getCurrentCodeAnimal();

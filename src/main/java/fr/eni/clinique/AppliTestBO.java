@@ -35,7 +35,7 @@ public class AppliTestBO {
 		LOGGER.info(animal.getCouleur());
 		
 		LOGGER.info("Test class Client");
-		Client client = new Client(5, "lagaffe", "vincent", "8 rue de lala", "bis", "49000", "Angers", "0606060606", "maf", "aze@rty.fr", "ne paye pas", animaux, false);
+		Client client = new Client(5, "lagaffe", "vincent", "8 rue de lala", "bis", "49000", "Angers", "0606060606", "maf", "aze@rty.fr", "ne paye pas", 0, false);
 		LOGGER.info(client.toString());
 		
 		LOGGER.info("Test class Personel");
