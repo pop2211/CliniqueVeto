@@ -3,6 +3,11 @@ package fr.eni.clinique.ihm.screen.common;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import fr.eni.clinique.AppliTestDAL;
+import fr.eni.clinique.bo.EnumRole;
 import fr.eni.clinique.ihm.controller.AnimalController;
 import fr.eni.clinique.ihm.controller.ClientController;
 import fr.eni.clinique.ihm.controller.PersonnelController;
@@ -20,6 +25,8 @@ public abstract class GenericScreen extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
 	protected MainScreen mainScreen;
 	protected GenericScreen parentScreen;
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(AppliTestDAL.class);
 	
 	public GenericScreen(String title, Boolean b1, Boolean b2,  Boolean b3,  Boolean b4){
 		super(title, b1, b2, b3, b4);
@@ -42,7 +49,11 @@ public abstract class GenericScreen extends JInternalFrame {
 	 * @param e
 	 */
 	public void errorOccured(Exception e) {
-		e.printStackTrace(); //before modal popup
+		LOGGER.error("ERROR", e);
+		//if user is dev show stack trace (before modal popup)
+		if(getMainScreen().getProfil() == EnumRole.DEV){
+			e.printStackTrace();
+		}
 		showFailureMessage(e.getMessage());
 	}
 

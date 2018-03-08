@@ -301,7 +301,7 @@ public class AnimalScreen extends GenericScreen {
 						showAnimal(reloadedAnimal);
 						showSuccessMessage("Animal rechargé !");
 					} catch (Exception e1) {
-						showFailureMessage(e1.getMessage());
+						errorOccured(e1);
 					}
 				}
 			}

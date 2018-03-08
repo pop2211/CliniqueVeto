@@ -186,11 +186,14 @@ public class PersonnelScreen extends GenericScreen {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					Integer personnelId = getCurrentPersonnelId();
+					if(personnelId == -1){
+						throw new Exception("Aucun personnel séléctionné");
+					}
 					controller.deletePersonnel(personnelId);
 					modelTable.refresh();
 					showSuccessMessage("Personnel archivé !");
 				} catch (Exception e1) {
-					showFailureMessage(e1.getMessage());
+					errorOccured(e1);
 				}
 			}
 

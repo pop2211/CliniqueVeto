@@ -170,7 +170,7 @@ public class MainClientScreen extends GenericClientScreen {
 					controllerClient.saveClient(saveIt);
 					showSuccessMessage("Client enregistré !");
 				} catch (Exception e1) {
-					showFailureMessage(e1.getMessage());
+					errorOccured(e1);
 				}
 			}
 		});
@@ -462,7 +462,7 @@ public class MainClientScreen extends GenericClientScreen {
 					modelAnimalTable.refresh();
 					showSuccessMessage("Animal archivé !");
 				} catch (Exception e1) {
-					showFailureMessage(e1.getMessage());
+					errorOccured(e1);
 				}
 			}
 		});
