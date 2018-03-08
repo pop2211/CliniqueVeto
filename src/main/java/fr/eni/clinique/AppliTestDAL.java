@@ -95,10 +95,10 @@ public class AppliTestDAL {
             LOGGER.info("Check inserting directeurtech : {}");
             personnelDAO.insert(directeurtech);
             
-            Personnel assistant = new Personnel("assistant", "1", EnumRole.USR, false);
+            Personnel assistant = new Personnel("assistant", "1", EnumRole.ASS, false);
             LOGGER.info("Check inserting assistant : {}");
             personnelDAO.insert(assistant);
-            Personnel stagiaire = new Personnel("stagiaire", "1", EnumRole.USR, false);
+            Personnel stagiaire = new Personnel("stagiaire", "1", EnumRole.ASS, false);
             LOGGER.info("Check inserting stagiaire : {}");
             personnelDAO.insert(stagiaire);
             

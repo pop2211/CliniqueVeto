@@ -63,9 +63,11 @@ public class TableModelRdv extends AbstractTableModel{
 		return rdvs.size();
 	}
 	
-
+	
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
+		String txt = "";
+		
 		switch (columnIndex) {
 		
 		case 0:
@@ -73,18 +75,27 @@ public class TableModelRdv extends AbstractTableModel{
 			
 		case 1:
 			try {
-				return (clientManagerImpl.selectById(rdvs.get(rowIndex).getAnimal().getCodeClient())).getFullname();
-			} catch (ManagerException e) {
+				txt = clientManagerImpl.selectById(rdvs.get(rowIndex).getAnimal().getCodeClient()).getFullname();
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			return txt;
 
 		case 2:		
-			
-			return rdvs.get(rowIndex).getAnimal().getNomAnimal();
+			try {
+				txt = rdvs.get(rowIndex).getAnimal().getNomAnimal();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return txt;
 
 		case 3:
-
-			return rdvs.get(rowIndex).getAnimal().getRace().getRace();
+			try {
+				txt = rdvs.get(rowIndex).getAnimal().getRace().getRace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return txt;
 
 		default:
 			throw new IllegalArgumentException();

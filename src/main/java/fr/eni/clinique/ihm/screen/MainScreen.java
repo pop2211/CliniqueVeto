@@ -160,8 +160,8 @@ public class MainScreen extends JFrame implements ActionListener {
 			menuAgenda.setVisible(false);
 			menuGestionDuPersonnel.setVisible(true);
 			break;
-		case EnumRole.USR:
-			menuGestionDesRendezvous.setVisible(true);
+		case EnumRole.ASS:
+			menuGestionDesRendezvous.setVisible(false);
 			menuAgenda.setVisible(true);
 			menuGestionDuPersonnel.setVisible(false);
 			break;
