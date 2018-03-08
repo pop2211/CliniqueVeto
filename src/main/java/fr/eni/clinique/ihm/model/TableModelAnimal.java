@@ -41,9 +41,6 @@ public class TableModelAnimal extends AbstractTableModel{
 			if(currentClientId != null){
 				this.animaux = animalManagerImpl.selectByMaitre(currentClientId);
 			}
-			//else{
-			//	this.animaux = animalManagerImpl.selectAll();
-			//}
 		} catch (ManagerException e) {
 			e.printStackTrace();
 		}
