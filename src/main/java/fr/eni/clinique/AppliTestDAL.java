@@ -73,7 +73,7 @@ public class AppliTestDAL {
             
 
             
-            Personnel u = new Personnel("u", "u", EnumRole.VET, false);
+            Personnel u = new Personnel("u", "u", EnumRole.DEV, false);
             LOGGER.info("Check inserting u : {}");
             personnelDAO.insert(u);
             
