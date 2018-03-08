@@ -430,6 +430,9 @@ public class MainClientScreen extends GenericClientScreen {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					Integer animalId = getCurrentCodeAnimal();
+					if(animalId == -1){
+						throw new Exception("Aucun animal séléctionné");
+					}
 					controllerAnimal.removeAnimalById(animalId);
 					modelAnimalTable.refresh();
 					showSuccessMessage("Animal archivé !");
@@ -453,10 +456,14 @@ public class MainClientScreen extends GenericClientScreen {
 				System.out.println("editerAnimalBtn getCurrentCodeAnimal: "+ getCurrentCodeAnimal());
 				frameAnimal = getFrameAnimal(Integer.parseInt(codeTbx.getText()));
 				try {
-					Animal currAnimal = controllerAnimal.loadAnimal(getCurrentCodeAnimal());
+					Integer animalId = getCurrentCodeAnimal();
+					if(animalId == -1){
+						throw new Exception("Aucun animal séléctionné");
+					}
+					Animal currAnimal = controllerAnimal.loadAnimal(animalId);
 					frameAnimal.showAnimal(currAnimal);
 					frameAnimal.setVisible(true);
-				} catch (ManagerException e1) {
+				} catch (Exception e1) {
 					errorOccured(e1);
 				}
 			}
