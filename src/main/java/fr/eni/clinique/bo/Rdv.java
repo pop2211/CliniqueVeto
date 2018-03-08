@@ -45,7 +45,7 @@ public class Rdv {
 	}
 	
 	public String getTime() {
-		return new SimpleDateFormat("HH:ss").format(dateRdv);
+		return new SimpleDateFormat("HH:mm").format(dateRdv);
 	}
 	
 	public void setDateRdv(Timestamp timestamp) {

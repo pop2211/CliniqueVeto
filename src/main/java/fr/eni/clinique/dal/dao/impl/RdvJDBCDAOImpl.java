@@ -231,14 +231,13 @@ public class RdvJDBCDAOImpl implements RdvDAO{
             statement.setString(2, date);
 
             resultSet = statement.executeQuery();
-            if (resultSet.next()) {
+            while (resultSet.next()) { 
             	try {
             		listeRendezVous.add(resultSetEntryToRdv(resultSet));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
             }
-
         } catch(SQLException e) {
             throw new DaoException(e.getMessage(), e);
         } finally {
