@@ -188,8 +188,11 @@ public class AnimalScreen extends GenericScreen {
 		fillRace(especeCbx.getItemAt(0),null);
 		especeCbx.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				fillRace(especeCbx.getSelectedItem().toString(), null);
-
+				String selectedEspece = null;
+				if(especeCbx.getSelectedItem() != null){
+					selectedEspece = especeCbx.getSelectedItem().toString();
+				}
+				fillRace(selectedEspece, null);
 			}
 		});
 		getContentPane().add(raceCbx, gbc_raceCbx);
@@ -331,8 +334,7 @@ public class AnimalScreen extends GenericScreen {
 				especeCbx.setSelectedItem(currentEspece);
 			}
 		} catch (DaoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			errorOccured(e);
 		}
 	}
 	
