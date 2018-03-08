@@ -49,6 +49,7 @@ public class AnimalScreen extends GenericScreen {
 	private JComboBox sexeCbx;
 	private JLabel recupLblCli;
 	private JLabel recupLblAnimal;
+	private JLabel lblNewLabel;
 	private JTextField antecedentsTbx;
 	private Integer codeClient = null;
 	RaceDAO raceDAO = new RaceJDBCDAOImpl();
@@ -65,8 +66,6 @@ public class AnimalScreen extends GenericScreen {
         this.modelAnimal = new AnimalModel();
 		this.controllerAnimal = new AnimalController(this.modelAnimal);
 		codeClient = CodeCli;
-		
-		System.out.println(CodeCli);
 		
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		
@@ -98,8 +97,8 @@ public class AnimalScreen extends GenericScreen {
 		gbc_recupLabelClient.gridy = 2;
 		getContentPane().add(recupLblCli, gbc_recupLabelClient);
 		
-		
-		JLabel lblNewLabel = new JLabel("Code");
+		lblNewLabel = new JLabel("Code");
+		lblNewLabel.setVisible(false);
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.anchor = GridBagConstraints.EAST;
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
@@ -115,11 +114,6 @@ public class AnimalScreen extends GenericScreen {
 		gbc_recupLblAnimal.gridx = 2;
 		gbc_recupLblAnimal.gridy = 4;
 		getContentPane().add(recupLblAnimal, gbc_recupLblAnimal);
-		
-		if (codeClient == null){
-			lblNewLabel.setVisible(false);
-			recupLblAnimal.setVisible(false);
-		}
 		
 		JLabel lblNewLabel_1 = new JLabel("Nom");
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
@@ -297,7 +291,7 @@ public class AnimalScreen extends GenericScreen {
 		annulerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String codeAnimal = recupLblAnimal.getText();
-				if("".equals(codeAnimal) || codeAnimal == null){
+				if(StringUtil.isNull(codeAnimal)){
 					//annule ajout animal
 					setVisible(false);
 				}else{
@@ -376,16 +370,16 @@ public class AnimalScreen extends GenericScreen {
 		if(animal == null){
 			animal = new Animal();
 		}
+		lblNewLabel.setVisible(true);
 		// Rempli les champs de l'ihm :
-
-			recupLblAnimal.setText(String.valueOf(animal.getCodeAnimal()));
-			nomTbx.setText(ObjectUtil.nullToBlank(animal.getNomAnimal()).trim());
-			couleurTbx.setText(ObjectUtil.nullToBlank(animal.getCouleur()).trim());
-			tatouageTbx.setText(ObjectUtil.nullToBlank(animal.getTatouage()).trim());
-			//antecedentsTbx.setText(ObjectUtil.nullToBlank(animal.getAntecedents()).trim());
-			fillEspece(animal.getRace().getEspece());
-			fillRace(animal.getRace().getEspece(),animal.getRace().getRace());
-			sexeCbx.setSelectedItem(animal.getSexe());
+		recupLblAnimal.setText(String.valueOf(animal.getCodeAnimal()));
+		nomTbx.setText(ObjectUtil.nullToBlank(animal.getNomAnimal()).trim());
+		couleurTbx.setText(ObjectUtil.nullToBlank(animal.getCouleur()).trim());
+		tatouageTbx.setText(ObjectUtil.nullToBlank(animal.getTatouage()).trim());
+		//antecedentsTbx.setText(ObjectUtil.nullToBlank(animal.getAntecedents()).trim());
+		fillEspece(animal.getRace().getEspece());
+		fillRace(animal.getRace().getEspece(),animal.getRace().getRace());
+		sexeCbx.setSelectedItem(animal.getSexe());
 	}
 
 	/**
