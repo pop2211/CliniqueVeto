@@ -24,6 +24,7 @@ import fr.eni.clinique.ihm.controller.PersonnelController;
 import fr.eni.clinique.ihm.model.AnimalModel;
 import fr.eni.clinique.ihm.model.ClientModel;
 import fr.eni.clinique.ihm.model.PersonnelModel;
+import fr.eni.clinique.ihm.screen.Agenda.AgendaScreen;
 import fr.eni.clinique.ihm.screen.Rdv.RdvScreen;
 import fr.eni.clinique.ihm.screen.animal.AnimalScreen;
 import fr.eni.clinique.ihm.screen.client.MainClientScreen;
@@ -55,7 +56,7 @@ public class MainScreen extends JFrame implements ActionListener {
 	private JDesktopPane desktopPane;
 	private JMenuBar menuBarre;
 	private JMenu menuGestionDesRendezvous;
-	private JMenu menuAgenda;
+	private JMenuItem menuAgenda;
 	private JMenuItem menuGestionDuPersonnel;
 	private JMenuItem menuGestionDesAnimaux;
 	
@@ -64,6 +65,7 @@ public class MainScreen extends JFrame implements ActionListener {
 	private AnimalScreen animalScreen;
 	private PersonnelScreen personnelScreen;
 	private RdvScreen rdvScreen;
+	private AgendaScreen agendaScreen;
 	
 	
 
@@ -132,8 +134,15 @@ public class MainScreen extends JFrame implements ActionListener {
 			menuGestionDesRendezvous.add(menuItem);
 		
 		//Menu Agenda
-		menuAgenda = new JMenu("Agenda");
+		menuAgenda = new JMenuItem("Agenda");
 		menuAgenda.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		
+		Integer menuAgendaWidth = 55;
+		menuAgenda.setAlignmentX(Component.LEFT_ALIGNMENT);
+		menuAgenda.setPreferredSize(new Dimension(menuAgendaWidth, 22));
+		menuAgenda.setMaximumSize(new Dimension(menuAgendaWidth, 22));
+		menuAgenda.setMinimumSize(new Dimension(menuAgendaWidth, 22));
+		
 		menuAgenda.setActionCommand("gestionAgenda");
 		menuAgenda.addActionListener(this);
 		menuBarre.add(menuAgenda);
@@ -227,6 +236,13 @@ public class MainScreen extends JFrame implements ActionListener {
 			desktopPane.add(rdvScreen);
 			rdvScreen.setVisible(true);
 			break;
+		case "gestionAgenda": 
+			System.out.println("CLIC gestionAgenda");
+			//frame GestionAgenda
+			agendaScreen = getAgendaScreen();
+			desktopPane.add(agendaScreen);
+			agendaScreen.setVisible(true);
+			break;
 		case "gestionClients":
 			//frame GestionCllient
             // Create client Model & Controller
@@ -277,17 +293,16 @@ public class MainScreen extends JFrame implements ActionListener {
 	}
 	
 	public RdvScreen getRdvScreen(PersonnelModel model, PersonnelController controller) {
-		/*if (frameLogin == null) {
-			frameLogin = new InternalFrameLogin(model, controller);
-		}*/
 		RdvScreen rdvScreen = new RdvScreen();
 		return rdvScreen;
 	}
+	
+	public AgendaScreen getAgendaScreen() {
+		AgendaScreen agendaScreen = new AgendaScreen();
+		return agendaScreen;
+	}
 
 	public MainClientScreen getClientScreen(ClientModel model, ClientController controller) {
-		/*if(clientScreen == null) {
-			clientScreen = new ClientScreen(model, controller);
-		}*/
 		clientScreen = new MainClientScreen(model, controller);
 		return clientScreen;
 	}

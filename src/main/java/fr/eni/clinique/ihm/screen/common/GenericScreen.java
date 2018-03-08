@@ -50,11 +50,15 @@ public abstract class GenericScreen extends JInternalFrame {
 	 */
 	public void errorOccured(Exception e) {
 		LOGGER.error("ERROR", e);
-		//if user is dev show stack trace (before modal popup)
 		if(getMainScreen().getProfil() == EnumRole.DEV){
+			//user is dev, we show stack trace before modal popup
 			e.printStackTrace();
 		}
-		showFailureMessage(e.getMessage());
+		String errorMsg = e.getMessage();
+		if("".equals(errorMsg)){
+			errorMsg = "Une erreur s'est produite";
+		}
+		showFailureMessage(errorMsg);
 	}
 
 	/**
