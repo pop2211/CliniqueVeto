@@ -51,7 +51,6 @@ public class PersonnelJDBCDAOImpl implements PersonnelDAO{
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
             	personnel = resultSetEntryToPersonnel(resultSet);
-				// TODO Auto-generated catch block
             }
 
         } catch(SQLException e) {

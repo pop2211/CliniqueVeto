@@ -8,8 +8,10 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
@@ -18,29 +20,29 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import org.jdatepicker.ComponentFormatDefaults;
 import org.jdatepicker.JDatePicker;
 
 import fr.eni.clinique.bll.exception.ManagerException;
-import fr.eni.clinique.bll.manager.impl.RdvManagerImpl;
 import fr.eni.clinique.bo.Animal;
 import fr.eni.clinique.bo.Client;
 import fr.eni.clinique.bo.EnumRole;
 import fr.eni.clinique.bo.Personnel;
-import fr.eni.clinique.bo.Race;
 import fr.eni.clinique.bo.Rdv;
 import fr.eni.clinique.common.util.Item;
 import fr.eni.clinique.common.util.StringUtil;
-import fr.eni.clinique.dal.dao.impl.RdvJDBCDAOImpl;
-import fr.eni.clinique.dal.exception.DaoException;
 import fr.eni.clinique.ihm.controller.AnimalController;
 import fr.eni.clinique.ihm.controller.ClientController;
 import fr.eni.clinique.ihm.controller.PersonnelController;
 import fr.eni.clinique.ihm.controller.RdvController;
+import fr.eni.clinique.ihm.model.TableModelRdv;
 import fr.eni.clinique.ihm.screen.animal.AnimalScreen;
 import fr.eni.clinique.ihm.screen.client.AddClientScreen;
 import fr.eni.clinique.ihm.screen.common.GenericScreen;
@@ -56,8 +58,10 @@ public class RdvScreen extends GenericScreen {
 	JComboBox<Item<Integer>> CbxAnimal;
 	JComboBox<Item<Integer>> CbxVeterinaire;
 	JComboBox<String> cbxHeure;
-	JComboBox<String> cbxMinute;
-	JDatePicker datePicker;
+	private JComboBox<String> cbxMinute;
+	private JDatePicker datePicker;
+	TableModelRdv tableModelRdv;
+	JTable tableClient;
 	
 	public RdvScreen() {
 		super("Prise de rendez-vous", true, true, true, true);
@@ -71,7 +75,7 @@ public class RdvScreen extends GenericScreen {
 	private void constructionFenetre() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{220, 0, 220, 0, 110, 110, 0};
-		gridBagLayout.rowHeights = new int[]{30, 130, 35, 191, 0, 0};
+		gridBagLayout.rowHeights = new int[]{30, 130, 3, 191, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		getContentPane().setLayout(gridBagLayout);
@@ -266,6 +270,7 @@ public class RdvScreen extends GenericScreen {
         
         datePicker = new JDatePicker();
         datePicker.getFormattedTextField().setColumns(1);
+        datePicker.getFormattedTextField().setText(new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime()));
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		gbc_textField.gridwidth = 4;
 		gbc_textField.insets = new Insets(0, 10, 5, 0);
@@ -305,14 +310,21 @@ public class RdvScreen extends GenericScreen {
 		gbc_comboBox_1.gridy = 3;
 		panelQuand.add(cbxMinute, gbc_comboBox_1);
 		
-		JTable tableClient = new JTable();
+		Integer numVeto = ((Item<Integer>) CbxVeterinaire.getItemAt(0)).getId();
+		String date = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+		tableModelRdv = new TableModelRdv(numVeto, date);
+		JTable tableClient = new JTable(tableModelRdv);
+		tableClient.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		GridBagConstraints gbc_tableClient = new GridBagConstraints();
-		gbc_tableClient.insets = new Insets(0, 0, 5, 5);
-		gbc_tableClient.fill = GridBagConstraints.VERTICAL;
+		gbc_tableClient.insets = new Insets(0, 5, 5, 5);
+		gbc_tableClient.fill = GridBagConstraints.BOTH;
 		gbc_tableClient.gridwidth = 6;
 		gbc_tableClient.gridx = 0;
 		gbc_tableClient.gridy = 3;
-		getContentPane().add(tableClient, gbc_tableClient);
+		JScrollPane scrollPane = new JScrollPane(tableClient);
+		scrollPane.setBorder(new LineBorder(Color.BLACK, 2, true));
+		scrollPane.setPreferredSize(new Dimension(0, 0));
+		getContentPane().add(scrollPane, gbc_tableClient);
 		
 		JButton btnSupprimer = new JButton("Supprimer");
 		btnSupprimer.setMinimumSize(new Dimension(100, 23));
@@ -402,7 +414,16 @@ public class RdvScreen extends GenericScreen {
 				chargeAnimaux(((Item<Integer>) CbxClient.getSelectedItem()).getId());
 			break;
 			case "AddRdv":
-			
+				Integer numVeto = ((Item<Integer>) CbxVeterinaire.getSelectedItem()).getId();
+				try {
+					Date initDate = new SimpleDateFormat("dd/MM/yyyy").parse(datePicker.getFormattedTextField().getText());
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+				    String parsedDate = formatter.format(initDate);
+				    tableModelRdv.refresh(numVeto, parsedDate);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			break;	
 		}
 	}

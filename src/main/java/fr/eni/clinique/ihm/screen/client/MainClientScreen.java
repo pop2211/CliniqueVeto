@@ -24,6 +24,7 @@ import fr.eni.clinique.ihm.controller.ClientController;
 import fr.eni.clinique.ihm.model.AnimalModel;
 import fr.eni.clinique.ihm.model.ClientModel;
 import fr.eni.clinique.ihm.model.TableModelAnimal;
+import fr.eni.clinique.ihm.screen.animal.AnimalDossierMedicalScreen;
 import fr.eni.clinique.ihm.screen.animal.AnimalScreen;
 import fr.eni.clinique.ihm.screen.common.GenericScreen;
 import fr.eni.clinique.ihm.screen.common.JTextFieldLimit;
@@ -44,6 +45,7 @@ public class MainClientScreen extends GenericClientScreen {
 	
 	private JTable animauxTable;
 	private AnimalScreen frameAnimal;
+	private AnimalDossierMedicalScreen frameAnimalDossierMedical;
 	
 	JButton rechercherBtn;
 	JButton validerBtn;
@@ -168,7 +170,7 @@ public class MainClientScreen extends GenericClientScreen {
 					controllerClient.saveClient(saveIt);
 					showSuccessMessage("Client enregistré !");
 				} catch (Exception e1) {
-					showFailureMessage(e1.getMessage());
+					errorOccured(e1);
 				}
 			}
 		});
@@ -188,7 +190,7 @@ public class MainClientScreen extends GenericClientScreen {
 					showClient(reloadedCli);
 					showSuccessMessage("Client rechargé !");
 				} catch (Exception e1) {
-					showFailureMessage(e1.getMessage());
+					errorOccured(e1);
 				}
 			}
 		});
@@ -390,6 +392,29 @@ public class MainClientScreen extends GenericClientScreen {
 		gbc_emailTbx.gridy = 12;
 		getContentPane().add(emailTbx, gbc_emailTbx);
 		
+		JButton btnTest = new JButton("Test");
+		btnTest.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Integer codeAnimal = getCurrentCodeAnimal();
+					if(codeAnimal == -1){
+						throw new Exception("Aucun animal séléctionné");
+					}
+					frameAnimalDossierMedical = getFrameAnimalDossierMedical(currentCodeClient, codeAnimal);
+					frameAnimalDossierMedical.setVisible(true);
+				} catch (Exception e1) {
+					errorOccured(e1);
+				}
+			}
+		});
+		btnTest.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnTest.setHorizontalTextPosition(SwingConstants.CENTER);
+		GridBagConstraints gbc_btnTest = new GridBagConstraints();
+		gbc_btnTest.insets = new Insets(0, 0, 5, 5);
+		gbc_btnTest.gridx = 4;
+		gbc_btnTest.gridy = 12;
+		getContentPane().add(btnTest, gbc_btnTest);
+		
 		JLabel lblRemarque = new JLabel("Remarque");
 		GridBagConstraints gbc_lblRemarque = new GridBagConstraints();
 		gbc_lblRemarque.anchor = GridBagConstraints.WEST;
@@ -437,7 +462,7 @@ public class MainClientScreen extends GenericClientScreen {
 					modelAnimalTable.refresh();
 					showSuccessMessage("Animal archivé !");
 				} catch (Exception e1) {
-					showFailureMessage(e1.getMessage());
+					errorOccured(e1);
 				}
 			}
 		});
@@ -521,6 +546,12 @@ public class MainClientScreen extends GenericClientScreen {
 		frameAnimal = new AnimalScreen((GenericScreen)this, CodeCli);
 		getMainScreen().getDesktopPane().add(frameAnimal);
 		return frameAnimal;
+	}
+	
+	public AnimalDossierMedicalScreen getFrameAnimalDossierMedical(Integer CodeCli, Integer CodeAnimal) {
+		frameAnimalDossierMedical = new AnimalDossierMedicalScreen((GenericScreen)this, CodeCli, CodeAnimal);
+		getMainScreen().getDesktopPane().add(frameAnimalDossierMedical);
+		return frameAnimalDossierMedical;
 	}
 	
 	@Override

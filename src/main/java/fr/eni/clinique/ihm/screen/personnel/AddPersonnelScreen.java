@@ -21,6 +21,7 @@ import fr.eni.clinique.common.util.Item;
 import fr.eni.clinique.common.util.ObjectUtil;
 import fr.eni.clinique.ihm.controller.PersonnelController;
 import fr.eni.clinique.ihm.model.PersonnelModel;
+import fr.eni.clinique.ihm.screen.common.GenericScreen;
 import fr.eni.clinique.ihm.screen.common.JTextFieldLimit;
 
 import javax.swing.JButton;
@@ -28,7 +29,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 
-public class AddPersonnelScreen extends JInternalFrame {
+public class AddPersonnelScreen extends GenericScreen {
 	/**
 	 * 
 	 */
@@ -113,12 +114,11 @@ public class AddPersonnelScreen extends JInternalFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					controller.newPersonnel(readPersonnel());
-					showSuccessMessage("Personnel ajouté !");
 					setVisible(false);
 					personnelScreen.getTableModel().refresh();
+					showSuccessMessage("Personnel ajouté !");
 				} catch (ManagerException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					errorOccured(e);
 				}		
 			}			
 		});
@@ -194,13 +194,13 @@ public class AddPersonnelScreen extends JInternalFrame {
 		
 		return personnel;
 	}
-	
-	private void showFailureMessage(String message) {
-		JOptionPane.showMessageDialog(AddPersonnelScreen.this, message, "Erreur", JOptionPane.ERROR_MESSAGE);
-	}
 
-	private void showSuccessMessage(String message) {
-		JOptionPane.showMessageDialog(AddPersonnelScreen.this, message);		
+
+
+	@Override
+	public void processEvent(String eventName, Object eventParam) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 

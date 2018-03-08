@@ -1,5 +1,6 @@
 package fr.eni.clinique.bll.manager.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.clinique.bll.exception.ManagerException;
@@ -75,5 +76,18 @@ public class RdvManagerImpl implements RdvManager{
             throw new TechnicalException(e.getMessage(), e);
         }
     }
+
+	@Override
+	public List<Rdv> selectByVetAndDate(Integer codePersonne, String date) throws ManagerException {
+        List<Rdv> listeRendezVous = new ArrayList<Rdv>();
+		
+		try {
+			listeRendezVous = rdvDAO.selectByVetAndDate(codePersonne, date);
+            
+        } catch (DaoException e) {
+            throw new ManagerException("Erreur récupération Liste RDV", e);
+        }
+		return listeRendezVous;
+	}
 
 }

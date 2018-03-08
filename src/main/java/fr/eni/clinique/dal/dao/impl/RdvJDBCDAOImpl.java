@@ -17,6 +17,7 @@ import fr.eni.clinique.bo.Animal;
 import fr.eni.clinique.bo.Personnel;
 import fr.eni.clinique.bo.Rdv;
 import fr.eni.clinique.common.util.ResourceUtil;
+import fr.eni.clinique.common.util.StringUtil;
 import fr.eni.clinique.dal.dao.RdvDAO;
 import fr.eni.clinique.dal.exception.DaoException;
 import fr.eni.clinique.dal.factory.JdbcTools;
@@ -29,7 +30,8 @@ public class RdvJDBCDAOImpl implements RdvDAO{
 	//=> pas d'id rendez vous
 	
 	//private static final String SELECT_BY_ID_QUERY = "SELECT * FROM Agendas WHERE CodeRdv = ?";
-	private static final String SELECT_BY_CODEVETO_DATERDV_CODEANIMAL_QUERY = "SELECT * FROM Agendas WHERE CodeVeto=? AND DateRdv=? AND CodeAnimal=? ";
+	private static final String SELECT_BY_CODEVETO_DATERDV_CODEANIMAL_QUERY = "SELECT * FROM Agendas WHERE CodeVeto=? AND DateRdv=? AND CodeAnimal=?";
+	private static final String SELECT_BY_VET_AND_DATE = "SELECT * FROM Agendas WHERE CodeVeto=? AND datediff(day, DateRdv, ?) = 0";
 	private static final String SELECT_ALL_QUERY = "SELECT * FROM Agendas";
 	private static final String UPDATE_QUERY = "UPDATE Agendas SET CodeVeto=?, DateRdv=?, CodeAnimal=? WHERE CodeVeto=? AND DateRdv=? AND CodeAnimal=?";
     private static final String INSERT_QUERY = "INSERT INTO Agendas(CodeVeto, DateRdv, CodeAnimal) VALUES (?,?,?)";
@@ -44,6 +46,8 @@ public class RdvJDBCDAOImpl implements RdvDAO{
 	public static RdvDAO getInstance() {
 		if(instance == null) {
             instance = new RdvJDBCDAOImpl();
+            PersonnelDAO = new PersonnelJDBCDAOImpl();
+            AnimalDAO = new AnimalJDBCDAOImpl(); 
         }
         return instance;
 	}
@@ -84,7 +88,6 @@ public class RdvJDBCDAOImpl implements RdvDAO{
 
 	private Rdv resultSetEntryToRdv(ResultSet resultSet) throws Exception {
 		Rdv rdv = new Rdv();
-		
 		
 	    Timestamp calendar = resultSet.getTimestamp("DateRdv");
 		Integer codeVeto = resultSet.getInt("CodeVeto");
@@ -211,6 +214,37 @@ public class RdvJDBCDAOImpl implements RdvDAO{
         } finally {
             ResourceUtil.safeClose(connection, statement);
         }
+	}
+
+
+	@Override
+	public List<Rdv> selectByVetAndDate(Integer codePersonne, String date) throws DaoException {
+		Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        List<Rdv> listeRendezVous = new ArrayList<Rdv>();
+        try {
+            connection = JdbcTools.get();
+            statement = connection.prepareStatement(SELECT_BY_VET_AND_DATE);
+            
+            statement.setInt(1, codePersonne); 
+            statement.setString(2, date);
+
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+            	try {
+            		listeRendezVous.add(resultSetEntryToRdv(resultSet));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+            }
+
+        } catch(SQLException e) {
+            throw new DaoException(e.getMessage(), e);
+        } finally {
+            ResourceUtil.safeClose(connection, statement, resultSet);
+        }
+        return listeRendezVous;
 	}
 
 
