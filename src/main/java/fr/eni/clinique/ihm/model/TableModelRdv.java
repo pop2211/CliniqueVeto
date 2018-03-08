@@ -77,7 +77,7 @@ public class TableModelRdv extends AbstractTableModel{
 			try {
 				txt = clientManagerImpl.selectById(rdvs.get(rowIndex).getAnimal().getCodeClient()).getFullname();
 			} catch (Exception e) {
-				//e.printStackTrace();
+				e.printStackTrace();
 			}
 			return txt;
 
@@ -85,7 +85,7 @@ public class TableModelRdv extends AbstractTableModel{
 			try {
 				txt = rdvs.get(rowIndex).getAnimal().getNomAnimal();
 			} catch (Exception e) {
-				//e.printStackTrace();
+				e.printStackTrace();
 			}
 			return txt;
 
@@ -93,7 +93,7 @@ public class TableModelRdv extends AbstractTableModel{
 			try {
 				txt = rdvs.get(rowIndex).getAnimal().getRace().getRace();
 			} catch (Exception e) {
-				//e.printStackTrace();
+				e.printStackTrace();
 			}
 			return txt;
 
