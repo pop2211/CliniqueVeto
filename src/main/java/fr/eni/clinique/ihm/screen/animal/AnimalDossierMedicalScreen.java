@@ -19,6 +19,7 @@ import javax.swing.SwingConstants;
 
 import com.sun.xml.internal.ws.util.StringUtils;
 
+import fr.eni.clinique.bll.exception.ManagerException;
 import fr.eni.clinique.bo.Animal;
 import fr.eni.clinique.bo.Client;
 import fr.eni.clinique.bo.Race;
@@ -45,31 +46,32 @@ public class AnimalDossierMedicalScreen extends GenericScreen {
 	private static final long serialVersionUID = -4328796218453001155L;
 	
 	private JLabel lblCodeClient; //(OLD recupLblCli)
-	private JTextField antecedentsTbx;
+	private JTextArea antecedentsTbx;
 	
 	private Integer codeClient = null;
 	private Integer codeAnimal = null;
+	private Animal currentAnimal;
 	
-	RaceDAO raceDAO = new RaceJDBCDAOImpl();
-	ClientDAO clientDAO = new ClientJDBCDAOImpl();
+	private RaceDAO raceDAO = new RaceJDBCDAOImpl();
+	private ClientDAO clientDAO = new ClientJDBCDAOImpl();
 	
-	JLabel labelCli;
-	JLabel lblCodeAnimal;
+	private JLabel labelCli;
+	private JLabel lblCodeAnimal;
 	
-	JLabel labelAntecedents;
-	JLabel lblAnimal;
-	JLabel lblNom;
-	JLabel lblCouleur;
-	JLabel lblSexe;
-	JLabel lblRace;
-	JLabel lblEspece;
-	JLabel lblTatouage;
+	private JLabel labelAntecedents;
+	private JLabel lblAnimal;
+	private JLabel lblNom;
+	private JLabel lblCouleur;
+	private JLabel lblSexe;
+	private JLabel lblRace;
+	private JLabel lblEspece;
+	private JLabel lblTatouage;
 	
 	
 	public AnimalDossierMedicalScreen(GenericScreen parentScreen, Integer CodeClient, Integer CodeAnimal) {
 		super("Gestion des Animaux", true, true, true,true);
 		
-		setBounds(100, 100, 625, 625);
+		setBounds(100, 100, 609, 452);
 		
 		this.parentScreen = parentScreen;
 		
@@ -83,7 +85,7 @@ public class AnimalDossierMedicalScreen extends GenericScreen {
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{20, 107, 0, 0, 150, 20, 0};
+		gridBagLayout.columnWidths = new int[]{20, 107, 0, 0, 300, 20, 0};
 		gridBagLayout.rowHeights = new int[]{20, 85, 0, 0, 24, 0, 0, 0, 0, 10, 150, 20, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
@@ -101,21 +103,43 @@ public class AnimalDossierMedicalScreen extends GenericScreen {
 		getContentPane().add(panel, gbc_panel);
 		
 		JButton validerBtn = new JButton("Valider");
+		validerBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					String antecedents =antecedentsTbx.getText().trim();
+					currentAnimal.setAntecedents(antecedents);
+					controllerAnimal.saveAnimal(currentAnimal);
+					
+					parentScreen.processEvent("UpdateAnimal", null);
+					setVisible(false);
+					showSuccessMessage("Animal mise à jour !");
+				} catch (Exception e) {
+					errorOccured(e);
+				}
+			}
+		});
 		validerBtn.setIcon(new ImageIcon(AnimalDossierMedicalScreen.class.getResource("/images/ico/done_32p.png")));
 		validerBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
 		validerBtn.setHorizontalTextPosition(SwingConstants.CENTER);
-		validerBtn.setBounds(256, 11, 75, 59);
+		validerBtn.setBounds(354, 11, 86, 59);
 		panel.add(validerBtn);
 		
 		JButton annulerBtn = new JButton("Annuler");
 		annulerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				try {
+					Animal reloadedAnimal = controllerAnimal.loadAnimal(currentAnimal.getCodeAnimal());
+					showAnimal(reloadedAnimal);
+					setVisible(false);
+				} catch (Exception e1) {
+					errorOccured(e1);
+				}
 			}
 		});
 		annulerBtn.setIcon(new ImageIcon(AnimalDossierMedicalScreen.class.getResource("/images/ico/undo_27p.png")));
 		annulerBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
 		annulerBtn.setHorizontalTextPosition(SwingConstants.CENTER);
-		annulerBtn.setBounds(341, 13, 75, 58);
+		annulerBtn.setBounds(450, 13, 92, 58);
 		panel.add(annulerBtn);
 		
 		lblCodeClient = new JLabel("");
@@ -128,12 +152,12 @@ public class AnimalDossierMedicalScreen extends GenericScreen {
 		labelCli.setHorizontalAlignment(SwingConstants.TRAILING);
 		labelCli.setFont(new Font("Tahoma", Font.BOLD, 12));
 		GridBagConstraints gbc_labelCli = new GridBagConstraints();
-		gbc_labelCli.anchor = GridBagConstraints.EAST;
 		gbc_labelCli.insets = new Insets(0, 0, 5, 5);
 		gbc_labelCli.gridx = 1;
 		gbc_labelCli.gridy = 3;
 		getContentPane().add(labelCli, gbc_labelCli);
 		GridBagConstraints gbc_recupLabelClient = new GridBagConstraints();
+		gbc_recupLabelClient.anchor = GridBagConstraints.WEST;
 		gbc_recupLabelClient.insets = new Insets(0, 0, 5, 5);
 		gbc_recupLabelClient.gridx = 2;
 		gbc_recupLabelClient.gridy = 3;
@@ -148,7 +172,7 @@ public class AnimalDossierMedicalScreen extends GenericScreen {
 		gbc_labelAntecedents.gridy = 3;
 		getContentPane().add(labelAntecedents, gbc_labelAntecedents);
 		
-		JTextArea antecedentsTbx = new JTextArea();
+		antecedentsTbx = new JTextArea();
 		GridBagConstraints gbc_antecedentsTbx = new GridBagConstraints();
 		gbc_antecedentsTbx.gridheight = 7;
 		gbc_antecedentsTbx.insets = new Insets(0, 0, 5, 5);
@@ -170,6 +194,7 @@ public class AnimalDossierMedicalScreen extends GenericScreen {
 		lblCodeAnimal.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCodeAnimal.setFont(new Font("Tahoma", Font.BOLD, 12));
 		GridBagConstraints gbc_lblCodeAnimal = new GridBagConstraints();
+		gbc_lblCodeAnimal.anchor = GridBagConstraints.WEST;
 		gbc_lblCodeAnimal.insets = new Insets(0, 0, 5, 5);
 		gbc_lblCodeAnimal.gridx = 2;
 		gbc_lblCodeAnimal.gridy = 5;
@@ -179,6 +204,7 @@ public class AnimalDossierMedicalScreen extends GenericScreen {
 		lblNom.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNom.setFont(new Font("Tahoma", Font.BOLD, 12));
 		GridBagConstraints gbc_lblNom = new GridBagConstraints();
+		gbc_lblNom.anchor = GridBagConstraints.WEST;
 		gbc_lblNom.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNom.gridx = 2;
 		gbc_lblNom.gridy = 6;
@@ -188,6 +214,7 @@ public class AnimalDossierMedicalScreen extends GenericScreen {
 		lblCouleur.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCouleur.setFont(new Font("Tahoma", Font.BOLD, 12));
 		GridBagConstraints gbc_lblCouleur = new GridBagConstraints();
+		gbc_lblCouleur.anchor = GridBagConstraints.WEST;
 		gbc_lblCouleur.insets = new Insets(0, 0, 5, 5);
 		gbc_lblCouleur.gridx = 2;
 		gbc_lblCouleur.gridy = 7;
@@ -197,6 +224,7 @@ public class AnimalDossierMedicalScreen extends GenericScreen {
 		lblSexe.setHorizontalAlignment(SwingConstants.LEFT);
 		lblSexe.setFont(new Font("Tahoma", Font.BOLD, 12));
 		GridBagConstraints gbc_lblSexe = new GridBagConstraints();
+		gbc_lblSexe.anchor = GridBagConstraints.WEST;
 		gbc_lblSexe.insets = new Insets(0, 0, 5, 5);
 		gbc_lblSexe.gridx = 3;
 		gbc_lblSexe.gridy = 7;
@@ -206,6 +234,7 @@ public class AnimalDossierMedicalScreen extends GenericScreen {
 		lblRace.setHorizontalAlignment(SwingConstants.LEFT);
 		lblRace.setFont(new Font("Tahoma", Font.BOLD, 12));
 		GridBagConstraints gbc_lblRace = new GridBagConstraints();
+		gbc_lblRace.anchor = GridBagConstraints.WEST;
 		gbc_lblRace.insets = new Insets(0, 0, 5, 5);
 		gbc_lblRace.gridx = 2;
 		gbc_lblRace.gridy = 8;
@@ -215,6 +244,7 @@ public class AnimalDossierMedicalScreen extends GenericScreen {
 		lblEspece.setHorizontalAlignment(SwingConstants.LEFT);
 		lblEspece.setFont(new Font("Tahoma", Font.BOLD, 12));
 		GridBagConstraints gbc_lblEspece = new GridBagConstraints();
+		gbc_lblEspece.anchor = GridBagConstraints.WEST;
 		gbc_lblEspece.insets = new Insets(0, 0, 5, 5);
 		gbc_lblEspece.gridx = 3;
 		gbc_lblEspece.gridy = 8;
@@ -224,6 +254,7 @@ public class AnimalDossierMedicalScreen extends GenericScreen {
 		lblTatouage.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTatouage.setFont(new Font("Tahoma", Font.BOLD, 12));
 		GridBagConstraints gbc_lblTatouage = new GridBagConstraints();
+		gbc_lblTatouage.anchor = GridBagConstraints.WEST;
 		gbc_lblTatouage.insets = new Insets(0, 0, 5, 5);
 		gbc_lblTatouage.gridx = 2;
 		gbc_lblTatouage.gridy = 9;
@@ -233,6 +264,14 @@ public class AnimalDossierMedicalScreen extends GenericScreen {
 			labelCli.setVisible(false);	//"Client: "
 			lblCodeAnimal.setVisible(false);
 		}
+		
+		currentAnimal = new Animal();
+		try {
+			currentAnimal = controllerAnimal.loadAnimal(codeAnimal);
+		} catch (ManagerException e) {
+			errorOccured(e);
+		}
+		showAnimal(currentAnimal);
 		
 		this.pack();
 	}
@@ -266,39 +305,6 @@ public class AnimalDossierMedicalScreen extends GenericScreen {
 		lblEspece.setText(animal.getRace().getEspece());
 		lblRace.setText(animal.getRace().getRace());
 		lblSexe.setText(animal.getSexe());
-	}
-
-	private Animal readOnlyDossierMedical() {
-
-		Animal animal = new Animal();
-		
-		// Recupère les champs de l'ihm :
-		Integer codeAnimal = null;
-		if(!StringUtil.isNull(lblCodeAnimal.getText())) {
-			codeAnimal = Integer.parseInt(lblCodeAnimal.getText());
-		}
-		
-		animal.setCodeAnimal(codeAnimal);
-		animal.setAntecedents(antecedentsTbx.getText().trim());
-		
-		
-		/*
-		
-		animal.setCodeAnimal(codeAnimal);
-		animal.setNomAnimal(nomTbx.getText().trim());
-		animal.setCouleur(couleurTbx.getText().trim());
-		Race race = new Race();
-		race.setRace(raceCbx.getSelectedItem().toString());
-		race.setEspece(especeCbx.getSelectedItem().toString());
-		animal.setRace(race);
-		animal.setTatouage(tatouageTbx.getText().trim());
-		//animal.setAntecedents(antecedentsTbx.getText().trim());
-		animal.setSexe(sexeCbx.getSelectedItem().toString());
-		animal.setArchive(false);
-		animal.setCodeClient(codeClient);
-		*/
-
-		return animal;
 	}
 
 	@Override

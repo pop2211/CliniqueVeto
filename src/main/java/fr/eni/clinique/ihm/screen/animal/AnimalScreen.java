@@ -215,7 +215,6 @@ public class AnimalScreen extends GenericScreen {
 		// Validation de l'ajout ou de la modification
 		
 		JButton validerBtn = new JButton("Valider");
-
 		validerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {

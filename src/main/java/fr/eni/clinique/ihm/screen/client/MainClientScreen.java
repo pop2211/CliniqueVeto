@@ -190,7 +190,7 @@ public class MainClientScreen extends GenericClientScreen {
 					showClient(reloadedCli);
 					showSuccessMessage("Client rechargé !");
 				} catch (Exception e1) {
-					showFailureMessage(e1.getMessage());
+					errorOccured(e1);
 				}
 			}
 		});
