@@ -23,16 +23,6 @@ public class TableModelRDV extends AbstractTableModel{
 
 	private List<Rdv> rdvs;
 	
-	public TableModelRDV() {
-		rdvManagerImpl = RdvManagerImpl.getInstance();
-		try {
-			rdvs = rdvManagerImpl.selectAll();
-		} catch (ManagerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
 	public TableModelRDV(Integer currentVetoId){
 		this.rdvManagerImpl = RdvManagerImpl.getInstance();
 		setCurrentVetoId(currentVetoId);
