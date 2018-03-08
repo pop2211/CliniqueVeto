@@ -40,7 +40,7 @@ public class PersonnelController{
 	}
 	
 	public void changePswPersonnel(Integer codePerso ,String mdp) throws ManagerException{
-		personnelManager.updateByCode(codePerso, mdp);
+		personnelManager.updatePasswordByCode(codePerso, mdp);
 	}
 	
 	

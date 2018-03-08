@@ -17,6 +17,7 @@ import fr.eni.clinique.common.util.Item;
 import fr.eni.clinique.common.util.ObjectUtil;
 import fr.eni.clinique.ihm.controller.PersonnelController;
 import fr.eni.clinique.ihm.model.PersonnelModel;
+import fr.eni.clinique.ihm.screen.common.GenericScreen;
 import fr.eni.clinique.ihm.screen.common.JTextFieldLimit;
 
 import java.awt.Insets;
@@ -28,7 +29,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.ImageIcon;
 
-public class RebootPasswordPersonnelScreen extends JInternalFrame {
+public class RebootPasswordPersonnelScreen extends GenericScreen {
 	
 	
 	private JTextField mdpTbx;
@@ -83,12 +84,11 @@ public class RebootPasswordPersonnelScreen extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					controller.changePswPersonnel(currentCodePersonnel, mdpTbx.getText());
-					showSuccessMessage("Mot de Passe modifié !");
 					setVisible(false);
 					personnelScreen.getTableModel().refresh();
+					showSuccessMessage("Mot de Passe modifié !");
 				} catch (ManagerException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					errorOccured(e1);
 				}
 				
 			}
@@ -107,8 +107,11 @@ public class RebootPasswordPersonnelScreen extends JInternalFrame {
 		mdpTbx.setText(ObjectUtil.nullToBlank(personnnel.getMdp()).trim());		
 	}
 	
-	private void showSuccessMessage(String message) {
-		JOptionPane.showMessageDialog(RebootPasswordPersonnelScreen.this, message);		
+
+	@Override
+	public void processEvent(String eventName, Object eventParam) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 

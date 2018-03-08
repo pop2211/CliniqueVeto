@@ -12,7 +12,7 @@ public interface PersonnelManager extends GenericManager<Personnel, Integer>{
 	Personnel connexion(Personnel personnel) throws ManagerException;
 	
 	List<Personnel> selectByRole(String role) throws ManagerException;
-	
-	public void updateByCode(Integer codePersonnel, String mdp) throws ManagerException;
+
+	public void updatePasswordByCode(Integer codePersonnel, String mdp) throws ManagerException;
 
 }
