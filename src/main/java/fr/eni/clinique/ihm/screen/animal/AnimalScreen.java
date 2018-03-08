@@ -320,6 +320,7 @@ public class AnimalScreen extends GenericScreen {
 	
 	public void fillEspece(String currentEspece){
 		try {
+			especeCbx.removeAllItems();
 			List<String> especes = raceDAO.selectEspeceDistinct();
 			for(String espece : especes){
 				especeCbx.addItem(espece);
