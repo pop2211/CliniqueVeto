@@ -6,44 +6,38 @@ import javax.swing.table.AbstractTableModel;
 
 import fr.eni.clinique.bll.exception.ManagerException;
 import fr.eni.clinique.bll.manager.impl.AnimalManagerImpl;
+import fr.eni.clinique.bll.manager.impl.ClientManagerImpl;
 import fr.eni.clinique.bll.manager.impl.RdvManagerImpl;
 import fr.eni.clinique.bo.Rdv;
 import fr.eni.clinique.ihm.controller.ClientController;
 
-public class TableModelRDV extends AbstractTableModel{
+public class TableModelRdv extends AbstractTableModel{
 
 	
 	private static final long serialVersionUID = 4379302346906726025L;
 
 	private final String[] entetes = {"Heure", "Nom du client","Animal","Race"};	
 	
-	private ClientController controller;
+	private ClientManagerImpl clientManagerImpl;
 	private RdvManagerImpl rdvManagerImpl;
 	private Integer currentVetoId;
-	private String currentDate;
+	private String date;
 
 	private List<Rdv> rdvs;
 	
-	public TableModelRDV(Integer currentVetoId){
-		this.rdvManagerImpl = RdvManagerImpl.getInstance();
-		setCurrentVetoId(currentVetoId);
-		setCurrentDate(currentDate);
-		refresh();
-	}
-	
-	public void setCurrentVetoId(Integer currentVetoId){
+	public TableModelRdv(Integer currentVetoId, String date){
+		rdvManagerImpl = RdvManagerImpl.getInstance();
+		clientManagerImpl = new ClientManagerImpl();
 		this.currentVetoId = currentVetoId;
+		this.date = date;
+		refresh(currentVetoId, date);
 	}
 	
-	public void setCurrentDate(String currentDate){
-		this.currentDate = currentDate;
-	}
-	
-	public void refresh(){
+	public void refresh(Integer currentVetoId, String date){
 		try {
-			this.rdvs = rdvManagerImpl.selectAll();
+			this.rdvs = rdvManagerImpl.selectByVetAndDate(currentVetoId, date);
+			System.out.println(rdvs);
 		} catch (ManagerException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -77,14 +71,12 @@ public class TableModelRDV extends AbstractTableModel{
 		
 		case 0:
 			
-			return rdvs.get(rowIndex).getDateRdv();
+			return rdvs.get(rowIndex).getTime();
 			
 		case 1:
-
 			try {
-				return controller.loadClient(rdvs.get(rowIndex).getAnimal().getCodeClient()).getFullname();
+				return (clientManagerImpl.selectById(rdvs.get(rowIndex).getAnimal().getCodeClient())).getFullname();
 			} catch (ManagerException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 

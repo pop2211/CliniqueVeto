@@ -1,7 +1,7 @@
 package fr.eni.clinique.bo;
 
 import java.sql.Timestamp;
-import java.util.GregorianCalendar;
+import java.text.SimpleDateFormat;
 
 public class Rdv {
 	
@@ -38,6 +38,14 @@ public class Rdv {
 
 	public Timestamp getDateRdv() {
 		return dateRdv;
+	}
+	
+	public String getDate() {
+		return new SimpleDateFormat("dd/MM/YYYY").format(dateRdv);
+	}
+	
+	public String getTime() {
+		return new SimpleDateFormat("HH:ss").format(dateRdv);
 	}
 	
 	public void setDateRdv(Timestamp timestamp) {

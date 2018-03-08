@@ -1,38 +1,28 @@
 package fr.eni.clinique.ihm.screen.personnel;
 
-import java.awt.EventQueue;
-
-import javax.swing.JInternalFrame;
-import java.awt.GridBagLayout;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-
+import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
-import fr.eni.clinique.bll.exception.ManagerException;
-import fr.eni.clinique.bo.Personnel;
 import fr.eni.clinique.ihm.controller.PersonnelController;
 import fr.eni.clinique.ihm.model.PersonnelModel;
 import fr.eni.clinique.ihm.model.TableModelPersonnel;
-import fr.eni.clinique.ihm.screen.client.AddClientScreen;
 import fr.eni.clinique.ihm.screen.common.GenericScreen;
-
-import java.awt.Color;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import java.awt.Font;
-import javax.swing.JTable;
-import java.awt.Dimension;
-import javax.swing.ListSelectionModel;
 
 public class PersonnelScreen extends GenericScreen {
 
