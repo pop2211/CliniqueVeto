@@ -8,14 +8,14 @@ public enum EnumRole {
 	
 	
 	ADMIN("ADM", "Administrateur", "gestion administrative de la clinique (financière et ressources humaines)"), 
-    USER("USR", "Utilisateur", "aider les vétérinaires lors des consultations à la clinique en exécutant les actes de base. Souvent des stagiaires provenant des écoles vétérinaires."),
+    ASSISTANT("ASS", "Assistant", "aider les vétérinaires lors des consultations à la clinique en exécutant les actes de base."),
     SECRETAIRE("SEC", "Secrétaire", "lien entre la clinique et le client. Prise de rendez-vous téléphonique, préparation des tournées, facturation."), 
     VETERINAIRE("VET", "Vétérinaire", "effectuer des consultations à la clinique sur rendez-vous et effectuer des consultations à domicile (tournée planifiée)"),
     SUPPORT_TECH("SUP", "Support technique", "gestion du parc matériel de la clinique (matériel professionnel, bureautique et informatique)"),
     DEVELOPPEUR("DEV", "Développeur", "");
     
 	public static final String ADM = "ADM";
-	public static final String USR = "USR";
+	public static final String ASS = "ASS";
 	public static final String SEC = "SEC";
 	public static final String VET = "VET";
 	public static final String SUP = "SUP";
@@ -44,7 +44,7 @@ public enum EnumRole {
     
     public static List<EnumRole> getList(){
     	List<EnumRole> myList = new ArrayList<EnumRole>();
-    	myList.addAll(Arrays.asList(ADMIN, USER,SECRETAIRE,VETERINAIRE, SUPPORT_TECH, DEVELOPPEUR));
+    	myList.addAll(Arrays.asList(ADMIN, ASSISTANT,SECRETAIRE,VETERINAIRE, SUPPORT_TECH, DEVELOPPEUR));
 		return myList;
     	
     }
