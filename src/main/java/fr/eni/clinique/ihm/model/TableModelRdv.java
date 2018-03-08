@@ -36,7 +36,7 @@ public class TableModelRdv extends AbstractTableModel{
 	public void refresh(Integer currentVetoId, String date){
 		try {
 			this.rdvs = rdvManagerImpl.selectByVetAndDate(currentVetoId, date);
-		} catch (ManagerException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
