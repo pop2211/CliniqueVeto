@@ -1,19 +1,19 @@
 package fr.eni.clinique.bo;
 
+import java.sql.Timestamp;
 import java.util.GregorianCalendar;
 
 public class Rdv {
-
 	
 	private Personnel veto; 
-	private GregorianCalendar dateRdv; //Rendez-vous tous les quarts d'heures : 00 ; 15 ; 30 ; 45
+	private Timestamp dateRdv; //Rendez-vous tous les quarts d'heures : 00 ; 15 ; 30 ; 45
 	private Animal animal;
-	
 	
 	public Rdv() {
 		super();
 	}
-	public Rdv(Personnel veto, GregorianCalendar dateRdv, Animal animal) {
+	
+	public Rdv(Personnel veto, Timestamp dateRdv, Animal animal) {
 		super();
 		this.veto = veto;
 		this.dateRdv = dateRdv;
@@ -23,6 +23,7 @@ public class Rdv {
 	public Personnel getVeto() {
 		return veto;
 	}
+	
 	public void setVeto(Personnel veto) {
 		this.veto = veto;
 	}
@@ -30,16 +31,19 @@ public class Rdv {
 	public Animal getAnimal() {
 		return animal;
 	}
+	
 	public void setAnimal(Animal animal) {
 		this.animal = animal;
 	}
 
-	public GregorianCalendar getDateRdv() {
+	public Timestamp getDateRdv() {
 		return dateRdv;
 	}
-	public void setDateRdv(GregorianCalendar dateRdv) {
-		this.dateRdv = dateRdv;
+	
+	public void setDateRdv(Timestamp timestamp) {
+		this.dateRdv = timestamp;
 	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

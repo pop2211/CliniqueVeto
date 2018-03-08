@@ -1,5 +1,6 @@
 package fr.eni.clinique;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -43,8 +44,9 @@ public class AppliTestBO {
 		LOGGER.info(personel.toString());
 		
 		LOGGER.info("Test class Rdv");
-		GregorianCalendar date = new GregorianCalendar(2018, 2, 25, 14, 15);
-		Rdv rdv = new Rdv(personel, date, animal);
+		java.util.Date date= new java.util.Date();
+        Timestamp dateRdv = new Timestamp(date.getTime());
+		Rdv rdv = new Rdv(personel, dateRdv, animal);
 		LOGGER.info(rdv.toString());
 
 	}

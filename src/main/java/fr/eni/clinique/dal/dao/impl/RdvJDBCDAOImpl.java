@@ -6,6 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -56,9 +59,8 @@ public class RdvJDBCDAOImpl implements RdvDAO{
             connection = JdbcTools.get();
             statement = connection.prepareStatement(SELECT_BY_CODEVETO_DATERDV_CODEANIMAL_QUERY);
             
-            statement.setInt(1, rdv.getVeto().getCodePers());
-            
-            statement.setDate(2, new java.sql.Date(rdv.getDateRdv().getTimeInMillis()) );
+            statement.setInt(1, rdv.getVeto().getCodePers()); 
+            statement.setTimestamp(2, rdv.getDateRdv());
             statement.setInt(3, rdv.getAnimal().getCodeAnimal());
             
 
@@ -83,10 +85,8 @@ public class RdvJDBCDAOImpl implements RdvDAO{
 	private Rdv resultSetEntryToRdv(ResultSet resultSet) throws Exception {
 		Rdv rdv = new Rdv();
 		
-		Date dateRdv = resultSet.getDate("DateRdv");
-	    GregorianCalendar calendar = new GregorianCalendar();
-	    calendar.setTime(dateRdv);
 		
+	    Timestamp calendar = resultSet.getTimestamp("DateRdv");
 		Integer codeVeto = resultSet.getInt("CodeVeto");
 		Integer codeAnimal = resultSet.getInt("CodeAnimal");
 		
@@ -111,7 +111,7 @@ public class RdvJDBCDAOImpl implements RdvDAO{
             statement = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS);
             
 	        statement.setInt(1, rdv.getVeto().getCodePers());
-			statement.setDate(2, new java.sql.Date(rdv.getDateRdv().getTimeInMillis()) );
+			statement.setTimestamp(2, rdv.getDateRdv());
 			statement.setInt(3, rdv.getAnimal().getCodeAnimal());
 
             if (statement.executeUpdate() == 0) {
@@ -135,7 +135,7 @@ public class RdvJDBCDAOImpl implements RdvDAO{
 	        statement = connection.prepareStatement(UPDATE_QUERY);
 	        
 	        statement.setInt(1, rdv.getVeto().getCodePers());
-			statement.setDate(2, new java.sql.Date(rdv.getDateRdv().getTimeInMillis()) );
+			statement.setTimestamp(2, rdv.getDateRdv());
 			statement.setInt(3, rdv.getAnimal().getCodeAnimal());
             
         } catch(SQLException e) {
@@ -158,7 +158,7 @@ public class RdvJDBCDAOImpl implements RdvDAO{
             statement = connection.prepareStatement(DELETE_QUERY);
             
 	        statement.setInt(1, rdv.getVeto().getCodePers());
-			statement.setDate(2, new java.sql.Date(rdv.getDateRdv().getTimeInMillis()) );
+			statement.setTimestamp(2, rdv.getDateRdv());
 			statement.setInt(3, rdv.getAnimal().getCodeAnimal());
             
             statement.executeUpdate();

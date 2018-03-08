@@ -40,6 +40,7 @@ import fr.eni.clinique.dal.exception.DaoException;
 import fr.eni.clinique.ihm.controller.AnimalController;
 import fr.eni.clinique.ihm.controller.ClientController;
 import fr.eni.clinique.ihm.controller.PersonnelController;
+import fr.eni.clinique.ihm.controller.RdvController;
 import fr.eni.clinique.ihm.screen.animal.AnimalScreen;
 import fr.eni.clinique.ihm.screen.client.AddClientScreen;
 import fr.eni.clinique.ihm.screen.common.GenericScreen;
@@ -51,20 +52,19 @@ public class RdvScreen extends GenericScreen {
 	private AddClientScreen frameAddClient;
 	private AnimalScreen frameAddAnimal;
 	
-	
 	JComboBox<Item<Integer>> CbxClient;
 	JComboBox<Item<Integer>> CbxAnimal;
 	JComboBox<Item<Integer>> CbxVeterinaire;
 	JComboBox<String> cbxHeure;
 	JComboBox<String> cbxMinute;
 	JDatePicker datePicker;
-	RdvManagerImpl rdvimp;
 	
 	public RdvScreen() {
 		super("Prise de rendez-vous", true, true, true, true);
 		controllerClient = new ClientController(modelClient);
 		controllerAnimal = new AnimalController(modelAnimal);
 		controllerPersonnel = new PersonnelController(modelPersonnel);
+		controllerRdv = new RdvController(modelRdv);
 		constructionFenetre();
 	}
 	
@@ -328,15 +328,11 @@ public class RdvScreen extends GenericScreen {
 		btnValider.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					//change ça BASTIEN
-					rdvimp.insert(readRdv());
-					/*controllerRdv.newRdv(readRdv());
-					parentScreen.processEvent("AddAnimal", null);
-					showSuccessMessage("Animal enregistré !");
-					setVisible(false);*/
+					controllerRdv.newRdv(readRdv());
+					processEvent("AddRdv", null);
+					showSuccessMessage("Rendez-vous enregistré !");
 				} catch (ManagerException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					showFailureMessage(e.getMessage());
 				}
 			}
 		});
@@ -399,11 +395,15 @@ public class RdvScreen extends GenericScreen {
 	@Override
 	public void processEvent(String eventName, Object eventParam) {
 		switch(eventName){
-		case "AddClient":
-			chargeClient();
-		break;
-		case "AddAnimal":
-			chargeAnimaux(((Item<Integer>) CbxClient.getSelectedItem()).getId());
+			case "AddClient":
+				chargeClient();
+			break;
+			case "AddAnimal":
+				chargeAnimaux(((Item<Integer>) CbxClient.getSelectedItem()).getId());
+			break;
+			case "AddRdv":
+			
+			break;	
 		}
 	}
 
@@ -414,17 +414,22 @@ public class RdvScreen extends GenericScreen {
 		
 		try {
 			//Recupère les champs de l'ihm :
-			Integer codeAnimal = ((Item<Integer>) CbxClient.getSelectedItem()).getId();
-			Animal animal = controllerAnimal.loadAnimal(codeAnimal);
-			rdv.setAnimal(animal);
+			if(CbxAnimal.getItemCount() > 0) {
+				Integer codeAnimal = ((Item<Integer>) CbxAnimal.getSelectedItem()).getId();
+				Animal animal = controllerAnimal.loadAnimal(codeAnimal);
+				rdv.setAnimal(animal);
 			
-			Integer codePers = ((Item<Integer>) CbxVeterinaire.getSelectedItem()).getId();
-			Personnel personnel = controllerPersonnel.selectPersonnel(codePers);
-			rdv.setVeto(personnel);
+				if(CbxVeterinaire.getItemCount() > 0) {
+					Integer codePers = ((Item<Integer>) CbxVeterinaire.getSelectedItem()).getId();
+					Personnel personnel = controllerPersonnel.selectPersonnel(codePers);
+					rdv.setVeto(personnel);
+				
 		
-			String DateTime = (datePicker.getFormattedTextField().getText() + " " + cbxHeure.getSelectedItem() + ":" + cbxMinute.getSelectedItem());
-			Timestamp Timestamp = StringUtil.convertStringToTimestamp(DateTime);
-			System.out.println(Timestamp);
+					String DateTime = (datePicker.getFormattedTextField().getText() + " " + cbxHeure.getSelectedItem() + ":" + cbxMinute.getSelectedItem());
+					Timestamp Timestamp = StringUtil.convertStringToTimestamp(DateTime);
+					rdv.setDateRdv(Timestamp);
+				}
+			}
 			
 		} catch (ManagerException e) {
 			// TODO Auto-generated catch block
