@@ -24,6 +24,7 @@ import fr.eni.clinique.ihm.controller.PersonnelController;
 import fr.eni.clinique.ihm.model.PersonnelModel;
 import fr.eni.clinique.ihm.screen.MainScreen;
 import fr.eni.clinique.ihm.screen.common.GenericScreen;
+import fr.eni.clinique.ihm.screen.personnel.PersonnelScreen;
 
 public class LoginScreen extends GenericScreen{
 	
@@ -96,15 +97,8 @@ public class LoginScreen extends GenericScreen{
         gbc_passwordInput.gridy = 2;
         mainPanel.add(passwordInput, gbc_passwordInput); 
         
-		Image img = null;
-		try {
-			img = ImageIO.read(new File("src//main//resources//images//ico//done_16p.png"));
-		} catch (IOException e1) {
-			errorOccured(e1);
-		}
-		
         validateButton = new JButton("Valider");
-        validateButton.setIcon(new ImageIcon(img));
+        validateButton.setIcon(new ImageIcon(PersonnelScreen.class.getResource("/images/ico/done_16p.png")));
 	    validateButton.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
