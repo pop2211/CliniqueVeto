@@ -7,24 +7,19 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
-
-import com.sun.xml.internal.ws.util.StringUtils;
+import javax.swing.border.LineBorder;
 
 import fr.eni.clinique.bll.exception.ManagerException;
 import fr.eni.clinique.bo.Animal;
 import fr.eni.clinique.bo.Client;
-import fr.eni.clinique.bo.Race;
 import fr.eni.clinique.common.util.ObjectUtil;
-import fr.eni.clinique.common.util.StringUtil;
 import fr.eni.clinique.dal.dao.ClientDAO;
 import fr.eni.clinique.dal.dao.RaceDAO;
 import fr.eni.clinique.dal.dao.impl.ClientJDBCDAOImpl;
@@ -32,12 +27,7 @@ import fr.eni.clinique.dal.dao.impl.RaceJDBCDAOImpl;
 import fr.eni.clinique.dal.exception.DaoException;
 import fr.eni.clinique.ihm.controller.AnimalController;
 import fr.eni.clinique.ihm.model.AnimalModel;
-import fr.eni.clinique.ihm.screen.client.MainClientScreen;
 import fr.eni.clinique.ihm.screen.common.GenericScreen;
-import fr.eni.clinique.ihm.screen.common.JTextFieldLimit;
-import javax.swing.JPanel;
-import javax.swing.border.LineBorder;
-import javax.swing.JTextArea;
 
 public class AnimalDossierMedicalScreen extends GenericScreen {
 	

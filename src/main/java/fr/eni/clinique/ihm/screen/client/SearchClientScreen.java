@@ -1,39 +1,30 @@
 package fr.eni.clinique.ihm.screen.client;
 
-import java.awt.EventQueue;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+import java.util.Vector;
 
-import javax.swing.JInternalFrame;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import fr.eni.clinique.bll.exception.ManagerException;
 import fr.eni.clinique.bo.Client;
 import fr.eni.clinique.common.util.Item;
-import fr.eni.clinique.ihm.controller.ClientController;
-import fr.eni.clinique.ihm.model.ClientModel;
 import fr.eni.clinique.ihm.screen.common.GenericScreen;
-
-import javax.swing.JButton;
-import java.awt.BorderLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.event.ActionListener;
-import java.util.List;
-import java.util.Vector;
-import java.awt.event.ActionEvent;
-import javax.swing.ImageIcon;
-import java.awt.Insets;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JTable;
-import java.awt.Color;
-import javax.swing.JComboBox;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.border.LineBorder;
-import java.awt.Dimension;
-import javax.swing.JScrollPane;
 
 public class SearchClientScreen extends GenericClientScreen {
 

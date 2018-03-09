@@ -1,8 +1,5 @@
 package fr.eni.clinique.bo;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Client {
 
 	private Integer codeClient;

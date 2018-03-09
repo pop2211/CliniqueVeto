@@ -6,7 +6,6 @@ import java.util.List;
 
 import fr.eni.clinique.bll.exception.ManagerException;
 import fr.eni.clinique.bll.manager.RdvManager;
-import fr.eni.clinique.bo.Animal;
 import fr.eni.clinique.bo.Rdv;
 import fr.eni.clinique.common.exception.TechnicalException;
 import fr.eni.clinique.common.util.ObjectUtil;
@@ -79,7 +78,7 @@ public class RdvManagerImpl implements RdvManager{
         try {
             ObjectUtil.checkNotNullWithMessage(rdv, "Une erreur technique est survenue");
             ObjectUtil.checkNotNullWithMessage(rdv.getAnimal(), "L'animal est obligatoire");
-            ObjectUtil.checkNotNullWithMessage(rdv.getVeto(), "Le veterinnaire est obligatoire");
+            ObjectUtil.checkNotNullWithMessage(rdv.getVeto(), "Le veterinaire est obligatoire");
             ObjectUtil.checkNotNullWithMessage(rdv.getDateRdv(), "La date est obligatoire");
             ObjectUtil.checkTimestamp(rdv.getDateRdv(), "Date au format invalide");
         } catch (IllegalArgumentException e) {

@@ -1,9 +1,7 @@
 package fr.eni.clinique.dal.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.clinique.bo.Animal;
 import fr.eni.clinique.bo.Race;
 import fr.eni.clinique.dal.exception.DaoException;
 

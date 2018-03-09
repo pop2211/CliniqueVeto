@@ -1,5 +1,6 @@
 package fr.eni.clinique.ihm.screen.client;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -9,15 +10,14 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 
 import fr.eni.clinique.bo.Client;
 import fr.eni.clinique.ihm.screen.common.GenericScreen;
 import fr.eni.clinique.ihm.screen.common.JTextFieldLimit;
-import javax.swing.JPanel;
-import javax.swing.border.LineBorder;
-import java.awt.Color;
 
 public class AddClientScreen extends GenericClientScreen {
 

@@ -1,28 +1,9 @@
 package fr.eni.clinique.ihm.screen.Agenda;
 
-import java.awt.EventQueue;
-
-import javax.swing.JInternalFrame;
-
-import fr.eni.clinique.bll.exception.ManagerException;
-import fr.eni.clinique.bo.EnumRole;
-import fr.eni.clinique.bo.Personnel;
-import fr.eni.clinique.bo.Rdv;
-import fr.eni.clinique.common.util.Item;
-import fr.eni.clinique.ihm.controller.AnimalController;
-import fr.eni.clinique.ihm.controller.PersonnelController;
-import fr.eni.clinique.ihm.controller.RdvController;
-import fr.eni.clinique.ihm.model.TableModelAgenda;
-import fr.eni.clinique.ihm.model.TableModelRdv;
-import fr.eni.clinique.ihm.screen.animal.AnimalDossierMedicalScreen;
-import fr.eni.clinique.ihm.screen.common.GenericScreen;
-import fr.eni.clinique.ihm.screen.personnel.PersonnelScreen;
-
-import java.awt.GridBagLayout;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,21 +13,31 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import javax.swing.JButton;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
-import java.awt.Color;
 import javax.swing.border.TitledBorder;
 
 import org.jdatepicker.ComponentFormatDefaults;
 import org.jdatepicker.JDatePicker;
 
-import javax.swing.JComboBox;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.JLabel;
-import java.awt.Dimension;
-import javax.swing.JTable;
+import fr.eni.clinique.bll.exception.ManagerException;
+import fr.eni.clinique.bo.EnumRole;
+import fr.eni.clinique.bo.Personnel;
+import fr.eni.clinique.bo.Rdv;
+import fr.eni.clinique.common.util.Item;
+import fr.eni.clinique.ihm.controller.AnimalController;
+import fr.eni.clinique.ihm.controller.PersonnelController;
+import fr.eni.clinique.ihm.controller.RdvController;
+import fr.eni.clinique.ihm.screen.animal.AnimalDossierMedicalScreen;
+import fr.eni.clinique.ihm.screen.common.GenericScreen;
+import fr.eni.clinique.ihm.screen.personnel.PersonnelScreen;
 
 public class AgendaScreen extends GenericScreen {
 
