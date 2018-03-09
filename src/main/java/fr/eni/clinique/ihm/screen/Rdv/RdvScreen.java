@@ -432,7 +432,6 @@ public class RdvScreen extends GenericScreen {
 			break;
 			case "AddAnimal":
 				chargeAnimaux(((Item<Integer>) CbxClient.getSelectedItem()).getId());
-				CbxAnimal.setSelectedIndex(CbxAnimal.getItemCount()-1);
 			break;
 			case "AddRdv":
 				tableModelRdv.refresh(getActualVeto(), getActualDate());
