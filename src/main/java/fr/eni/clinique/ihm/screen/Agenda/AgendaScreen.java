@@ -35,6 +35,7 @@ import fr.eni.clinique.common.util.Item;
 import fr.eni.clinique.ihm.controller.AnimalController;
 import fr.eni.clinique.ihm.controller.PersonnelController;
 import fr.eni.clinique.ihm.controller.RdvController;
+import fr.eni.clinique.ihm.model.TableModelAgenda;
 import fr.eni.clinique.ihm.screen.animal.AnimalDossierMedicalScreen;
 import fr.eni.clinique.ihm.screen.common.GenericScreen;
 import fr.eni.clinique.ihm.screen.personnel.PersonnelScreen;
@@ -184,7 +185,7 @@ public class AgendaScreen extends GenericScreen {
 					}
 					Rdv rdv = tableModelAgenda.getRdvs().get(rowIndex);
 					Integer codeAnimal = rdv.getAnimal().getCodeAnimal();
-					Integer codeClient = rdv.getAnimal().getCodeClient();
+					Integer codeClient = rdv.getAnimal().getClient().getCodeClient();
 					frameAnimalDossierMedical = getFrameAnimalDossierMedical(codeClient, codeAnimal);
 					frameAnimalDossierMedical.setVisible(true);
 				} catch (Exception e1) {

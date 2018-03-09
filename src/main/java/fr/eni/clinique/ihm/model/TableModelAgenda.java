@@ -71,7 +71,7 @@ public class TableModelAgenda extends AbstractTableModel{
 			
 		case 1:
 			try {
-				txt = clientManagerImpl.selectById(rdvs.get(rowIndex).getAnimal().getCodeClient()).getFullname();
+				txt = clientManagerImpl.selectById(rdvs.get(rowIndex).getAnimal().getClient().getCodeClient()).getFullname();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
