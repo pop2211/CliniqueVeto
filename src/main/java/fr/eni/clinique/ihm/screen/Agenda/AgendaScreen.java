@@ -35,6 +35,7 @@ import fr.eni.clinique.common.util.Item;
 import fr.eni.clinique.ihm.controller.AnimalController;
 import fr.eni.clinique.ihm.controller.PersonnelController;
 import fr.eni.clinique.ihm.controller.RdvController;
+import fr.eni.clinique.ihm.model.TableModelAgenda;
 import fr.eni.clinique.ihm.screen.animal.AnimalDossierMedicalScreen;
 import fr.eni.clinique.ihm.screen.common.GenericScreen;
 import fr.eni.clinique.ihm.screen.personnel.PersonnelScreen;
@@ -46,7 +47,7 @@ public class AgendaScreen extends GenericScreen {
 	private JDatePicker datePicker;
 	private JTable table;
 	private JComboBox CbxVeterinaire;
-	TableModelAgenda tableModelAgenda;
+	private TableModelAgenda tableModelAgenda;
 	
 	private AnimalDossierMedicalScreen frameAnimalDossierMedical;
 	
