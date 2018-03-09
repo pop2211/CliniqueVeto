@@ -185,7 +185,7 @@ public class AgendaScreen extends GenericScreen {
 					}
 					Rdv rdv = tableModelAgenda.getRdvs().get(rowIndex);
 					Integer codeAnimal = rdv.getAnimal().getCodeAnimal();
-					Integer codeClient = rdv.getAnimal().getCodeClient();
+					Integer codeClient = rdv.getAnimal().getClient().getCodeClient();
 					frameAnimalDossierMedical = getFrameAnimalDossierMedical(codeClient, codeAnimal);
 					frameAnimalDossierMedical.setVisible(true);
 				} catch (Exception e1) {
