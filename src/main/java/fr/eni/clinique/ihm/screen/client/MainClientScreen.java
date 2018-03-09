@@ -107,10 +107,10 @@ public class MainClientScreen extends GenericClientScreen {
 		rechercherBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				frameClientSearch = getFrameClientSearch();
+				//here results list can be loaded with previous search results
+				//so we refresh it (for example to hide removed clients) :
+				frameClientSearch.launchSearch();
 				frameClientSearch.setVisible(true);
-				
-				//frameSearch.launchSearch(); //hide removed client from previous search results
-				//=> ERR (avant ou apres setVisible true)
 			}
 		});
 		rechercherBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
