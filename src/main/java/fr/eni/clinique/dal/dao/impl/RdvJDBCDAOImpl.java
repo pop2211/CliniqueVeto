@@ -1,23 +1,18 @@
 package fr.eni.clinique.dal.dao.impl;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import fr.eni.clinique.bo.Animal;
 import fr.eni.clinique.bo.Personnel;
 import fr.eni.clinique.bo.Rdv;
 import fr.eni.clinique.common.util.ResourceUtil;
-import fr.eni.clinique.common.util.StringUtil;
 import fr.eni.clinique.dal.dao.RdvDAO;
 import fr.eni.clinique.dal.exception.DaoException;
 import fr.eni.clinique.dal.factory.JdbcTools;
@@ -47,8 +42,6 @@ public class RdvJDBCDAOImpl implements RdvDAO{
 	public static RdvDAO getInstance() {
 		if(instance == null) {
             instance = new RdvJDBCDAOImpl();
-            PersonnelDAO = new PersonnelJDBCDAOImpl();
-            AnimalDAO = new AnimalJDBCDAOImpl(); 
         }
         return instance;
 	}
@@ -94,7 +87,10 @@ public class RdvJDBCDAOImpl implements RdvDAO{
 		Integer codeVeto = resultSet.getInt("CodeVeto");
 		Integer codeAnimal = resultSet.getInt("CodeAnimal");
 		
-		Personnel veto = PersonnelDAO.selectById(codeVeto);
+		PersonnelDAO = new PersonnelJDBCDAOImpl();
+        AnimalDAO = new AnimalJDBCDAOImpl(); 
+		
+        Personnel veto = PersonnelDAO.selectById(codeVeto);
 		Animal animal = AnimalDAO.selectById(codeAnimal);
 		
 		rdv.setVeto(veto);
@@ -175,7 +171,6 @@ public class RdvJDBCDAOImpl implements RdvDAO{
         }
 		
 	}
-
 	
 
 	@Override

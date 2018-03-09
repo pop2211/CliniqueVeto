@@ -2,7 +2,6 @@ package fr.eni.clinique;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -22,8 +21,11 @@ public class AppliTestBO {
 
 		Race race = new Race("pasderace", "bambie");
 		Race race2 = new Race("lapin", "civet");
-		Animal animal = new Animal(1, "MamandeBambi", "h", "bleu", "symbole", "alcoolique", false , race , 5);
-		Animal animal2 = new Animal(2, "Mamandepanpan", "h", "vert", "flingue", "suicidaire", false, race2 , 5);
+		
+		Client client = new Client(5, "lagaffe", "vincent", "8 rue de lala", "bis", "49000", "Angers", "0606060606", "maf", "aze@rty.fr", "ne paye pas", 0, false);
+		
+		Animal animal = new Animal(1, "MamandeBambi", "h", "bleu", "symbole", "alcoolique", false , race , client);
+		Animal animal2 = new Animal(2, "Mamandepanpan", "h", "vert", "flingue", "suicidaire", false, race2 , client);
 
 		List<Animal> animaux = new ArrayList<Animal>();
 		animaux.add(animal);
@@ -36,7 +38,6 @@ public class AppliTestBO {
 		LOGGER.info(animal.getCouleur());
 		
 		LOGGER.info("Test class Client");
-		Client client = new Client(5, "lagaffe", "vincent", "8 rue de lala", "bis", "49000", "Angers", "0606060606", "maf", "aze@rty.fr", "ne paye pas", 0, false);
 		LOGGER.info(client.toString());
 		
 		LOGGER.info("Test class Personel");

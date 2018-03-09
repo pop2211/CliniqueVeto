@@ -1,30 +1,22 @@
 package fr.eni.clinique.ihm.screen.Agenda;
 
-import java.awt.EventQueue;
-
-import javax.swing.JInternalFrame;
-
-import fr.eni.clinique.ihm.screen.common.GenericScreen;
-import java.awt.GridBagLayout;
-import javax.swing.JPanel;
+import java.awt.Color;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import javax.swing.JButton;
-import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
-import java.awt.Color;
 import javax.swing.border.TitledBorder;
 
 import org.jdatepicker.ComponentFormatDefaults;
 import org.jdatepicker.JDatePicker;
 
-import javax.swing.JComboBox;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-import java.awt.Dimension;
+import fr.eni.clinique.ihm.screen.common.GenericScreen;
 
 public class AgendaScreen extends GenericScreen {
 

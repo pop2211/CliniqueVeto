@@ -5,9 +5,7 @@ import java.util.List;
 import fr.eni.clinique.bll.exception.ManagerException;
 import fr.eni.clinique.bll.factory.ManagerFactory;
 import fr.eni.clinique.bll.manager.RdvManager;
-import fr.eni.clinique.bo.Animal;
 import fr.eni.clinique.bo.Rdv;
-import fr.eni.clinique.ihm.model.AnimalModel;
 import fr.eni.clinique.ihm.model.RdvModel;
 
 public class RdvController {

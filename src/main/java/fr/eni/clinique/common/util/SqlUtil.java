@@ -3,13 +3,6 @@ package fr.eni.clinique.common.util;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import fr.eni.clinique.common.AppConstants;
 
 /**
  * String utilities.

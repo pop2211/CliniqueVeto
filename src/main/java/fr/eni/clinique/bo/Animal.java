@@ -10,14 +10,14 @@ public class Animal {
 	private String antecedents;
 	private Boolean archive;
 	private Race race;
-	private Integer codeClient;
+	private Client client;
 	
 	public Animal() {
 		super();
 		this.setArchive(false);
 	}
 	public Animal(Integer codeAnimal, String nomAnimal, String sexe, String couleur, String tatouage,
-			String antecedents, Boolean archive, Race race, Integer codeClient) {
+			String antecedents, Boolean archive, Race race, Client client) {
 		super();
 		this.codeAnimal = codeAnimal;
 		this.nomAnimal = nomAnimal;
@@ -27,11 +27,11 @@ public class Animal {
 		this.antecedents = antecedents;
 		this.archive = archive;
 		this.race = race;
-		this.codeClient = codeClient;
+		this.client = client;
 	}
 	
 	public Animal(String nomAnimal, String sexe, String couleur, String tatouage, String antecedents, Boolean archive,
-			Race race, Integer codeClient) {
+			Race race, Client client) {
 		super();
 		this.nomAnimal = nomAnimal;
 		this.sexe = sexe;
@@ -40,7 +40,7 @@ public class Animal {
 		this.antecedents = antecedents;
 		this.archive = archive;
 		this.race = race;
-		this.codeClient = codeClient;
+		this.client = client;
 	}
 	public Integer getCodeAnimal() {
 		return codeAnimal;
@@ -98,12 +98,12 @@ public class Animal {
 		this.archive = archive;
 	}
 	
-	public Integer getCodeClient() {
-		return codeClient;
+	public Client getClient() {
+		return client;
 	}
 	
-	public void setCodeClient(Integer codeClient) {
-		this.codeClient = codeClient;
+	public void setClient(Client codeClient) {
+		this.client = codeClient;
 	}
 	
 	public Race getRace() {
@@ -134,7 +134,7 @@ public class Animal {
 		builder.append(", race=");
 		builder.append(race);
 		builder.append(", codeClient=");
-		builder.append(codeClient);
+		builder.append(client);
 		builder.append("]");
 		return builder.toString();
 	}

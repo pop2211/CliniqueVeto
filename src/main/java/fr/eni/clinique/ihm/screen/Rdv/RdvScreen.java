@@ -106,6 +106,9 @@ public class RdvScreen extends GenericScreen {
 		panel_Pour.add(lblClient, gbc_lblClient);
 		
 		CbxClient = new JComboBox<Item<Integer>>();
+
+		CbxClient.setMaximumSize(new Dimension(125, 20));
+		CbxClient.setMinimumSize(new Dimension(125, 20));
 		chargeClient();
 		
 		GridBagConstraints gbc_CbxClient = new GridBagConstraints();
@@ -162,6 +165,14 @@ public class RdvScreen extends GenericScreen {
 		gbc_CbXAnimal.gridx = 0;
 		gbc_CbXAnimal.gridy = 3;
 		panel_Pour.add(CbxAnimal, gbc_CbXAnimal);
+		
+		CbxClient.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(CbxClient.getItemCount() > 0) {
+					chargeAnimaux(((Item<Integer>) CbxClient.getSelectedItem()).getId());
+				}
+			}
+		});
 		
 		JButton BtnAddAnimal = new JButton("");
 		BtnAddAnimal.setBorderPainted(false);
@@ -351,8 +362,10 @@ public class RdvScreen extends GenericScreen {
 		btnValider.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					controllerRdv.newRdv(readRdv());
+					Rdv rdvAjout = readRdv();
+					controllerRdv.newRdv(rdvAjout);
 					processEvent("AddRdv", null);
+					//CbxClient.setSelectedItem(rdvAjout.getAnimal().getCodeClient());
 					showSuccessMessage("Rendez-vous enregistré !");
 				} catch (ManagerException e) {
 					showFailureMessage(e.getMessage());
@@ -389,15 +402,6 @@ public class RdvScreen extends GenericScreen {
 		} catch (ManagerException e) {
 			e.printStackTrace();
 		}
-		CbxClient.setMaximumSize(new Dimension(125, 20));
-		CbxClient.setMinimumSize(new Dimension(125, 20));
-		CbxClient.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(CbxClient.getItemCount() > 0) {
-					chargeAnimaux(((Item<Integer>) CbxClient.getSelectedItem()).getId());
-				}
-			}
-		});
 	}
 
 	private void chargeAnimaux(int CodeClient) {
@@ -423,6 +427,7 @@ public class RdvScreen extends GenericScreen {
 			break;
 			case "AddAnimal":
 				chargeAnimaux(((Item<Integer>) CbxClient.getSelectedItem()).getId());
+				CbxAnimal.setSelectedIndex(CbxAnimal.getItemCount()-1);
 			break;
 			case "AddRdv":
 				tableModelRdv.refresh(getActualVeto(), getActualDate());

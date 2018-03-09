@@ -4,7 +4,6 @@ import java.util.List;
 
 import fr.eni.clinique.bll.exception.ManagerException;
 import fr.eni.clinique.bll.manager.RaceManager;
-import fr.eni.clinique.bo.Client;
 import fr.eni.clinique.bo.Race;
 import fr.eni.clinique.common.exception.TechnicalException;
 import fr.eni.clinique.common.util.ObjectUtil;

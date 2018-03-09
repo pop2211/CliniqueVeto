@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.clinique.bo.Animal;
+import fr.eni.clinique.bo.Client;
 import fr.eni.clinique.bo.Race;
 import fr.eni.clinique.common.util.ResourceUtil;
 import fr.eni.clinique.dal.dao.AnimalDAO;
@@ -27,6 +28,7 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
     private static final String SELECT_BY_MAITRE = "SELECT * FROM Animaux WHERE CodeClient=?"+ NOT_ARCHIVE;;
     
     private static AnimalJDBCDAOImpl instance;
+    private static ClientJDBCDAOImpl ClientDAO;
     
 	public static AnimalDAO getInstance() {
 		if(instance == null) {
@@ -49,10 +51,9 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
 				animal = resultSetEntryToAnimal(resultSet);
-				// TODO Auto-generated catch block
             }
 
-        } catch(SQLException e) {
+        } catch(Exception e) {
             throw new DaoException(e.getMessage(), e);
         } finally {
             ResourceUtil.safeClose(connection, statement, resultSet);
@@ -60,15 +61,21 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
         return animal;
 	}
 
-	private Animal resultSetEntryToAnimal(ResultSet resultSet) throws SQLException{
+	private Animal resultSetEntryToAnimal(ResultSet resultSet) throws Exception{
 		Animal animal = new Animal();
-
+		
+		Integer codeClient = resultSet.getInt("CodeClient");
+		
+		ClientDAO = new ClientJDBCDAOImpl();
+		
+		Client client = ClientDAO.selectById(codeClient);
+		
 		animal.setCodeAnimal(resultSet.getInt("CodeAnimal"));
 		animal.setNomAnimal(resultSet.getString("NomAnimal"));
 		animal.setSexe(resultSet.getString("Sexe"));
 		animal.setCouleur(resultSet.getString("Couleur"));
 		animal.setRace(new Race(resultSet.getString("Race"),resultSet.getString("Espece")));
-		animal.setCodeClient(resultSet.getInt("CodeClient"));
+		animal.setClient(client);
 		animal.setTatouage(resultSet.getString("Tatouage"));
 		animal.setAntecedents(resultSet.getString("Antecedents"));
 		animal.setArchive(resultSet.getBoolean("Archive"));
@@ -92,7 +99,7 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
             statement.setString(3, animal.getCouleur());
             statement.setString(4, animal.getRace().getRace());
             statement.setString(5, animal.getRace().getEspece());
-            statement.setInt(6, animal.getCodeClient());
+            statement.setInt(6, animal.getClient().getCodeClient());
             statement.setString(7, animal.getTatouage());
             statement.setString(8, animal.getAntecedents());
             statement.setBoolean(9, animal.isArchive());
@@ -125,11 +132,10 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
             statement.setString(3, animal.getCouleur());
             statement.setString(4, animal.getRace().getRace());
             statement.setString(5, animal.getRace().getEspece());
-            statement.setInt(6, animal.getCodeClient());
+            statement.setInt(6, animal.getClient().getCodeClient());
             statement.setString(7, animal.getTatouage());
             statement.setString(8, animal.getAntecedents());
             statement.setBoolean(9, animal.isArchive());
-            
             statement.setInt(10, animal.getCodeAnimal());
             
 			if (statement.executeUpdate() == 0) {
@@ -180,7 +186,7 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
             while (resultSet.next()) { 
 				liste.add(resultSetEntryToAnimal(resultSet));	
             }
-        } catch(SQLException e) {
+        } catch(Exception e) {
             throw new DaoException(e.getMessage(), e);
         } finally {
             ResourceUtil.safeClose(connection, statement, resultSet);
@@ -219,7 +225,7 @@ public class AnimalJDBCDAOImpl implements AnimalDAO{
             while (resultSet.next()) { 
 				liste.add(resultSetEntryToAnimal(resultSet));	
             }
-        } catch(SQLException e) {
+        } catch(Exception e) {
             throw new DaoException(e.getMessage(), e);
         } finally {
             ResourceUtil.safeClose(connection, statement, resultSet);

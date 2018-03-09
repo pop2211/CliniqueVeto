@@ -1,7 +1,6 @@
 package fr.eni.clinique;
 
 import java.sql.Timestamp;
-import java.util.GregorianCalendar;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,7 +66,7 @@ public class AppliTestDAL {
             Client client2 = new Client("cli2", "nomcli2", "9 rue de lala", "bis", "75000", "Paris", "0707070707", "maf", "aze@rty.com", "remarque", false);
             LOGGER.info("Check inserting Client2 : {}", clientDAO.insert(client2));
             
-            Animal animal = new Animal("MamandeBambi", "h", "bleu", "symbole", "alcoolique", false , race , client.getCodeClient());
+            Animal animal = new Animal("MamandeBambi", "h", "bleu", "symbole", "alcoolique", false , race , client2);
     		LOGGER.info("Check inserting Animal : {}", animalDAO.insert(animal));
             LOGGER.info("Check reading Animal : {}", animalDAO.selectAll());
             

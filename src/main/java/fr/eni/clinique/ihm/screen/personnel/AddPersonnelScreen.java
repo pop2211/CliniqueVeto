@@ -1,20 +1,21 @@
 package fr.eni.clinique.ihm.screen.personnel;
 
 
-import javax.swing.JInternalFrame;
-import java.awt.GridBagLayout;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
+import java.awt.Font;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.Font;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import fr.eni.clinique.bll.exception.ManagerException;
-import fr.eni.clinique.bo.Animal;
 import fr.eni.clinique.bo.EnumRole;
 import fr.eni.clinique.bo.Personnel;
 import fr.eni.clinique.common.util.Item;
@@ -23,11 +24,6 @@ import fr.eni.clinique.ihm.controller.PersonnelController;
 import fr.eni.clinique.ihm.model.PersonnelModel;
 import fr.eni.clinique.ihm.screen.common.GenericScreen;
 import fr.eni.clinique.ihm.screen.common.JTextFieldLimit;
-
-import javax.swing.JButton;
-import javax.swing.ImageIcon;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
 
 public class AddPersonnelScreen extends GenericScreen {
 	/**

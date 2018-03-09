@@ -17,8 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import com.sun.xml.internal.ws.util.StringUtils;
-
+import fr.eni.clinique.bll.exception.ManagerException;
 import fr.eni.clinique.bo.Animal;
 import fr.eni.clinique.bo.Client;
 import fr.eni.clinique.bo.Race;
@@ -392,12 +391,13 @@ public class AnimalScreen extends GenericScreen {
 	private Animal readAnimal() {
 
 		Animal animal = new Animal();
-
+		
 		Integer codeAnimal = null;
 		if(!StringUtil.isNull(recupLblAnimal.getText())) {
 			codeAnimal = Integer.parseInt(recupLblAnimal.getText());
 		}
 		
+		try {
 		// Recupère les champs de l'ihm :
 		animal.setCodeAnimal(codeAnimal);
 		animal.setNomAnimal(nomTbx.getText().trim());
@@ -410,7 +410,12 @@ public class AnimalScreen extends GenericScreen {
 		//animal.setAntecedents(antecedentsTbx.getText().trim());
 		animal.setSexe(sexeCbx.getSelectedItem().toString());
 		animal.setArchive(false);
-		animal.setCodeClient(codeClient);
+		Client client = controllerClient.loadClient(codeClient);
+		animal.setClient(client);
+		} catch (ManagerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		return animal;
 	}
