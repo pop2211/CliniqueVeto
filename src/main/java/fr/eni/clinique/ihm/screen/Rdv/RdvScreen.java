@@ -42,6 +42,7 @@ import fr.eni.clinique.ihm.controller.ClientController;
 import fr.eni.clinique.ihm.controller.PersonnelController;
 import fr.eni.clinique.ihm.controller.RdvController;
 import fr.eni.clinique.ihm.model.TableModelRdv;
+import fr.eni.clinique.ihm.screen.animal.AnimalDossierMedicalScreen;
 import fr.eni.clinique.ihm.screen.animal.AnimalScreen;
 import fr.eni.clinique.ihm.screen.client.AddClientScreen;
 import fr.eni.clinique.ihm.screen.common.GenericScreen;
@@ -52,6 +53,7 @@ public class RdvScreen extends GenericScreen {
 	
 	private AddClientScreen frameAddClient;
 	private AnimalScreen frameAddAnimal;
+	
 	
 	JComboBox<Item<Integer>> CbxClient;
 	JComboBox<Item<Integer>> CbxAnimal;
@@ -504,4 +506,6 @@ public class RdvScreen extends GenericScreen {
 		
 		return frameAddAnimal;
 	}
+	
+
 }
