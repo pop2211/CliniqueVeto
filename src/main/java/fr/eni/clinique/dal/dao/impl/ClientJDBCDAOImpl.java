@@ -26,13 +26,14 @@ public class ClientJDBCDAOImpl implements ClientDAO {
 	private static final String TRUNCATE_QUERY = "DELETE FROM Clients; DBCC CHECKIDENT(Clients, RESEED, 0);";
 	
 	//private static final String SEARCH_QUERY = "SELECT * FROM Clients WHERE (NomClient LIKE ? OR PrenomClient LIKE ?)"+ NOT_ARCHIVE;
-	private static final String SEARCH_QUERY = "SELECT c2.*, res.NbAnimaux FROM("
-		+" SELECT c.CodeClient, COUNT(a.CodeAnimal) AS NbAnimaux FROM Clients c"
-		+" LEFT JOIN Animaux a ON a.CodeClient = c.CodeClient"
-		+" WHERE (c.NomClient LIKE ? OR c.PrenomClient LIKE ?)"
-		+" GROUP BY c.CodeClient"
-	+" ) res JOIN Clients c2 ON c2.CodeClient = res.CodeClient"
-	+" WHERE 1=1 "+ NOT_ARCHIVE;
+	private static final String SEARCH_QUERY = "SELECT c1.*, res.NbAnimaux FROM Clients c1"
+	+" LEFT JOIN ("
+		+" SELECT c2.CodeClient, COUNT(a.CodeAnimal) AS NbAnimaux FROM Clients c2"
+		+" JOIN Animaux a ON a.CodeClient = c2.CodeClient"
+		+" WHERE a.Archive<>1" //ANIMAL NOT ARCHIVE
+		+" GROUP BY c2.CodeClient"
+	+" ) res ON res.CodeClient = c1.CodeClient"
+	+" WHERE (c1.NomClient LIKE ? OR c1.PrenomClient LIKE ?) AND c1.Archive<>1"; //CLIENT NOT ARCHIVE
 
 	
 	private static ClientJDBCDAOImpl instance;
