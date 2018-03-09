@@ -124,7 +124,7 @@ public class AgendaScreen extends GenericScreen {
 				}
 			}
 		} catch (ManagerException e) {
-			e.printStackTrace();
+			errorOccured(e);
 		}
 		CbxVeterinaire.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -233,7 +233,7 @@ public class AgendaScreen extends GenericScreen {
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		    parsedDate = formatter.format(initDate);
 		} catch (ParseException e) {
-			e.printStackTrace();
+			errorOccured(e);
 		}
 		 return parsedDate;
 	}

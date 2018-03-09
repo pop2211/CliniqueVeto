@@ -88,19 +88,16 @@ public class MDIAppExample extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case "deconnexion":
-			System.out.println("Deconnexion");
 			break;
 		case "fermer":
 			System.exit(0);
 			break;
 
 		case "ecran":
-			System.out.println("coucou");
 			getFrm1().setVisible(true);
 			break;
 
 		default:
-			System.out.println("Probleme e=" + e);
 		}
 
 	}

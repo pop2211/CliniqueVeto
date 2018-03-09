@@ -61,8 +61,7 @@ public class ClientJDBCDAOImpl implements ClientDAO {
 				try {
 					client = resultSetEntryToClient(resultSet);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					throw new DaoException("Erreur selection client");
 				}
 			}
 
@@ -167,7 +166,6 @@ public class ClientJDBCDAOImpl implements ClientDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
 			throw new DaoException(e.getMessage(), e);
 		} finally {
 			ResourceUtil.safeClose(connection, statement);

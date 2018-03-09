@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import fr.eni.clinique.AppliTestDAL;
 import fr.eni.clinique.bo.EnumRole;
+import fr.eni.clinique.common.util.LogUtil;
 import fr.eni.clinique.ihm.controller.AnimalController;
 import fr.eni.clinique.ihm.controller.ClientController;
 import fr.eni.clinique.ihm.controller.PersonnelController;
@@ -25,8 +26,6 @@ public abstract class GenericScreen extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
 	protected MainScreen mainScreen;
 	protected GenericScreen parentScreen;
-	
-	private static final Logger LOGGER = LoggerFactory.getLogger(AppliTestDAL.class);
 	
 	public GenericScreen(String title, Boolean b1, Boolean b2,  Boolean b3,  Boolean b4){
 		super(title, b1, b2, b3, b4);
@@ -49,7 +48,7 @@ public abstract class GenericScreen extends JInternalFrame {
 	 * @param e
 	 */
 	public void errorOccured(Exception e) {
-		LOGGER.error("ERROR", e);
+		LogUtil.LOGGER.error("ERROR", e);
 		if(getMainScreen().getProfil() == EnumRole.DEV){
 			//user is dev, we show stack trace before modal popup
 			e.printStackTrace();
@@ -90,6 +89,7 @@ public abstract class GenericScreen extends JInternalFrame {
 		int dialogResult = JOptionPane.showConfirmDialog(null, message, title, dialogButton);
 		return (dialogResult == JOptionPane.YES_OPTION);
 	}
+	
 
 
 	//========== MODEL & CONTROLLERS ==============

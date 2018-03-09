@@ -23,7 +23,6 @@ public class RaceController {
 
 		
 		public void init() throws Exception {
-			System.out.println("Client Controler: init()");
 			
 		}
 

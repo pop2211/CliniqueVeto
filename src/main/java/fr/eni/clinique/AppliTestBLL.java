@@ -7,11 +7,10 @@ import fr.eni.clinique.bll.exception.ManagerException;
 import fr.eni.clinique.bll.factory.ManagerFactory;
 import fr.eni.clinique.bll.manager.PersonnelManager;
 import fr.eni.clinique.bo.Personnel;
+import fr.eni.clinique.common.util.LogUtil;
 
 public class AppliTestBLL {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(AppliTestBLL.class);
-	
 	
 	
 	public static void main(String[] args) {
@@ -22,8 +21,8 @@ public class AppliTestBLL {
 		try {
 			persoManag.connexion(testLogin);
 		} catch (ManagerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
-		}
+	}
+	
+	
 }

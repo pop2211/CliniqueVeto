@@ -23,7 +23,6 @@ public class PersonnelController{
 
 	
 	public void init() throws Exception {
-		System.out.println("Personnel Controler: init()");
 		
 	}
 	

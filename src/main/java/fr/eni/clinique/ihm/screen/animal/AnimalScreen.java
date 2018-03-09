@@ -329,7 +329,6 @@ public class AnimalScreen extends GenericScreen {
 			}
 			//modif
 			if(currentEspece != null){
-				System.out.println(currentEspece);
 				especeCbx.setSelectedItem(currentEspece);
 			}
 		} catch (DaoException e) {
@@ -349,8 +348,7 @@ public class AnimalScreen extends GenericScreen {
 				raceCbx.setSelectedItem(currentRace);
 			}
 		} catch (DaoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			errorOccured(e);
 		}
     }
 	
@@ -361,8 +359,7 @@ public class AnimalScreen extends GenericScreen {
 			result = clients.getFullname();
 			recupLblCli.setText(result);
 		} catch (DaoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			errorOccured(e);
 		}
     }
 	

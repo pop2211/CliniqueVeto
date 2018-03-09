@@ -157,7 +157,7 @@ public class RdvScreen extends GenericScreen {
 				}
 			}
 		} catch (ManagerException e) {
-			e.printStackTrace();
+			errorOccured(e);
 		}
 		CbxAnimal.setMaximumSize(new Dimension(125, 20));
 		CbxAnimal.setMinimumSize(new Dimension(125, 20));
@@ -233,7 +233,7 @@ public class RdvScreen extends GenericScreen {
 				}
 			}
 		} catch (ManagerException e) {
-			e.printStackTrace();
+			errorOccured(e);
 		}
 		CbxVeterinaire.setMaximumSize(new Dimension(125, 20));
 		CbxVeterinaire.setMinimumSize(new Dimension(125, 20));
@@ -352,7 +352,11 @@ public class RdvScreen extends GenericScreen {
 		btnSupprimer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Rdv rdv = tableModelRdv.getRdvs().get(tableClient.getSelectedRow());
-				controllerRdv.remove(rdv);
+				try {
+					controllerRdv.remove(rdv);
+				} catch (ManagerException e) {
+					errorOccured(e);
+				}
 				processEvent("DeleteRdv", null);
 				showSuccessMessage("Rendez-vous Supprimé !");
 			}
@@ -402,7 +406,7 @@ public class RdvScreen extends GenericScreen {
 				}
 			}
 		} catch (ManagerException e) {
-			e.printStackTrace();
+			errorOccured(e);
 		}
 	}
 
@@ -417,7 +421,7 @@ public class RdvScreen extends GenericScreen {
 				}
 			}
 		} catch (ManagerException e) {
-			e.printStackTrace();
+			errorOccured(e);
 		}
 	}
 
@@ -453,7 +457,7 @@ public class RdvScreen extends GenericScreen {
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		    parsedDate = formatter.format(initDate);
 		} catch (ParseException e) {
-			e.printStackTrace();
+			errorOccured(e);
 		}
 		 return parsedDate;
 	}
@@ -486,8 +490,7 @@ public class RdvScreen extends GenericScreen {
 			}
 			
 		} catch (ManagerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			errorOccured(e);
 		}
 		return rdv;
 	}

@@ -67,8 +67,7 @@ public class RdvJDBCDAOImpl implements RdvDAO{
             	try {
             		rendezVous = resultSetEntryToRdv(resultSet);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					throw new DaoException("Erreur selection rendez-vous");
 				}
             }
 
@@ -232,7 +231,7 @@ public class RdvJDBCDAOImpl implements RdvDAO{
             	try {
             		listeRendezVous.add(resultSetEntryToRdv(resultSet));
 				} catch (Exception e) {
-					e.printStackTrace();
+					throw new DaoException("Erreur selection rendez vous par veterinaire et date");
 				}
             }
         } catch(SQLException e) {
@@ -261,7 +260,7 @@ public class RdvJDBCDAOImpl implements RdvDAO{
             	try {
             		listeRendezVous.add(resultSetEntryToRdv(resultSet));
 				} catch (Exception e) {
-					e.printStackTrace();
+					throw new DaoException("Erreur selection Rdv par veterinaire et date");
 				}
             }
         } catch(SQLException e) {
