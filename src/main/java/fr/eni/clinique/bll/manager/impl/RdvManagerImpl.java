@@ -1,5 +1,6 @@
 package fr.eni.clinique.bll.manager.impl;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,10 +31,18 @@ public class RdvManagerImpl implements RdvManager{
         try {
         	validerRdv(rdv);
             
-        	rdv = rdvDAO.insert(rdv);
+        	List<Rdv> rdvEnregistre = selectByVetAndDateTime(rdv.getVeto().getCodePers(), rdv.getDateRdv());
+        	System.out.println(rdv.getDateRdv());
+        	if (rdvEnregistre.size() == 0){
+        	 
+        		rdv = rdvDAO.insert(rdv);
+        	}
+        	else {
+            	throw new ManagerException("Créneau déja existant");
+            }
             
         } catch (DaoException e) {
-            throw new ManagerException("Echec addRdv", e);
+            throw new ManagerException("Echec ajout du rendez-vous", e);
         }
         return rdv;
 	}
@@ -50,7 +59,7 @@ public class RdvManagerImpl implements RdvManager{
         	rdvDAO.delete(rdv);
             
         } catch (DaoException e) {
-            throw new ManagerException("Echec addRdv", e);
+            throw new ManagerException("Echec ajout de rendez-vous", e);
         }
 	}
 
@@ -98,6 +107,19 @@ public class RdvManagerImpl implements RdvManager{
 	public void delete(Integer id) throws ManagerException {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public List<Rdv> selectByVetAndDateTime(Integer codePersonne, Timestamp date) throws ManagerException {
+        List<Rdv> listeRendezVous = new ArrayList<Rdv>();
+		
+		try {
+			listeRendezVous = rdvDAO.selectByVetAndDateTime(codePersonne, date);
+            
+        } catch (DaoException e) {
+            throw new ManagerException("Erreur récupération Liste RDV", e);
+        }
+		return listeRendezVous;
 	}
 
 }

@@ -26,9 +26,6 @@ public class AppliTestIHM {
                     // Create A Clinique View
                     MainScreen screen = new MainScreen(AppConstants.APP_NAME, personnelModel, personnelController);
                     
-                    // The Controller listen to the View
-                    //screen.setActionListener(personnelController);
-                    
                     screen.setVisible(true); // Fenetre visible
                     screen.setLocationRelativeTo(null);
                 }
