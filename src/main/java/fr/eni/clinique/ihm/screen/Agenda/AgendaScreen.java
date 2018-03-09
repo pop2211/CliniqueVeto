@@ -47,7 +47,7 @@ public class AgendaScreen extends GenericScreen {
 	private JDatePicker datePicker;
 	private JTable table;
 	private JComboBox CbxVeterinaire;
-	TableModelAgenda tableModelAgenda;
+	private TableModelAgenda tableModelAgenda;
 	
 	private AnimalDossierMedicalScreen frameAnimalDossierMedical;
 	
