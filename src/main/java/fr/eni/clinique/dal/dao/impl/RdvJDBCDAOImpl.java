@@ -32,6 +32,7 @@ public class RdvJDBCDAOImpl implements RdvDAO{
 	//private static final String SELECT_BY_ID_QUERY = "SELECT * FROM Agendas WHERE CodeRdv = ?";
 	private static final String SELECT_BY_CODEVETO_DATERDV_CODEANIMAL_QUERY = "SELECT * FROM Agendas WHERE CodeVeto=? AND DateRdv=? AND CodeAnimal=?";
 	private static final String SELECT_BY_VET_AND_DATE = "SELECT * FROM Agendas WHERE CodeVeto=? AND datediff(day, DateRdv, ?) = 0";
+	private static final String SELECT_BY_VET_AND_DATETIME = "SELECT * FROM Agendas WHERE CodeVeto=? AND DateRdv = ?";
 	private static final String SELECT_ALL_QUERY = "SELECT * FROM Agendas";
 	private static final String UPDATE_QUERY = "UPDATE Agendas SET CodeVeto=?, DateRdv=?, CodeAnimal=? WHERE CodeVeto=? AND DateRdv=? AND CodeAnimal=?";
     private static final String INSERT_QUERY = "INSERT INTO Agendas(CodeVeto, DateRdv, CodeAnimal) VALUES (?,?,?)";
@@ -247,5 +248,33 @@ public class RdvJDBCDAOImpl implements RdvDAO{
         return listeRendezVous;
 	}
 
+	@Override
+	public List<Rdv> selectByVetAndDateTime(Integer codePersonne, Timestamp date) throws DaoException {
+		Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        List<Rdv> listeRendezVous = new ArrayList<Rdv>();
+        try {
+            connection = JdbcTools.get();
+            statement = connection.prepareStatement(SELECT_BY_VET_AND_DATETIME);
+            
+            statement.setInt(1, codePersonne); 
+            statement.setTimestamp(2, date);
+
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) { 
+            	try {
+            		listeRendezVous.add(resultSetEntryToRdv(resultSet));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+            }
+        } catch(SQLException e) {
+            throw new DaoException(e.getMessage(), e);
+        } finally {
+            ResourceUtil.safeClose(connection, statement, resultSet);
+        }
+        return listeRendezVous;
+	}
 
 }
