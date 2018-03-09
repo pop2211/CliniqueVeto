@@ -24,7 +24,6 @@ public class AnimalController {
 
 	
 	public void init() throws Exception {
-		System.out.println("Animal Controler: init()");
 		
 	}
 

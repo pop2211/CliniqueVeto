@@ -16,47 +16,47 @@ import fr.eni.clinique.common.AppConstants;
  */
 public class StringUtil {
 
-    private StringUtil() {
-        
-    }
-    
-    /**
-     * Convert Null value to blank value.
-     * 
-     * @param data
-     * @return
-     */
-    public static final String nullToBlank(String data) {
-        
-        String result = AppConstants.EMPTY;
-        
-        if(data != null) {
-            result = data; 
-        }
-        
-        return result;
-    }
-    
-    public static final Boolean isNull(String str) {
-	    Boolean result = true;
-    	if(str != null && !str.isEmpty()){
-    		result = false;
-	    }
-    	return result;
-    }
-    
-    public static Timestamp convertStringToTimestamp(String str_date) {
-        try {
-          DateFormat formatter;
-          formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-           // you can change format of date
-          Date date = formatter.parse(str_date);
-          java.sql.Timestamp timeStampDate = new Timestamp(date.getTime());
+	private StringUtil() {
 
-          return timeStampDate;
-        } catch (ParseException e) {
-          System.out.println("Exception :" + e);
-          return null;
-        }
-      }
+	}
+
+	/**
+	 * Convert Null value to blank value.
+	 * 
+	 * @param data
+	 * @return
+	 */
+	public static final String nullToBlank(String data) {
+
+		String result = AppConstants.EMPTY;
+
+		if (data != null) {
+			result = data;
+		}
+
+		return result;
+	}
+
+	public static final Boolean isNull(String str) {
+		Boolean result = true;
+		if (str != null && !str.isEmpty()) {
+			result = false;
+		}
+		return result;
+	}
+
+	public static Timestamp convertStringToTimestamp(String str_date) {
+		try {
+			DateFormat formatter;
+			formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+			// you can change format of date
+			Date date = formatter.parse(str_date);
+			java.sql.Timestamp timeStampDate = new Timestamp(date.getTime());
+
+			return timeStampDate;
+		} catch (ParseException e) {
+			LogUtil.LOGGER.error("ERROR StringUtil convertStringToTimestamp: ", e);
+			return null;
+		}
+	}
 }

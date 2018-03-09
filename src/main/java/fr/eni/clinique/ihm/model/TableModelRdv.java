@@ -7,6 +7,7 @@ import javax.swing.table.AbstractTableModel;
 import fr.eni.clinique.bll.manager.impl.ClientManagerImpl;
 import fr.eni.clinique.bll.manager.impl.RdvManagerImpl;
 import fr.eni.clinique.bo.Rdv;
+import fr.eni.clinique.common.util.LogUtil;
 
 public class TableModelRdv extends AbstractTableModel{
 
@@ -34,7 +35,7 @@ public class TableModelRdv extends AbstractTableModel{
 		try {
 			this.rdvs = rdvManagerImpl.selectByVetAndDate(currentVetoId, date);
 		} catch (Exception e) {
-			e.printStackTrace();
+			LogUtil.LOGGER.error("ERROR", e);
 		}
 		
 		this.fireTableDataChanged();	//UI Refresh
@@ -74,7 +75,7 @@ public class TableModelRdv extends AbstractTableModel{
 			try {
 				txt = clientManagerImpl.selectById(rdvs.get(rowIndex).getAnimal().getCodeClient()).getFullname();
 			} catch (Exception e) {
-				e.printStackTrace();
+				LogUtil.LOGGER.error("ERROR", e);
 			}
 			return txt;
 
@@ -82,7 +83,7 @@ public class TableModelRdv extends AbstractTableModel{
 			try {
 				txt = rdvs.get(rowIndex).getAnimal().getNomAnimal();
 			} catch (Exception e) {
-				e.printStackTrace();
+				LogUtil.LOGGER.error("ERROR", e);
 			}
 			return txt;
 
@@ -90,7 +91,7 @@ public class TableModelRdv extends AbstractTableModel{
 			try {
 				txt = rdvs.get(rowIndex).getAnimal().getRace().getRace();
 			} catch (Exception e) {
-				e.printStackTrace();
+				LogUtil.LOGGER.error("ERROR", e);
 			}
 			return txt;
 

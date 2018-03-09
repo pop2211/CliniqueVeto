@@ -35,6 +35,7 @@ import javax.swing.border.TitledBorder;
 import java.awt.Dimension;
 import javax.swing.JComboBox;
 import fr.eni.clinique.common.util.Item;
+import fr.eni.clinique.common.util.LogUtil;
 
 public class MainClientScreen extends GenericClientScreen {
 
@@ -565,7 +566,7 @@ public class MainClientScreen extends GenericClientScreen {
 					Client client = controllerClient.loadClient(id);
 					showClient(client);
 				} catch (ManagerException e2) {
-					e2.printStackTrace();
+					errorOccured(e2);
 				}
 			break;
 			case "AddAnimal":
@@ -575,8 +576,7 @@ public class MainClientScreen extends GenericClientScreen {
 				modelAnimalTable.refresh();
 			break;
 			default :
-				System.out.println("GenericClientScreen unknow event: "+ eventName);
-				//TODO throws Exception
+				LogUtil.LOGGER.error("ERROR", "GenericClientScreen unknow event: "+ eventName);
 			break;
 		}
 	}

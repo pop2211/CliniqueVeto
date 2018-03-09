@@ -65,20 +65,19 @@ public class RaceManagerImpl implements RaceManager{
         	races = raceDAO.selectAll();
             
         } catch (DaoException e) {
-            throw new ManagerException("Erreur récupération Liste de la race", e);
+            throw new ManagerException("Erreur récupération Liste de race", e);
         }
         
         return races;
 	}
 
 	@Override
-	public List<String> selectByEspece(String espece) {
+	public List<String> selectByEspece(String espece) throws ManagerException {
 		List<String> race = null;
 		try {
 			race = raceDAO.selectByEspece(espece);
 		} catch (DaoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new ManagerException("Erreur récupération Liste d'espèce", e);
 		}
 		return race;
 	}

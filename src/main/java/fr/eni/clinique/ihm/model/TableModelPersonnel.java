@@ -8,6 +8,7 @@ import fr.eni.clinique.bll.exception.ManagerException;
 import fr.eni.clinique.bll.manager.impl.PersonnelManagerImpl;
 import fr.eni.clinique.bo.EnumRole;
 import fr.eni.clinique.bo.Personnel;
+import fr.eni.clinique.common.util.LogUtil;
 
 public class TableModelPersonnel extends AbstractTableModel{
 	
@@ -27,8 +28,7 @@ public class TableModelPersonnel extends AbstractTableModel{
 		try {
 			personnels = personnelManagerImpl.selectAll();
 		} catch (ManagerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LogUtil.LOGGER.error("ERROR", e);
 		}
 	}
 	
@@ -36,8 +36,7 @@ public class TableModelPersonnel extends AbstractTableModel{
 		try {
 			this.personnels = personnelManagerImpl.selectAll();
 		} catch (ManagerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LogUtil.LOGGER.error("ERROR", e);
 		}
 		
 		this.fireTableDataChanged();	//UI Refresh

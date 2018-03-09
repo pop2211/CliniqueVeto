@@ -10,6 +10,7 @@ import fr.eni.clinique.bll.manager.impl.AnimalManagerImpl;
 import fr.eni.clinique.bll.manager.impl.PersonnelManagerImpl;
 import fr.eni.clinique.bo.Animal;
 import fr.eni.clinique.bo.Personnel;
+import fr.eni.clinique.common.util.LogUtil;
 
 public class TableModelAnimal extends AbstractTableModel{
 	
@@ -42,7 +43,7 @@ public class TableModelAnimal extends AbstractTableModel{
 				this.animaux = animalManagerImpl.selectByMaitre(currentClientId);
 			}
 		} catch (ManagerException e) {
-			e.printStackTrace();
+			LogUtil.LOGGER.error("ERROR", e);
 		}
 		this.fireTableDataChanged();	//UI Refresh
 	}

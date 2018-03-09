@@ -163,7 +163,7 @@ public class SearchClientScreen extends GenericClientScreen {
 				}
 			}
 		} catch (ManagerException e) {
-			e.printStackTrace();
+			errorOccured(e);
 		}
 		resultsLst.setListData(resultsLstModel);
 		loadingResultsLst = false;

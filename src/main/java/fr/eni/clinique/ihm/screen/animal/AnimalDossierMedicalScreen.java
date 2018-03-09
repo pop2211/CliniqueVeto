@@ -80,7 +80,6 @@ public class AnimalDossierMedicalScreen extends GenericScreen {
 		codeClient = CodeClient;
 		codeAnimal = CodeAnimal;
 		
-		System.out.println(codeAnimal);
 		
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		
@@ -285,8 +284,7 @@ public class AnimalDossierMedicalScreen extends GenericScreen {
 			result = clients.getFullname();
 			lblCodeClient.setText(result);
 		} catch (DaoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			errorOccured(e);
 		}
     }
 	

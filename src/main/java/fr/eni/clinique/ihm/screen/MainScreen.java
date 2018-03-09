@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 
 import fr.eni.clinique.bo.EnumRole;
 import fr.eni.clinique.common.AppConstants;
+import fr.eni.clinique.common.util.LogUtil;
 import fr.eni.clinique.common.util.StringUtil;
 import fr.eni.clinique.ihm.controller.AnimalController;
 import fr.eni.clinique.ihm.controller.ClientController;
@@ -220,7 +221,7 @@ public class MainScreen extends JFrame implements ActionListener {
 					try {
 						frames[i].setClosed(false);
 					} catch (PropertyVetoException e1) {
-						e1.printStackTrace();
+						errorOccured(e1);
 					}
 				}
 			}
@@ -237,7 +238,6 @@ public class MainScreen extends JFrame implements ActionListener {
 			rdvScreen.setVisible(true);
 			break;
 		case "gestionAgenda": 
-			System.out.println("CLIC gestionAgenda");
 			//frame GestionAgenda
 			agendaScreen = getAgendaScreen();
 			desktopPane.add(agendaScreen);
@@ -262,7 +262,7 @@ public class MainScreen extends JFrame implements ActionListener {
 			personnelScreen.setVisible(true);
 			break;
 		default:
-			System.out.println("Probleme Event = " + e);
+			LogUtil.LOGGER.error("ERROR", "MainScreen actionPerformed : "+ e);
 		}
 
 	}
@@ -307,6 +307,27 @@ public class MainScreen extends JFrame implements ActionListener {
 		return clientScreen;
 	}
 	
+	
+	
+	//==================================================================
+	/**
+	 * Show TechnicalError and print StackTrace.
+	 * 
+	 * @param e
+	 */
+	public void errorOccured(Exception e) {
+		LogUtil.LOGGER.error("ERROR", e);
+		if(getProfil() == EnumRole.DEV){
+			//user is dev, we show stack trace before modal popup
+			e.printStackTrace();
+		}
+		String errorMsg = e.getMessage();
+		if("".equals(errorMsg)){
+			errorMsg = "Une erreur s'est produite";
+		}
+		showFailureMessage(errorMsg);
+	}
+	
     /**
      * Show TechnicalError.
      * 
@@ -324,4 +345,5 @@ public class MainScreen extends JFrame implements ActionListener {
     public void showSuccessMessage(String message) {
         JOptionPane.showMessageDialog(MainScreen.this, message);
     }
+    //==================================================================
 }

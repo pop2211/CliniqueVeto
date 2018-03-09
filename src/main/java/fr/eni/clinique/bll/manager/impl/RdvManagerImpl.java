@@ -32,7 +32,6 @@ public class RdvManagerImpl implements RdvManager{
         	validerRdv(rdv);
             
         	List<Rdv> rdvEnregistre = selectByVetAndDateTime(rdv.getVeto().getCodePers(), rdv.getDateRdv());
-        	System.out.println(rdv.getDateRdv());
         	if (rdvEnregistre.size() == 0){
         	 
         		rdv = rdvDAO.insert(rdv);

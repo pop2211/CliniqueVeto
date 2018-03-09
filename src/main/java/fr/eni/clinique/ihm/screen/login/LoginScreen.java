@@ -104,7 +104,7 @@ public class LoginScreen extends GenericScreen{
 		try {
 			img = ImageIO.read(new File("src//main//resources//images//ico//done_16p.png"));
 		} catch (IOException e1) {
-			e1.printStackTrace();
+			errorOccured(e1);
 		}
 		
         validateButton = new JButton("Valider");
