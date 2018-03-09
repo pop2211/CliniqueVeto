@@ -371,7 +371,6 @@ public class RdvScreen extends GenericScreen {
 					Rdv rdvAjout = readRdv();
 					controllerRdv.newRdv(rdvAjout);
 					processEvent("AddRdv", null);
-					//CbxClient.setSelectedItem(rdvAjout.getAnimal().getCodeClient());
 					showSuccessMessage("Rendez-vous enregistré !");
 				} catch (ManagerException e) {
 					showFailureMessage(e.getMessage());
