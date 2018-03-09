@@ -7,12 +7,14 @@ import javax.swing.JInternalFrame;
 import fr.eni.clinique.bll.exception.ManagerException;
 import fr.eni.clinique.bo.EnumRole;
 import fr.eni.clinique.bo.Personnel;
+import fr.eni.clinique.bo.Rdv;
 import fr.eni.clinique.common.util.Item;
 import fr.eni.clinique.ihm.controller.AnimalController;
 import fr.eni.clinique.ihm.controller.PersonnelController;
 import fr.eni.clinique.ihm.controller.RdvController;
 import fr.eni.clinique.ihm.model.TableModelAgenda;
 import fr.eni.clinique.ihm.model.TableModelRdv;
+import fr.eni.clinique.ihm.screen.animal.AnimalDossierMedicalScreen;
 import fr.eni.clinique.ihm.screen.common.GenericScreen;
 import fr.eni.clinique.ihm.screen.personnel.PersonnelScreen;
 
@@ -54,6 +56,9 @@ public class AgendaScreen extends GenericScreen {
 	private JTable table;
 	private JComboBox CbxVeterinaire;
 	TableModelAgenda tableModelAgenda;
+	
+	private AnimalDossierMedicalScreen frameAnimalDossierMedical;
+	
 	/**
 	 * Create the frame.
 	 */
@@ -179,6 +184,23 @@ public class AgendaScreen extends GenericScreen {
 		panel.setLayout(gbl_panel);
 		
 		JButton dossierMedicalBtn = new JButton("Dossier Medical");
+		dossierMedicalBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Integer rowIndex = table.getSelectedRow();
+					if(rowIndex == -1){
+						throw new Exception("Aucun rendez-vous selectionné");
+					}
+					Rdv rdv = tableModelAgenda.getRdvs().get(rowIndex);
+					Integer codeAnimal = rdv.getAnimal().getCodeAnimal();
+					Integer codeClient = rdv.getAnimal().getCodeClient();
+					frameAnimalDossierMedical = getFrameAnimalDossierMedical(codeClient, codeAnimal);
+					frameAnimalDossierMedical.setVisible(true);
+				} catch (Exception e1) {
+					errorOccured(e1);
+				}
+			}
+		});
 		dossierMedicalBtn.setIcon(new ImageIcon(PersonnelScreen.class.getResource("/images/ico/folder_27p.png")));
 		GridBagConstraints gbc_dossierMedicalBtn = new GridBagConstraints();
 		gbc_dossierMedicalBtn.gridx = 12;
@@ -223,4 +245,11 @@ public class AgendaScreen extends GenericScreen {
 		}
 		 return parsedDate;
 	}
+	
+	public AnimalDossierMedicalScreen getFrameAnimalDossierMedical(Integer CodeCli, Integer CodeAnimal) {
+		frameAnimalDossierMedical = new AnimalDossierMedicalScreen((GenericScreen)this, CodeCli, CodeAnimal);
+		getMainScreen().getDesktopPane().add(frameAnimalDossierMedical);
+		return frameAnimalDossierMedical;
+	}
+	
 }
