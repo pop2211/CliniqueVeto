@@ -1,5 +1,7 @@
 package fr.eni.clinique.ihm.screen.client;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -9,33 +11,26 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 
 import fr.eni.clinique.bll.exception.ManagerException;
 import fr.eni.clinique.bo.Animal;
 import fr.eni.clinique.bo.Client;
-import fr.eni.clinique.common.util.ObjectUtil;
+import fr.eni.clinique.common.util.LogUtil;
 import fr.eni.clinique.ihm.controller.AnimalController;
 import fr.eni.clinique.ihm.controller.ClientController;
 import fr.eni.clinique.ihm.model.AnimalModel;
 import fr.eni.clinique.ihm.model.ClientModel;
 import fr.eni.clinique.ihm.model.TableModelAnimal;
-import fr.eni.clinique.ihm.screen.animal.AnimalDossierMedicalScreen;
 import fr.eni.clinique.ihm.screen.animal.AnimalScreen;
 import fr.eni.clinique.ihm.screen.common.GenericScreen;
 import fr.eni.clinique.ihm.screen.common.JTextFieldLimit;
-import javax.swing.JPanel;
-import javax.swing.border.LineBorder;
-import java.awt.Color;
-import javax.swing.border.TitledBorder;
-import java.awt.Dimension;
-import javax.swing.JComboBox;
-import fr.eni.clinique.common.util.Item;
-import fr.eni.clinique.common.util.LogUtil;
 
 public class MainClientScreen extends GenericClientScreen {
 

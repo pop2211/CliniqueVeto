@@ -29,7 +29,9 @@ import fr.eni.clinique.dal.dao.impl.ClientJDBCDAOImpl;
 import fr.eni.clinique.dal.dao.impl.RaceJDBCDAOImpl;
 import fr.eni.clinique.dal.exception.DaoException;
 import fr.eni.clinique.ihm.controller.AnimalController;
+import fr.eni.clinique.ihm.controller.ClientController;
 import fr.eni.clinique.ihm.model.AnimalModel;
+import fr.eni.clinique.ihm.model.ClientModel;
 import fr.eni.clinique.ihm.screen.client.MainClientScreen;
 import fr.eni.clinique.ihm.screen.common.GenericScreen;
 import fr.eni.clinique.ihm.screen.common.JTextFieldLimit;
@@ -64,6 +66,8 @@ public class AnimalScreen extends GenericScreen {
 		
         this.modelAnimal = new AnimalModel();
 		this.controllerAnimal = new AnimalController(this.modelAnimal);
+		this.modelClient = new ClientModel();
+		this.controllerClient = new ClientController(modelClient);
 		codeClient = CodeCli;
 		
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
